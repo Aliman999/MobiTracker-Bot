@@ -3,9 +3,9 @@ from discord.ext import commands
 client = discord.Client()
 bot = commands.Bot(command_prefix='$')
 
-@bot.command(name='list')
-async def _list(ctx, arg):
-    pass
+@bot.command()
+async def test(ctx):
+    await ctx.send("fuck you")
 
 @client.event
 async def on_ready():
