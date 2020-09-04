@@ -18,9 +18,9 @@ async def on_ready():
 
 #Errr?
 @bot.command()
-async def search(ctx, arg):
+async def foo(ctx, arg):
+    await ctx.send(arg)
     #w = open("wee.txt", "r")
     #dusky = w.readlines()
-    await ctx.send(arg)
 
 client.run('NzUxMjUyNjE3NDUxMTQzMjE5.X1GYhQ.lpeuSNw1EAvFoZX7TZZrXwGOvog')
