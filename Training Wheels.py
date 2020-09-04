@@ -5,7 +5,7 @@ import datetime
 from urllib import parse, request
 import re
 
-bot = commands.Bot(command_prefix='>', description="This is a Helper Bot")
+bot = commands.Bot(command_prefix='!', description="This is a Helper Bot")
 
 @bot.command()
 async def ping(ctx):
