@@ -7,12 +7,6 @@ bot = commands.Bot(command_prefix='$')
 async def test(ctx):
     pass
 
-# or:
-
-@commands.command()
-async def test(ctx):
-    pass
-
 bot.add_command(test)
 
 @client.event
