@@ -3,6 +3,17 @@ from discord.ext import commands
 client = discord.Client()
 bot = commands.Bot(command_prefix='$')
 
+@bot.command()
+async def test(ctx):
+    pass
+
+# or:
+
+@commands.command()
+async def test(ctx):
+    pass
+
+bot.add_command(test)
 
 @client.event
 async def on_ready():
@@ -22,5 +33,6 @@ async def foo(ctx, arg):
     await ctx.send(arg)
     #w = open("wee.txt", "r")
     #dusky = w.readlines()
+    await ctx.send(arg)
 
 client.run('NzUxMjUyNjE3NDUxMTQzMjE5.X1GYhQ.lpeuSNw1EAvFoZX7TZZrXwGOvog')
