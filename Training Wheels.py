@@ -40,15 +40,15 @@ async def youtube(ctx, *, search):
 # Events
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Streaming(name="Tutorials", url="http://www.twitch.tv/accountname"))
-    print('My Ready is Body')
+    await bot.change_presence(activity=discord.Streaming(name="Mobitracker", url="https://mobitracker.co"))
+    print('Mobitracker Online')
 
 
 @bot.listen()
 async def on_message(message):
-    if "tutorial" in message.content.lower():
+    if "mobitracker" in message.content.lower():
         # in this case don't respond with the word "Tutorial" or you will call the on_message event recursively
-        await message.channel.send('This is that you want http://youtube.com/fazttech')
+        await message.channel.send('https://mobitracker.co')
         await bot.process_commands(message)
 
 bot.run('NzUxMjUyNjE3NDUxMTQzMjE5.X1GYhQ.lpeuSNw1EAvFoZX7TZZrXwGOvog')
