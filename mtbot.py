@@ -9,7 +9,7 @@ bot = commands.Bot(command_prefix='!', description="This is a Helper Bot")
 
 @bot.command()
 async def ping(ctx):
-    await ctx.send('@Dread#8277 ')
+    await ctx.send(allowed-mentions=true,"@Dread#8277")
 
 #@bot.command()
 #async def sum(ctx, numOne: int, numTwo: int):
