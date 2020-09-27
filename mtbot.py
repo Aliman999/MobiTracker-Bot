@@ -5,7 +5,7 @@ import datetime
 from urllib import parse, request
 import re
 
-bot = commands.Bot(command_prefix='>', description="This is a Helper Bot")
+bot = commands.Bot(command_prefix='!', description="This is a Helper Bot")
 
 @bot.command()
 async def ping(ctx):
@@ -37,18 +37,12 @@ async def youtube(ctx, *, search):
     # I will put just the first result, you can loop the response to show more results
     await ctx.send('https://www.youtube.com/watch?v=' + search_results[0])
 
-# Events
-@bot.event
-async def on_ready():
-    await bot.change_presence(activity=discord.Streaming(name="Tutorials", url="http://www.twitch.tv/accountname"))
-    print('My Ready is Body')
-
 
 @bot.listen()
 async def on_message(message):
-    if "tutorial" in message.content.lower():
+    if "Mobitracker" in message.content.lower():
         # in this case don't respond with the word "Tutorial" or you will call the on_message event recursively
-        await message.channel.send('This is that you want http://youtube.com/fazttech')
+        await message.channel.send('This is the mobitracker Bot')
         await bot.process_commands(message)
 
 # Events
