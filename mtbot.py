@@ -15,7 +15,7 @@ async def ping(ctx):
 async def sum(ctx, numOne: int, numTwo: int):
     await ctx.send(numOne + numTwo)
 
-@bot.command()
+@bot.command() 
 async def info(ctx):
     embed = discord.Embed(title=f"{ctx.guild.name}", description="Lorem Ipsum asdasd", timestamp=datetime.datetime.utcnow(), color=discord.Color.blue())
     embed.add_field(name="Server created at", value=f"{ctx.guild.created_at}")
