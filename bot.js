@@ -11,9 +11,6 @@ client.on('message', message => {
   if (message.content === 'ping') {
     message.channel.send('pong');
   }
-});
-
-client.on('message', message => {
   // If the message is "how to embed"
   if (message.content === 'how to embed') {
     // We can create embeds using the MessageEmbed constructor
