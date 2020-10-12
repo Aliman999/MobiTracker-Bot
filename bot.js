@@ -53,7 +53,7 @@ client.on('message', message => {
       .addFields(
         () => {
             if(user.data.organization.sid){
-              { name: 'Main Organization', value: '['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')', inline: true },
+              { name: 'Main Organization', value: '['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')', inline: true }
             }
           }
 
