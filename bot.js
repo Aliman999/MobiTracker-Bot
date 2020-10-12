@@ -30,10 +30,11 @@ client.on('message', message => {
       .setColor(0x39ced8)
       .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+`${args}`)
       // Set the main content of the embed
-      .setDescription('"Ideas are bulletproof." - V \n As a true believer of the above quote, I have set out on a mission to discover the vast landscapes of the Stanton solar system. \n Six months of work came to fruition - Crane Expedition Atlas (CEA℠). \n CEA℠ provides a comprehensive solution to Star Citizen's exploration gameplay. \n Link: https://cea.guide \n I issue survey contracts for individuals. \n Community Ratings: https://mobitracker.co/Bo-Fone')
+      .setDescription('Six months of work came to fruition - Crane Expedition Atlas (CEA℠). \u200B Test')
       .addFields(
         { name: 'Organization', value: 'Fleet of the Faithful Knights', inline: true },
     		{ name: 'Title', value: 'Civilian', inline: true},
+    		{ name: '\u200B', value: '\u200B' },
     		{ name: 'Rating', value: '5/5', inline: true },
 	     )
        .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
