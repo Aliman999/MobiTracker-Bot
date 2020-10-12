@@ -20,24 +20,16 @@ client.on('message', message => {
   	}else if (args.length > 1) {
   		return message.channel.send(`Too many arguments!, ${message.author}!`);
     }
-  	//message.channel.send(`Command name: ${command}\nArguments: ${args}`);
-
-    // We can create embeds using the MessageEmbed constructor
-    // Read more about all that you can do with the constructor
-    // over at https://discord.js.org/#/docs/main/master/class/MessageEmbed
     const embed = new MessageEmbed()
-      // Set the color of the embed
       .setColor(0x39ced8)
       .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+`${args}`)
-      // Set the main content of the embed
       .setDescription('Test')
       .addFields(
         { name: 'Organization', value: 'Fleet of the Faithful Knights', inline: true },
     		{ name: 'Title', value: 'Civilian', inline: true},
-    		{ name: 'Rating', value: '5/5', inline: true }
+    		{ name: 'Rating', value: '5/5 (3)', inline: true }
 	     )
        .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
-    // Send the embed to the same channel as the message
     message.channel.send(embed);
   }
 
