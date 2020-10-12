@@ -31,7 +31,7 @@ function affiliations(aff){
 }
 
 client.on('ready', () => {
-  console.log('I am ready!');
+  console.log('MobiTracker Bot is Ready');
 });
 
 client.on('message', message => {
