@@ -34,7 +34,6 @@ client.on('message', message => {
       .addFields(
         { name: 'Organization', value: 'Fleet of the Faithful Knights', inline: true },
     		{ name: 'Title', value: 'Civilian', inline: true},
-    		{ name: '\u200B', value: '\u200B' },
     		{ name: 'Rating', value: '5/5', inline: true },
 	     )
        .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
