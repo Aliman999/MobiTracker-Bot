@@ -29,8 +29,6 @@ client.on('message', message => {
       // Set the color of the embed
       .setColor(0x39ced8)
       .setAuthor(`${args}`, 'https://mobitracker.co/src/avatars/avatar_default.jpg', "https://mobitracker.co/"+`${args}`)
-      // Set the title of the field
-      .setTitle(`${args}`)
       // Set the main content of the embed
       .setDescription('Asteroid')
       .addFields(
