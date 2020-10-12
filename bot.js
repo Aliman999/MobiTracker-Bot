@@ -4,7 +4,6 @@ const config  = require('./config');
 const prefix = '!';
 const client = new Client();
 const https = require('https');
-var user;
 
 function affiliations(aff){
   var display;
@@ -36,10 +35,10 @@ client.on('message', message => {
     }
     const req = https.request(options, res => {
       console.log(`statusCode: ${res.statusCode}`)
+    })
 
-      res.on('data', d => {
-        user = JSON.parse(d)
-      })
+    const user = res.on('data', d => {
+      return JSON.parse(d)
     })
 
     req.on('error', error => {
