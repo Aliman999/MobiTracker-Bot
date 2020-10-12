@@ -1,7 +1,7 @@
 'use strict';
 const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
-const prefix = require('./prefix.json');
+const prefix = '!';
 const client = new Client();
 
 client.on('ready', () => {
@@ -13,10 +13,8 @@ client.on('message', message => {
     message.channel.send('pong');
   }
 
-  if (message.content.startsWith(`${prefix}ping`)) {
+  if (message.content.startsWith(prefix + 'ping')) {
   	message.channel.send('Pong.');
-  } else if (message.content.startsWith(`${prefix}beep`)) {
-    message.channel.send('Boop.');
   }
   // If the message is "how to embed"
   if (message.content === 'how to embed') {
