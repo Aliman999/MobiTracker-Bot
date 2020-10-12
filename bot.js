@@ -5,8 +5,12 @@ const prefix = '!';
 const client = new Client();
 const https = require('https')
 
-function organizations(orgs){
-  return
+function affiliations(aff){
+  var display;
+  for (var i = 0; i < aff.length; i++) {
+    display = display+aff.rank+' in '+'['+aff.name+']'+'(https://robertsspaceindustries.com/orgs/'+aff.sid+')'+'\n';
+  }
+  return display;
 }
 
 client.on('ready', () => {
@@ -34,9 +38,7 @@ client.on('message', message => {
 
       res.on('data', d => {
         const user = JSON.parse(d)
-        for (var i = 0; i < user.data.affiliation.length; i++) {
-          user.data.affiliation[i]
-        }
+        affiliations(user.data.affiliation);
       })
     })
 
@@ -48,17 +50,13 @@ client.on('message', message => {
 
     const embed = new MessageEmbed()
       .setColor(0x39ced8)
-      .setAuthor(user.data.profile.handle, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+user.data.profile.handle)
+      .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
       .setDescription("AKA "+user.data.profile.display)
       .addFields(
-        () => {
-            if(user.data.organization.sid){
-              { name: 'Main Organization', value: '['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')', inline: true }
-            }
-          }
-
-    		{ name: 'Title', value: 'Civilian', inline: true},
-    		{ name: 'Rating', value: '5/5 (3)', inline: true }
+        { name: 'Title', value: user.data.profile.title, inline: true},
+        { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
+        { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
+        { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
 	     )
        .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
     message.channel.send(embed);
