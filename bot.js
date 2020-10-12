@@ -52,6 +52,7 @@ client.on('message', message => {
         message.channel.send(embed);
       })
     })
+    console.log(req);
     req.on('error', error => {
       console.error(error)
     })
