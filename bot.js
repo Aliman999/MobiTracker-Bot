@@ -40,13 +40,11 @@ client.on('message', message => {
       console.error(error)
     })
     var user;
+    var embed = new MessageEmbed();
     req.on('data', d => {
       user = JSON.parse(d);
-    });
-
-    console.log(user);
-
-    const embed = new MessageEmbed()
+      console.log(user);
+      embed
       .setColor(0x39ced8)
       .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
       .setDescription("AKA "+user.data.profile.display)
@@ -57,6 +55,10 @@ client.on('message', message => {
         { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
        )
        .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+    });
+
+
+
     while(!user){
       if(user){
         message.channel.send(embed);
