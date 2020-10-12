@@ -25,7 +25,7 @@ client.on('message', message => {
       path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
       method: 'GET'
     }
-
+    console.log(options.path);
     const req = https.request(options, res => {
       console.log(`statusCode: ${res.statusCode}`)
 
