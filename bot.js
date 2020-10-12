@@ -3,7 +3,20 @@ const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
 const client = new Client();
-const https = require('https')
+const https = require('https');
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: config.MysqlHost,
+  user: config.MysqlUsername,
+  password: config.MysqlPassword,
+  database: config.MysqlDatabase
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected to Mobitracker Database");
+});
 
 function affiliations(aff){
   var display = "";
@@ -44,6 +57,12 @@ client.on('message', message => {
         if(!user.data.profile.title){
           user.data.profile.title = "None";
         }
+        user.data.profile.id = user.data.profile.id.substring(1);
+        console.log(user.data.profile.id);
+        con.query("SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+'''+"cID = "+user.data.profile.id, function (err, result, fields) {
+          if (err) throw err;
+          console.log(result);
+        });
         const embed = new MessageEmbed()
           .setColor(0x39ced8)
           .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
