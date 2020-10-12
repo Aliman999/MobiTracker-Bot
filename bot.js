@@ -35,11 +35,12 @@ client.on('message', message => {
     }
     const req = https.request(options, res => {
       console.log(`statusCode: ${res.statusCode}`)
+      const user = res.on('data', d => {
+        return JSON.parse(d)
+      })
     })
 
-    const user = res.on('data', d => {
-      return JSON.parse(d)
-    })
+
 
     req.on('error', error => {
       console.error(error)
