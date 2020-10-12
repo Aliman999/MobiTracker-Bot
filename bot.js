@@ -28,11 +28,9 @@ client.on('message', message => {
     const embed = new MessageEmbed()
       // Set the color of the embed
       .setColor(0x39ced8)
-      .setAuthor(`${args}`, 'https://mobitracker.co/src/avatars/avatar_default.jpg', 'https://discord.js.org')
+      .setAuthor(`${args}`, 'https://mobitracker.co/src/avatars/avatar_default.jpg', "https://mobitracker.co/"+`${args}`)
       // Set the title of the field
       .setTitle(`${args}`)
-      // URL to the client's Profile
-      .setURL("https://mobitracker.co/"+`${args}`)
       // Set the main content of the embed
       .setDescription('Asteroid')
       .addFields(
