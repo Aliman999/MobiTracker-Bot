@@ -35,34 +35,26 @@ client.on('message', message => {
     }
     const req = https.request(options, res => {
       console.log(`statusCode: ${res.statusCode}`)
-      const user = res.on('data', d => {
-        return JSON.parse(d)
+      res.on('data', d => {
+        const user = JSON.parse(d)
+        
+        const embed = new MessageEmbed()
+          .setColor(0x39ced8)
+          .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+          .setDescription("AKA "+user.data.profile.display)
+          .addFields(
+            { name: 'Title', value: user.data.profile.title, inline: true},
+            { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
+            { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
+            { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+    	     )
+           .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+        message.channel.send(embed);
       })
     })
-
-
-
     req.on('error', error => {
       console.error(error)
     })
-
-    req.end()
-
-    console.log(user)
-    /*
-    const embed = new MessageEmbed()
-      .setColor(0x39ced8)
-      .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-      .setDescription("AKA "+user.data.profile.display)
-      .addFields(
-        { name: 'Title', value: user.data.profile.title, inline: true},
-        { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
-        { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
-        { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
-	     )
-       .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
-    message.channel.send(embed);
-    */
   }
 
   if (message.content === `${prefix}server`) {
