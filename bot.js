@@ -33,11 +33,11 @@ client.on('message', message => {
       // URL to the client's Profile
       .setURL("https://mobitracker.co/"+`${args}`)
       // Set the main content of the embed
-      .setDescription('Organization: Asteroid')
+      .setDescription('Asteroid')
       .addFields(
     		{ name: 'Title:', value: 'Civilian' },
-    		{ name: '\u200B', value: '\u200B' },
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
+    		{ name: '\u200B', value: '\u200B' },
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
 	     )
        .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
