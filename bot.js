@@ -17,7 +17,9 @@ client.on('message', message => {
   if (command === 'search'){
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username, ${message.author}!`);
-  	}
+  	}else if (args.length > 1) {
+  		return message.channel.send(`Too many arguments!, ${message.author}!`);
+    }
   	message.channel.send(`Command name: ${command}\nArguments: ${args}`);
   }
 
