@@ -54,23 +54,27 @@ client.on('message', message => {
       console.log('Looking up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
-        const cID = user.data.profile.id.substring(1);
-        const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
-        con.query(sql, function (err, result, fields) {
-          if (err) throw err;
-          const embed = new MessageEmbed()
-            .setColor(0x39ced8)
-            .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-            .setDescription("AKA "+user.data.profile.display)
-            .addFields(
-              { name: 'Badge', value: user.data.profile.badge, inline: true},
-              { name: 'Mobitracker Rating', value: result[0].rating+"/5 "+"("+result[0].count+")", inline: true},
-              { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
-              { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
-             )
-             .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
-          message.channel.send(embed);
-        });
+        if(user.data.length > 0){
+          const cID = user.data.profile.id.substring(1);
+          const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
+          con.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            const embed = new MessageEmbed()
+              .setColor(0x39ced8)
+              .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+              .setDescription("AKA "+user.data.profile.display)
+              .addFields(
+                { name: 'Badge', value: user.data.profile.badge, inline: true},
+                { name: 'Mobitracker Rating', value: result[0].rating+"/5 "+"("+result[0].count+")", inline: true},
+                { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
+                { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+               )
+               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+            message.channel.send(embed);
+          });
+        }else{
+          message.channel.send(`That user doesnt exist, ${message.author}!`);
+        }
       })
     })
 
