@@ -39,9 +39,9 @@ client.on('message', message => {
     req.on('error', error => {
       console.error(error)
     })
-
-    const user = req.on('data', d => {
-      return JSON.parse(d);
+    var user;
+    req.on('data', d => {
+      user = JSON.parse(d);
     });
 
     console.log(user);
