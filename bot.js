@@ -35,7 +35,7 @@ client.on('message', message => {
       // Set the main content of the embed
       .setDescription('')
       .addFields(
-    		{ name: 'Regular field title', value: 'Some value here' },
+    		{ name: 'Asteroid', value: "https://mobitracker.co/android-chrome-192x192.png"+'Civilian' },
     		{ name: '\u200B', value: '\u200B' },
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
