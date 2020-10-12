@@ -1,7 +1,7 @@
 'use strict';
+const configPrefix = require('./configPrefix.json');
 const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
-const configPrefix = require('./configPrefix.json');
 const client = new Client();
 
 client.on('ready', () => {
