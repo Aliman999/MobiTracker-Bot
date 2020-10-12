@@ -68,7 +68,7 @@ client.on('message', message => {
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
             if(result[0].rating == -1){
-              result[0].rating = "N/A";
+              result[0].rating = "Na";
             }
             const embed = new MessageEmbed()
               .setColor(0x39ced8)
