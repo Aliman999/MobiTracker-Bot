@@ -7,10 +7,14 @@ const https = require('https')
 
 function affiliations(aff){
   var display;
-  for (var i = 0; i < aff.length; i++) {
-    display = display+aff.rank+' in '+'['+aff.name+']'+'(https://robertsspaceindustries.com/orgs/'+aff.sid+')'+'\n';
+  if(aff){
+    for (var i = 0; i < aff.length; i++) {
+      display = display+aff.rank+' in '+'['+aff.name+']'+'(https://robertsspaceindustries.com/orgs/'+aff.sid+')'+'\n';
+    }
+    return display;
+  }else{
+    return "None";
   }
-  return display;
 }
 
 client.on('ready', () => {
