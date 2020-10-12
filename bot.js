@@ -55,9 +55,6 @@ client.on('message', message => {
       console.log('Looking up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
-        if(user.data.profile.badge == "undefined"){
-          user.data.profile.badge = "None";
-        }
         const cID = user.data.profile.id.substring(1);
         const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
         con.query(sql, function (err, result, fields) {
