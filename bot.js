@@ -1,6 +1,7 @@
 'use strict';
 const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
+const configPrefix = require('./configPrefix.json');
 const client = new Client();
 
 client.on('ready', () => {
@@ -10,6 +11,12 @@ client.on('ready', () => {
 client.on('message', message => {
   if (message.content === 'ping') {
     message.channel.send('pong');
+  }
+
+  if (message.content.startsWith(`${prefix}ping`)) {
+  	message.channel.send('Pong.');
+  } else if (message.content.startsWith(`${prefix}beep`)) {
+    message.channel.send('Boop.');
   }
   // If the message is "how to embed"
   if (message.content === 'how to embed') {
@@ -22,7 +29,7 @@ client.on('message', message => {
       //This query is from mobitracker.co
       .setAuthor('Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png')
       // Set the title of the field
-      .setTitle('MobiTracker.co')
+      .setTitle('JamesDusky - Mobitracker.co')
       // URL to the client's Profile
       .setURL("https://mobitracker.co/JamesDusky")
       // Set the main content of the embed
