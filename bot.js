@@ -6,7 +6,7 @@ const client = new Client();
 const https = require('https')
 
 function affiliations(aff){
-  var display;
+  var display = "";
   if(aff.length > 0){
     for (var i = 0; i < aff.length; i++) {
       display = display+aff[i].rank+' in '+'['+aff[i].name+']'+'(https://robertsspaceindustries.com/orgs/'+aff[i].sid+')'+'\n';
@@ -46,7 +46,7 @@ client.on('message', message => {
           .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
           .setDescription("AKA "+user.data.profile.display)
           .addFields(
-            { name: 'Title', value: user.data.profile.title, inline: true},
+            { name: 'Title', value: user.data.profile.title = function(){if(this){}else{return "None"}}, inline: true},
             { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
             { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
             { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
