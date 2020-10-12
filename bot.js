@@ -55,7 +55,9 @@ client.on('message', message => {
       console.log('Looking up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
-        console.log(user.data.profile.title);
+        if(user.data.profile.badge == "undefined"){
+          user.data.profile.badge = "None";
+        }
         const cID = user.data.profile.id.substring(1);
         const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
         con.query(sql, function (err, result, fields) {
@@ -65,7 +67,7 @@ client.on('message', message => {
             .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
             .setDescription("AKA "+user.data.profile.display)
             .addFields(
-              { name: 'Title', value: user.data.profile.title, inline: true},
+              { name: 'Badge', value: user.data.profile.badge, inline: true},
               { name: 'Mobitracker Rating', value: result[0].rating+"/5 "+"("+result[0].count+")", inline: true},
               { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
               { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
