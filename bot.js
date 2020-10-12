@@ -69,7 +69,7 @@ client.on('message', message => {
             .setDescription("AKA "+user.data.profile.display)
             .addFields(
               { name: 'Title', value: user.data.profile.title, inline: true},
-              { name: 'Mobitracker Rating', value: result.rating+"/5 "+"("+result.count+")", inline: true},
+              { name: 'Mobitracker Rating', value: result[0].rating+"/5 "+"("+result[0].count+")", inline: true},
               { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
               { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
              )
