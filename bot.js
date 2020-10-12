@@ -42,7 +42,7 @@ client.on('message', message => {
       res.on('data', d => {
         const user = JSON.parse(d);
         if(!user.data.profile.title){
-          user.data.profile.title = "";
+          user.data.profile.title = "None";
         }
         const embed = new MessageEmbed()
           .setColor(0x39ced8)
