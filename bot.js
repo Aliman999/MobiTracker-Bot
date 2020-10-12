@@ -42,7 +42,7 @@ client.on('message', message => {
 
     const embed = new MessageEmbed()
       .setColor(0x39ced8)
-      .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+`${args}`)
+      .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+user.data.profile.handle)
       .setDescription('Test')
       .addFields(
         { name: 'Organization', value: '[Fleet of the Faithful Knights](https://robertsspaceindustries.com/orgs/FFK)', inline: true },
