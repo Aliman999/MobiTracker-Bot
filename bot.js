@@ -15,6 +15,7 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
+    console.log(args.length);
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username, ${message.author}!`);
   	}else if (args.length > 1) {
