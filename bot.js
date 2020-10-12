@@ -55,7 +55,7 @@ client.on('message', message => {
       res.on('data', d => {
         const user = JSON.parse(d);
         console.log(Object.size(user.data));
-        if(_.size(user.data)){
+        if(Object.size(user.data) > 0){
           const cID = user.data.profile.id.substring(1);
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
           con.query(sql, function (err, result, fields) {
