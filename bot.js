@@ -33,32 +33,29 @@ client.on('message', message => {
       path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
       method: 'GET'
     }
+    var user;
+    var embed = new MessageEmbed();
     const req = https.request(options, res => {
       console.log(`statusCode: ${res.statusCode}`)
+      res.on('data', d => {
+        user = JSON.parse(d);
+        console.log(user);
+        embed
+        .setColor(0x39ced8)
+        .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+        .setDescription("AKA "+user.data.profile.display)
+        .addFields(
+          { name: 'Title', value: user.data.profile.title, inline: true},
+          { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
+          { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
+          { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+         )
+         .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+      })
     })
     req.on('error', error => {
       console.error(error)
     })
-    var user;
-    var embed = new MessageEmbed();
-    req.on('data', d => {
-      user = JSON.parse(d);
-      console.log(user);
-      embed
-      .setColor(0x39ced8)
-      .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-      .setDescription("AKA "+user.data.profile.display)
-      .addFields(
-        { name: 'Title', value: user.data.profile.title, inline: true},
-        { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
-        { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
-        { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
-       )
-       .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
-    });
-
-
-
     while(!user){
       if(user){
         message.channel.send(embed);
