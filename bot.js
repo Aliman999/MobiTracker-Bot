@@ -3,6 +3,7 @@ const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
 const client = new Client();
+const https = require('https')
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -18,14 +19,27 @@ client.on('message', message => {
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username, ${message.author}!`);
   	}else if (args.length > 1) return;
-    const Http = new XMLHttpRequest();
-    const url='https://api.starcitizen-api.com/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`;
-    Http.open("GET", url);
-    Http.send();
-
-    Http.onreadystatechange = (e) => {
-      console.log(Http.responseText)
+    const options = {
+      hostname: 'https://api.starcitizen-api.com',
+      port: 443,
+      path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
+      method: 'GET'
     }
+
+    const req = https.request(options, res => {
+      console.log(`statusCode: ${res.statusCode}`)
+
+      res.on('data', d => {
+        process.stdout.write(d)
+      })
+    })
+
+    req.on('error', error => {
+      console.error(error)
+    })
+
+    req.end()
+
     const embed = new MessageEmbed()
       .setColor(0x39ced8)
       .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+`${args}`)
