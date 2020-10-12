@@ -37,20 +37,20 @@ client.on('message', message => {
     var embed = new MessageEmbed();
     const req = https.request(options, res => {
       console.log(`statusCode: ${res.statusCode}`)
+
       res.on('data', d => {
         user = JSON.parse(d);
         console.log(user);
-        embed
-        .setColor(0x39ced8)
-        .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-        .setDescription("AKA "+user.data.profile.display)
-        .addFields(
+        embed.setColor(0x39ced8)
+        embed.setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+        embed.setDescription("AKA "+user.data.profile.display)
+        embed.addFields(
           { name: 'Title', value: user.data.profile.title, inline: true},
           { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
           { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
           { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
          )
-         .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+        embed.setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
       })
     })
     req.on('error', error => {
