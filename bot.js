@@ -70,9 +70,9 @@ client.on('message', message => {
         if(Object.size(user.data) > 0){
           const cID = user.data.profile.id.substring(1);
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
-          console.log(sql);
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
+            console.log(result);
             if(result[0].rating == -1){
               result[0].rating = "Not Rated";
             }else{
