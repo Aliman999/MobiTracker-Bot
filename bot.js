@@ -27,7 +27,7 @@ client.on('message', message => {
       //This query is from mobitracker.co
       .setAuthor('Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png')
       // Set the title of the field
-      .setTitle('JamesDusky - Mobitracker.co')
+      .setTitle('JamesDusky - MobiTracker.co')
       // URL to the client's Profile
       .setURL("https://mobitracker.co/JamesDusky")
       // Set the main content of the embed
