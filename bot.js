@@ -17,8 +17,14 @@ client.on('message', message => {
   if (command === 'search'){
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username, ${message.author}!`);
-  	}else if (args.length > 1) {
-  		return message.channel.send(`Too many arguments!, ${message.author}!`);
+  	}else if (args.length > 1) return;
+    const Http = new XMLHttpRequest();
+    const url='https://api.starcitizen-api.com/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`;
+    Http.open("GET", url);
+    Http.send();
+
+    Http.onreadystatechange = (e) => {
+      console.log(Http.responseText)
     }
     const embed = new MessageEmbed()
       .setColor(0x39ced8)
