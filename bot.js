@@ -46,7 +46,7 @@ client.on('message', message => {
             { name: 'Title', value: user.data.profile.title, inline: true},
             { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
             { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
-            { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+            { name: 'Affiliated Organizations', value: ""}
     	     )
            .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png')
         message.channel.send(embed)
