@@ -5,9 +5,9 @@ const prefix = '!';
 const client = new Client();
 const https = require('https')
 const options = {
-  hostname: 'whatever.com',
+  hostname: 'api.starcitizen-api.com',
   port: 443,
-  path: '/todos',
+  path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/Bo-Fone',
   method: 'GET'
 }
 
