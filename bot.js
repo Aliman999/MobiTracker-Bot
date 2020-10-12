@@ -7,7 +7,7 @@ const https = require('https')
 
 function affiliations(aff){
   var display;
-  if(aff){
+  if(aff.length > 0){
     for (var i = 0; i < aff.length; i++) {
       display = display+aff.rank+' in '+'['+aff.name+']'+'(https://robertsspaceindustries.com/orgs/'+aff.sid+')'+'\n';
     }
@@ -41,7 +41,6 @@ client.on('message', message => {
       console.log(`statusCode: ${res.statusCode}`)
       res.on('data', d => {
         const user = JSON.parse(d);
-        console.log(user);
         const embed = new MessageEmbed()
           .setColor(0x39ced8)
           .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
