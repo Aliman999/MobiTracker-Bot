@@ -5,8 +5,6 @@ const prefix = '!';
 const client = new Client();
 const https = require('https');
 
-
-
 function affiliations(aff){
   var display;
   for (var i = 0; i < aff.length; i++) {
@@ -35,31 +33,34 @@ client.on('message', message => {
       path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
       method: 'GET'
     }
-    var user;
-    var embed = new MessageEmbed();
     const req = https.request(options, res => {
-      console.log(message)
       console.log(`statusCode: ${res.statusCode}`)
-
       res.on('data', d => {
-        user = JSON.parse(d);
+        const user = JSON.parse(d);
         console.log(user);
-        embed.setColor(0x39ced8)
-        embed.setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-        embed.setDescription("AKA "+user.data.profile.display)
-        embed.addFields(
-          { name: 'Title', value: user.data.profile.title, inline: true},
-          { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
-          { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
-          { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
-         )
-        embed.setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
-        message.channel.send(embed);
+
+        const embed = new MessageEmbed()
+          .setColor(0x39ced8)
+          .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+          .setDescription("AKA "+user.data.profile.display)
+          .addFields(
+            { name: 'Title', value: user.data.profile.title, inline: true},
+            { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
+            { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
+            { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+           )
+           .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
       })
     })
     req.on('error', error => {
       console.error(error)
     })
+    while(!user){
+      if(user){
+        message.channel.send(embed);
+        break;
+      }
+    }
   }
 
   if (message.content === `${prefix}server`) {
