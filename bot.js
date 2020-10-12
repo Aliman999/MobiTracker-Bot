@@ -62,6 +62,11 @@ client.on('message', message => {
       console.log('Looked up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
+        if(user.data.oranization.name){
+          user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name;
+        }else{
+          user.data.organization.name = "REDACTED";
+        }
         if(Object.size(user.data) > 0){
           const cID = user.data.profile.id.substring(1);
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
@@ -79,7 +84,7 @@ client.on('message', message => {
               .addFields(
                 { name: 'Badge', value: user.data.profile.badge, inline: true},
                 { name: 'Mobitracker Rating', value: result[0].rating, inline: true},
-                { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
+                { name: 'Main Organization', value: user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
