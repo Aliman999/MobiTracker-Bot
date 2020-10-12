@@ -5,6 +5,10 @@ const prefix = '!';
 const client = new Client();
 const https = require('https');
 
+process.on('uncaughtException', function(err) {
+  console.log(err);
+});
+
 function affiliations(aff){
   var display;
   for (var i = 0; i < aff.length; i++) {
