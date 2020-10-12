@@ -58,7 +58,7 @@ client.on('message', message => {
       path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
       method: 'GET'
     }
-    client.users.get(`${message.author}`).send("Hi");
+    message.channel.type === (`"dm"`) + message.author.sendMessage(`"Your other message"`) 
     const req = https.request(options, res => {
       console.log('Looked up '+`${args}`);
       res.on('data', d => {
