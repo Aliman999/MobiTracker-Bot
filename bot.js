@@ -59,7 +59,6 @@ client.on('message', message => {
           user.data.profile.title = "None";
         }
         const cID = user.data.profile.id.substring(1);
-        console.log(user.data.profile.id);
         const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
         con.query(sql, function (err, result, fields) {
           if (err) throw err;
