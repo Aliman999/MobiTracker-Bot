@@ -28,6 +28,7 @@ client.on('message', message => {
     const embed = new MessageEmbed()
       // Set the color of the embed
       .setColor(0x39ced8)
+      .setAuthor(`${args}`, 'https://mobitracker.co/src/avatars/avatar_default.jpg', 'https://discord.js.org')
       // Set the title of the field
       .setTitle(`${args}`)
       // URL to the client's Profile
