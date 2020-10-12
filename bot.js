@@ -75,7 +75,11 @@ client.on('message', message => {
             if(result.length == 0){
               const rating = "Not Rated";
             }else{
-              const rating = result[0].rating+"/5 "+"("+result[0].count+")";
+              if(result[0].rating == -1){
+                const rating = "Not Rated";
+              }else{
+                const rating = result[0].rating+"/5 "+"("+result[0].count+")";
+              }
             }
             const embed = new MessageEmbed()
               .setColor(0x39ced8)
