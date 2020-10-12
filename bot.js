@@ -30,7 +30,7 @@ client.on('message', message => {
       .setColor(0x39ced8)
       .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+`${args}`)
       // Set the main content of the embed
-      .setDescription('Six months of work came to fruition - Crane Expedition Atlas (CEA℠). \u200B Test')
+      .setDescription('Six months of work came to fruition - Crane Expedition Atlas (CEA℠). \n Test')
       .addFields(
         { name: 'Organization', value: 'Fleet of the Faithful Knights', inline: true },
     		{ name: 'Title', value: 'Civilian', inline: true},
