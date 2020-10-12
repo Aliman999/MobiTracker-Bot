@@ -8,7 +8,7 @@ const https = require('https')
 function affiliations(aff){
   var display;
   if(aff.length > 0){
-    console.log(aff.length);
+    console.log(aff);
     for (var i = 0; i < aff.length; i++) {
       display = display+aff.rank+' in '+'['+aff.name+']'+'(https://robertsspaceindustries.com/orgs/'+aff.sid+')'+'\n';
     }
