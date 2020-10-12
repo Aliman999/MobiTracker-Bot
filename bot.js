@@ -3,7 +3,8 @@ const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
 const client = new Client();
-const https = require('https')
+const https = require('https');
+var user;
 
 function affiliations(aff){
   var display;
