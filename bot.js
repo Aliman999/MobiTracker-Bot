@@ -40,8 +40,8 @@ client.on('message', message => {
       console.error(error)
     })
 
-    req.on('data', d => {
-      const user = JSON.parse(d);
+    const user = req.on('data', d => {
+      return JSON.parse(d);
     })
     const embed = new MessageEmbed()
       .setColor(0x39ced8)
