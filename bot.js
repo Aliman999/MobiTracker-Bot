@@ -55,7 +55,7 @@ client.on('message', message => {
       console.log('Looking up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
-        if(!user.data.profile.title){
+        if(user.data.profile.title == "undefined"){
           user.data.profile.title = "None";
         }
         const cID = user.data.profile.id.substring(1);
