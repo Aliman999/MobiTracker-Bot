@@ -51,7 +51,6 @@ client.on('message', message => {
       method: 'GET'
     }
     const req = https.request(options, res => {
-      console.log(`statusCode: ${res.statusCode}`)
       console.log('Looking up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
