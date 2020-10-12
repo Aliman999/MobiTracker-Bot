@@ -28,10 +28,8 @@ client.on('message', message => {
     const embed = new MessageEmbed()
       // Set the color of the embed
       .setColor(0x39ced8)
-      //This query is from mobitracker.co
-      .setAuthor(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png')
       // Set the title of the field
-      .setTitle(`${args}`+'')
+      .setTitle(`${args}`)
       // URL to the client's Profile
       .setURL("https://mobitracker.co/"+`${args}`)
       // Set the main content of the embed
@@ -41,7 +39,8 @@ client.on('message', message => {
     		{ name: '\u200B', value: '\u200B' },
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
-	     );
+	     )
+       .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
     // Send the embed to the same channel as the message
     message.channel.send(embed);
   }
