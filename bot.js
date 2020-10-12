@@ -68,7 +68,9 @@ client.on('message', message => {
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
             if(result[0].rating == -1){
-              result[0].rating = "Na";
+              result[0].rating = "Not Rated";
+            }else{
+              rating[0] = result[0].rating+"/5 "+"("+result[0].count+")"
             }
             const embed = new MessageEmbed()
               .setColor(0x39ced8)
@@ -76,7 +78,7 @@ client.on('message', message => {
               .setDescription("AKA "+user.data.profile.display)
               .addFields(
                 { name: 'Badge', value: user.data.profile.badge, inline: true},
-                { name: 'Mobitracker Rating', value: result[0].rating+"/5 "+"("+result[0].count+")", inline: true},
+                { name: 'Mobitracker Rating', value: result[0].rating, inline: true},
                 { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
