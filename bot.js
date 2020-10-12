@@ -4,26 +4,6 @@ const config  = require('./config');
 const prefix = '!';
 const client = new Client();
 const https = require('https')
-const options = {
-  hostname: 'api.starcitizen-api.com',
-  port: 443,
-  path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/Bo-Fone',
-  method: 'GET'
-}
-
-const req = https.request(options, res => {
-  console.log(`statusCode: ${res.statusCode}`)
-
-  res.on('data', d => {
-    process.stdout.write(d)
-  })
-})
-
-req.on('error', error => {
-  console.error(error)
-})
-
-req.end()
 
 function affiliations(aff){
   var display;
@@ -72,10 +52,12 @@ client.on('message', message => {
         message.channel.send(embed);
       })
     })
-    console.log(req);
+
     req.on('error', error => {
       console.error(error)
     })
+
+    req.end()
   }
 
   if (message.content === `${prefix}server`) {
