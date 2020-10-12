@@ -59,7 +59,7 @@ client.on('message', message => {
       method: 'GET'
     }
     const req = https.request(options, res => {
-      console.log('Looked up '+`${args}`);
+      console.log('Looked up '+`${args}`+' at '+Date.now());
       res.on('data', d => {
         const user = JSON.parse(d);
         if(Object.size(user.data.organization) > 0){
