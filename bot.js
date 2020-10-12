@@ -33,7 +33,7 @@ client.on('message', message => {
       path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
       method: 'GET'
     }
-    const user = "";
+    const user = {};
     const req = https.request(options, res => {
       console.log(`statusCode: ${res.statusCode}`)
 
