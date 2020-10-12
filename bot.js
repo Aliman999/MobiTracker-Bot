@@ -48,7 +48,7 @@ client.on('message', message => {
     })
 
     req.end()
-
+    console.log(user);
     const embed = new MessageEmbed()
       .setColor(0x39ced8)
       .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
