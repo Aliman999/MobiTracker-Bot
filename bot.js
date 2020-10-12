@@ -35,7 +35,7 @@ client.on('message', message => {
       // Set the main content of the embed
       .setDescription('Organization: Asteroid')
       .addFields(
-    		{ name: 'Title: Civilian', value: ' ' },
+    		{ name: 'Title:', value: 'Civilian' },
     		{ name: '\u200B', value: '\u200B' },
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
