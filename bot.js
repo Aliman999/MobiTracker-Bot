@@ -5,6 +5,10 @@ const prefix = '!';
 const client = new Client();
 const https = require('https')
 
+function organizations(orgs){
+  return
+}
+
 client.on('ready', () => {
   console.log('I am ready!');
 });
@@ -30,7 +34,9 @@ client.on('message', message => {
 
       res.on('data', d => {
         const user = JSON.parse(d)
-        console.log(user.data.profile.handle);
+        for (var i = 0; i < user.data.affiliation.length; i++) {
+          user.data.affiliation[i]
+        }
       })
     })
 
@@ -42,10 +48,15 @@ client.on('message', message => {
 
     const embed = new MessageEmbed()
       .setColor(0x39ced8)
-      .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+user.data.profile.handle)
-      .setDescription('Test')
+      .setAuthor(user.data.profile.handle, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+user.data.profile.handle)
+      .setDescription("AKA "+user.data.profile.display)
       .addFields(
-        { name: 'Organization', value: '[Fleet of the Faithful Knights](https://robertsspaceindustries.com/orgs/FFK)', inline: true },
+        () => {
+            if(user.data.organization.sid){
+              { name: 'Main Organization', value: '['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')', inline: true },
+            }
+          }
+
     		{ name: 'Title', value: 'Civilian', inline: true},
     		{ name: 'Rating', value: '5/5 (3)', inline: true }
 	     )
