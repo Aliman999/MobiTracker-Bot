@@ -15,7 +15,7 @@ client.on('message', message => {
   if (message.content === `${prefix}server`) {
 	   message.channel.send(`Server name: ${message.guild.name}\nTotal members: ${message.guild.memberCount}`);
   }
-  if (!message.content.startsWith(${prefix})) return;
+  if (!message.content.startsWith(`${prefix}`)) return;
   // If the message is "how to embed"
   if (message.content === 'how to embed') {
     // We can create embeds using the MessageEmbed constructor
