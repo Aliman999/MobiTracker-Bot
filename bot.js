@@ -17,12 +17,14 @@ client.on('message', message => {
     // Read more about all that you can do with the constructor
     // over at https://discord.js.org/#/docs/main/master/class/MessageEmbed
     const embed = new MessageEmbed()
-      // Set the title of the field
-      .setTitle('MobiTracker.co')
       // Set the color of the embed
       .setColor(0x39ced8)
+      //This query is from mobitracker.co
+      .setAuthor('Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png')
+      // Set the title of the field
+      .setTitle('MobiTracker.co')
       // URL to the client's Profile
-      .setURL("https://mobitracker.co/JamesDusky");
+      .setURL("https://mobitracker.co/JamesDusky")
       // Set the main content of the embed
       .setDescription('');
     // Send the embed to the same channel as the message
