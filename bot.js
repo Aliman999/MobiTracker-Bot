@@ -5,9 +5,7 @@ const prefix = '!';
 const client = new Client();
 const https = require('https');
 
-process.on('uncaughtException', function(err) {
-  console.log(err);
-});
+
 
 function affiliations(aff){
   var display;
@@ -55,17 +53,12 @@ client.on('message', message => {
           { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
          )
         embed.setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+        message.channel.send(embed);
       })
     })
     req.on('error', error => {
       console.error(error)
     })
-    while(!user){
-      if(user){
-        message.channel.send(embed);
-        break;
-      }
-    }
   }
 
   if (message.content === `${prefix}server`) {
