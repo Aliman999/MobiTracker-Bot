@@ -41,6 +41,9 @@ client.on('message', message => {
       console.log(`statusCode: ${res.statusCode}`)
       res.on('data', d => {
         const user = JSON.parse(d);
+        if(!user.data.profile.title){
+          user.data.profile.title = "";
+        }
         const embed = new MessageEmbed()
           .setColor(0x39ced8)
           .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
