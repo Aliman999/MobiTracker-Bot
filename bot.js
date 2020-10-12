@@ -67,6 +67,9 @@ client.on('message', message => {
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
+            if(result[0].rating == -1){
+              result[0].rating = "N/A";
+            }
             const embed = new MessageEmbed()
               .setColor(0x39ced8)
               .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
