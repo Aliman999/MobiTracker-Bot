@@ -62,7 +62,6 @@ client.on('message', message => {
       console.log('Looked up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
-        console.log(user.data.organization);
         if(Object.size(user.data.organization) > 0){
           user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
         }else{
