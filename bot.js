@@ -39,7 +39,7 @@ client.on('message', message => {
 
       res.on('data', d => {
         user = JSON.parse(d)
-        affiliations(user.data.affiliation);
+        affiliations(user.data.affiliation)
       })
     })
 
