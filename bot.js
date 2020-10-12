@@ -37,7 +37,7 @@ client.on('message', message => {
       console.log(`statusCode: ${res.statusCode}`)
 
       res.on('data', d => {
-        const user = JSON.parse(d)
+        user = JSON.parse(d)
         affiliations(user.data.affiliation);
       })
     })
