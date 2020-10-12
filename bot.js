@@ -29,13 +29,19 @@ client.on('message', message => {
       // Set the color of the embed
       .setColor(0x39ced8)
       //This query is from mobitracker.co
-      .setAuthor('Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png')
+      .setAuthor(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png')
       // Set the title of the field
-      .setTitle(`${args}`+' - MobiTracker.co')
+      .setTitle(`${args}`+'')
       // URL to the client's Profile
       .setURL("https://mobitracker.co/"+`${args}`)
       // Set the main content of the embed
-      .setDescription('');
+      .setDescription('')
+      .addFields(
+    		{ name: 'Regular field title', value: 'Some value here' },
+    		{ name: '\u200B', value: '\u200B' },
+    		{ name: 'Inline field title', value: 'Some value here', inline: true },
+    		{ name: 'Inline field title', value: 'Some value here', inline: true },
+	     );
     // Send the embed to the same channel as the message
     message.channel.send(embed);
   }
