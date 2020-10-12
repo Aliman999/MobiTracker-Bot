@@ -38,6 +38,7 @@ client.on('message', message => {
     var user;
     var embed = new MessageEmbed();
     const req = https.request(options, res => {
+      console.log(message)
       console.log(`statusCode: ${res.statusCode}`)
 
       res.on('data', d => {
@@ -52,7 +53,7 @@ client.on('message', message => {
           { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
           { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
          )
-        embed.setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+        embed.setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
         message.channel.send(embed);
       })
     })
