@@ -28,9 +28,21 @@ client.on('message', message => {
     const embed = new MessageEmbed()
       // Set the color of the embed
       .setColor(0x39ced8)
-      .setAuthor(`${args}`, 'https://mobitracker.co/src/avatars/avatar_default.jpg', "https://mobitracker.co/"+`${args}`)
+      .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+`${args}`)
       // Set the main content of the embed
-      .setDescription('Asteroid')
+      .setDescription('"Ideas are bulletproof." - V
+
+As a true believer of the above quote, I have set out on a mission to discover the vast landscapes of the Stanton solar system.
+
+Six months of work came to fruition - Crane Expedition Atlas (CEA℠).
+
+CEA℠ provides a comprehensive solution to Star Citizen's exploration gameplay.
+
+Link: https://cea.guide
+
+I issue survey contracts for individuals.
+
+Community Ratings: https://mobitracker.co/Bo-Fone')
       .addFields(
     		{ name: 'Title:', value: 'Civilian', inline: true},
     		{ name: 'Inline field title', value: 'Some value here', inline: true },
