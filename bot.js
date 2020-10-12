@@ -25,7 +25,7 @@ client.on('message', message => {
       .setAuthor(`${args}`, 'https://robertsspaceindustries.com/media/f36tw6e9v746jr/heap_infobox/Portrait-Dark.jpg', "https://mobitracker.co/"+`${args}`)
       .setDescription('Test')
       .addFields(
-        { name: 'Organization', value: 'Fleet of the Faithful Knights', inline: true },
+        { name: 'Organization', value: '[Fleet of the Faithful Knights](https://robertsspaceindustries.com/orgs/FFK)', inline: true },
     		{ name: 'Title', value: 'Civilian', inline: true},
     		{ name: 'Rating', value: '5/5 (3)', inline: true }
 	     )
