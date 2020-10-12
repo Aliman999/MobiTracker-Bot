@@ -51,7 +51,7 @@ client.on('message', message => {
       method: 'GET'
     }
     const req = https.request(options, res => {
-      console.log(`${message.author}`+'looked up '+`${args}`);
+      console.log(`${message.author}`+' looked up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
         if(user.data.profile.handle){
