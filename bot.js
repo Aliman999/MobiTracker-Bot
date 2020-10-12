@@ -39,7 +39,6 @@ client.on('message', message => {
 
       res.on('data', d => {
         user = JSON.parse(d)
-        console.log(user)
       })
     })
 
@@ -48,6 +47,8 @@ client.on('message', message => {
     })
 
     req.end()
+
+    console.log(user)
     /*
     const embed = new MessageEmbed()
       .setColor(0x39ced8)
