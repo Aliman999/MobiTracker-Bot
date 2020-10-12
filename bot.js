@@ -52,6 +52,7 @@ client.on('message', message => {
     }
     const req = https.request(options, res => {
       console.log(`statusCode: ${res.statusCode}`)
+      console.log('Looking up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
         if(!user.data.profile.title){
