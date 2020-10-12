@@ -37,19 +37,7 @@ client.on('message', message => {
       console.log(`statusCode: ${res.statusCode}`)
       res.on('data', d => {
         const user = JSON.parse(d)
-
-        const embed = new MessageEmbed()
-          .setColor(0x39ced8)
-          .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-          .setDescription("AKA "+user.data.profile.display)
-          .addFields(
-            { name: 'Title', value: user.data.profile.title, inline: true},
-            { name: 'Mobitracker Rating', value: "5/5 (3)", inline: true},
-            { name: 'Main Organization', value: user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')' },
-            { name: 'Affiliated Organizations', value: ""}
-    	     )
-           .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png')
-        message.channel.send(embed)
+        message.channel.send("hello")
       })
     })
     req.on('error', error => {
