@@ -57,8 +57,8 @@ client.on('message', message => {
         { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
        )
        .setFooter(`${args}`+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+       message.channel.send(embed);
     });
-    message.channel.send(embed);
   }
 
   if (message.content === `${prefix}server`) {
