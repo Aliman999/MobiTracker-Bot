@@ -20,7 +20,7 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username, ${message.author}!`);
   	}else if (args.length > 1) return;
     const options = {
-      hostname: 'https://api.starcitizen-api.com',
+      hostname: 'api.starcitizen-api.com',
       port: 443,
       path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
       method: 'GET'
