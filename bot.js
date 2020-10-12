@@ -87,7 +87,7 @@ client.on('message', message => {
               .setDescription("AKA "+user.data.profile.display)
               .addFields(
                 { name: 'Badge', value: user.data.profile.badge, inline: true},
-                { name: 'Mobitracker Rating', value: result[0].rating, inline: true},
+                { name: 'Mobitracker Rating', value: rating, inline: true},
                 { name: 'Main Organization', value: user.data.organization.name },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
