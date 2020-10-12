@@ -72,13 +72,14 @@ client.on('message', message => {
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
+            var rating = "";
             if(result.length == 0){
-              const rating = "Not Rated";
+              rating = "Not Rated";
             }else{
               if(result[0].rating == -1){
-                const rating = "Not Rated";
+                rating = "Not Rated";
               }else{
-                const rating = result[0].rating+"/5 "+"("+result[0].count+")";
+                rating = result[0].rating+"/5 "+"("+result[0].count+")";
               }
             }
             const embed = new MessageEmbed()
