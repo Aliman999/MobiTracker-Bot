@@ -68,8 +68,10 @@ client.on('message', message => {
         const user = JSON.parse(d);
         if(Object.size(user.data.organization) > 0){
           user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
-        }else{
+        }else if (user.data.organization.name == "") {
           user.data.organization.name = "REDACTED";
+        }else {
+          user.data.organization.name = "None";
         }
         if(Object.size(user.data) > 0){
           const cID = user.data.profile.id.substring(1);
