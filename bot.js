@@ -92,6 +92,7 @@ client.on('message', message => {
               .setColor(0x25a6dd)
               .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
               .setDescription("AKA "+user.data.profile.display)
+              .setThumbnail(user.data.profile.image)
               .addFields(
                 { name: 'Badge', value: user.data.profile.badge, inline: true},
                 { name: 'Mobitracker Rating', value: rating, inline: true},
