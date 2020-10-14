@@ -139,7 +139,7 @@ client.on('message', message => {
             token: token
           };
           const wsClient = new WebSocket('wss://mobitracker.co:8000');
-          wsClient.on('open' function(){
+          wsClient.on('open', function(){
             wsClient.send(msg);
           });
           wsClient.on('close', function clear(){
