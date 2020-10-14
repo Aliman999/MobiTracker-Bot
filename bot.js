@@ -85,8 +85,8 @@ client.on('message', message => {
 
   if (command === 'search'){
   	if (!args.length){
-  		return message.channel.send(`You didnt provide a username, ${message.author}!`);
-  	}else if (args.length > 1) return;
+  		return message.channel.send(`You didnt provide a username.`);
+  	}else if (args.length > 1) return message.channel.send(`Too many arguments.`);
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
@@ -154,11 +154,11 @@ client.on('message', message => {
     }else if(args.length>1){
       return message.channel.send('Too many arguments.');
     }else{
-      jwt.verify(`${args[0]}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
+      jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
         if(err){
           console.log(err);
         }else{
-
+          
         }
       });
     }
