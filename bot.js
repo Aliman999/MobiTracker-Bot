@@ -83,7 +83,7 @@ client.on('message', message => {
               rating = "Not Rated";
             }else{
               if(result[0].rating == -1){
-                rating = "Not Rated";
+                rating = "No Reviews. [Login](https://mobitracker.co/login) and be the first.";
               }else{
                 rating = result[0].rating+"/5 "+"("+result[0].count+")";
               }
