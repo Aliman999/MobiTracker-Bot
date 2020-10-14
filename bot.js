@@ -133,7 +133,7 @@ client.on('message', message => {
           console.log(err);
         }else{
           const authUser = message.author;
-          console.log(Date.now());
+          console.log(Math.floor(Date.now()));
           const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: { discordID:authUser.id, discordName:authUser.username, discordDiscrim:authUser.discriminator }}, config.Secret, { algorithm: 'HS256' });
           const msg = {
             type:"authDiscord",
