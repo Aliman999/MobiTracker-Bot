@@ -139,7 +139,6 @@ client.on('message', message => {
 
     req.end()
   }else if(command == 'auth'){
-    console.log(message);
     console.log(message.author);
   }
 
