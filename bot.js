@@ -101,15 +101,14 @@ client.on('message', message => {
       console.log('Looked up '+`${args}`);
       res.on('data', d => {
         const user = JSON.parse(d);
-        console.log(user);
-        if(Object.size(user.data.organization) > 1){
-          user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
-        }else if (user.data.organization.name == "") {
-          user.data.organization.name = "REDACTED";
-        }else {
-          user.data.organization.name = "None";
-        }
         if(Object.size(user.data) > 0){
+          if(Object.size(user.data.organization) > 1){
+            user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
+          }else if (user.data.organization.name == "") {
+            user.data.organization.name = "REDACTED";
+          }else {
+            user.data.organization.name = "None";
+          }
           const cID = user.data.profile.id.substring(1);
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
           con.query(sql, function (err, result, fields) {
