@@ -158,11 +158,11 @@ client.on('message', message => {
         if(err){
           console.log(err);
         }else{
-          const token = jwt.sign({  }, config.Secret, { algorithm: 'HS256' });
+          console.log(decoded);
+          const authUser = message.author.User;
+          const token = jwt.sign({ discordID:authUser.id, discordName:authUser.username, discordDiscrim:authUser.discriminator }, config.Secret, { algorithm: 'HS256' });
         }
       });
-      const authUser = message.author.User;
-      console.log(message.author);
     }
   }
 
