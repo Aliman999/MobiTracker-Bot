@@ -80,10 +80,10 @@ client.on('message', message => {
             if (err) throw err;
             var rating = "";
             if(result.length == 0){
-              rating = "Not Rated";
+              rating = "No Reviews. [Login](https://mobitracker.co/login) to leave them a review.";
             }else{
               if(result[0].rating == -1){
-                rating = "No Reviews. [Login](https://mobitracker.co/login) and be the first.";
+                rating = "No Reviews. [Login](https://mobitracker.co/login) to leave them a review.";
               }else{
                 rating = result[0].rating+"/5 "+"("+result[0].count+")";
               }
