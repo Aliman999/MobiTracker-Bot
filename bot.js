@@ -138,7 +138,7 @@ client.on('message', message => {
             message.channel.send(embed);
           });
         }else{
-          message.channel.send(`That user doesnt exist, ${message.author}!`);
+          message.channel.send(`That user doesnt exist.`);
         }
       })
     })
