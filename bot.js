@@ -140,7 +140,7 @@ client.on('message', message => {
           };
           const wsClient = new WebSocket('wss://mobitracker.co:8000');
           wsClient.on('open', function(){
-            wsClient.send(msg);
+            wsClient.send(JSON.stringify(msg));
           });
           wsClient.on('close', function clear(){
             clearTimeout(this.pingTimeout);
