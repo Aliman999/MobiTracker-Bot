@@ -67,10 +67,6 @@ client.on('message', message => {
       path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
       method: 'GET'
     }
-    //THIS IS FOR ALERTS
-    //message.channel.type = (`"dm"`);
-    //message.author.send('You have a new Review on your Profile! https://mobitracker.co/JamesDusky');
-    //THIS IS FOR ALERTS
     const req = https.request(options, res => {
       console.log('Looked up '+`${args}`);
       res.on('data', d => {
@@ -133,7 +129,7 @@ client.on('message', message => {
           console.log(err);
         }else{
           const authUser = message.author;
-          const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: { discordID:authUser.id, discordName:authUser.username, discordDiscrim:authUser.discriminator }}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+          const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
           const msg = {
             type:"authDiscord",
             token: token
@@ -141,10 +137,13 @@ client.on('message', message => {
           const wsClient = new WebSocket('wss://mobitracker.co:8000');
           wsClient.on('open', function(){
             wsClient.send(JSON.stringify(msg));
+            message.channel.type = (`"dm"`);
+            authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
           });
           wsClient.on('close', function clear(){
             clearTimeout(this.pingTimeout);
           });
+
         }
       });
     }
