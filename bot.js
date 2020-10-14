@@ -161,9 +161,9 @@ client.on('message', message => {
           console.log(decoded);
         }
       });
+      const authUser = message.author.User;
+      console.log(message.author);
     }
-    const authUser = message.author.User;
-    console.log(message.author);
   }
 
   if (message.content === `${prefix}server`) {
