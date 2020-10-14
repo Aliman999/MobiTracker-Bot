@@ -59,7 +59,7 @@ client.on('message', message => {
       method: 'GET'
     }
     message.channel.type = (`"dm"`);
-    message.author.send(`"You have a new Review on your Profile! https://mobitracker.co/JamesDusky"`);
+    message.author.send('You have a new Review on your Profile! https://mobitracker.co/JamesDusky');
     const req = https.request(options, res => {
       console.log('Looked up '+`${args}`);
       res.on('data', d => {
