@@ -139,7 +139,7 @@ client.on('message', message => {
 
     req.end()
   }else if(command == 'auth'){
-    const user = new Discord.User(client, data);
+    const user = new Client.User(client, data);
     console.log(user);
   }
 
