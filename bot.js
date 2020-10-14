@@ -5,8 +5,8 @@ const prefix = '!';
 const client = new Client();
 const https = require('https');
 const mysql = require('mysql');
-const WebSocket = require('ws');
-const wsClient = new WebSocket('wss://mobitracker.co/:8000');
+//const WebSocket = require('ws');
+//const wsClient = new WebSocket('wss://mobitracker.co/:8000');
 //var jwt = require('jsonwebtoken');
 //var token = jwt.sign({ foo:"bar" }, config.Secret, { algorithm: 'HS256' });
 
