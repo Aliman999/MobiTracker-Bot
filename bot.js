@@ -89,7 +89,7 @@ client.on('message', message => {
               }
             }
             const embed = new MessageEmbed()
-              .setColor(0x39ced8)
+              .setColor(0x25a6dd)
               .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
               .setDescription("AKA "+user.data.profile.display)
               .addFields(
@@ -98,7 +98,7 @@ client.on('message', message => {
                 { name: 'Main Organization', value: user.data.organization.name },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
-               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
+               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/beta/android-chrome-192x192.png');
             message.channel.send(embed);
           });
         }else{
