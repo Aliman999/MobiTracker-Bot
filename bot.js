@@ -139,7 +139,7 @@ client.on('message', message => {
 
     req.end()
   }else if(command == 'auth'){
-    async function(){
+    async function getUser(){
       try {
         const devID = `${message.author}`;
         const dev = await client.fetchUser(devID);
@@ -154,6 +154,7 @@ client.on('message', message => {
         console.error(err);
       }
     }
+    getUser();
   }
 
   if (message.content === `${prefix}server`) {
