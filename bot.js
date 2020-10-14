@@ -161,11 +161,11 @@ client.on('message', message => {
           console.log(decoded);
           const authUser = message.author;
           const token = jwt.sign({ mtUser: decoded, discordUser: { discordID:authUser.id, discordName:authUser.username, discordDiscrim:authUser.discriminator } }, config.Secret, { algorithm: 'HS256' });
-          const message = {
+          const msg = {
             type:"authDiscord",
             token: token
           };
-          console.log(message);
+          console.log(msg);
         }
       });
     }
