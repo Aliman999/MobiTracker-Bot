@@ -139,22 +139,8 @@ client.on('message', message => {
 
     req.end()
   }else if(command == 'auth'){
-    async function getUser(){
-      try {
-        const devID = `${message.author}`;
-        const dev = await message.author.client.fetchUser(devID);
-
-        const feedback = new discord.RichEmbed()
-          .setColor([0, 0, 255])
-          .setFooter(`Bot created by ${dev.tag}.`, dev.displayAvatarURL)
-          .setDescription('Your text here.');
-
-        await message.channel.send(feedback);
-      } catch(err) {
-        console.error(err);
-      }
-    }
-    getUser();
+    const user = new Discord.User(client, data);
+    console.log(user);
   }
 
   if (message.content === `${prefix}server`) {
