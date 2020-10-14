@@ -5,41 +5,15 @@ const prefix = '!';
 const client = new Client();
 const https = require('https');
 const mysql = require('mysql');
-//const WebSocket = require('ws');
-//const wsClient = new WebSocket('wss://mobitracker.co/:8000');
+const WebSocket = require('ws');
 var jwt = require('jsonwebtoken');
-//var token = jwt.sign({ foo:"bar" }, config.Secret, { algorithm: 'HS256' });
-//var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjaWQiOiIwMDAwMDAwMDEiLCJ1c2VybmFtZSI6Im10ZGlzY29yZGJvdCIsInB1YmxpY2tleSI6Im10LmNvIn0.XpeX7Izpo2PsfzwXlpD9hs2Y9GBGDXWE31IZ9a8aS-s';
 
-    //JWT Header
-    /*
-    $header = json_encode([
-        'typ' => 'JWT',
-        'alg' => 'HS256'
-    ]);
-
-    $payload = json_encode([
-        'cid' => '000000001',
-        'username' => 'mtdiscordbot',
-        'publickey' => 'mt.co'
-    ]);
-    */
-    //JWT Payload
-/*
 function heartbeat() {
   clearTimeout(this.pingTimeout);
   this.pingTimeout = setTimeout(() => {
     this.terminate();
   }, 30000 + 1000);
 }
-
-wsClient.on('open', heartbeat);
-wsClient.on('ping', heartbeat);
-wsClient.on('close', function clear(){
-  clearTimeout(this.pingTimeout);
-});
-*/
-
 
 var con = mysql.createConnection({
   host: config.MysqlHost,
@@ -158,14 +132,19 @@ client.on('message', message => {
         if(err){
           console.log(err);
         }else{
-          console.log(decoded);
           const authUser = message.author;
           const token = jwt.sign({ mtUser: decoded, discordUser: { discordID:authUser.id, discordName:authUser.username, discordDiscrim:authUser.discriminator } }, config.Secret, { algorithm: 'HS256' });
           const msg = {
             type:"authDiscord",
             token: token
           };
-          console.log(msg);
+          const wsClient = new WebSocket('wss://mobitracker.co/:8000');
+          wsClient.on('open', heartbeat);
+          wsClient.send(msg);
+          wsClient.on('ping', heartbeat);
+          wsClient.on('close', function clear(){
+            clearTimeout(this.pingTimeout);
+          });
         }
       });
     }
