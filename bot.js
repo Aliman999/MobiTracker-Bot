@@ -58,8 +58,10 @@ client.on('message', message => {
       path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
       method: 'GET'
     }
-    message.channel.type = (`"dm"`);
-    message.author.send('You have a new Review on your Profile! https://mobitracker.co/JamesDusky');
+    //THIS IS FOR ALERTS
+    //message.channel.type = (`"dm"`);
+    //message.author.send('You have a new Review on your Profile! https://mobitracker.co/JamesDusky');
+    //THIS IS FOR ALERTS
     const req = https.request(options, res => {
       console.log('Looked up '+`${args}`);
       res.on('data', d => {
