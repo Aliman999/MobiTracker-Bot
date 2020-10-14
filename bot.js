@@ -158,7 +158,7 @@ client.on('message', message => {
         if(err){
           console.log(err);
         }else{
-
+          console.log(decoded);
         }
       });
     }
