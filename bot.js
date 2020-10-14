@@ -133,7 +133,8 @@ client.on('message', message => {
           console.log(err);
         }else{
           const authUser = message.author;
-          const token = jwt.sign({ mtUser: decoded, discordUser: { discordID:authUser.id, discordName:authUser.username, discordDiscrim:authUser.discriminator } }, config.Secret, { algorithm: 'HS256' });
+          console.log(Date.now());
+          const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: { discordID:authUser.id, discordName:authUser.username, discordDiscrim:authUser.discriminator }}, config.Secret, { algorithm: 'HS256' });
           const msg = {
             type:"authDiscord",
             token: token
@@ -142,16 +143,10 @@ client.on('message', message => {
           wsClient.on('open', function(){
             wsClient.send(JSON.stringify(msg));
           });
-          wsClient.on('close', function clear(){
-            clearTimeout(this.pingTimeout);
-          });
+          wsClient.close();
         }
       });
     }
-  }
-
-  if (message.content === `${prefix}server`) {
-	   message.channel.send(`Server name: ${message.guild.name}\nTotal members: ${message.guild.memberCount}`);
   }
   if (!message.content.startsWith(`${prefix}`)) return;
   // If the message is "how to embed"
