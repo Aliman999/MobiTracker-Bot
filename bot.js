@@ -139,6 +139,7 @@ client.on('message', message => {
 
     req.end()
   }else if(command == 'auth'){
+    const authUser = message.author.User;
     console.log(message.author);
   }
 
