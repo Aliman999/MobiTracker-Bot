@@ -6,26 +6,29 @@ const client = new Client();
 const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
+const wsClient = new WebSocket('wss://mobitracker.co/:8000');
+//var jwt = require('jsonwebtoken');
+//var token = jwt.sign({ foo:"bar" }, config.Secret, { algorithm: 'HS256' });
 
+    //JWT Payload
+    //'cid' => $_SESSION['id'],
+    //'username' => $_SESSION['username'],
+    //'expiresIn' => '4h'
+/*
 function heartbeat() {
   clearTimeout(this.pingTimeout);
-
-  // Use `WebSocket#terminate()`, which immediately destroys the connection,
-  // instead of `WebSocket#close()`, which waits for the close timer.
-  // Delay should be equal to the interval at which your server
-  // sends out pings plus a conservative assumption of the latency.
   this.pingTimeout = setTimeout(() => {
     this.terminate();
   }, 30000 + 1000);
 }
+*/
 
-const wsClient = new WebSocket('wss://mobitracker.co/:8000');
+//wsClient.on('open', heartbeat);
+//wsClient.on('ping', heartbeat);
+//wsClient.on('close', function clear(){
+//  clearTimeout(this.pingTimeout);
+//});
 
-wsClient.on('open', heartbeat);
-wsClient.on('ping', heartbeat);
-wsClient.on('close', function clear() {
-  clearTimeout(this.pingTimeout);
-});
 
 
 var con = mysql.createConnection({
@@ -135,6 +138,22 @@ client.on('message', message => {
     })
 
     req.end()
+  }else if(command == 'auth'){
+    async function(){
+      try {
+        const devID = `${message.author}`;
+        const dev = await client.fetchUser(devID);
+
+        const feedback = new discord.RichEmbed()
+          .setColor([0, 0, 255])
+          .setFooter(`Bot created by ${dev.tag}.`, dev.displayAvatarURL)
+          .setDescription('Your text here.');
+
+        await message.channel.send(feedback);
+      } catch(err) {
+        console.error(err);
+      }
+    }
   }
 
   if (message.content === `${prefix}server`) {

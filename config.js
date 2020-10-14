@@ -5,6 +5,7 @@ const config = {
   MysqlUsername:process.env.MYSQL_USERNAME,
   MysqlPassword:process.env.MYSQL_PASSWORD,
   MysqlDatabase:process.env.MYSQL_DATABASE,
-  Key:process.env.KEY
+  Key:process.env.KEY,
+  Secret:process.env.SECRET
 };
 module.exports = config;
