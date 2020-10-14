@@ -142,7 +142,7 @@ client.on('message', message => {
     async function getUser(){
       try {
         const devID = `${message.author}`;
-        const dev = await message.author.client.fetchUser(devID);
+        const dev = await message.author.fetchUser(devID);
 
         const feedback = new discord.RichEmbed()
           .setColor([0, 0, 255])
