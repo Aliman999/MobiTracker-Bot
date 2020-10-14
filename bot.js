@@ -139,8 +139,8 @@ client.on('message', message => {
 
     req.end()
   }else if(command == 'auth'){
-    const user = new Client.User(client, data);
-    console.log(user);
+    console.log(message);
+    console.log(message.author);
   }
 
   if (message.content === `${prefix}server`) {
