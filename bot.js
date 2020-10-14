@@ -98,7 +98,7 @@ client.on('message', message => {
                 { name: 'Main Organization', value: user.data.organization.name },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
-               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/beta/android-chrome-192x192.png');
+               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-192x192.png');
             message.channel.send(embed);
           });
         }else{
