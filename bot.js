@@ -143,7 +143,9 @@ client.on('message', message => {
           wsClient.on('open', function(){
             wsClient.send(JSON.stringify(msg));
           });
-          wsClient.close();
+          wsClient.on('close', function clear(){
+            clearTimeout(this.pingTimeout);
+          });
         }
       });
     }
