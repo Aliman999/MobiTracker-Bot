@@ -19,11 +19,11 @@ function heartbeat() {
   }, 30000 + 1000);
 }
 
-const client = new WebSocket('wss://mobitracker.co/:8000');
+const wsClient = new WebSocket('wss://mobitracker.co/:8000');
 
-client.on('open', heartbeat);
-client.on('ping', heartbeat);
-client.on('close', function clear() {
+wsClient.on('open', heartbeat);
+wsClient.on('ping', heartbeat);
+wsClient.on('close', function clear() {
   clearTimeout(this.pingTimeout);
 });
 
