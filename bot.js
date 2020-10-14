@@ -139,8 +139,9 @@ client.on('message', message => {
             token: token
           };
           const wsClient = new WebSocket('wss://mobitracker.co/:8000');
-          wsClient.on('open', heartbeat);
-          wsClient.send(msg);
+          wsClient.on('open', heartbeat, function(){
+            wsClient.send(msg);
+          });
           wsClient.on('ping', heartbeat);
           wsClient.on('close', function clear(){
             clearTimeout(this.pingTimeout);
