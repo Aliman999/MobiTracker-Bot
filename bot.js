@@ -160,7 +160,7 @@ client.on('message', message => {
         }else{
           console.log(decoded);
           const authUser = message.author;
-          console.log(authUser.User);
+          console.log(authUser);
           const token = jwt.sign({ discordID:authUser.id, discordName:authUser.username, discordDiscrim:authUser.discriminator }, config.Secret, { algorithm: 'HS256' });
         }
       });
