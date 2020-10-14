@@ -158,7 +158,7 @@ client.on('message', message => {
         if(err){
           console.log(err);
         }else{
-          console.log(decoded);
+          const token = jwt.sign({  }, config.Secret, { algorithm: 'HS256' });
         }
       });
       const authUser = message.author.User;
