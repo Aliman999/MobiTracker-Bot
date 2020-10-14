@@ -22,7 +22,9 @@ function heartbeat() {
 const wsClient = new WebSocket('wss://mobitracker.co/:8000');
 
 wsClient.on('open', heartbeat);
-console.log(wsClient.on('error'));
+wsClient.on('error', err => {
+  console.log(err);
+})
 wsClient.on('ping', heartbeat);
 wsClient.on('close', function clear() {
   clearTimeout(this.pingTimeout);
