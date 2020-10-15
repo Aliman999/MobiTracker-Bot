@@ -42,7 +42,7 @@ function reconnect(){
       wsClient = new WebSocket('wss://mobitracker.co:8000');
       wsClient.on('error', function(err){
         reconnect();
-        console.log(err);
+        console.log("Trying to Connect to Event Server.");
       });
     }catch(e){
     }
