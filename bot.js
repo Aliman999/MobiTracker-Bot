@@ -32,7 +32,6 @@ function connectEvent(){
     });
 
     wsClient.on('error', function(err){
-      console.log('Failed to connect to Event Server.');
       reconnect();
     });
   }catch(e){
@@ -45,6 +44,7 @@ connectEvent();
 function reconnect(){
   setTimeout(() => {
     connectEvent();
+    console.log('Failed to connect to Event Server.');
   }, 10000);
 }
 
