@@ -32,7 +32,7 @@ wsClient.on('close', function clear(){
 });
 
 function reconnect(){
-  this.pingTimeout = setTimeout(() => {
+  setTimeout(() => {
     try{
       wsClient = new WebSocket('wss://mobitracker.co:8000');
     }catch(e){
