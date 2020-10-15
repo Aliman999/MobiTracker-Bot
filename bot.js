@@ -19,29 +19,29 @@ const msg = {
   type:"bot",
   token: botToken
 };
-try{
-  wsClient.on('open', function(){
-    wsClient.send(JSON.stringify(msg));
-  });
+wsClient.on('open', function(){
+  wsClient.send(JSON.stringify(msg));
+});
 
-  wsClient.on('message', function(response){
-    console.log(response);
-  });
+wsClient.on('message', function(response){
+  console.log(response);
+});
 
-  wsClient.on('close', function clear(){
-    reconnect();
-  });
+wsClient.on('close', function clear(){
+  reconnect();
+});
 
-  wsClient.on('error', function(err){
-    reconnect();
-    console.log(err);
-  });
-}catch(e){
-  console.log(e);
-}
+wsClient.on('error', function(err){
+  reconnect();
+  console.log(err);
+});
 
 function reconnect(){
-  wsClient = new WebSocket('wss://mobitracker.co:8000');
+  setTimeout(() => {
+    try{
+      wsClient = new WebSocket('wss://mobitracker.co:8000');
+    }
+  }, 10000);
 }
 
 function heartbeat(){
