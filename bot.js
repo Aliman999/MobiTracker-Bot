@@ -190,6 +190,7 @@ client.on('message', message => {
             type:"authDiscord",
             token: token
           };
+          /*
           const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -208,6 +209,7 @@ client.on('message', message => {
               message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
             }
           });
+          */
           wsClient.send(JSON.stringify(msg));
           wsClient.on('message', function(r){
             r = JSON.parse(r);
