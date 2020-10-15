@@ -238,6 +238,7 @@ const program = async () => {
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
       if(event.table == 'discordAlerts'){
+        console.log(event.affectedRows[0].after);
         const alert = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
