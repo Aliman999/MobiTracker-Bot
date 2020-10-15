@@ -209,7 +209,7 @@ client.on('message', message => {
             }
           });
           wsClient.send(JSON.stringify(msg));
-          wsClient.on('message' function(r){
+          wsClient.on('message', function(r){
             const r = JSON.parse(r);
             if(r == 'success'){
               message.author.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
