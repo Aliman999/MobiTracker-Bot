@@ -112,7 +112,7 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
 
   const dm = new DMChannel(client, message);
-  console.log(dm);
+  console.log("da "+dm+" dadw");
 
   if (command === 'search'){
   	if (!args.length){
