@@ -103,7 +103,7 @@ client.on('ready', () => {
   console.log('MobiTracker Bot is Ready');
 });
 
-async function reply(message, args){
+function reply(message, args){
   console.log(message);
   /*
     if(message.length == 0){
@@ -228,6 +228,7 @@ client.on('message', message => {
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
+  message = null;
 });
 
 client.login(config.Key);
