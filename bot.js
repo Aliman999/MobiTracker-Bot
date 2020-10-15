@@ -194,7 +194,7 @@ client.on('message', message => {
                 authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
               }else if(response.data == 'exists'){
                 message.channel.type = (`"dm"`);
-                authUser.send('Your account is already linked with another discord.');
+                authUser.send('Your account is already linked.');
               }else if(response.data == 'nonexists'){
                 message.channel.type = (`"dm"`);
                 authUser.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
