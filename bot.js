@@ -35,7 +35,6 @@ function connectEvent(){
       reconnect();
     });
   }catch(e){
-    console.log('Failed to connect to Event Server');
     reconnect();
   }
 }
@@ -43,9 +42,9 @@ function connectEvent(){
 connectEvent();
 
 function reconnect(){
-  console.log('Retrying connection to Event Server.');
   setTimeout(() => {
     connectEvent();
+    console.log('Retrying connection to Event Server.');
   }, 10000);
 }
 
