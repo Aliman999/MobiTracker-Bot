@@ -37,8 +37,7 @@ wsClient.on('error', function(err){
 });
 
 function reconnect(){
-  wsClient = new ReconnectingWebSocket('ws://....');
-  wsClient.reconnectInterval = 10000;
+  wsClient = new WebSocket('wss://mobitracker.co:8000');
 }
 
 function heartbeat(){
