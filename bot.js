@@ -27,7 +27,7 @@ function connectEvent(){
       console.log(response);
     });
 
-    wsClient.on('close', function clear(){
+    wsClient.on('error', function(err){
       reconnect();
     });
   }catch(e){
