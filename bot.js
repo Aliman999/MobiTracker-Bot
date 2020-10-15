@@ -24,10 +24,6 @@ function connectEvent(){
       wsClient.send(JSON.stringify(msg));
     });
 
-    wsClient.on('message', function(response){
-      console.log(response);
-    });
-
     wsClient.on('close', function(){
       clearTimeout(this.pingTimeout);
     })
@@ -188,8 +184,9 @@ client.on('message', message => {
               token: token
             };
             wsClient.send(JSON.stringify(msg));
-            async function reply(r){
-              const response = JSON.parse(r);
+            wsClient.on('message', function(response){
+              response = JSON.parse(response);
+              console.log(response);
               if(response.data == 'success'){
                 message.channel.type = (`"dm"`);
                 authUser.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
@@ -200,9 +197,6 @@ client.on('message', message => {
                 message.channel.type = (`"dm"`);
                 authUser.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
-            }
-            wsClient.on('message', function(r){
-              reply(r);
             });
           }else{
             authUser.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
