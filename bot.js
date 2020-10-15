@@ -191,7 +191,7 @@ client.on('message', message => {
               response = JSON.parse(response);
               if(response.data == 'success'){
                 message.channel.type = (`"dm"`);
-                authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                authUser.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
               }else if(response.data == 'exists'){
                 message.channel.type = (`"dm"`);
                 authUser.send('Your account is already linked.');
