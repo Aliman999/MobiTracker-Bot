@@ -26,7 +26,7 @@ function connectEvent(){
 
     wsClient.on('message', function(response){
       response = JSON.parse(response);
-      console.log(response.event);
+      console.log(response);
     });
 
     wsClient.on('close', function(){
