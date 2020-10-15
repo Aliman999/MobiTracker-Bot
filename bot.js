@@ -7,6 +7,7 @@ const client = new Client();
 const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
+var wsClient;
 var jwt = require('jsonwebtoken');
 
 const botToken = jwt.sign({ username:'mtcobot', cid: '0000001' }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
@@ -17,7 +18,7 @@ const msg = {
 
 function connectEvent(){
   try{
-    var wsClient = new WebSocket('wss://mobitracker.co:8000');
+    wsClient = new WebSocket('wss://mobitracker.co:8000');
 
     wsClient.on('open', function(){
       wsClient.send(JSON.stringify(msg));
