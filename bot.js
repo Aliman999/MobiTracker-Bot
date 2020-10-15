@@ -181,7 +181,7 @@ client.on('message', message => {
           console.log(err);
         }else{
           if(decoded.cid != "" && decoded.username != ""){
-            var authUser = message.author;
+            var authUser = message.author.channel;
             delete authUser.lastMessageChannelID;
             const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
             const msg = {
