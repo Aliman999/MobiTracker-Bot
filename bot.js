@@ -31,7 +31,11 @@ wsClient.on('close', function clear(){
 
 function reconnect(){
   console.log('Lost connection to Event Server... Retrying.');
-  wsClient = new WebSocket('wss://mobitracker.co:8000');
+  try{
+    wsClient = new WebSocket('wss://mobitracker.co:8000');
+  }catch(e){
+    console.log(e);
+  }
 }
 
 function heartbeat(){
