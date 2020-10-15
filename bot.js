@@ -104,10 +104,6 @@ client.on('ready', () => {
   console.log('MobiTracker Bot is Ready');
 });
 
-async function reset(){
-  client = new Discord.Client();
-}
-
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -169,7 +165,6 @@ client.on('message', message => {
         }else{
           message.channel.send(`That user doesnt exist.`);
         }
-        reset();
       })
     })
 
@@ -211,7 +206,6 @@ client.on('message', message => {
             message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
           }
         }
-        reset();
       });
     }
   }else if(command == 'alerts'){
