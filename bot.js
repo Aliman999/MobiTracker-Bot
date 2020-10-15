@@ -24,11 +24,12 @@ function connectEvent(){
     wsClient.on('open', function(){
       wsClient.send(JSON.stringify(msg));
     });
-
+    /*
     wsClient.on('message', function(response){
       response = JSON.parse(response);
       console.log(response.event);
     });
+    */
 
     wsClient.on('close', function(){
       clearTimeout(this.pingTimeout);
@@ -220,6 +221,3 @@ client.on('message', message => {
 });
 
 client.login(config.Key);
-/*
-
-*/
