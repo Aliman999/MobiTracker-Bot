@@ -202,7 +202,7 @@ client.on('message', message => {
               .setDescription("AKA jamesdusky")
               .setThumbnail('https://mobitracker.co/src/starcitizen.png')
               .addFields(
-                { name: 'Badge', value: '1' inline: true},
+                { name: 'Badge', value: '1', inline: true},
                 { name: 'Mobitracker Rating', value: '2', inline: true},
                 { name: 'Main Organization', value: '3' },
                 { name: 'Affiliated Organizations', value: '4'}
