@@ -201,7 +201,9 @@ client.on('message', message => {
                 authUser.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
             }
-            wsClient.on('message', reply(r));
+            wsClient.on('message', function(r){
+              reply(r);
+            });
           }else{
             authUser.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
           }
