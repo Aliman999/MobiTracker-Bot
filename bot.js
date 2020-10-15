@@ -1,12 +1,12 @@
 'use strict';
-const Discord = require('discord.js');
+const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
 const fs = require('fs');
 const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
-var client = new Discord.Client();
+const client = new Client();
 var wsClient;
 var jwt = require('jsonwebtoken');
 var discordClients = [];
@@ -185,3 +185,45 @@ client.on('message', message => {
 });
 
 client.login(config.Key);
+/*
+else if(command == 'auth'){
+  if(!args.length){
+    return message.channel.send('Sign in at https://mobitracker.co/login and click the button that says "Authenticate with Discord". \nThen and copy the text provided and paste it here.');
+  }else if(args.length>1){
+    return message.channel.send('Too many arguments.');
+  }else{
+    jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
+      if(err){
+        console.log(err);
+      }else{
+        if(decoded.cid != "" && decoded.username != ""){
+          const authUser = message.channel;
+          delete authUser.lastMessageChannelID;
+          const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+          const msg = {
+            type:"authDiscord",
+            token: token
+          };
+          wsClient.send(JSON.stringify(msg));
+          wsClient.on('message', function(response){
+            response = JSON.parse(response);
+            if(response.data == 'success'){
+              message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+            }else if(response.data == 'exists'){
+              message.channel.send('Your account is already linked.');
+            }else if(response.data == 'nonexists'){
+              message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
+            }
+            response = "";
+          });
+        }else{
+          message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
+        }
+      }
+      reset();
+    });
+  }
+}else if(command == 'alerts'){
+
+}
+*/
