@@ -240,7 +240,7 @@ const program = async () => {
       if(event.table == 'discordAlerts'){
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        console.log(id);
+        console.log(id.id);
         client.users.get(id.id).send("You got an alert!!!");
       }
     },
