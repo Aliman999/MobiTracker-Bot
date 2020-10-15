@@ -181,7 +181,7 @@ client.on('message', message => {
           console.log(err);
         }else{
           if(decoded.cid != "" && decoded.username != ""){
-            var authUser = message.author.channel;
+            var authUser = message.author;
             delete authUser.lastMessageChannelID;
             const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
             const msg = {
@@ -192,16 +192,16 @@ client.on('message', message => {
             wsClient.on('message', function(response){
               response = JSON.parse(response);
               if(response.data == 'success'){
-                authUser.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                authUser.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
               }else if(response.data == 'exists'){
-                authUser.send('Your account is already linked.');
+                authUser.channel.send('Your account is already linked.');
               }else if(response.data == 'nonexists'){
-                authUser.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
+                authUser.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
               response = "";
             });
           }else{
-            authUser.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
+            authUser.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
           }
         }
       });
