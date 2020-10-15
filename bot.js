@@ -103,10 +103,13 @@ client.on('ready', () => {
   console.log('MobiTracker Bot is Ready');
 });
 
-
+async function reply(message, args) => {
+    message.author.send("Hello, I'm a DM that handles if users don't have permission!").catch(e => {
+        message.channel.send("There was an internal error attempting to send you a message.\n"+`${message.author}`;
+    }
+}
 
 client.on('message', message => {
-  console.log(message.author);
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -196,6 +199,7 @@ client.on('message', message => {
             wsClient.on('message', function(response){
               response = JSON.parse(response);
               if(response.data == 'success'){
+                reply();
                 message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
               }else if(response.data == 'exists'){
                 message.channel.send('Your account is already linked.');
