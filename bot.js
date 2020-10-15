@@ -41,7 +41,7 @@ function reconnect(){
 function heartbeat(){
   clearTimeout(this.pingTimeout);
   this.pingTimeout = setTimeout(() => {
-    this.terminate();
+    reconnect();
   }, 30000 + 1000);
 }
 
