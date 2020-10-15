@@ -25,7 +25,6 @@ function connectEvent(){
     });
 
     wsClient.on('message', function(response){
-      console.log(response.event);
       console.log(response);
     });
 
