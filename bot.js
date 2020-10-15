@@ -19,22 +19,26 @@ const msg = {
   type:"bot",
   token: botToken
 };
-wsClient.on('open', function(){
-  wsClient.send(JSON.stringify(msg));
-});
+try{
+  wsClient.on('open', function(){
+    wsClient.send(JSON.stringify(msg));
+  });
 
-wsClient.on('message', function(response){
-  console.log(response);
-});
+  wsClient.on('message', function(response){
+    console.log(response);
+  });
 
-wsClient.on('close', function clear(){
-  reconnect();
-});
+  wsClient.on('close', function clear(){
+    reconnect();
+  });
 
-wsClient.on('error', function(err){
-  reconnect();
-  console.log(err);
-});
+  wsClient.on('error', function(err){
+    reconnect();
+    console.log(err);
+  });
+}catch(e){
+  console.log(e);
+}
 
 function reconnect(){
   wsClient = new WebSocket('wss://mobitracker.co:8000');
