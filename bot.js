@@ -1,9 +1,9 @@
 'use strict';
-const { Client, MessageEmbed} = require('discord.js');
+const Discord = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
 const fs = require('fs');
-const client = new Client();
+const client = new Discord.Client();
 const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
@@ -196,16 +196,16 @@ client.on('message', message => {
             wsClient.on('message', function(response){
               response = JSON.parse(response);
               if(response.data == 'success'){
-                message.reply('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
               }else if(response.data == 'exists'){
-                message.reply('Your account is already linked.');
+                message.channel.send('Your account is already linked.');
               }else if(response.data == 'nonexists'){
-                message.reply('You must sign up at https://mobitracker.co/register To get discord alerts.');
+                message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
               response = "";
             });
           }else{
-            message.reply('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
+            message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
           }
         }
       });
