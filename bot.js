@@ -105,7 +105,7 @@ client.on('ready', () => {
 
 async function reply(message, args){
   console.log(message);
-    message.author.send(args).catch(e => {
+    message[message.length].author.send(args).catch(e => {
         message.channel.send("It seems you dont have DM's enabled. We wont beable to contact you with DM's disabled. \n"+`${message.author}`);
     });
 }
