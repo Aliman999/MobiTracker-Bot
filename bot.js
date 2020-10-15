@@ -103,6 +103,10 @@ client.on('ready', () => {
   console.log('MobiTracker Bot is Ready');
 });
 
+
+const dm = Discord.DMChannel(clientdata);
+console.log(dm);
+
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -182,8 +186,6 @@ client.on('message', message => {
         }else{
           if(decoded.cid != "" && decoded.username != ""){
             const authUser = message.author;
-            const dm = Discord.DMChannel(clientdata);
-            console.log(dm);
             delete authUser.lastMessageChannelID;
             const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
             const msg = {
