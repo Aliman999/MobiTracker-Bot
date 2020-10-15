@@ -8,7 +8,7 @@ const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
 var jwt = require('jsonwebtoken');
-const wsClient = new WebSocket('wss://mobitracker.co:8000');
+var wsClient = new WebSocket('wss://mobitracker.co:8000');
 const botToken = jwt.sign({ username:'mtcobot', cid: '0000001' }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
   type:"bot",
@@ -21,7 +21,10 @@ wsClient.on('message', function(response){
   console.log(response);
 });
 wsClient.on('close', function clear(){
-  clearTimeout(this.pingTimeout);
+  console.log('Lost connection to Event Server... Retrying.');
+  setTimeout(() => {
+    wsClient = new WebSocket('wss://mobitracker.co:8000');
+  }, 30000 + 1000);
 });
 function heartbeat(){
   clearTimeout(this.pingTimeout);
