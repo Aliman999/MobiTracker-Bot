@@ -9,6 +9,7 @@ const mysql = require('mysql');
 const WebSocket = require('ws');
 var wsClient;
 var jwt = require('jsonwebtoken');
+var discordClients = [];
 
 const botToken = jwt.sign({ username:'mtcobot', cid: '0000001' }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
@@ -124,6 +125,7 @@ client.on('message', message => {
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
+  discordClients.push({ author:message.author });
 
   if (command === 'search'){
   	if (!args.length){
@@ -216,7 +218,6 @@ client.on('message', message => {
                 reply(message, 'You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
               response = "";
-              message = null;
             });
           }else{
             message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
