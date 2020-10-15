@@ -1,5 +1,5 @@
 'use strict';
-const { Client, MessageEmbed } = require('discord.js');
+const { Client, MessageEmbed, DMChannel } = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
 const fs = require('fs');
@@ -181,8 +181,9 @@ client.on('message', message => {
           console.log(err);
         }else{
           if(decoded.cid != "" && decoded.username != ""){
-            var authUser = message.author;
-            console.log("dawd "+message+" awadadw");
+            const authUser = message.author;
+            const dm = Discord.DMChannel(clientdata);
+            console.log(dm);
             delete authUser.lastMessageChannelID;
             const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
             const msg = {
