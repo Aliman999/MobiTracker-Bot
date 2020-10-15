@@ -171,7 +171,7 @@ client.on('message', message => {
     req.end()
   }else if(command == 'auth'){
     if(!args.length){
-      return message.channel.send('Sign in at https://mobitracker.co/login and click the button that says "Auth". \nThen and copy the text provided and paste it here.');
+      return message.channel.send('Sign in at https://mobitracker.co/login and click the button that says "Authenticate with Discord". \nThen and copy the text provided and paste it here.');
     }else if(args.length>1){
       return message.channel.send('Too many arguments.');
     }else{
