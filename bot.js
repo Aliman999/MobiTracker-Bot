@@ -213,11 +213,11 @@ client.on('message', message => {
           wsClient.send(JSON.stringify(msg));
           wsClient.on('message', function(r){
             r = JSON.parse(r);
-            if(r == 'success'){
+            if(r.data == 'success'){
               message.author.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
-            }else if(r == 'exists'){
+            }else if(r.data == 'exists'){
               message.author.send('Your account is already linked.');
-            }else if(r == 'nonexistant'){
+            }else if(r.data == 'nonexistant'){
               message.author.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
             }
           });
