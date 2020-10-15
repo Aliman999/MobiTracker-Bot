@@ -241,7 +241,7 @@ const program = async () => {
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
         console.log(id.id);
-        client.users.get(id.id).send("You got an alert!!!");
+        client.users.cache.get(id.id).send("You got an alert!!!");
       }
     },
   });
