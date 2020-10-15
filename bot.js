@@ -174,7 +174,8 @@ client.on('message', message => {
 
     req.end()
 
-  }else if(command == 'auth'){
+  }
+  if(command == 'auth'){
     if(!args.length){
       return message.channel.send('Sign in at https://mobitracker.co/login and click the button that says "Authenticate with Discord". \nThen and copy the text provided and paste it here.');
     }else if(args.length>1){
@@ -195,11 +196,14 @@ client.on('message', message => {
           wsClient.on('message', function(response){
             response = JSON.parse(response);
             if(response.data == 'success'){
-              message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+              const reply = 'Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.';
+              message.channel.send(reply);
             }else if(response.data == 'exists'){
-              message.channel.send('Your account is already linked.');
+              const reply = 'Your account is already linked.';
+              message.channel.send(reply);
             }else if(response.data == 'nonexists'){
-              message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
+              const reply = 'You must sign up at https://mobitracker.co/register To get discord alerts.';
+              message.channel.send(reply);
             }
           });
         }else{
@@ -207,7 +211,8 @@ client.on('message', message => {
         }
       }
     });
-  }else if(command == 'alerts'){
+  }
+  if(command == 'alerts'){
 
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
