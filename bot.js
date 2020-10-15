@@ -7,8 +7,19 @@ const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
 var jwt = require('jsonwebtoken');
-
-function heartbeat() {
+const wsClient = new WebSocket('wss://mobitracker.co:8000');
+const botToken = jwt.sign({ username:'mtcobot', cid: }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+const msg = {
+  type:"bot",
+  token: token
+};
+wsClient.on('open', function(){
+  wsClient.send(JSON.stringify(msg));
+});
+wsClient.on('close', function clear(){
+  clearTimeout(this.pingTimeout);
+});
+function heartbeat(){
   clearTimeout(this.pingTimeout);
   this.pingTimeout = setTimeout(() => {
     this.terminate();
@@ -134,16 +145,9 @@ client.on('message', message => {
             type:"authDiscord",
             token: token
           };
-          const wsClient = new WebSocket('wss://mobitracker.co:8000');
-          wsClient.on('open', function(){
-            wsClient.send(JSON.stringify(msg));
-            message.channel.type = (`"dm"`);
-            authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
-          });
-          wsClient.on('close', function clear(){
-            clearTimeout(this.pingTimeout);
-          });
-
+          wsClient.send(JSON.stringify(msg));
+          message.channel.type = (`"dm"`);
+          authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
         }
       });
     }
