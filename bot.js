@@ -16,6 +16,9 @@ const msg = {
 wsClient.on('open', function(){
   wsClient.send(JSON.stringify(msg));
 });
+wsClient.on('message', function(response){
+  console.log(response.data);
+});
 wsClient.on('close', function clear(){
   clearTimeout(this.pingTimeout);
 });
