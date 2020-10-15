@@ -146,8 +146,11 @@ client.on('message', message => {
             token: token
           };
           wsClient.send(JSON.stringify(msg));
-          message.channel.type = (`"dm"`);
-          authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
+          wsClient.on('message', response => {
+            console.log(response);
+            message.channel.type = (`"dm"`);
+            authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
+          });
         }
       });
     }
