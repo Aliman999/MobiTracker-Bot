@@ -190,7 +190,7 @@ client.on('message', message => {
             };
             wsClient.send(JSON.stringify(msg));
             wsClient.on('message', function(response){
-              response = JSON.parse(response.data);
+              response = JSON.parse(response);
               console.log(response);
               if(response.data == 'success'){
                 message.channel.type = (`"dm"`);
