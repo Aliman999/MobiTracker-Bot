@@ -191,7 +191,7 @@ client.on('message', message => {
             wsClient.send(JSON.stringify(msg));
             wsClient.on('message', function(response){
               response = JSON.parse(response);
-              console.log(response);
+              console.log(response.event);
               if(response.data == 'success'){
                 message.channel.type = (`"dm"`);
                 authUser.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
