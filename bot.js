@@ -14,18 +14,26 @@ const msg = {
   type:"bot",
   token: botToken
 };
+
 wsClient.on('open', function(){
   wsClient.send(JSON.stringify(msg));
 });
+
 wsClient.on('message', function(response){
   console.log(response);
 });
+
 wsClient.on('close', function clear(){
   console.log('Lost connection to Event Server... Retrying.');
   setTimeout(() => {
-    wsClient = new WebSocket('wss://mobitracker.co:8000');
-  }, 30000 + 1000);
+    reconnect();
+  }, 10000);
 });
+
+function reconnect(){
+  wsClient = new WebSocket('wss://mobitracker.co:8000');
+}
+
 function heartbeat(){
   clearTimeout(this.pingTimeout);
   this.pingTimeout = setTimeout(() => {
