@@ -240,7 +240,8 @@ const program = async () => {
       console.log(event.affectedRows.after);
       if(event.table == 'discordAlerts'){
         const user = event.affectedRows[0].after.discordUser;
-        console.log(user);
+        const id = JSON.parse(user);
+        console.log(id);
         client.users.get()
       }
     },
