@@ -238,9 +238,12 @@ const program = async () => {
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
       if(event.table == 'discordAlerts'){
+        const alert = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        console.log(id.id);
+        if(){
+
+        }
         client.users.cache.get(id.id).send("You got an alert!!!");
       }
     },
