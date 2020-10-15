@@ -32,7 +32,7 @@ function heartbeat(){
 
 var trueLog = console.log;
 console.log = function(msg) {
-    fs.appendFile("/home/ubuntu/bot/bot.log", msg, function(err) {
+    fs.appendFile('/home/ubuntu/bot/bot.log', msg+'\n', function(err) {
         if(err) {
             return trueLog(err);
         }
