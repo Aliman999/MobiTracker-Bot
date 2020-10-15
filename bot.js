@@ -146,7 +146,7 @@ client.on('message', message => {
             token: token
           };
           wsClient.send(JSON.stringify(msg));
-          wsClient.on('message', response => {
+          wsClient.on('message', function(response){
             console.log(response);
             message.channel.type = (`"dm"`);
             authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
