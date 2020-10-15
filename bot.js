@@ -207,11 +207,10 @@ client.on('message', message => {
       });
     }
   }else if(command == 'alerts'){
-
+    
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
-  // If the message is "how to embed"
 });
 
 client.login(config.Key);
