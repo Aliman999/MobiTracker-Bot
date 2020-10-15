@@ -201,6 +201,7 @@ client.on('message', message => {
                 message.channel.type = (`"dm"`);
                 authUser.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
+              response = "";
             });
           }else{
             authUser.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
