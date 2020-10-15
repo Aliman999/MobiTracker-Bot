@@ -24,13 +24,13 @@ wsClient.on('message', function(response){
 });
 
 wsClient.on('close', function clear(){
-  console.log('Lost connection to Event Server... Retrying.');
   setTimeout(() => {
     reconnect();
   }, 10000);
 });
 
 function reconnect(){
+  console.log('Lost connection to Event Server... Retrying.');
   wsClient = new WebSocket('wss://mobitracker.co:8000');
 }
 
