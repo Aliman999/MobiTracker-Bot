@@ -104,7 +104,7 @@ client.on('ready', () => {
 });
 
 
-const dm = new DMChannel(clientdata);
+const dm = new DMChannel(client, data);
 console.log(dm);
 
 client.on('message', message => {
