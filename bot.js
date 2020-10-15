@@ -52,7 +52,7 @@ function heartbeat(){
   clearTimeout(this.pingTimeout);
   this.pingTimeout = setTimeout(() => {
     reconnect();
-  }, 30000 + 1000);
+  }, 10000);//30000 + 1000
 }
 
 var trueLog = console.log;
