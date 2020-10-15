@@ -25,6 +25,10 @@ function connectEvent(){
       wsClient.send(JSON.stringify(msg));
     });
 
+    wsClient.on('message', function(response){
+      console.log(response);
+    });
+
     wsClient.on('close', function(){
       clearTimeout(this.pingTimeout);
     })
@@ -188,33 +192,23 @@ client.on('message', message => {
             token: token
           };
           wsClient.send(JSON.stringify(msg));
-          wsClient.on('message', function(response){
-            response = JSON.parse(response);
-            const embed = new MessageEmbed()
-              .setColor(0x25a6dd)
-              .setAuthor('test', 'https://mobitracker.co/src/starcitizen.png', "https://mobitracker.co/jamesdusky")
-              .setDescription("AKA jamesdusky")
-              .setThumbnail('https://mobitracker.co/src/starcitizen.png')
-              .addFields(
-                { name: 'Badge', value: '1', inline: true},
-                { name: 'Mobitracker Rating', value: '2', inline: true},
-                { name: 'Main Organization', value: '3' },
-                { name: 'Affiliated Organizations', value: '4'}
-               )
-               .setFooter('JamesDusky - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-            message.channel.send(embed);
-            /*
-            if(response.data == 'success'){
-              const reply = 'Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.';
-              message.channel.send(reply);
-            }else if(response.data == 'exists'){
-              const reply = 'Your account is already linked.';
-              message.channel.send(reply);
-            }else if(response.data == 'nonexists'){
-              const reply = 'You must sign up at https://mobitracker.co/register To get discord alerts.';
-              message.channel.send(reply);
+          const sql = "SELECT username FROM players WHERE username = '"+mtUser.username.toString()+"' AND cID = "+mtUser.cid;
+          con.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            if(result.length > 0){
+              const sql = "SELECT username FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+              con.query(sql, function (err, result, fields) {
+                if (err) throw err;
+                if(result.length > 0){
+                  message.channel.send('Your account is already linked.');
+                }else{
+                  message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+
+                }
+              });
+            }else{
+              message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
             }
-            */
           });
         }else{
           message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
