@@ -24,6 +24,11 @@ function connectEvent(){
       wsClient.send(JSON.stringify(msg));
     });
 
+    wsClient.on('message', function(response){
+      response = JSON.parse(response.event);
+      console.log(response);
+    });
+
     wsClient.on('close', function(){
       clearTimeout(this.pingTimeout);
     })
@@ -185,7 +190,7 @@ client.on('message', message => {
             };
             wsClient.send(JSON.stringify(msg));
             wsClient.on('message', function(response){
-              response = JSON.parse(response);
+              response = JSON.parse(response.data);
               console.log(response);
               if(response.data == 'success'){
                 message.channel.type = (`"dm"`);
