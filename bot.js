@@ -187,7 +187,7 @@ client.on('message', message => {
           const authUser = message.author;
           const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
           const msg = {
-            type:"authDiscord",
+            type:"bot",
             token: token
           };
           /*
