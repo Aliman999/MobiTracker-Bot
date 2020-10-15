@@ -171,7 +171,7 @@ client.on('message', message => {
     req.end()
   }else if(command == 'auth'){
     if(!args.length){
-      return message.channel.send('Go to https://mobitracker.co/auth for your token then add it to this command. \nLike so: !auth TOKEN');
+      return message.channel.send('Go to https://mobitracker.co/auth and copy the text provided.');
     }else if(args.length>1){
       return message.channel.send('Too many arguments.');
     }else{
@@ -207,7 +207,7 @@ client.on('message', message => {
       });
     }
   }else if(command == 'alerts'){
-    
+
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
