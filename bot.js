@@ -30,10 +30,6 @@ function connectEvent(){
     wsClient.on('close', function clear(){
       reconnect();
     });
-
-    wsClient.on('error', function(err){
-      reconnect();
-    });
   }catch(e){
     reconnect();
   }
