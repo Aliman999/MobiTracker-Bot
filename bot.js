@@ -8,7 +8,12 @@ const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
 var jwt = require('jsonwebtoken');
-var wsClient = new WebSocket('wss://mobitracker.co:8000');
+try{
+  var wsClient = new WebSocket('wss://mobitracker.co:8000');
+}catch{
+  var wsClient;
+  reconnect();
+}
 const botToken = jwt.sign({ username:'mtcobot', cid: '0000001' }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
   type:"bot",
@@ -27,7 +32,7 @@ wsClient.on('close', function clear(){
 });
 
 function reconnect(){
-  var wsClient = new WebSocket('wss://mobitracker.co:8000');
+  wsClient = new WebSocket('wss://mobitracker.co:8000');
 }
 
 function heartbeat(){
