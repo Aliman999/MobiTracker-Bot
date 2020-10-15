@@ -109,8 +109,6 @@ client.on('message', message => {
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
-  console.log(message);
-
   if (command === 'search'){
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
@@ -191,7 +189,6 @@ client.on('message', message => {
             type:"authDiscord",
             token: token
           };
-          wsClient.send(JSON.stringify(msg));
           const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -202,8 +199,8 @@ client.on('message', message => {
                 if(result.length > 0){
                   message.channel.send('Your account is already linked.');
                 }else{
+                  wsClient.send(JSON.stringify(msg));
                   message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
-
                 }
               });
             }else{
