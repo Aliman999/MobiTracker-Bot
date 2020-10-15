@@ -189,10 +189,15 @@ client.on('message', message => {
             wsClient.send(JSON.stringify(msg));
             wsClient.on('message', function(response){
               response = JSON.parse(response);
-              if(response.data){
-                console.log(response.data);
+              if(response.data == 'success'){
                 message.channel.type = (`"dm"`);
                 authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
+              }else if(response.data == 'exists'){
+                message.channel.type = (`"dm"`);
+                authUser.send('Your account is already linked with another discord.');
+              }else if(response.data == 'nonexists'){
+                message.channel.type = (`"dm"`);
+                authUser.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
             });
           }else{
