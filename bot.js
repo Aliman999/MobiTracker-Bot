@@ -188,7 +188,7 @@ client.on('message', message => {
               token: token
             };
             wsClient.send(JSON.stringify(msg));
-            wsClient.on('message', function(r){
+            async function reply(r){
               const response = JSON.parse(r);
               if(response.data == 'success'){
                 message.channel.type = (`"dm"`);
@@ -200,7 +200,8 @@ client.on('message', message => {
                 message.channel.type = (`"dm"`);
                 authUser.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
-            });
+            }
+            wsClient.on('message', reply(r));
           }else{
             authUser.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
           }
