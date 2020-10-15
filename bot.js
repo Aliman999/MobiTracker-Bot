@@ -40,11 +40,11 @@ function reconnect(){
   setTimeout(() => {
     try{
       wsClient = new WebSocket('wss://mobitracker.co:8000');
-    }catch(e){
       wsClient.on('error', function(err){
         reconnect();
         console.log(err);
       });
+    }catch(e){
     }
   }, 10000);
 }
