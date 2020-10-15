@@ -52,7 +52,7 @@ function heartbeat(){
   clearTimeout(this.pingTimeout);
   this.pingTimeout = setTimeout(() => {
     reconnect();
-  }, 10000);//30000 + 1000
+  }, 30000 + 1000);
 }
 
 var trueLog = console.log;
@@ -178,21 +178,25 @@ client.on('message', message => {
         if(err){
           console.log(err);
         }else{
-          const authUser = message.author;
-          const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
-          const msg = {
-            type:"authDiscord",
-            token: token
-          };
-          wsClient.send(JSON.stringify(msg));
-          wsClient.on('message', function(response){
-            response = JSON.parse(response);
-            if(response.data){
-              console.log(response.data);
-              message.channel.type = (`"dm"`);
-              authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
-            }
-          });
+          if(decoded.cid && decoded.username){
+            const authUser = message.author;
+            const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+            const msg = {
+              type:"authDiscord",
+              token: token
+            };
+            wsClient.send(JSON.stringify(msg));
+            wsClient.on('message', function(response){
+              response = JSON.parse(response);
+              if(response.data){
+                console.log(response.data);
+                message.channel.type = (`"dm"`);
+                authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
+              }
+            });
+          }else{
+            authUser.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
+          }
         }
       });
     }
