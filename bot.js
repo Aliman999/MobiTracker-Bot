@@ -104,7 +104,7 @@ client.on('ready', () => {
 });
 
 async function reply(message, args) => {
-    message.author.send("Hello, I'm a DM that handles if users don't have permission!").catch(e => {
+    message.author.send(args).catch(e => {
         message.channel.send("It seems you dont have DM's enabled. We wont beable to contact you with DM's disabled. \n"+`${message.author}`;
     }
 }
