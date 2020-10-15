@@ -29,6 +29,16 @@ function heartbeat(){
   }, 30000 + 1000);
 }
 
+var trueLog = console.log;
+console.log = function(msg) {
+    fs.appendFile("/home/ubuntu/bot/bot.log", msg, function(err) {
+        if(err) {
+            return trueLog(err);
+        }
+    });
+    trueLog(msg);
+}
+
 var con = mysql.createConnection({
   host: config.MysqlHost,
   user: config.MysqlUsername,
