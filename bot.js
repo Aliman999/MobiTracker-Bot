@@ -182,6 +182,7 @@ client.on('message', message => {
     jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
       if(err){
         console.log(err);
+        console.log(`${args}`);
       }else{
         if(decoded.cid != "" && decoded.username != ""){
           const authUser = message.author;
@@ -191,7 +192,7 @@ client.on('message', message => {
             token: token
           };
           const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
-          con.query(sql, function (err, result, fields) {
+          con.query(sql, function (err, result, fields){
             if (err) throw err;
             if(result.length > 0){
               const sql = "SELECT username FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
@@ -199,6 +200,7 @@ client.on('message', message => {
                 if (err) throw err;
                 if(result.length > 0){
                   message.author.send('Your account is already linked.');
+                  console.log(decoded.username+':'+decoded.cid+' tried to re-authorize but its already linked.');
                 }else{
                   wsClient.send(JSON.stringify(msg));
                   message.author.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
