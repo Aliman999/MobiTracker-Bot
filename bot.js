@@ -196,16 +196,16 @@ client.on('message', message => {
             wsClient.on('message', function(response){
               response = JSON.parse(response);
               if(response.data == 'success'){
-                message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                message.reply('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
               }else if(response.data == 'exists'){
-                message.channel.send('Your account is already linked.');
+                message.reply('Your account is already linked.');
               }else if(response.data == 'nonexists'){
-                message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
+                message.reply('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
               response = "";
             });
           }else{
-            message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
+            message.reply('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
           }
         }
       });
