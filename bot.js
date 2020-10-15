@@ -216,6 +216,7 @@ client.on('message', message => {
                 reply(message, 'You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
               response = "";
+              message = null;
             });
           }else{
             message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
@@ -228,7 +229,6 @@ client.on('message', message => {
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
-  message = null;
 });
 
 client.login(config.Key);
