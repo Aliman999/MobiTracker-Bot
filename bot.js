@@ -27,6 +27,10 @@ function connectEvent(){
       console.log(response);
     });
 
+    wsClient.on('close', function(){
+      clearTimeout(this.pingTimeout);
+    })
+
     wsClient.on('error', function(err){
       console.log('Failed to connect to Event Server.');
       reconnect();
