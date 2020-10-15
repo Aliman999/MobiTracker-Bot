@@ -36,7 +36,7 @@ function connectEvent(){
       console.log('Retrying connection to Event Server.');
     });
   }catch(e){
-    var wsClient;
+    console.log('Failed to connect to Event Server');
     reconnect();
   }
 }
