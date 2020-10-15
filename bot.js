@@ -200,7 +200,7 @@ client.on('message', message => {
               .setColor(0x25a6dd)
               .setAuthor('test', 'https://mobitracker.co/src/starcitizen.png', "https://mobitracker.co/jamesdusky")
               .setDescription("AKA jamesdusky")
-              .setThumbnail(https://mobitracker.co/src/starcitizen.png)
+              .setThumbnail('https://mobitracker.co/src/starcitizen.png')
               .addFields(
                 { name: 'Badge', value: '1' inline: true},
                 { name: 'Mobitracker Rating', value: '2', inline: true},
