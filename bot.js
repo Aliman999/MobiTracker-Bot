@@ -2,6 +2,7 @@
 const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
+const MySQLEvents = require('@rodrigogs/mysql-events');
 const fs = require('fs');
 const https = require('https');
 const mysql = require('mysql');
@@ -68,7 +69,7 @@ console.log = function(msg) {
     trueLog(msg);
 }
 
-var con = mysql.createConnection({
+var con = mysql.createPool({
   host: config.MysqlHost,
   user: config.MysqlUsername,
   password: config.MysqlPassword,
@@ -222,5 +223,30 @@ client.on('message', message => {
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
 });
+
+const program = async () => {
+  const instance = new MySQLEvents(con, {
+    startAtEnd: true,
+    excludedSchemas: {
+      mysql: true,
+    },
+  });
+  await instance.start();
+
+  instance.addTrigger({
+    name: 'Alert',
+    expression: '*',
+    statement: MySQLEvents.STATEMENTS.ALL,
+    onEvent: (event) => {
+      console.log(event.affectedRows);
+      if(event.table == 'discordAlerts'){
+        client.users.get()
+      }
+    },
+  });
+  instance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
+  instance.on(MySQLEvents.EVENTS.ZONGJI_ERROR, console.error);
+};
+program().then(() => console.log('Waiting for database events...')).catch(console.error);
 
 client.login(config.Key);
