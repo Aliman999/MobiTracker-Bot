@@ -216,13 +216,13 @@ client.on('message', message => {
             if(r == 'success'){
               message.author.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
             }else if(r == 'exists'){
-              message.channel.send('Your account is already linked.');
+              message.author.send('Your account is already linked.');
             }else if(r == 'nonexistant'){
-              message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
+              message.author.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
             }
           });
         }else{
-          message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
+          message.author.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
         }
       }
     });
