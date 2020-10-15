@@ -116,6 +116,7 @@ async function reply(message, args){
           message.channel.send("It seems you dont have DM's enabled. We wont beable to contact you with DM's disabled. \n"+`${message.author}`);
       });
     //}
+    message = null;
 }
 
 client.on('message', message => {
@@ -227,7 +228,6 @@ client.on('message', message => {
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
-  message = null;
 });
 
 client.login(config.Key);
