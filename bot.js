@@ -150,9 +150,10 @@ client.on('message', message => {
           };
           wsClient.send(JSON.stringify(msg));
           wsClient.on('message', function(response){
-            console.log(response);
-            message.channel.type = (`"dm"`);
-            authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
+            if(){
+              message.channel.type = (`"dm"`);
+              authUser.send('Your discord is linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username);
+            }
           });
         }
       });
