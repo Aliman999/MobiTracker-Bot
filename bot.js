@@ -31,11 +31,6 @@ wsClient.on('close', function clear(){
   reconnect();
 });
 
-wsClient.on('error', function(err){
-  reconnect();
-  console.log(err);
-});
-
 function reconnect(){
   setTimeout(() => {
     try{
