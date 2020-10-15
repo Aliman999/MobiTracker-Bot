@@ -104,22 +104,6 @@ client.on('ready', () => {
   console.log('MobiTracker Bot is Ready');
 });
 
-function reply(message, args){
-  console.log(message);
-  /*
-    if(message.length == 0){
-      message.author.send(args).catch(e => {
-          message.channel.send("It seems you dont have DM's enabled. We wont beable to contact you with DM's disabled. \n"+`${message.author}`);
-      });
-    }else{
-      */
-      message.author.send(args).catch(e => {
-          message.channel.send("It seems you dont have DM's enabled. We wont beable to contact you with DM's disabled. \n"+`${message.author}`);
-      });
-    //}
-    message = null;
-}
-
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -200,7 +184,7 @@ client.on('message', message => {
           console.log(err);
         }else{
           if(decoded.cid != "" && decoded.username != ""){
-            const authUser = message.author;
+            const authUser = message.channel;
             delete authUser.lastMessageChannelID;
             const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
             const msg = {
@@ -211,14 +195,13 @@ client.on('message', message => {
             wsClient.on('message', function(response){
               response = JSON.parse(response);
               if(response.data == 'success'){
-                reply(message, 'Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
               }else if(response.data == 'exists'){
-                reply(message, 'Your account is already linked.');
+                message.channel.send('Your account is already linked.');
               }else if(response.data == 'nonexists'){
-                reply(message, 'You must sign up at https://mobitracker.co/register To get discord alerts.');
+                message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
               response = "";
-              authUser.destroy();
             });
           }else{
             message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
