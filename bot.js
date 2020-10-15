@@ -10,7 +10,7 @@ const WebSocket = require('ws');
 var jwt = require('jsonwebtoken');
 try{
   var wsClient = new WebSocket('wss://mobitracker.co:8000');
-}catch{
+}catch(e){
   var wsClient;
   reconnect();
 }
@@ -35,7 +35,7 @@ function reconnect(){
   this.pingTimeout = setTimeout(() => {
     try{
       wsClient = new WebSocket('wss://mobitracker.co:8000');
-    }catch{
+    }catch(e){
       
     }
   }, 10000);
