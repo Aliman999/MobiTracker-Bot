@@ -192,7 +192,7 @@ client.on('message', message => {
             token: token
           };
           wsClient.send(JSON.stringify(msg));
-          const sql = "SELECT username FROM players WHERE username = '"+mtUser.username.toString()+"' AND cID = "+mtUser.cid;
+          const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
             if(result.length > 0){
