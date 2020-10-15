@@ -218,6 +218,7 @@ client.on('message', message => {
                 reply(message, 'You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
               response = "";
+              authUser.destroy();
             });
           }else{
             message.channel.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
