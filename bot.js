@@ -45,7 +45,6 @@ connectEvent();
 function reconnect(){
   setTimeout(() => {
     connectEvent();
-    console.log('Retrying connection to Event Server.');
   }, 10000);
 }
 
