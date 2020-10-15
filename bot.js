@@ -105,7 +105,7 @@ client.on('ready', () => {
 
 async function reply(message, args) => {
     message.author.send("Hello, I'm a DM that handles if users don't have permission!").catch(e => {
-        message.channel.send("There was an internal error attempting to send you a message.\n"+`${message.author}`;
+        message.channel.send("It seems you dont have DM's enabled. We wont beable to contact you with DM's disabled. \n"+`${message.author}`;
     }
 }
 
@@ -199,12 +199,11 @@ client.on('message', message => {
             wsClient.on('message', function(response){
               response = JSON.parse(response);
               if(response.data == 'success'){
-                reply();
-                message.channel.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                reply(message, 'Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
               }else if(response.data == 'exists'){
-                message.channel.send('Your account is already linked.');
+                reply(message, 'Your account is already linked.');
               }else if(response.data == 'nonexists'){
-                message.channel.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
+                reply(message, 'You must sign up at https://mobitracker.co/register To get discord alerts.');
               }
               response = "";
             });
