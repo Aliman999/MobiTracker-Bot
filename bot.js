@@ -8,44 +8,43 @@ const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
 var jwt = require('jsonwebtoken');
-try{
-  var wsClient = new WebSocket('wss://mobitracker.co:8000');
-}catch(e){
-  var wsClient;
-  reconnect();
-}
+
 const botToken = jwt.sign({ username:'mtcobot', cid: '0000001' }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
   type:"bot",
   token: botToken
 };
-wsClient.on('open', function(){
-  wsClient.send(JSON.stringify(msg));
-});
 
-wsClient.on('message', function(response){
-  console.log(response);
-});
+function connectEvent(){
+  try{
+    var wsClient = new WebSocket('wss://mobitracker.co:8000');
 
-wsClient.on('close', function clear(){
-  reconnect();
-});
+    wsClient.on('open', function(){
+      wsClient.send(JSON.stringify(msg));
+    });
 
-wsClient.on('error', function(err){
-  reconnect();
-  console.log(err);
-});
+    wsClient.on('message', function(response){
+      console.log(response);
+    });
+
+    wsClient.on('close', function clear(){
+      reconnect();
+    });
+
+    wsClient.on('error', function(err){
+      reconnect();
+      console.log('Retrying connection to Event Server.');
+    });
+  }catch(e){
+    var wsClient;
+    reconnect();
+  }
+}
+connectEvent();
 
 function reconnect(){
   setTimeout(() => {
-    try{
-      wsClient = new WebSocket('wss://mobitracker.co:8000');
-      wsClient.on('error', function(err){
-        reconnect();
-        console.log("Trying to Connect to Event Server.");
-      });
-    }catch(e){
-    }
+    connectEvent();
   }, 10000);
 }
 
