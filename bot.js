@@ -76,9 +76,8 @@ var con = mysql.createPool({
   database: config.MysqlDatabase
 });
 
-con.connect(function(err) {
+con.getConnection(function(err, connection) {
   if (err) throw err;
-  console.log("Connected to Mobitracker Database");
 });
 
 function affiliations(aff){
