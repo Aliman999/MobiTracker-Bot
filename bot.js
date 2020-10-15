@@ -1,5 +1,5 @@
 'use strict';
-const { Client, MessageEmbed, DMChannel } = require('discord.js');
+const { Client, MessageEmbed} = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
 const fs = require('fs');
@@ -106,13 +106,11 @@ client.on('ready', () => {
 
 
 client.on('message', message => {
+  console.log(message.author);
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
-
-  const dm = new DMChannel(client, message);
-  console.log("da "+dm+" dadw");
 
   if (command === 'search'){
   	if (!args.length){
@@ -175,6 +173,7 @@ client.on('message', message => {
     })
 
     req.end()
+
   }else if(command == 'auth'){
     if(!args.length){
       return message.channel.send('Sign in at https://mobitracker.co/login and click the button that says "Authenticate with Discord". \nThen and copy the text provided and paste it here.');
