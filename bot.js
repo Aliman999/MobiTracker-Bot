@@ -104,7 +104,7 @@ client.on('ready', () => {
 });
 
 
-const dm = Discord.DMChannel(clientdata);
+const dm = new DMChannel(clientdata);
 console.log(dm);
 
 client.on('message', message => {
