@@ -109,10 +109,6 @@ client.on('message', message => {
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
-  var i = 0;
-  discordClients.push({ message:message });
-  discordClients[i].message.author.send("Hello");
-  i++;
   console.log(discordClients);
 
   if (command === 'search'){
