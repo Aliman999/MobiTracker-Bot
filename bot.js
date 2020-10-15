@@ -31,6 +31,11 @@ wsClient.on('close', function clear(){
   reconnect();
 });
 
+wsClient.on('error', function(err){
+  reconnect();
+  console.log(err);
+});
+
 function reconnect(){
   wsClient = new ReconnectingWebSocket('ws://....');
   wsClient.reconnectInterval = 10000;
