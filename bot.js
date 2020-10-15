@@ -11,7 +11,7 @@ const wsClient = new WebSocket('wss://mobitracker.co:8000');
 const botToken = jwt.sign({ username:'mtcobot', cid: '0000001' }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
   type:"bot",
-  token: token
+  token: botToken
 };
 wsClient.on('open', function(){
   wsClient.send(JSON.stringify(msg));
