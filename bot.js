@@ -28,7 +28,7 @@ wsClient.on('message', function(response){
 });
 
 wsClient.on('close', function clear(){
-  clearTimeout(this.pingTimeout);
+  reconnect();
 });
 
 function reconnect(){
@@ -36,7 +36,7 @@ function reconnect(){
     try{
       wsClient = new WebSocket('wss://mobitracker.co:8000');
     }catch(e){
-      
+
     }
   }, 10000);
 }
