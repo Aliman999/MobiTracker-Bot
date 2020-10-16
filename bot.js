@@ -246,7 +246,8 @@ const program = async () => {
         console.log(alert);
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        if(alertAfter.contracts != alertBefore.contracts){
+        if(event.affectedColumns == "contracts"){
+          console.log(alertAfter);
           if(alertAfter.contracts != -1){
             if(alert.contracts == 1){
               client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
