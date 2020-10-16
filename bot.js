@@ -186,7 +186,11 @@ client.on('message', message => {
         console.log(`${args}`);
       }else{
         if(decoded.cid != "" && decoded.username != ""){
-          const authUser = message.author;
+          if(message.author.bot == false){
+            const authUser = message.author.id;
+          }else{
+            return message.channel.send('We dont allow bots to use this service.');
+          }
           const token = jwt.sign({ mtUser: { update:false, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
           const msg = {
             type:"authDiscord",
