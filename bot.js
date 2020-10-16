@@ -210,12 +210,19 @@ client.on('message', message => {
                     message.author.send('Your account is already linked.');
                     console.log(decoded.username+':'+decoded.cid+' changed their alert policy');
                   }else{
-                    message.author.send('Your account is already linked.');
-                    console.log(decoded.username+':'+decoded.cid+' tried to re-authorize but its already linked');
+                    message.author.send('Your alert policies have been updated!');
+                    console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
                   }
                 }else{
                   wsClient.send(JSON.stringify(msg));
-                  message.author.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                  if(decoded.contracts == 0 && decoded.reviews == -1){
+                    const span = " for contract alerts.";
+                  }else if(decoded.contracts == -1 && decoded.reviews == 0){
+                    const span = " for review alerts.";
+                  }else{
+                    const span = " for contract and review alerts.";
+                  }
+                  message.author.send('Your discord is now linked with '+decoded.username+''+span+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
                 }
               });
             }else{
