@@ -199,7 +199,7 @@ client.on('message', message => {
               const sql = "SELECT contracts, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
-                console.log(result[0]);
+                console.log(result);
                 if(decoded.contracts != result[0].contracts || decoded.reviews != result[0].reviews){
                   message.author.send('Your account is already linked.');
                   console.log(decoded.username+':'+decoded.cid+' changed their alert policy');
