@@ -257,7 +257,7 @@ const program = async () => {
         if(alertAfter.reviews != alertBefore.reviews){
           if(alertAfter.reviews != -1){
             if(alertAfter.reviews == 1){
-              client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alert.username);
+              client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }else if(alertAfter.reviews > 1){
               client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }
