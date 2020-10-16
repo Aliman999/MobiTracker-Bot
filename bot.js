@@ -24,6 +24,7 @@ function connectEvent(){
 
     wsClient.on('open', function(){
       wsClient.send(JSON.stringify(msg));
+      console.log("Connected to Event Server.");
     });
 
     wsClient.on('message', function(response){
