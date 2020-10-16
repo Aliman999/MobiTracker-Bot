@@ -239,18 +239,19 @@ const program = async () => {
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
       if(event.table == 'discordAlerts'){
-        const alert = event.affectedRows[0].after;
+        const alertAfter = event.affectedRows[0].after;
+        const alertBefore = event.affectedRows[0].before;
         console.log(alert);
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        if(alert.contracts != -1){
+        if(alertAfter.contracts != -1 && alertAfter.contracts != alertBefore.contracts){
           if(alert.contracts == 1){
             client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
           }else if(alert.contracts > 1){
             client.users.cache.get(id.id).send("You have "+alert.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
           }
         }
-        if(alert.reviews != -1){
+        if(alertAfter.reviews != -1 && alertAfter.reviews != alertBefore.reviews){
           if(alert.reviews == 1){
             client.users.cache.get(id.id).send("You have a new review on your profile1 \nhttps://mobitracker.co/"+alert.username);
           }else if(alert.reviews > 1){
