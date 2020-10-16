@@ -207,8 +207,8 @@ client.on('message', message => {
                 if (err) throw err;
                 if(result.length > 0){
                   console.log(result[0].contracts);
-                  const oldContracts = result[0].contracts;
-                  if(decoded.contracts.toString() != result[0].contracts || decoded.reviews.toString() != result[0].reviews){
+                  const oldContracts = result[0].contracts.toString();
+                  if(decoded.contracts.toString() != result[0].contracts.toString() || decoded.reviews.toString() != result[0].reviews.toString()){
                     message.author.send('Your account is already linked.');
                     console.log(decoded.username+':'+decoded.cid+' changed their alert policy');
                   }else{
