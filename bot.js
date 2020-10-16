@@ -267,23 +267,22 @@ const program = async () => {
       if(event.table == 'discordAlerts'){
         const alertBefore = event.affectedRows[0].before;
         const alertAfter = event.affectedRows[0].after;
-        const user = event.affectedRows[0].after.discordUser;
-        const id = JSON.parse(user);
+        const id = event.affectedRows[0].after.discordUser;
         if(alertBefore.contracts != alertAfter.contracts){
           if(alertAfter.contracts != -1){
             if(alertAfter.contracts == 1){
-              client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
+              client.users.cache.get(id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
             }else if(alertAfter.contracts > 1){
-              client.users.cache.get(id.id).send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
+              client.users.cache.get(id).send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
             }
           }
         }
         if(alertAfter.reviews != alertBefore.reviews){
           if(alertAfter.reviews != -1){
             if(alertAfter.reviews == 1){
-              client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+              client.users.cache.get(id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }else if(alertAfter.reviews > 1){
-              client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+              client.users.cache.get(id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }
           }
         }
