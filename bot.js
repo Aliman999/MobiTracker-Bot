@@ -193,8 +193,8 @@ client.on('message', message => {
             decoded.reviews = 0;
           }
           const authUser = message.author;
-          const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
-          const msg = {
+          const token = jwt.sign({ mtUser: { update:false cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+          var msg = {
             type:"authDiscord",
             token: token
           };
@@ -207,6 +207,7 @@ client.on('message', message => {
                 if (err) throw err;
                 if(result.length > 0){
                   if(decoded.contracts != result[0].contracts || decoded.reviews != result[0].reviews){
+                    msg.token.mtUser.update = true;
                     wsClient.send(JSON.stringify(msg));
                     message.author.send('Your alert policies have been updated!');
                     console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
