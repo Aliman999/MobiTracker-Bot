@@ -246,10 +246,10 @@ client.on('message', message => {
       return message.channel.send('Too many arguments.');
     }
     console.log(message.author);
-    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' ='"+message.author.id+"';";
+    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
     con.query(sql, function (err, result, fields) {
 
-    }
+    });
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
