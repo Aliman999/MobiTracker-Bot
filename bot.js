@@ -292,9 +292,9 @@ const program = async () => {
         if(alertAfter.applicants > alertBefore.applicants){
           if(alertAfter.applicants != -1){
             if(alertAfter.applicants == 1){
-              client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
+              client.users.cache.get(id.id).send("Someone applied to one of your contracts! \nhttps://mobitracker.co/contracts");
             }else if(alertAfter.applicants > 1){
-              client.users.cache.get(id.id).send("You have "+alertAfter.applicants+" contracts available to you! \nhttps://mobitracker.co/contracts");
+              client.users.cache.get(id.id).send(alertAfter.applicants+" people have applied to one of your contracts! \nhttps://mobitracker.co/contracts");
             }
           }
         }
