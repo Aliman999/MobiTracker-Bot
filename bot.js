@@ -263,7 +263,7 @@ const program = async () => {
               client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alert.username);
             }else if(alertAfter.reviews > 1){
               console.log('works4');
-              client.users.cache.get(id.id).send("You have "+alert.contracts+" new reviews on your profile! \nhttps://mobitracker.co/"+alert.username);
+              client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }
           }
         }
