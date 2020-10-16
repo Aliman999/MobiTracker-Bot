@@ -24,7 +24,7 @@ function connectEvent(){
 
     wsClient.on('open', function(){
       wsClient.send(JSON.stringify(msg));
-      console.log("Connected to Event Server.");
+      console.log("Connected to Event Server");
     });
 
     wsClient.on('message', function(response){
@@ -37,7 +37,7 @@ function connectEvent(){
     })
 
     wsClient.on('error', function(err){
-      console.log('Failed to connect to Event Server.');
+      console.log('Failed to connect to Event Server');
       reconnect();
     });
   }catch(e){
@@ -239,14 +239,13 @@ const program = async () => {
     expression: '*',
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
+      console.log(event);
       if(event.table == 'discordAlerts'){
         const alertAfter = event.affectedRows[0].after;
         const alertBefore = event.affectedRows[0].before;
         console.log(alert);
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        console.log(alertBefore);
-        console.log(alertAfter);
         if(alertAfter.contracts != alertBefore.contracts){
           if(alertAfter.contracts != -1){
             if(alert.contracts == 1){
