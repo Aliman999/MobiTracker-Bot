@@ -255,14 +255,10 @@ const program = async () => {
           }
         }
         if(alertAfter.reviews != alertBefore.reviews){
-          console.log('works1');
           if(alertAfter.reviews != -1){
-            console.log('works2');
             if(alertAfter.reviews == 1){
-              console.log('works3');
               client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alert.username);
             }else if(alertAfter.reviews > 1){
-              console.log('works4');
               client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }
           }
