@@ -215,7 +215,12 @@ client.on('message', message => {
                   }
                 }else{
                   wsClient.send(JSON.stringify(msg));
-                  console.log(decoded);
+                  if(decoded.contracts == '-1'){
+                    console.log(decoded.contracts);
+                  }
+                  if(decoded.reviews == '-1'){
+                    console.log(decoded.reviews);
+                  }
                   if(decoded.contracts == 0 && decoded.reviews == '-1'){
                     const span = " for contract alerts.";
                   }else if(decoded.contracts == '-1' && decoded.reviews == 0){
