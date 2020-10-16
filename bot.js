@@ -200,7 +200,10 @@ client.on('message', message => {
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 if(result.length > 0){
-                  if(decoded.contracts.toString() !== result[0].contracts || decoded.reviews.toString() !== result[0].reviews){
+                  if(decoded.contracts.toString() == result[0].contracts || decoded.reviews.toString() == result[0].reviews){
+                    message.author.send('Your policies are the same.');
+                    console.log(decoded.username+':'+decoded.cid+' gave existing policies');
+                  }else{
                     const token = jwt.sign({ mtUser: { update:true, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
                     const msg = {
                       type:"authDiscord",
@@ -209,9 +212,6 @@ client.on('message', message => {
                     wsClient.send(JSON.stringify(msg));
                     message.author.send('Your alert policies have been updated!');
                     console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
-                  }else{
-                    message.author.send('Your account is already linked.');
-                    console.log(decoded.username+':'+decoded.cid+' tried to re-authorize but is already linked');
                   }
                 }else{
                   wsClient.send(JSON.stringify(msg));
