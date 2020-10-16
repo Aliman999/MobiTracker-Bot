@@ -240,13 +240,16 @@ client.on('message', message => {
     });
   }
   if(command == 'alerts'){
+    if(!args.length){
+      return message.channel.send('Sign in at https://mobitracker.co/login and click the button that says "Authenticate with Discord". \nThen and copy the text provided and paste it here.');
+    }else if(args.length>1){
+      return message.channel.send('Too many arguments.');
+    }
     console.log(message.author);
-    /*
-    const sql = "SELECT contracts, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' ='"+message.author.id+"';";
     con.query(sql, function (err, result, fields) {
 
     }
-    */
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
