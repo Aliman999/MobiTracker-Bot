@@ -199,7 +199,6 @@ client.on('message', message => {
               const sql = "SELECT contracts, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
-                console.log(result);
                 if(result.length > 0){
                   if(decoded.contracts != result[0].contracts || decoded.reviews != result[0].reviews){
                     message.author.send('Your account is already linked.');
@@ -210,8 +209,11 @@ client.on('message', message => {
                   }
                 }else{
                   wsClient.send(JSON.stringify(msg));
-                  if(decoded.contracts != -1 && decoded.reviews != -1){
-                    const span = "";
+                  if(decoded.contracts != -1){
+                    decoded.contracts = 0;
+                  }
+                  if(decoded.reviews != -1){
+                    decoded.reviews = 0;
                   }
                   message.author.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
                 }
