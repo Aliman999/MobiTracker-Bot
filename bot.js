@@ -272,10 +272,10 @@ const program = async () => {
           if(alertAfter.contracts != -1){
             if(alertAfter.contracts == 1){
               console.log("sent");
-              client.users.cache.get(id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
+              client.users.cache.get("'"+id+"'").send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
             }else if(alertAfter.contracts > 1){
               console.log("sent");
-              client.users.cache.get(id).send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
+              client.users.cache.get("'"+id+"'").send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
             }
           }
         }
@@ -283,10 +283,10 @@ const program = async () => {
           if(alertAfter.reviews != -1){
             if(alertAfter.reviews == 1){
               console.log("sent");
-              client.users.cache.get(id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+              client.users.cache.get("'"+id+"'").send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }else if(alertAfter.reviews > 1){
               console.log("sent");
-              client.users.cache.get(id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+              client.users.cache.get("'"+id+"'").send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }
           }
         }
