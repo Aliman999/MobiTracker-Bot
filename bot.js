@@ -215,12 +215,13 @@ client.on('message', message => {
                   }
                 }else{
                   wsClient.send(JSON.stringify(msg));
+                  var span = "";
                   if(decoded.contracts == 0 && decoded.reviews != 0){
-                    const span = " for contract alerts.";
+                    span = " for contract alerts.";
                   }else if(decoded.contracts != 0 && decoded.reviews == 0){
-                    const span = " for review alerts.";
+                    span = " for review alerts.";
                   }else{
-                    const span = " for contract and review alerts.";
+                    span = " for contract and review alerts.";
                   }
                   message.author.send('Your discord is now linked with '+decoded.username+''+span+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
                 }
