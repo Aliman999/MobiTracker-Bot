@@ -239,7 +239,6 @@ const program = async () => {
     expression: '*',
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
-      console.log(event);
       if(event.table == 'discordAlerts'){
         const alertBefore = event.affectedRows[0].before;
         const alertAfter = event.affectedRows[0].after;
@@ -248,10 +247,10 @@ const program = async () => {
         if(alertBefore.contracts != alertAfter.contracts){
           console.log(alertAfter);
           if(alertAfter.contracts != -1){
-            if(alert.contracts == 1){
+            if(alertAfter.contracts == 1){
               client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
-            }else if(alert.contracts > 1){
-              client.users.cache.get(id.id).send("You have "+alert.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
+            }else if(alertAfter.contracts > 1){
+              client.users.cache.get(id.id).send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
             }
           }
         }
