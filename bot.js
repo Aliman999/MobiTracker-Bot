@@ -241,12 +241,13 @@ client.on('message', message => {
   }
   if(command == 'alerts'){
     if(!args.length){
-      return message.channel.send('Sign in at https://mobitracker.co/login and click the button that says "Authenticate with Discord". \nThen and copy the text provided and paste it here.');
+      return message.channel.send('');
     }else if(args.length>1){
       return message.channel.send('Too many arguments.');
     }
     console.log(message.author);
     const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
+    console.log(sql);
     con.query(sql, function (err, result, fields) {
 
     });
