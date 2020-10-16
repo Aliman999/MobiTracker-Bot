@@ -200,7 +200,7 @@ client.on('message', message => {
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 console.log(result);
-                if(result[0].length > 0){
+                if(result.length > 0){
                   if(decoded.contracts != result[0].contracts || decoded.reviews != result[0].reviews){
                     message.author.send('Your account is already linked.');
                     console.log(decoded.username+':'+decoded.cid+' changed their alert policy');
