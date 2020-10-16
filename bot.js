@@ -128,9 +128,9 @@ client.on('message', message => {
         if(Object.size(user.data) > 0){
           if(Object.size(user.data.organization) > 1){
             user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
-          }else if (user.data.organization.name == "") {
+          }else if (user.data.organization.name == ""){
             user.data.organization.name = "REDACTED";
-          }else {
+          }else{
             user.data.organization.name = "None";
           }
           const cID = user.data.profile.id.substring(1);
@@ -237,7 +237,13 @@ client.on('message', message => {
     });
   }
   if(command == 'alerts'){
+    console.log(message.author);
+    /*
+    const sql = "SELECT contracts, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+    con.query(sql, function (err, result, fields) {
 
+    }
+    */
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
