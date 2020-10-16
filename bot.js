@@ -207,6 +207,7 @@ client.on('message', message => {
                 if (err) throw err;
                 if(result.length > 0){
                   if(decoded.contracts != result[0].contracts || decoded.reviews != result[0].reviews){
+                    wsClient.send(JSON.stringify(msg));
                     message.author.send('Your alert policies have been updated!');
                     console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
                   }else{
