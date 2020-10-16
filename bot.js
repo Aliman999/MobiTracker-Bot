@@ -256,9 +256,9 @@ const program = async () => {
         }
         if(alertAfter.reviews != alertBefore.reviews){
           if(alertAfter.reviews != -1){
-            if(alert.reviews == 1){
+            if(alertAfter.reviews == 1){
               client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alert.username);
-            }else if(alert.reviews > 1){
+            }else if(alertAfter.reviews > 1){
               client.users.cache.get(id.id).send("You have "+alert.contracts+" new reviews on your profile! \nhttps://mobitracker.co/"+alert.username);
             }
           }
