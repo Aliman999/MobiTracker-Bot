@@ -216,9 +216,9 @@ client.on('message', message => {
                 }else{
                   wsClient.send(JSON.stringify(msg));
                   console.log(decoded);
-                  if(decoded.contracts == 0 && decoded.reviews == -1){
+                  if(decoded.contracts == 0 && decoded.reviews == '-1'){
                     const span = " for contract alerts.";
-                  }else if(decoded.contracts == -1 && decoded.reviews == 0){
+                  }else if(decoded.contracts == '-1' && decoded.reviews == 0){
                     const span = " for review alerts.";
                   }else{
                     const span = " for contract and review alerts.";
