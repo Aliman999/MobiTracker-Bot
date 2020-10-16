@@ -186,7 +186,7 @@ client.on('message', message => {
         console.log(`${args}`);
       }else{
         if(decoded.cid != "" && decoded.username != ""){
-          const authUser = message.author;
+          const authUser = message.author.id;
           const token = jwt.sign({ mtUser: { update:false, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
           const msg = {
             type:"authDiscord",
@@ -267,14 +267,13 @@ const program = async () => {
       if(event.table == 'discordAlerts'){
         const alertBefore = event.affectedRows[0].before;
         const alertAfter = event.affectedRows[0].after;
-        const id = event.affectedRows[0].after.discordUser;
+        const user = event.affectedRows[0].after.discordUser;
+        const id = JSON.parse(user);
         if(alertBefore.contracts != alertAfter.contracts){
           if(alertAfter.contracts != -1){
             if(alertAfter.contracts == 1){
-              console.log("sent");
               client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
             }else if(alertAfter.contracts > 1){
-              console.log("sent");
               client.users.cache.get(id.id).send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
             }
           }
@@ -282,10 +281,8 @@ const program = async () => {
         if(alertAfter.reviews != alertBefore.reviews){
           if(alertAfter.reviews != -1){
             if(alertAfter.reviews == 1){
-              console.log("sent");
               client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }else if(alertAfter.reviews > 1){
-              console.log("sent");
               client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
             }
           }
