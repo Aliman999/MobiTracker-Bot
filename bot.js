@@ -244,18 +244,22 @@ const program = async () => {
         console.log(alert);
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        if(alertAfter.contracts != -1 && alertAfter.contracts != alertBefore.contracts){
-          if(alert.contracts == 1){
-            client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
-          }else if(alert.contracts > 1){
-            client.users.cache.get(id.id).send("You have "+alert.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
+        if(alertAfter.contracts != alertBefore.contracts){
+          if(alertAfter.contracts != -1){
+            if(alert.contracts == 1){
+              client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
+            }else if(alert.contracts > 1){
+              client.users.cache.get(id.id).send("You have "+alert.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
+            }
           }
         }
-        if(alertAfter.reviews != -1 && alertAfter.reviews != alertBefore.reviews){
-          if(alert.reviews == 1){
-            client.users.cache.get(id.id).send("You have a new review on your profile1 \nhttps://mobitracker.co/"+alert.username);
-          }else if(alert.reviews > 1){
-            client.users.cache.get(id.id).send("You have "+alert.contracts+" contracts available to you! \nhttps://mobitracker.co/"+alert.username);
+        if(alertAfter.reviews != alertBefore.reviews){
+          if(alertAfter.reviews != -1){
+            if(alert.reviews == 1){
+              client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alert.username);
+            }else if(alert.reviews > 1){
+              client.users.cache.get(id.id).send("You have "+alert.contracts+" new reviews on your profile! \nhttps://mobitracker.co/"+alert.username);
+            }
           }
         }
       }
