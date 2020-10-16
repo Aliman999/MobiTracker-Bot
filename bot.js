@@ -186,12 +186,6 @@ client.on('message', message => {
         console.log(`${args}`);
       }else{
         if(decoded.cid != "" && decoded.username != ""){
-          if(decoded.contracts != -1){
-            decoded.contracts = 0;
-          }
-          if(decoded.reviews != -1){
-            decoded.reviews = 0;
-          }
           const authUser = message.author;
           const token = jwt.sign({ mtUser: { update:false, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
           const msg = {
