@@ -226,6 +226,7 @@ client.on('message', message => {
 const program = async () => {
   const instance = new MySQLEvents(con, {
     startAtEnd: true,
+    serverId:2,
     excludedSchemas: {
       mysql: true,
     },
