@@ -63,9 +63,9 @@ function heartbeat(){
 var trueLog = console.log;
 console.log = function(msg) {
     fs.appendFile('/home/ubuntu/bot/bot.log', msg+'\n', function(err) {
-        if(err) {
-            return trueLog(err);
-        }
+      if(err) {
+        return trueLog(err);
+      }
     });
     trueLog(msg);
 }
@@ -241,7 +241,7 @@ client.on('message', message => {
   }
   if(command == 'alerts'){
     if(!args.length){
-      return message.channel.send('');
+      return message.channel.send('t');
     }else if(args.length>1){
       return message.channel.send('Too many arguments.');
     }
