@@ -240,16 +240,14 @@ client.on('message', message => {
     });
   }
   if(command == 'alerts'){
-    if(!args.length){
-      return message.channel.send('t');
-    }else if(args.length>1){
+    if(args.length>1){
       return message.channel.send('Too many arguments.');
     }
     console.log(message.author);
     const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
     console.log(sql);
     con.query(sql, function (err, result, fields) {
-
+      console.log(result);
     });
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
