@@ -206,14 +206,12 @@ client.on('message', message => {
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 if(result.length > 0){
-                  const oldContracts = result[0].contracts.toString();
-                  const oldReviews = result[0].reviews.toString();
-                  if(decoded.contracts.toString() != oldContracts || decoded.reviews.toString() != oldReviews){
-                    message.author.send('Your account is already linked.');
-                    console.log(decoded.username+':'+decoded.cid+' changed their alert policy');
-                  }else{
+                  if(decoded.contracts != result[0].contracts || decoded.reviews != result[0].reviews){
                     message.author.send('Your alert policies have been updated!');
                     console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
+                  }else{
+                    message.author.send('Your account is already linked.');
+                    console.log(decoded.username+':'+decoded.cid+' tried to re-authorize but is already linked');
                   }
                 }else{
                   wsClient.send(JSON.stringify(msg));
