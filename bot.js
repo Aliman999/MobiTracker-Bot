@@ -196,14 +196,21 @@ client.on('message', message => {
           con.query(sql, function (err, result, fields){
             if (err) throw err;
             if(result.length > 0){
-              const sql = "SELECT username FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+              const sql = "SELECT contracts, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
-                if(result.length > 0){
+                console.log(result[0]);
+                if(decoded.contracts != result[0].contracts || decoded.reviews != result[0].reviews){
                   message.author.send('Your account is already linked.');
-                  console.log(decoded.username+':'+decoded.cid+' tried to re-authorize but its already linked.');
+                  console.log(decoded.username+':'+decoded.cid+' changed their alert policy');
+                }else if(result[0].length > 0){
+                  message.author.send('Your account is already linked.');
+                  console.log(decoded.username+':'+decoded.cid+' tried to re-authorize but its already linked');
                 }else{
                   wsClient.send(JSON.stringify(msg));
+                  if(decoded.contracts != -1 && decoded.reviews != -1){
+                    const span = "";
+                  }
                   message.author.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
                 }
               });
