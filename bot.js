@@ -206,7 +206,7 @@ client.on('message', message => {
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 if(result.length > 0){
-                  if(decoded.contracts.toString() === result[0].contracts || decoded.reviews.toString() === result[0].reviews{
+                  if(decoded.contracts.toString() == result[0].contracts || decoded.reviews.toString() == result[0].reviews{
                     const token = jwt.sign({ mtUser: { update:true, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
                     const msg = {
                       type:"authDiscord",
