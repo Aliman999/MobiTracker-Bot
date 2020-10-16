@@ -193,7 +193,7 @@ client.on('message', message => {
             decoded.reviews = 0;
           }
           const authUser = message.author;
-          const token = jwt.sign({ mtUser: { update:false cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+          const token = jwt.sign({ mtUser: { update:false, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
           var msg = {
             type:"authDiscord",
             token: token
