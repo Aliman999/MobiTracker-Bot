@@ -244,6 +244,8 @@ const program = async () => {
         console.log(alert);
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
+        console.log(alertBefore);
+        console.log(alertAfter);
         if(alertAfter.contracts != alertBefore.contracts){
           if(alertAfter.contracts != -1){
             if(alert.contracts == 1){
