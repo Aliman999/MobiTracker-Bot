@@ -187,7 +187,9 @@ client.on('message', message => {
       }else{
         if(decoded.cid != "" && decoded.username != ""){
           const authUser = message.author.id;
-          const token = jwt.sign({ mtUser: { update:false, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+          delete decoded.exp;
+          decoded.update = false;
+          const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
           const msg = {
             type:"authDiscord",
             token: token
@@ -196,15 +198,16 @@ client.on('message', message => {
           con.query(sql, function (err, result, fields){
             if (err) throw err;
             if(result.length > 0){
-              const sql = "SELECT contracts, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+              const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 if(result.length > 0){
-                  if(decoded.contracts.toString() == result[0].contracts && decoded.reviews.toString() == result[0].reviews){
+                  if(decoded.contracts.toString() == result[0].contracts && decoded.applicants.toString == result[0].applicants && decoded.reviews.toString() == result[0].reviews ){
                     message.author.send('Your policies are the same.');
                     console.log(decoded.username+':'+decoded.cid+' gave existing policies');
                   }else{
-                    const token = jwt.sign({ mtUser: { update:true, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+                    decoded.update = true;
+                    const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
                     const msg = {
                       type:"authDiscord",
                       token: token
@@ -269,7 +272,15 @@ const program = async () => {
         const alertAfter = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        if(alertBefore.contracts != alertAfter.contracts){
+        if(alertAfter.contracts > alertBefore.contracts){
+          if(alertAfter.contracts != -1){
+            if(alertAfter.contracts == 1){
+              client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
+            }else if(alertAfter.contracts > 1){
+              client.users.cache.get(id.id).send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
+            }
+          }
+        }else if(alertAfter.contracts < alertBefore.contracts){
           if(alertAfter.contracts != -1){
             if(alertAfter.contracts == 1){
               client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
@@ -278,7 +289,15 @@ const program = async () => {
             }
           }
         }
-        if(alertAfter.reviews != alertBefore.reviews){
+        if(alertAfter.reviews > alertBefore.reviews){
+          if(alertAfter.reviews != -1){
+            if(alertAfter.reviews == 1){
+              client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+            }else if(alertAfter.reviews > 1){
+              client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+            }
+          }
+        }else if(alertAfter.reviews < alertBefore.reviews){
           if(alertAfter.reviews != -1){
             if(alertAfter.reviews == 1){
               client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
