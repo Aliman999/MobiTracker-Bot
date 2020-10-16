@@ -241,9 +241,9 @@ const program = async () => {
     onEvent: (event) => {
       console.log(event);
       if(event.table == 'discordAlerts'){
-        console.log(event.affectedRows[0].after);
         console.log(event.affectedRows[0].before);
-        console.log(alert);
+        console.log(event.affectedRows[0].after);
+        const alert = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
         if(event.affectedColumns == "contracts"){
