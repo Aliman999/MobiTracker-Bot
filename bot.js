@@ -202,7 +202,7 @@ client.on('message', message => {
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 if(result.length > 0){
-                  if(decoded.contracts.toString() == result[0].contracts && decoded.applicants.toString == result[0].applicants && decoded.reviews.toString() == result[0].reviews ){
+                  if(decoded.contracts.toString() == result[0].contracts && decoded.applicants.toString() == result[0].applicants && decoded.reviews.toString() == result[0].reviews ){
                     message.author.send('Your policies are the same.');
                     console.log(decoded.username+':'+decoded.cid+' gave existing policies');
                   }else{
