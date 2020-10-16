@@ -213,7 +213,7 @@ client.on('message', message => {
                       token: token
                     };
                     wsClient.send(JSON.stringify(msg));
-                    message.author.send('Your alert policies have been updated!');
+                    message.author.send('Updated your alert policies!');
                     console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
                   }
                 }else{
