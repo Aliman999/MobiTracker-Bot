@@ -241,13 +241,12 @@ const program = async () => {
     onEvent: (event) => {
       console.log(event);
       if(event.table == 'discordAlerts'){
-        console.log(event.affectedRows[0].before);
-        console.log(event.affectedRows[0].after);
-        const alert = event.affectedRows[0].after;
+        const alertBefore = event.affectedRows[0].before;
+        const alertAfter = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        if(event.affectedColumns == "contracts"){
-          console.log('works');
+        if(alertBefore.contracts != alertAfter.contracts){
+          console.log('yes');
           if(alertAfter.contracts != -1){
             if(alert.contracts == 1){
               client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
