@@ -186,54 +186,50 @@ client.on('message', message => {
         console.log(`${args}`);
       }else{
         if(decoded.cid != "" && decoded.username != ""){
-          if(message.author.bot == false){
-            const authUser = message.author.id;
-            const token = jwt.sign({ mtUser: { update:false, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
-            const msg = {
-              type:"authDiscord",
-              token: token
-            };
-            const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
-            con.query(sql, function (err, result, fields){
-              if (err) throw err;
-              if(result.length > 0){
-                const sql = "SELECT contracts, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
-                con.query(sql, function (err, result, fields) {
-                  if (err) throw err;
-                  if(result.length > 0){
-                    if(decoded.contracts.toString() == result[0].contracts || decoded.reviews.toString() == result[0].reviews){
-                      message.author.send('Your policies are the same.');
-                      console.log(decoded.username+':'+decoded.cid+' gave existing policies');
-                    }else{
-                      const token = jwt.sign({ mtUser: { update:true, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
-                      const msg = {
-                        type:"authDiscord",
-                        token: token
-                      };
-                      wsClient.send(JSON.stringify(msg));
-                      message.author.send('Your alert policies have been updated!');
-                      console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
-                    }
+          const authUser = message.author.id;
+          const token = jwt.sign({ mtUser: { update:false, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+          const msg = {
+            type:"authDiscord",
+            token: token
+          };
+          const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+          con.query(sql, function (err, result, fields){
+            if (err) throw err;
+            if(result.length > 0){
+              const sql = "SELECT contracts, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+              con.query(sql, function (err, result, fields) {
+                if (err) throw err;
+                if(result.length > 0){
+                  if(decoded.contracts.toString() == result[0].contracts || decoded.reviews.toString() == result[0].reviews){
+                    message.author.send('Your policies are the same.');
+                    console.log(decoded.username+':'+decoded.cid+' gave existing policies');
                   }else{
+                    const token = jwt.sign({ mtUser: { update:true, cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+                    const msg = {
+                      type:"authDiscord",
+                      token: token
+                    };
                     wsClient.send(JSON.stringify(msg));
-                    var span = "";
-                    if(decoded.contracts == 0 && decoded.reviews != 0){
-                      span = " for contract alerts.";
-                    }else if(decoded.contracts != 0 && decoded.reviews == 0){
-                      span = " for review alerts.";
-                    }else{
-                      span = " for contract and review alerts.";
-                    }
-                    message.author.send('Your discord is now linked with '+decoded.username+''+span+' \nhttps://mobitracker.co/'+decoded.username+' \nRemember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                    message.author.send('Your alert policies have been updated!');
+                    console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
                   }
-                });
-              }else{
-                message.author.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
-              }
-            });
-          }else{
-            return message.channel.send('We dont allow bots to use this service.');
-          }
+                }else{
+                  wsClient.send(JSON.stringify(msg));
+                  var span = "";
+                  if(decoded.contracts == 0 && decoded.reviews != 0){
+                    span = " for contract alerts.";
+                  }else if(decoded.contracts != 0 && decoded.reviews == 0){
+                    span = " for review alerts.";
+                  }else{
+                    span = " for contract and review alerts.";
+                  }
+                  message.author.send('Your discord is now linked with '+decoded.username+''+span+' \nhttps://mobitracker.co/'+decoded.username+' \nRemember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                }
+              });
+            }else{
+              message.author.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
+            }
+          });
         }else{
           message.author.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
         }
