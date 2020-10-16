@@ -186,6 +186,12 @@ client.on('message', message => {
         console.log(`${args}`);
       }else{
         if(decoded.cid != "" && decoded.username != ""){
+          if(decoded.contracts != -1){
+            decoded.contracts = 0;
+          }
+          if(decoded.reviews != -1){
+            decoded.reviews = 0;
+          }
           const authUser = message.author;
           const token = jwt.sign({ mtUser: { cid:decoded.cid, username:decoded.username, contracts:decoded.contracts, reviews:decoded.reviews }, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
           const msg = {
@@ -208,12 +214,6 @@ client.on('message', message => {
                     console.log(decoded.username+':'+decoded.cid+' tried to re-authorize but its already linked');
                   }
                 }else{
-                  if(decoded.contracts != -1){
-                    decoded.contracts = 0;
-                  }
-                  if(decoded.reviews != -1){
-                    decoded.reviews = 0;
-                  }
                   wsClient.send(JSON.stringify(msg));
                   message.author.send('Your discord is now linked with '+decoded.username+' \nhttps://mobitracker.co/'+decoded.username+' \nRemmember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
                 }
