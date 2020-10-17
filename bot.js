@@ -106,7 +106,7 @@ client.on('ready', () => {
 });
 
 //client.user.setActivity(, { type: 'PLAYING' });
-
+client.presence.activities = ["STREAMING"];
 client.presence.clientStatus = "Use !help for my commands!";
 
 client.on('message', message => {
