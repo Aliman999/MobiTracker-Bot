@@ -103,7 +103,14 @@ Object.size = function(obj) {
 
 client.on("ready", () => {
   console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} servers.`);
-  client.user.setActivity(`!help for commands`);
+  //client.user.setActivity(`!help for commands`);
+  client.user.setPresence({
+        status: 'online',
+        activity: {
+            name: "!help for commands",
+            type: ""
+        }
+    });
 });
 
 client.on('message', message => {
