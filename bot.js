@@ -107,8 +107,8 @@ client.on("ready", () => {
   client.user.setPresence({
         status: 'online',
         activity: {
-            name: "!help for commands",
-            type: "Testing"
+            name: "!help",
+            type: "WATCHING"
         }
     });
 });
