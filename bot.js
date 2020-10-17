@@ -107,7 +107,7 @@ client.on('ready', () => {
 
 //client.user.setActivity('Use !help for my commands!', { type: 'PLAYING' });
 
-console.log(client.user);
+console.log(client);
 
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
