@@ -106,7 +106,9 @@ client.on('ready', () => {
 });
 
 //client.user.setActivity('Use !help for my commands!', { type: 'PLAYING' });
-client.setPresence({ game: { name: 'with discord.js' , type: 'WATCHING' }, status: 'idle' })
+
+console.log(client.user);
+
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
