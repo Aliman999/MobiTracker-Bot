@@ -116,6 +116,13 @@ client.on("ready", () => {
 
   function loopStatus(){
     setTimeout(function(){
+      client.user.setPresence({
+        status: 'online',
+        activity: {
+            name: list[i],
+            type: "WATCHING"
+        }
+      });
       i++;
       if (i < list.length) {
         loopStatus();
