@@ -132,7 +132,7 @@ client.on("ready", () => {
         i = 0;
         loopStatus();
       }
-    }, 5000)
+    }, 10000)
   }
 
   loopStatus();
