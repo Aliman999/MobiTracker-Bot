@@ -328,7 +328,7 @@ const program = async () => {
           }
         }else if(alertAfter.reviews < alertBefore.reviews){
           if(alertAfter.reviews != -1){
-            client.users.cache.get(id.id).send("Someone remoived review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+            client.users.cache.get(id.id).send("Someone removed review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
           }
         }
       }
