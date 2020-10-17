@@ -105,6 +105,8 @@ client.on('ready', () => {
   console.log('MobiTracker Bot is Ready');
 });
 
+client.user.setActivity("Use !help for my commands!");
+
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
