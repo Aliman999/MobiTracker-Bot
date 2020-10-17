@@ -107,10 +107,13 @@ client.on("ready", () => {
   client.user.setPresence({
         status: 'online',
         activity: {
-            name: "!help",
+            name: "for !help",
             type: "WATCHING"
         }
     });
+  setInterval(function(){
+
+  }, 3000);
 });
 
 client.on('message', message => {
