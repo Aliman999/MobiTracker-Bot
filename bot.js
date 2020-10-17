@@ -107,13 +107,7 @@ client.on('ready', () => {
 
 client.on("ready", () => {
   console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} servers.`);
-  client.user.setPresence({
-    status: "online",
-    game: {
-      name: "Use !help for Commands",
-      type: "Streaming"
-    }
-  });
+  client.user.setActivity(`Use !help for commands`);
 });
 
 client.on('message', message => {
