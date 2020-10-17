@@ -243,6 +243,7 @@ client.on('message', message => {
     if(args.length>1){
       return message.channel.send('Too many arguments.');
     }
+    args[0].toLowerCase();
     const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
@@ -254,6 +255,8 @@ client.on('message', message => {
             console.log(message.author.tag+" turned off their alerts");
             message.author.send("Turned off Alerts.");
           });
+        }else if(args[0] == "on"){
+
         }
       }else{
       }
