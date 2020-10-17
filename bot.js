@@ -110,10 +110,23 @@ client.on("ready", () => {
             name: "for !help",
             type: "WATCHING"
         }
-    });
-  setInterval(function(){
+  });
+  var i = 0;
+  const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
 
-  }, 3000);
+  function loopStatus(){
+    setTimeout(function(){
+      i++;
+      if (i < list.length) {
+        loopStatus();
+      }else{
+        i = 0;
+        loopStatus();
+      }
+    }, 5000)
+  }
+
+  loopStatus();
 });
 
 client.on('message', message => {
