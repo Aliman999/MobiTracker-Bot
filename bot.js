@@ -108,7 +108,7 @@ client.on("ready", () => {
         status: 'online',
         activity: {
             name: "!help for commands",
-            type: ""
+            type: "Testing"
         }
     });
 });
