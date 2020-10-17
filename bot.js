@@ -105,8 +105,8 @@ client.on('ready', () => {
   console.log('MobiTracker Bot is Ready');
 });
 
-client.setActivity('Use !help for my commands!', { type: 'PLAYING' });
-
+//client.user.setActivity('Use !help for my commands!', { type: 'PLAYING' });
+client.user.setPresence({ game: { name: 'with discord.js' , type: 'WATCHING' }, status: 'idle' })
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
