@@ -264,6 +264,7 @@ client.on('message', message => {
           });
         }
       }else{
+        message.author.send("This command is used for toggling on and off your discord alerts of MobiTracker.co \nIf you'd like to received discord alerts sign up at https://mobitracker.co");
       }
     });
   }
