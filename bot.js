@@ -243,7 +243,7 @@ client.on('message', message => {
     if(args.length>1){
       return message.channel.send('Too many arguments.');
     }
-    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
+    const sql = "SELECT contracts, prevContracts, applicants, prevApplicants, reviews, prevReviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result.length > 0){
