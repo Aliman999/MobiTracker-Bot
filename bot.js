@@ -269,7 +269,7 @@ client.on('message', message => {
     });
   }
   if(command == 'help'){
-    message.channel.send("MobiTracker's Discord bot is very simple to use! \n!help - Bring up this help message \n!search USERNAME - Find any user in the verse by their ingame name quickly and displaying all the information you'd find online at https://mobitracker.co \n!auth - The command to authorize and edit your alert policies! Get your auth token at https://mobitracker.co/discord \n!alerts on/off - Pause and Resume your alert policy!");
+    message.channel.send("MobiTracker's Discord bot is very simple to use! \n\n!help - Bring up this help message \n\n!search USERNAME - Find any user in the verse by their ingame name quickly and displaying all the information you'd find online at https://mobitracker.co \n\n!auth - The command to authorize and edit your alert policies! \nGet your auth token at https://mobitracker.co/discord \n\n!alerts on/off - Pause and Resume your alert policy!");
   }
   //message.channel.send("This is MobiTracker.co 's official Discord bot. \nCurrent Commands: \n!search RSI_HANDLE \n !auth TOKEN - This token is received from https://mobitracker.co/auth \n!alerts'");
   if (!message.content.startsWith(`${prefix}`)) return;
