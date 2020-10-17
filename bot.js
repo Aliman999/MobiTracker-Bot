@@ -253,10 +253,15 @@ client.on('message', message => {
           con.query(sql, function (err, result, fields) {
             if(err) throw err;
             console.log(message.author.tag+" turned off their alerts");
-            message.author.send("Turned off Alerts.");
+            message.author.send("Paused Alerts.");
           });
         }else if(args[0] == "on"){
-
+          const sql = "UPDATE discordAlerts SET contracts = "+result[0].prevContracts+", prevContracts = null, applicants = "+result[0].prevApplicants+", prevApplicants = null, reviews = "+result[0].reviews+", prevReviews = null WHERE discordUser->'$.id' = '"+message.author.id+"'";
+          con.query(sql, function (err, result, fields) {
+            if(err) throw err;
+            console.log(message.author.tag+" turned on their alerts");
+            message.author.send("Resumed Alerts.");
+          });
         }
       }else{
       }
