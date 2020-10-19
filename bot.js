@@ -168,36 +168,32 @@ client.on('message', message => {
           }
           const cID = user.data.profile.id.substring(1);
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
-          try{
-            con.query(sql, function (err, result, fields) {
-              if (err) throw err;
-              var rating = "";
-              if(result.length == 0){
+          con.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            var rating = "";
+            if(result.length == 0){
+              rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
+            }else{
+              if(result[0].rating == -1){
                 rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
               }else{
-                if(result[0].rating == -1){
-                  rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
-                }else{
-                  rating = result[0].rating+"/5 "+"("+result[0].count+")";
-                }
+                rating = result[0].rating+"/5 "+"("+result[0].count+")";
               }
-              const embed = new MessageEmbed()
-                .setColor(0x25a6dd)
-                .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-                .setDescription("AKA "+user.data.profile.display)
-                .setThumbnail(user.data.profile.image)
-                .addFields(
-                  { name: 'Badge', value: user.data.profile.badge, inline: true},
-                  { name: 'Mobitracker Rating', value: rating, inline: true},
-                  { name: 'Main Organization', value: user.data.organization.name },
-                  { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
-                 )
-                 .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-              message.channel.send(embed);
-            });
-          }catch(err){
-            console.log(err);
-          }
+            }
+            const embed = new MessageEmbed()
+              .setColor(0x25a6dd)
+              .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+              .setDescription("AKA "+user.data.profile.display)
+              .setThumbnail(user.data.profile.image)
+              .addFields(
+                { name: 'Badge', value: user.data.profile.badge, inline: true},
+                { name: 'Mobitracker Rating', value: rating, inline: true},
+                { name: 'Main Organization', value: user.data.organization.name },
+                { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+               )
+               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
+            message.channel.send(embed);
+          });
         }else{
           message.channel.send(`That user doesnt exist.`);
         }
