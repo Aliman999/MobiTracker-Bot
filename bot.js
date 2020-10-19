@@ -280,7 +280,7 @@ client.on('message', message => {
       con.query(sql, function (err, result, fields) {
         if(result.length > 0){
           var string = '';
-          if(result[0].prevContracts == null || result[0].prevApplicants == null || result[0].prevReviews == null){
+          if(result[0].prevContracts != null || result[0].prevApplicants != null || result[0].prevReviews != null){
             return message.author.send('Your Alerts are paused!');
           }else{
             if(result[0].contracts != -1){
