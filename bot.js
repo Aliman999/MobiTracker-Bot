@@ -275,6 +275,36 @@ client.on('message', message => {
   if(command == 'alerts'){
     if(args.length>1){
       return message.channel.send('Too many arguments.');
+    }else if(args.length == 0){
+      const sql = "SELECT contracts, prevContracts, applicants, prevApplicants, reviews, prevReviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
+      con.query(sql, function (err, result, fields) {
+        if(result.length > 0){
+          var string = '';
+          if(result[0].prevContracts || result[0].prevApplicants || result[0].prevReviews){
+            return message.channel.send('Your Alerts are paused!');
+          }else{
+            if(result[0].contracts != -1){
+              result[0].contracts = 'ON';
+            }else{
+              result[0].contracts = 'OFF';
+            }
+            if(result[0].applicants != -1){
+              result[0].applicants = 'ON';
+            }else{
+              result[0].applicants = 'OFF';
+            }
+            if(result[0].reviews != -1){
+              result[0].reviews = 'ON';
+            }else{
+              result[0].reviews = 'OFF';
+            }
+            return message.channel.send('Your Alert Policy: \nContracts: '+result[0].contracts+' \nApplicants: '+result[0].applicants+' \nReviews: '+result[0].reviews);
+          }
+          return message.channel.send('');
+        }else{
+          return message.channel.send('Your not signed up for alerts!');
+        }
+      });
     }
     const sql = "SELECT contracts, prevContracts, applicants, prevApplicants, reviews, prevReviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
     con.query(sql, function (err, result, fields) {
