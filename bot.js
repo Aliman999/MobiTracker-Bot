@@ -166,8 +166,12 @@ client.on('message', message => {
           }else{
             user.data.organization.name = "None";
           }
-          const cID = user.data.profile.id.substring(1);
-          const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+" AND cID = "+cID;
+          if(user.data.profile.id != 'n/a'){
+            const cID = 'AND cID ='+user.data.profile.id.substring(1);
+          }else{
+            const cID = '';
+          }
+          const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
             var rating = "";
