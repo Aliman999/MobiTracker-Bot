@@ -167,7 +167,7 @@ client.on('message', message => {
             user.data.organization.name = "None";
           }
           console.log(user.data.profile.id);
-          if(user.data.profile.id != 'n/a'){
+          if(user.data.profile.id.toString() != 'n/a'){
             const cID = 'AND cID ='+user.data.profile.id.substring(1);
           }else{
             const cID = '';
