@@ -280,6 +280,7 @@ client.on('message', message => {
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result.length > 0){
+        args[0] = args[0].toLowerCase();
         if(args[0] == "off"){
           const sql = "UPDATE discordAlerts SET contracts = -1, prevContracts = "+result[0].contracts+", applicants = -1, prevApplicants = "+result[0].applicants+", reviews = -1, prevReviews = "+result[0].reviews+" WHERE discordUser->'$.id' = '"+message.author.id+"'";
           con.query(sql, function (err, result, fields) {
