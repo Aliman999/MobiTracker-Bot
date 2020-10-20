@@ -308,7 +308,7 @@ client.on('message', message => {
       console.log(sql);
       if(result.length>0){
         for(var x = 0; x<4; x++){
-          if(result[x].u_creator == undefined){
+          if(!result[x].u_creator){
             result[x].u_creator = 'Empty';
             result[x].careertype = 'Empty';
             result[x].price = 'Empty';
