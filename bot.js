@@ -173,7 +173,7 @@ client.on('message', message => {
                 rating = result[0].rating+"/5 "+"("+result[0].count+")";
               }
             }
-            const embed = new MessageEmbed()
+            var embed = new MessageEmbed()
               .setColor(0x25a6dd)
               .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
               .setDescription("AKA "+user.data.profile.display)
@@ -323,7 +323,7 @@ client.on('message', message => {
             }
           }
         }
-        const embed = new MessageEmbed()
+        var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-384x384.png', 'https://mobitracker.co/contracts')
           .setTitle('Page '+p+' of '+mp)
