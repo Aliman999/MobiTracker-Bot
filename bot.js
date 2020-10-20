@@ -277,7 +277,7 @@ client.on('message', message => {
     var mp;
     var limit;
     if(p*pp == 0){
-      limit = 'LIMIT 4, '+p+1;
+      limit = 'LIMIT 4, '+1;
     }else{
       limit = 'LIMIT 4, '+p*pp;
     }
