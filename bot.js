@@ -287,7 +287,7 @@ client.on('message', message => {
     var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0 "+limit;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      console.log(sql;);
+      console.log(sql);
       if(result.length>0){
         for(var x = 0; x<result.length; x++){
           if(result[x].type == 'S'){
