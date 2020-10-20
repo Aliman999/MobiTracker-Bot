@@ -289,7 +289,7 @@ client.on('message', message => {
         p = mp;
       }
     });
-    var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0 "+limit+" ORDER BY id DESC;";
+    var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       console.log(sql);
