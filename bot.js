@@ -102,7 +102,7 @@ Object.size = function(obj) {
 };
 
 client.on("ready", () => {
-  console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);=
+  console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
   var i = 0;
   const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
 
