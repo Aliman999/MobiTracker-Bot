@@ -296,9 +296,9 @@ client.on('message', message => {
       mp = Math.ceil(result.length/pp);
       console.log(p+' '+mp);
       if(p > mp && mp == 1){
-        p = 1;
+        p = 0;
       }else{
-        p = mp;
+        p = mp-1;
       }
       console.log(p+' '+mp);
       if(p*pp == 0){
