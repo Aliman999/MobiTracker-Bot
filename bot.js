@@ -294,13 +294,11 @@ client.on('message', message => {
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       mp = Math.ceil(result.length/pp);
-      console.log(p+' '+mp);
       if(p > mp && mp == 1){
         p = 0;
       }else{
         p = mp-1;
       }
-      console.log(p+' '+mp);
       if(p*pp == 0){
         limit = 'LIMIT 4';
       }else{
@@ -309,7 +307,6 @@ client.on('message', message => {
       var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
       con.query(sql, function (err, result, fields) {
         if(err) throw err;
-        console.log(sql);
         if(result.length>0){
           for(var x = 0; x<4; x++){
             if(!result[x]){
