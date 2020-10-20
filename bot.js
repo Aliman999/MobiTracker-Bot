@@ -329,6 +329,9 @@ client.on('message', message => {
             }
           }
         }
+        if(p == 0){
+          p = 1;
+        }
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-384x384.png', 'https://mobitracker.co/contracts')
