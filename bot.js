@@ -93,6 +93,17 @@ function affiliations(aff){
   }
 }
 
+String.prototype.decodeHTML = function() {
+    var map = {"gt":">" /* , … */};
+    return this.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, function($0, $1) {
+        if ($1[0] === "#") {
+            return String.fromCharCode($1[1].toLowerCase() === "x" ? parseInt($1.substr(2), 16)  : parseInt($1.substr(1), 10));
+        } else {
+            return map.hasOwnProperty($1) ? map[$1] : $0;
+        }
+    });
+};
+
 var truncate = function (elem, limit) {
 	if (!elem || !limit) return;
 	var content = elem.trim();
@@ -342,6 +353,7 @@ client.on('message', message => {
           }else{
             result[x].duration = result[x].duration+' hours';
           }
+          result[x].unsecure.decodeHTML();
           result[x].unsecure = truncate(result[x].unsecure, 10);
         }
         p++;
