@@ -102,17 +102,7 @@ Object.size = function(obj) {
 };
 
 client.on("ready", () => {
-  console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
-  //client.user.setActivity(`!help for commands`);
-  /*
-  client.user.setPresence({
-        status: 'online',
-        activity: {
-            name: "for !help",
-            type: "WATCHING"
-        }
-  });
-  */
+  console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);=
   var i = 0;
   const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
 
@@ -185,7 +175,7 @@ client.on('message', message => {
             }
             const embed = new MessageEmbed()
               .setColor(0x25a6dd)
-              .setAuthor(user.data.profile.handle+" "+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+              .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
               .setDescription("AKA "+user.data.profile.display)
               .setThumbnail(user.data.profile.image)
               .addFields(
@@ -275,12 +265,101 @@ client.on('message', message => {
       }
     });
   }
+  if(command = 'contracts'){
+    const pp = 4;
+    if(!args.length){
+      var p = 0;
+    }else if(args.length == 1 && args.length > 0){
+      var p = args[0]-1;
+    }else{
+      return message.channel.send('Invalid Arguments.');
+    }
+    var mp;
+    const limit = 'LIMIT 4, '+p*pp;
+    const sql = "SELECT id FROM contracts WHERE faction = 0";
+    con.query(sql, function (err, result, fields) {
+      if(err) throw err;
+      mp = result.length/pp;
+      if(p > mp){
+        p = mp;
+      }
+    });
+    const sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created at FROM contracts WHERE faction = 0 "+limit;
+    con.query(sql, function (err, result, fields) {
+      if(err) throw err;
+      if(result.length>0){
+        for(var x = 0; x<result.length; x++){
+          if(result[x].type == 'S'){
+            if(result[x].careertype == 'Scouting'){
+              result[x].careertype = 'Looking for a Scout';
+            }else if(result[x].careertype == 'Delivery'){
+              result[x].careertype = 'Need a Courier';
+            }else if(result[x].careertype == 'Racing'){
+              result[x].careertype = 'Looking to Race';
+            }else if(result[x].careertype == 'Medical'){
+              result[x].careertype = 'Looking for Medical Services';
+            }else if(result[x].careertype == 'Security'){
+              result[x].careertype = 'Looking for Security Services';
+            }else if(result[x].careertype == 'Charting Regular'){
+              result[x].careertype = 'Looking for a Charter';
+            }else if(result[x].careertype == 'Charting Luxury'){
+              result[x].careertype = 'Looking for a Luxurious Charter';
+            }
+          }else if(result[x].type == 'P'){
+            if(result[x].careertype == 'Scouting'){
+              result[x].careertype = 'Scout for Hire';
+            }else if(result[x].careertype == 'Delivery'){
+              result[x].careertype = 'Courier for Hire';
+            }else if(result[x].careertype == 'Racing'){
+              result[x].careertype = 'Racer for Hire';
+            }else if(result[x].careertype == 'Medical'){
+              result[x].careertype = 'Medical Services for Hire';
+            }else if(result[x].careertype == 'Security'){
+              result[x].careertype = 'Security Services for Hire';
+            }else if(result[x].careertype == 'Charting Regular'){
+              result[x].careertype = 'Regular Charter for Hire';
+            }else if(result[x].careertype == 'Charting Luxury'){
+              result[x].careertype = 'Luxurious Charter for Hire';
+            }
+          }
+        }
+        const embed = new MessageEmbed()
+          .setColor(0x25a6dd)
+          .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-384x384.png', 'https://mobitracker.co/contracts')
+          .setTitle('Page '+p+' of '+mp)
+          .addFields(
+            { name: result[pp-4].u_creator, value: result[pp-4].careertype, inline: true},
+            { name: 'Price', value:result[pp-4].careertype, inline:true },
+            { name: 'Duration', value:result[pp-4].duration, inline:true },
+            { name: 'Description', value:result[pp-4].unsecure, inline:true },
+
+            { name: result[pp-3].u_creator, value: result[pp-3].careertype, inline: true},
+            { name: 'Price', value:result[pp-3].careertype, inline:true },
+            { name: 'Duration', value:result[pp-3].duration, inline:true },
+            { name: 'Description', value:result[pp-3].unsecure, inline:true },
+
+            { name: result[pp-2].u_creator, value: result[pp-2].careertype, inline: true},
+            { name: 'Price', value:result[pp-2].careertype, inline:true },
+            { name: 'Duration', value:result[pp-2].duration, inline:true },
+            { name: 'Description', value:result[pp-2].unsecure, inline:true },
+
+            { name: result[pp-1].u_creator, value: result[pp-1].careertype, inline: true},
+            { name: 'Price', value:result[pp-1].careertype, inline:true },
+            { name: 'Duration', value:result[pp-1].duration, inline:true },
+            { name: 'Description', value:result[pp-1].unsecure, inline:true }
+           )
+           .setFooter('Contracts - Mobitracker.co');
+        message.channel.send(embed);
+      }
+    });
+  }
   if(command == 'alerts'){
     if(args.length>1){
       return message.author.send('Too many arguments.');
     }else if(args.length == 0){
       const sql = "SELECT contracts, prevContracts, applicants, prevApplicants, reviews, prevReviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
       con.query(sql, function (err, result, fields) {
+        if(err) throw err;
         if(result.length > 0){
           var string = '';
           if(result[0].paused == 1){
