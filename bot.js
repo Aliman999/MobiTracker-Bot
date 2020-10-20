@@ -277,9 +277,9 @@ client.on('message', message => {
     var mp;
     var limit;
     if(p*pp == 0){
-      limit = 'LIMIT 4 ORDER BY DESC;';
+      limit = 'LIMIT 4 ORDER BY created_at DESC;';
     }else{
-      limit = 'LIMIT 4, '+p*pp+' ORDER BY DESC;';
+      limit = 'LIMIT 4, '+p*pp+' ORDER BY created_at DESC;';
     }
     var sql = "SELECT id FROM contracts WHERE faction = 0";
     con.query(sql, function (err, result, fields) {
