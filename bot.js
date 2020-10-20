@@ -295,7 +295,7 @@ client.on('message', message => {
       if(err) throw err;
       mp = Math.ceil(result.length/pp);
       console.log(p+' '+mp);
-      if(p > mp && mp == 1){
+      if(p >= mp && mp == 1){
         p = 1;
       }else{
         p = mp;
