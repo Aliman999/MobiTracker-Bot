@@ -293,6 +293,7 @@ client.on('message', message => {
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       mp = Math.ceil(result.length/pp);
+      console.log(p+' '+mp);
       if(p > mp && mp == 1){
         p = 1;
       }else{
