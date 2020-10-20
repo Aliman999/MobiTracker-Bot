@@ -265,7 +265,7 @@ client.on('message', message => {
       }
     });
   }
-  if(command = 'contracts'){
+  if(command == 'contracts'){
     const pp = 4;
     if(!args.length){
       var p = 0;
