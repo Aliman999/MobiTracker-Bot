@@ -309,6 +309,7 @@ client.on('message', message => {
       if(result.length>0){
         for(var x = 0; x<4; x++){
           if(!result[x]){
+            result.push();
             result[x].u_creator = 'Empty';
             result[x].careertype = 'Empty';
             result[x].price = 'Empty';
