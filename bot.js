@@ -347,7 +347,7 @@ client.on('message', message => {
         p++;
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
-          .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-192x192.png', 'https://mobitracker.co/contracts')
+          .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
           .setTitle('Page '+p+' of '+mp)
           .addFields(
             { name: result[pp-4].u_creator, value: result[pp-4].careertype, inline: true},
