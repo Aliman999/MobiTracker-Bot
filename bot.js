@@ -298,7 +298,7 @@ client.on('message', message => {
       }else{
         p = mp;
       }
-      console.log(p);
+      console.log(p+' '+mp);
       if(p*pp == 0){
         limit = 'LIMIT 4';
       }else{
