@@ -301,7 +301,7 @@ client.on('message', message => {
       }else{
         limit = 'LIMIT 4, '+(p*pp-1);
       }
-      var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
+      sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
       con.query(sql, function (err, result, fields) {
         if(err) throw err;
         console.log(sql);
