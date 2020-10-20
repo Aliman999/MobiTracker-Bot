@@ -275,7 +275,7 @@ client.on('message', message => {
       return message.channel.send('Invalid Arguments.');
     }
     var mp;
-    const limit = 'LIMIT 4, '+p*pp;
+    const limit = 'LIMIT 4, '+p*pp+';';
     var sql = "SELECT id FROM contracts WHERE faction = 0";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
