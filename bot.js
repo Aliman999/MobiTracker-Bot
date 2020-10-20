@@ -93,7 +93,7 @@ function affiliations(aff){
   }
 }
 
-String.prototype.decodeHTML = function() {
+String.decodeHTML = function() {
     var map = {"gt":">" /* , … */};
     return this.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, function($0, $1) {
         if ($1[0] === "#") {
@@ -353,7 +353,7 @@ client.on('message', message => {
           }else{
             result[x].duration = result[x].duration+' hours';
           }
-          result[x].unsecure.decodeHTML();
+          String.decodeHTML(result[x].unsecure);
           result[x].unsecure = truncate(result[x].unsecure, 10);
         }
         p++;
