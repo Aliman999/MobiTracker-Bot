@@ -102,7 +102,7 @@ var truncate = function (elem, limit) {
 	var content = elem.trim();
 	content = content.split(' ').slice(0, limit);
 	content = content.join(' ');
-	elem = content;
+	elem = content+'...';
   return elem;
 };
 
@@ -297,7 +297,7 @@ client.on('message', message => {
     var sql = "SELECT id FROM contracts WHERE faction = 0";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      mp = result.length/pp;
+      mp = Math.ceil(result.length/pp);
       if(p > mp){
         p = mp;
       }
