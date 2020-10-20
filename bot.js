@@ -337,7 +337,12 @@ client.on('message', message => {
               result[x].careertype = 'Luxurious Charter for Hire';
             }
           }
-          result[x].unsecure = truncate(result[x].unsecure, 7);
+          if(result[x].duration == 1){
+            result[x].duration = '1 hour';
+          }else{
+            result[x].duration = result[x].duration+' hours';
+          }
+          result[x].unsecure = truncate(result[x].unsecure, 10);
         }
         p++;
         var embed = new MessageEmbed()
@@ -347,28 +352,28 @@ client.on('message', message => {
           .addFields(
             { name: result[pp-4].u_creator, value: result[pp-4].careertype, inline: true},
             { name: 'Price', value:result[pp-4].careertype, inline:true },
-            { name: 'Duration', value:result[pp-4].duration, inline:true },
+            { name: 'Expected Duration', value:result[pp-4].duration, inline:true },
             { name: 'Description', value:result[pp-4].unsecure, inline:true },
 
             { name: '\u200B', value: '\u200B' },
 
             { name: result[pp-3].u_creator, value: result[pp-3].careertype, inline: true},
             { name: 'Price', value:result[pp-3].careertype, inline:true },
-            { name: 'Duration', value:result[pp-3].duration, inline:true },
+            { name: 'Expected Duration', value:result[pp-3].duration, inline:true },
             { name: 'Description', value:result[pp-3].unsecure, inline:true },
 
             { name: '\u200B', value: '\u200B' },
 
             { name: result[pp-2].u_creator, value: result[pp-2].careertype, inline: true},
             { name: 'Price', value:result[pp-2].careertype, inline:true },
-            { name: 'Duration', value:result[pp-2].duration, inline:true },
+            { name: 'Expected Duration', value:result[pp-2].duration, inline:true },
             { name: 'Description', value:result[pp-2].unsecure, inline:true },
 
             { name: '\u200B', value: '\u200B' },
 
             { name: result[pp-1].u_creator, value: result[pp-1].careertype, inline: true},
             { name: 'Price', value:result[pp-1].careertype, inline:true },
-            { name: 'Duration', value:result[pp-1].duration, inline:true },
+            { name: 'Expected Duration', value:result[pp-1].duration, inline:true },
             { name: 'Description', value:result[pp-1].unsecure, inline:true }
            )
            .setFooter('Contracts - Mobitracker.co');
