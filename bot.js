@@ -292,7 +292,7 @@ client.on('message', message => {
     if(p*pp == 0){
       limit = 'LIMIT 4';
     }else{
-      limit = 'LIMIT 4, '+p*pp;
+      limit = 'LIMIT 4, '+(p*pp-1);
     }
     var sql = "SELECT id FROM contracts WHERE faction = 0";
     con.query(sql, function (err, result, fields) {
