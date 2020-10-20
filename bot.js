@@ -276,7 +276,7 @@ client.on('message', message => {
     }
     var mp;
     const limit = 'LIMIT 4, '+p*pp;
-    const sql = "SELECT id FROM contracts WHERE faction = 0";
+    var sql = "SELECT id FROM contracts WHERE faction = 0";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       mp = result.length/pp;
@@ -284,7 +284,7 @@ client.on('message', message => {
         p = mp;
       }
     });
-    const sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created at FROM contracts WHERE faction = 0 "+limit;
+    var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created at FROM contracts WHERE faction = 0 "+limit;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result.length>0){
