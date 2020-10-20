@@ -283,9 +283,8 @@ client.on('message', message => {
     if(!args.length){
       var p = 0;
       console.log('here');
-    }else if(args.length == 1 && args.length > 0){
+    }else if(args.length == 1 && args[0] > 0){
       var p = args[0]-1;
-      console.log('or here');
     }else{
       return message.channel.send('Invalid Arguments.');
     }
