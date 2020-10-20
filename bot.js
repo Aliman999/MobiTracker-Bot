@@ -350,15 +350,21 @@ client.on('message', message => {
             { name: 'Duration', value:result[pp-4].duration, inline:true },
             { name: 'Description', value:result[pp-4].unsecure, inline:true },
 
+            { name: '\u200B', value: '\u200B' },
+
             { name: result[pp-3].u_creator, value: result[pp-3].careertype, inline: true},
             { name: 'Price', value:result[pp-3].careertype, inline:true },
             { name: 'Duration', value:result[pp-3].duration, inline:true },
             { name: 'Description', value:result[pp-3].unsecure, inline:true },
 
+            { name: '\u200B', value: '\u200B' },
+
             { name: result[pp-2].u_creator, value: result[pp-2].careertype, inline: true},
             { name: 'Price', value:result[pp-2].careertype, inline:true },
             { name: 'Duration', value:result[pp-2].duration, inline:true },
             { name: 'Description', value:result[pp-2].unsecure, inline:true },
+
+            { name: '\u200B', value: '\u200B' },
 
             { name: result[pp-1].u_creator, value: result[pp-1].careertype, inline: true},
             { name: 'Price', value:result[pp-1].careertype, inline:true },
