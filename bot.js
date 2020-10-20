@@ -348,6 +348,7 @@ client.on('message', message => {
           }
           result[x].unsecure = decodeEntities(result[x].unsecure);
           result[x].unsecure = truncate(result[x].unsecure, 10);
+          result[x].price = result[x].price+' aUEC'; 
         }
         p++;
         var embed = new MessageEmbed()
