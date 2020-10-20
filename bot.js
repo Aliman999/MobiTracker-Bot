@@ -93,6 +93,15 @@ function affiliations(aff){
   }
 }
 
+var truncate = function (elem, limit) {
+	if (!elem || !limit) return;
+	var content = elem.trim();
+	content = content.split(' ').slice(0, limit);
+	content = content.join(' ');
+	elem = content;
+  return elem;
+};
+
 Object.size = function(obj) {
   var size = 0, key;
   for (key in obj) {
@@ -328,6 +337,7 @@ client.on('message', message => {
               result[x].careertype = 'Luxurious Charter for Hire';
             }
           }
+          result[x].unsecure = truncate(result[x].unsecure, 7);
         }
         p++;
         var embed = new MessageEmbed()
