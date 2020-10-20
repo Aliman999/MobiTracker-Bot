@@ -433,14 +433,14 @@ client.on('message', message => {
       if(result.length > 0 && args.length > 0){
         args[0] = args[0].toString().toLowerCase();
         if(args[0] == "off"){
-          const sql = "UPDATE discordAlerts SET pause = 1 WHERE discordUser->'$.id' = '"+message.author.id+"'";
+          const sql = "UPDATE discordAlerts SET userPause = 1 WHERE discordUser->'$.id' = '"+message.author.id+"'";
           con.query(sql, function (err, result, fields) {
             if(err) throw err;
             console.log(message.author.tag+" turned off their alerts");
             message.author.send("Paused Alerts.");
           });
         }else if(args[0] == "on"){
-          const sql = "UPDATE discordAlerts SET pause = 0 WHERE discordUser->'$.id' = '"+message.author.id+"'";
+          const sql = "UPDATE discordAlerts SET userPause = 0 WHERE discordUser->'$.id' = '"+message.author.id+"'";
           con.query(sql, function (err, result, fields) {
             if(err) throw err;
             console.log(message.author.tag+" turned on their alerts");
