@@ -284,7 +284,7 @@ client.on('message', message => {
         p = mp;
       }
     });
-    var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created at FROM contracts WHERE faction = 0 "+limit;
+    var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0 "+limit;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result.length>0){
