@@ -307,7 +307,7 @@ client.on('message', message => {
       if(err) throw err;
       console.log(sql);
       if(result.length>0){
-        for(var x = 0; x<result.length; x++){
+        for(var x = 0; x<4; x++){
           if(result[x].type == 'S'){
             if(result[x].careertype == 'Scouting'){
               result[x].careertype = 'Looking for a Scout';
@@ -348,7 +348,7 @@ client.on('message', message => {
           }
           result[x].unsecure = decodeEntities(result[x].unsecure);
           result[x].unsecure = truncate(result[x].unsecure, 10);
-          result[x].price = result[x].price+' aUEC'; 
+          result[x].price = result[x].price+' aUEC';
         }
         p++;
         var embed = new MessageEmbed()
