@@ -93,16 +93,23 @@ function affiliations(aff){
   }
 }
 
-String.decodeHTML = function() {
-    var map = {"gt":">" /* , … */};
-    return this.toString().replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, function($0, $1) {
-        if ($1[0] === "#") {
-            return String.fromCharCode($1[1].toLowerCase() === "x" ? parseInt($1.substr(2), 16)  : parseInt($1.substr(1), 10));
-        } else {
-            return map.hasOwnProperty($1) ? map[$1] : $0;
-        }
+function decodeEntities(encodedString) {
+    var translate_re = /&(nbsp|amp|quot|lt|gt|&#039);/g;
+    var translate = {
+        "nbsp" :" ",
+        "amp"  : "&",
+        "quot" : "\"",
+        "lt"   : "<",
+        "gt"   : ">",
+        "#039" : "'"
+    };
+    return encodedString.replace(translate_re, function(match, entity) {
+        return translate[entity];
+    }).replace(/&#(\d+);/gi, function(match, numStr) {
+        var num = parseInt(numStr, 10);
+        return String.fromCharCode(num);
     });
-};
+}
 
 var truncate = function (elem, limit) {
 	if (!elem || !limit) return;
@@ -353,7 +360,7 @@ client.on('message', message => {
           }else{
             result[x].duration = result[x].duration+' hours';
           }
-          String.decodeHTML(result[x].unsecure);
+          result[x].unsecure = decodeEntities(result[x].unsecure);
           result[x].unsecure = truncate(result[x].unsecure, 10);
         }
         p++;
