@@ -311,48 +311,49 @@ client.on('message', message => {
           if(!result[x]){
             const temp = {u_creator: 'Empty', careertype: 'Empty', price: 'Empty', duration: 'Empty', unsecure: 'Empty'};
             result.push(temp);
-          }
-          if(result[x].type == 'S'){
-            if(result[x].careertype == 'Scouting'){
-              result[x].careertype = 'Looking for a Scout';
-            }else if(result[x].careertype == 'Delivery'){
-              result[x].careertype = 'Need a Courier';
-            }else if(result[x].careertype == 'Racing'){
-              result[x].careertype = 'Looking to Race';
-            }else if(result[x].careertype == 'Medical'){
-              result[x].careertype = 'Looking for Medical Services';
-            }else if(result[x].careertype == 'Security'){
-              result[x].careertype = 'Looking for Security Services';
-            }else if(result[x].careertype == 'Charting Regular'){
-              result[x].careertype = 'Looking for a Charter';
-            }else if(result[x].careertype == 'Charting Luxury'){
-              result[x].careertype = 'Looking for a Luxurious Charter';
-            }
-          }else if(result[x].type == 'P'){
-            if(result[x].careertype == 'Scouting'){
-              result[x].careertype = 'Scout for Hire';
-            }else if(result[x].careertype == 'Delivery'){
-              result[x].careertype = 'Courier for Hire';
-            }else if(result[x].careertype == 'Racing'){
-              result[x].careertype = 'Racer for Hire';
-            }else if(result[x].careertype == 'Medical'){
-              result[x].careertype = 'Medical Services for Hire';
-            }else if(result[x].careertype == 'Security'){
-              result[x].careertype = 'Security Services for Hire';
-            }else if(result[x].careertype == 'Charting Regular'){
-              result[x].careertype = 'Regular Charter for Hire';
-            }else if(result[x].careertype == 'Charting Luxury'){
-              result[x].careertype = 'Luxurious Charter for Hire';
-            }
-          }
-          if(result[x].duration == 1){
-            result[x].duration = '1 hour';
           }else{
-            result[x].duration = result[x].duration+' hours';
+            if(result[x].type == 'S'){
+              if(result[x].careertype == 'Scouting'){
+                result[x].careertype = 'Looking for a Scout';
+              }else if(result[x].careertype == 'Delivery'){
+                result[x].careertype = 'Need a Courier';
+              }else if(result[x].careertype == 'Racing'){
+                result[x].careertype = 'Looking to Race';
+              }else if(result[x].careertype == 'Medical'){
+                result[x].careertype = 'Looking for Medical Services';
+              }else if(result[x].careertype == 'Security'){
+                result[x].careertype = 'Looking for Security Services';
+              }else if(result[x].careertype == 'Charting Regular'){
+                result[x].careertype = 'Looking for a Charter';
+              }else if(result[x].careertype == 'Charting Luxury'){
+                result[x].careertype = 'Looking for a Luxurious Charter';
+              }
+            }else if(result[x].type == 'P'){
+              if(result[x].careertype == 'Scouting'){
+                result[x].careertype = 'Scout for Hire';
+              }else if(result[x].careertype == 'Delivery'){
+                result[x].careertype = 'Courier for Hire';
+              }else if(result[x].careertype == 'Racing'){
+                result[x].careertype = 'Racer for Hire';
+              }else if(result[x].careertype == 'Medical'){
+                result[x].careertype = 'Medical Services for Hire';
+              }else if(result[x].careertype == 'Security'){
+                result[x].careertype = 'Security Services for Hire';
+              }else if(result[x].careertype == 'Charting Regular'){
+                result[x].careertype = 'Regular Charter for Hire';
+              }else if(result[x].careertype == 'Charting Luxury'){
+                result[x].careertype = 'Luxurious Charter for Hire';
+              }
+            }
+            if(result[x].duration == 1){
+              result[x].duration = '1 hour';
+            }else{
+              result[x].duration = result[x].duration+' hours';
+            }
+            result[x].unsecure = decodeEntities(result[x].unsecure);
+            result[x].unsecure = truncate(result[x].unsecure, 10);
+            result[x].price = result[x].price+' aUEC';
           }
-          result[x].unsecure = decodeEntities(result[x].unsecure);
-          result[x].unsecure = truncate(result[x].unsecure, 10);
-          result[x].price = result[x].price+' aUEC';
         }
         p++;
         var embed = new MessageEmbed()
