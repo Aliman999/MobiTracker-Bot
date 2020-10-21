@@ -283,7 +283,7 @@ client.on('message', message => {
     if(!args.length){
       var p = 0;
     }else if(args.length == 1 && args[0] > 0){
-      var p = args[0];
+      var p = args[0]-1;
     }else{
       return message.channel.send('Invalid Arguments.');
     }
