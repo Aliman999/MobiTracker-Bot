@@ -293,10 +293,8 @@ client.on('message', message => {
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       mp = Math.ceil(result.length/pp);
-      if(p > mp && mp == 1){
-        p = 0;
-      }else{
-        p = mp-1;
+      if(p > mp){
+        p = mp;
       }
       if(p*pp == 0){
         limit = 'LIMIT 4';
