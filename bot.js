@@ -425,7 +425,7 @@ client.on('message', message => {
         }
       });
     }
-    const sql = "SELECT contracts, prevContracts, applicants, prevApplicants, reviews, prevReviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
+    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result.length > 0 && args.length > 0){
