@@ -301,16 +301,16 @@ client.on('message', message => {
       }else{
         limit = 'LIMIT 4, '+(p*pp-1);
       }
-      var sql = "SELECT u_creator, careertype, price, duration, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
+      var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
       con.query(sql, function (err, result, fields) {
         if(err) throw err;
         if(result.length>0){
           for(var x = 0; x<4; x++){
             if(!result[x]){
-              const temp = {u_creator: 'Empty', careertype: 'Empty', price: 'Empty', duration: 'Empty', unsecure: 'Empty'};
+              const temp = {u_creator: 'Empty', careertype: 'Empty', price: 'Empty', unsecure: 'Empty'};
               result.push(temp);
             }else{
-              if(result[x].type == 'S'){
+              if(result[x].type == 'R'){
                 if(result[x].careertype == 'Scouting'){
                   result[x].careertype = 'Looking for a Scout';
                 }else if(result[x].careertype == 'Delivery'){
@@ -326,7 +326,7 @@ client.on('message', message => {
                 }else if(result[x].careertype == 'Charting Luxury'){
                   result[x].careertype = 'Looking for a Luxurious Charter';
                 }
-              }else if(result[x].type == 'P'){
+              }else if(result[x].type == 'O'){
                 if(result[x].careertype == 'Scouting'){
                   result[x].careertype = 'Scout for Hire';
                 }else if(result[x].careertype == 'Delivery'){
@@ -343,11 +343,6 @@ client.on('message', message => {
                   result[x].careertype = 'Luxurious Charter for Hire';
                 }
               }
-              if(result[x].duration == 1){
-                result[x].duration = '1 hour';
-              }else{
-                result[x].duration = result[x].duration+' hours';
-              }
               result[x].unsecure = decodeEntities(result[x].unsecure);
               result[x].unsecure = truncate(result[x].unsecure, 10);
               result[x].price = result[x].price+' aUEC';
@@ -361,28 +356,24 @@ client.on('message', message => {
             .addFields(
               { name: result[pp-4].u_creator, value: result[pp-4].careertype, inline: true},
               { name: 'Price', value:result[pp-4].price, inline:true },
-              { name: 'Expected Duration', value:result[pp-4].duration, inline:true },
               { name: 'Description', value:result[pp-4].unsecure, inline:true },
 
               { name: '\u200B', value: '\u200B' },
 
               { name: result[pp-3].u_creator, value: result[pp-3].careertype, inline: true},
               { name: 'Price', value:result[pp-3].price, inline:true },
-              { name: 'Expected Duration', value:result[pp-3].duration, inline:true },
               { name: 'Description', value:result[pp-3].unsecure, inline:true },
 
               { name: '\u200B', value: '\u200B' },
 
               { name: result[pp-2].u_creator, value: result[pp-2].careertype, inline: true},
               { name: 'Price', value:result[pp-2].price, inline:true },
-              { name: 'Expected Duration', value:result[pp-2].duration, inline:true },
               { name: 'Description', value:result[pp-2].unsecure, inline:true },
 
               { name: '\u200B', value: '\u200B' },
 
               { name: result[pp-1].u_creator, value: result[pp-1].careertype, inline: true},
               { name: 'Price', value:result[pp-1].price, inline:true },
-              { name: 'Expected Duration', value:result[pp-1].duration, inline:true },
               { name: 'Description', value:result[pp-1].unsecure, inline:true }
              )
              .setFooter('Contracts - Mobitracker.co');
