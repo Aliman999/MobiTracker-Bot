@@ -309,7 +309,7 @@ client.on('message', message => {
         if(err) throw err;
         var newCreator = [], newPrice = [], newEscrow = [], newDesc = [], spacer, field = [];
         for(var x = 0; x<result.length; x++){
-          if(result[x].type == 'S'){
+          if(result[x].type == 'R'){
             if(result[x].careertype == 'Scouting'){
               result[x].careertype = 'Looking for a Scout';
 
@@ -360,9 +360,9 @@ client.on('message', message => {
           result[x].unsecure = truncate(result[x].unsecure, 10);
           result[x].price = result[x].price+' aUEC';
           if(result[x].escrow == 1){
-            result[x].escrow = "True";
+            result[x].escrow = "Active";
           }else{
-            result[x].escrow = "False";
+            result[x].escrow = "Inactive";
           }
           newCreator[x] = { name: result[x].u_creator, value: result[x].careertype, inline: true };
           newPrice[x] = { name: 'Price', value: numberWithCommas(result[x].price), inline: true };
