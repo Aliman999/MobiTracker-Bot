@@ -304,7 +304,7 @@ client.on('message', message => {
       var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, escrow->'$.ESCROW' AS escrow, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
       con.query(sql, function (err, result, fields) {
         if(err) throw err;
-        var newField, field = [];
+        var newCreator = [], newPrice = [], newEscrow = [], newDesc = [], spacer, field = [];
         for(var x = 0; x<result.length; x++){
           if(result[x].type == 'R'){
             if(result[x].careertype == 'Scouting'){
@@ -376,9 +376,12 @@ client.on('message', message => {
           }else{
             result[x].escrow = "False";
           }
-          newField = { name: result[x].u_creator, value: result[x].careertype, inline: true,  name: 'Price', value: result[x].price, inline: true, name: 'Escrow', value:result[x].escrow, inline:true, name: 'Description', value:result[x].unsecure, inline:true, name: '\u200B', value: '\u200B' };
-          field.push(newField);
-          console.log(newField);
+          newCreator[x] = { name: result[x].u_creator, value: result[x].careertype, inline: true };
+          newPrice[x] = { name: 'Price', value: result[x].price, inline: true };
+          newEscrow[x] = { name: 'Escrow', value:result[x].escrow, inline:true };
+          newDesc[x] = { name: 'Description', value:result[x].unsecure, inline:true };
+          spacer = { name: '\u200B', value: '\u200B' };
+          console.log(newCreator);
         }
         p++;
         var embed = new MessageEmbed()
