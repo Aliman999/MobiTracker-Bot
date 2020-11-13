@@ -383,6 +383,7 @@ client.on('message', message => {
             { name: 'Description', value:result[x].unsecure, inline:true },
             { name: '\u200B', value: '\u200B' };
           field.push(newField);
+          console.log(field);
         }
         p++;
         var embed = new MessageEmbed()
