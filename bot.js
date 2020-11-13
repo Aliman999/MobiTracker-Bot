@@ -373,30 +373,16 @@ client.on('message', message => {
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
           .setTitle('Page '+p+' of '+mp)
-          .addFields(
-            { name: result[pp-4].u_creator, value: result[pp-4].careertype, inline: true},
-            { name: 'Price', value:result[pp-4].price, inline:true },
-            { name: 'Description', value:result[pp-4].unsecure, inline:true },
-
-            { name: '\u200B', value: '\u200B' },
-
-            { name: result[pp-3].u_creator, value: result[pp-3].careertype, inline: true},
-            { name: 'Price', value:result[pp-3].price, inline:true },
-            { name: 'Description', value:result[pp-3].unsecure, inline:true },
-
-            { name: '\u200B', value: '\u200B' },
-
-            { name: result[pp-2].u_creator, value: result[pp-2].careertype, inline: true},
-            { name: 'Price', value:result[pp-2].price, inline:true },
-            { name: 'Description', value:result[pp-2].unsecure, inline:true },
-
-            { name: '\u200B', value: '\u200B' },
-
-            { name: result[pp-1].u_creator, value: result[pp-1].careertype, inline: true},
-            { name: 'Price', value:result[pp-1].price, inline:true },
-            { name: 'Description', value:result[pp-1].unsecure, inline:true }
-           )
-           .setFooter('Contracts - Mobitracker.co');
+          .setFooter('Contracts - Mobitracker.co');
+        for(var x = 0; x < result.length; x++){
+          embed.addFields(newCreator[x]);
+          embed.addFields(newPrice[x]);
+          embed.addFields(newEscrow[x]);
+          embed.addFields(newDesc[x]);
+          if(x != result.length-1){
+            embed.addFields(spacer);
+          }
+        }
         message.channel.send(embed);
       });
     });
