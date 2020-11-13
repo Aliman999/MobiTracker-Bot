@@ -376,7 +376,7 @@ client.on('message', message => {
           }else{
             result[x].escrow = "False";
           }
-          newField = { name: result[x].u_creator, value: result[x].careertype, inline: true }, { name: 'Price', value: result[x].price, inline: true }, { name: 'Escrow', value:result[x].escrow, inline:true }, { name: 'Description', value:result[x].unsecure, inline:true }, { name: '\u200B', value: '\u200B' };
+          newField = { name: result[x].u_creator, value: result[x].careertype, inline: true,  name: 'Price', value: result[x].price, inline: true, name: 'Escrow', value:result[x].escrow, inline:true, name: 'Description', value:result[x].unsecure, inline:true, name: '\u200B', value: '\u200B' };
           field.push(newField);
           console.log(newField);
         }
