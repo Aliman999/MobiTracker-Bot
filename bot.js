@@ -306,64 +306,49 @@ client.on('message', message => {
         if(err) throw err;
         var newCreator = [], newPrice = [], newEscrow = [], newDesc = [], spacer, field = [];
         for(var x = 0; x<result.length; x++){
-          if(result[x].type == 'R'){
+          if(result[x].type == 'S'){
             if(result[x].careertype == 'Scouting'){
-
               result[x].careertype = 'Looking for a Scout';
 
             }else if(result[x].careertype == 'Delivery'){
-
               result[x].careertype = 'Looking for a Courier';
 
             }else if(result[x].careertype == 'Racing'){
-
               result[x].careertype = 'Looking to Race';
 
             }else if(result[x].careertype == 'Medical'){
-
               result[x].careertype = 'Looking for Medical Services';
 
             }else if(result[x].careertype == 'Security'){
-
               result[x].careertype = 'Looking for Security Services';
 
             }else if(result[x].careertype == 'Charting Regular'){
-
               result[x].careertype = 'Looking for a Charter';
 
             }else if(result[x].careertype == 'Charting Luxury'){
-
               result[x].careertype = 'Looking for a Luxurious Charter';
 
             }
           }else if(result[x].type == 'O'){
-
             if(result[x].careertype == 'Scouting'){
-
               result[x].careertype = 'Scout for Hire';
 
             }else if(result[x].careertype == 'Delivery'){
-
               result[x].careertype = 'Courier for Hire';
 
             }else if(result[x].careertype == 'Racing'){
-
               result[x].careertype = 'Racer for Hire';
 
             }else if(result[x].careertype == 'Medical'){
-
               result[x].careertype = 'Medical Services for Hire';
 
             }else if(result[x].careertype == 'Security'){
-
               result[x].careertype = 'Security Services for Hire';
 
             }else if(result[x].careertype == 'Charting Regular'){
-
               result[x].careertype = 'Regular Charter for Hire';
 
             }else if(result[x].careertype == 'Charting Luxury'){
-
               result[x].careertype = 'Luxurious Charter for Hire';
 
             }
