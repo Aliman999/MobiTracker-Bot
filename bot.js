@@ -301,108 +301,118 @@ client.on('message', message => {
       }else{
         limit = 'LIMIT 4, '+(p*pp-1);
       }
-      var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
+      var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, escrow->'$.ESCROW' AS escrow, created_at FROM contracts WHERE faction = 0  ORDER BY id DESC "+limit+";";
       con.query(sql, function (err, result, fields) {
         if(err) throw err;
-        if(result.length>0){
-          for(var x = 0; x<result.length; x++){
-            if(result[x].type == 'R'){
-              if(result[x].careertype == 'Scouting'){
+        var newField, field = [];
+        for(var x = 0; x<result.length; x++){
+          if(result[x].type == 'R'){
+            if(result[x].careertype == 'Scouting'){
 
-                result[x].careertype = 'Looking for a Scout';
+              result[x].careertype = 'Looking for a Scout';
 
-              }else if(result[x].careertype == 'Delivery'){
+            }else if(result[x].careertype == 'Delivery'){
 
-                result[x].careertype = 'Need a Courier';
+              result[x].careertype = 'Need a Courier';
 
-              }else if(result[x].careertype == 'Racing'){
+            }else if(result[x].careertype == 'Racing'){
 
-                result[x].careertype = 'Looking to Race';
+              result[x].careertype = 'Looking to Race';
 
-              }else if(result[x].careertype == 'Medical'){
+            }else if(result[x].careertype == 'Medical'){
 
-                result[x].careertype = 'Looking for Medical Services';
+              result[x].careertype = 'Looking for Medical Services';
 
-              }else if(result[x].careertype == 'Security'){
+            }else if(result[x].careertype == 'Security'){
 
-                result[x].careertype = 'Looking for Security Services';
+              result[x].careertype = 'Looking for Security Services';
 
-              }else if(result[x].careertype == 'Charting Regular'){
+            }else if(result[x].careertype == 'Charting Regular'){
 
-                result[x].careertype = 'Looking for a Charter';
+              result[x].careertype = 'Looking for a Charter';
 
-              }else if(result[x].careertype == 'Charting Luxury'){
+            }else if(result[x].careertype == 'Charting Luxury'){
 
-                result[x].careertype = 'Looking for a Luxurious Charter';
+              result[x].careertype = 'Looking for a Luxurious Charter';
 
-              }
-            }else if(result[x].type == 'O'){
-
-              if(result[x].careertype == 'Scouting'){
-
-                result[x].careertype = 'Scout for Hire';
-
-              }else if(result[x].careertype == 'Delivery'){
-
-                result[x].careertype = 'Courier for Hire';
-
-              }else if(result[x].careertype == 'Racing'){
-
-                result[x].careertype = 'Racer for Hire';
-
-              }else if(result[x].careertype == 'Medical'){
-
-                result[x].careertype = 'Medical Services for Hire';
-
-              }else if(result[x].careertype == 'Security'){
-
-                result[x].careertype = 'Security Services for Hire';
-
-              }else if(result[x].careertype == 'Charting Regular'){
-
-                result[x].careertype = 'Regular Charter for Hire';
-
-              }else if(result[x].careertype == 'Charting Luxury'){
-
-                result[x].careertype = 'Luxurious Charter for Hire';
-
-              }
             }
-            result[x].unsecure = decodeEntities(result[x].unsecure);
-            result[x].unsecure = truncate(result[x].unsecure, 10);
-            result[x].price = result[x].price+' aUEC';
+          }else if(result[x].type == 'O'){
+
+            if(result[x].careertype == 'Scouting'){
+
+              result[x].careertype = 'Scout for Hire';
+
+            }else if(result[x].careertype == 'Delivery'){
+
+              result[x].careertype = 'Courier for Hire';
+
+            }else if(result[x].careertype == 'Racing'){
+
+              result[x].careertype = 'Racer for Hire';
+
+            }else if(result[x].careertype == 'Medical'){
+
+              result[x].careertype = 'Medical Services for Hire';
+
+            }else if(result[x].careertype == 'Security'){
+
+              result[x].careertype = 'Security Services for Hire';
+
+            }else if(result[x].careertype == 'Charting Regular'){
+
+              result[x].careertype = 'Regular Charter for Hire';
+
+            }else if(result[x].careertype == 'Charting Luxury'){
+
+              result[x].careertype = 'Luxurious Charter for Hire';
+
+            }
           }
-          p++;
-          var embed = new MessageEmbed()
-            .setColor(0x25a6dd)
-            .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
-            .setTitle('Page '+p+' of '+mp)
-            .addFields(
-              { name: result[pp-4].u_creator, value: result[pp-4].careertype, inline: true},
-              { name: 'Price', value:result[pp-4].price, inline:true },
-              { name: 'Description', value:result[pp-4].unsecure, inline:true },
-
-              { name: '\u200B', value: '\u200B' },
-
-              { name: result[pp-3].u_creator, value: result[pp-3].careertype, inline: true},
-              { name: 'Price', value:result[pp-3].price, inline:true },
-              { name: 'Description', value:result[pp-3].unsecure, inline:true },
-
-              { name: '\u200B', value: '\u200B' },
-
-              { name: result[pp-2].u_creator, value: result[pp-2].careertype, inline: true},
-              { name: 'Price', value:result[pp-2].price, inline:true },
-              { name: 'Description', value:result[pp-2].unsecure, inline:true },
-
-              { name: '\u200B', value: '\u200B' },
-
-              { name: result[pp-1].u_creator, value: result[pp-1].careertype, inline: true},
-              { name: 'Price', value:result[pp-1].price, inline:true },
-              { name: 'Description', value:result[pp-1].unsecure, inline:true }
-             )
-             .setFooter('Contracts - Mobitracker.co');
-          message.channel.send(embed);
+          result[x].unsecure = decodeEntities(result[x].unsecure);
+          result[x].unsecure = truncate(result[x].unsecure, 10);
+          result[x].price = result[x].price+' aUEC';
+          if(result[x].escrow == 1){
+            result[x].escrow = "True";
+          }else{
+            result[x].escrow = "False";
+          }
+          newField =
+            { name: result[x].u_creator, value: result[x].careertype, inline: true },
+            { name: 'Price', value: result[x].price, inline: true },
+            { name: 'Escrow', value:result[x].escrow, inline:true },
+            { name: 'Description', value:result[x].unsecure, inline:true };
+          field.push(newField);
         }
+        p++;
+        var embed = new MessageEmbed()
+          .setColor(0x25a6dd)
+          .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
+          .setTitle('Page '+p+' of '+mp)
+          .addFields(
+            { name: result[pp-4].u_creator, value: result[pp-4].careertype, inline: true},
+            { name: 'Price', value:result[pp-4].price, inline:true },
+            { name: 'Description', value:result[pp-4].unsecure, inline:true },
+
+            { name: '\u200B', value: '\u200B' },
+
+            { name: result[pp-3].u_creator, value: result[pp-3].careertype, inline: true},
+            { name: 'Price', value:result[pp-3].price, inline:true },
+            { name: 'Description', value:result[pp-3].unsecure, inline:true },
+
+            { name: '\u200B', value: '\u200B' },
+
+            { name: result[pp-2].u_creator, value: result[pp-2].careertype, inline: true},
+            { name: 'Price', value:result[pp-2].price, inline:true },
+            { name: 'Description', value:result[pp-2].unsecure, inline:true },
+
+            { name: '\u200B', value: '\u200B' },
+
+            { name: result[pp-1].u_creator, value: result[pp-1].careertype, inline: true},
+            { name: 'Price', value:result[pp-1].price, inline:true },
+            { name: 'Description', value:result[pp-1].unsecure, inline:true }
+           )
+           .setFooter('Contracts - Mobitracker.co');
+        message.channel.send(embed);
       });
     });
   }
