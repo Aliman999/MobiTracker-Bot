@@ -305,77 +305,72 @@ client.on('message', message => {
       con.query(sql, function (err, result, fields) {
         if(err) throw err;
         if(result.length>0){
-          for(var x = 0; x<4; x++){
-            if(!result[x]){
-              const temp = {u_creator: 'Empty', careertype: 'Empty', price: 'Empty', unsecure: 'Empty'};
-              result.push(temp);
-            }else{
-              if(result[x].type == 'R'){
-                if(result[x].careertype == 'Scouting'){
+          for(var x = 0; x<result.length; x++){
+            if(result[x].type == 'R'){
+              if(result[x].careertype == 'Scouting'){
 
-                  result[x].careertype = 'Looking for a Scout';
+                result[x].careertype = 'Looking for a Scout';
 
-                }else if(result[x].careertype == 'Delivery'){
+              }else if(result[x].careertype == 'Delivery'){
 
-                  result[x].careertype = 'Need a Courier';
+                result[x].careertype = 'Need a Courier';
 
-                }else if(result[x].careertype == 'Racing'){
+              }else if(result[x].careertype == 'Racing'){
 
-                  result[x].careertype = 'Looking to Race';
+                result[x].careertype = 'Looking to Race';
 
-                }else if(result[x].careertype == 'Medical'){
+              }else if(result[x].careertype == 'Medical'){
 
-                  result[x].careertype = 'Looking for Medical Services';
+                result[x].careertype = 'Looking for Medical Services';
 
-                }else if(result[x].careertype == 'Security'){
+              }else if(result[x].careertype == 'Security'){
 
-                  result[x].careertype = 'Looking for Security Services';
+                result[x].careertype = 'Looking for Security Services';
 
-                }else if(result[x].careertype == 'Charting Regular'){
+              }else if(result[x].careertype == 'Charting Regular'){
 
-                  result[x].careertype = 'Looking for a Charter';
+                result[x].careertype = 'Looking for a Charter';
 
-                }else if(result[x].careertype == 'Charting Luxury'){
+              }else if(result[x].careertype == 'Charting Luxury'){
 
-                  result[x].careertype = 'Looking for a Luxurious Charter';
+                result[x].careertype = 'Looking for a Luxurious Charter';
 
-                }
-              }else if(result[x].type == 'O'){
-
-                if(result[x].careertype == 'Scouting'){
-
-                  result[x].careertype = 'Scout for Hire';
-
-                }else if(result[x].careertype == 'Delivery'){
-
-                  result[x].careertype = 'Courier for Hire';
-
-                }else if(result[x].careertype == 'Racing'){
-
-                  result[x].careertype = 'Racer for Hire';
-
-                }else if(result[x].careertype == 'Medical'){
-                  
-                  result[x].careertype = 'Medical Services for Hire';
-
-                }else if(result[x].careertype == 'Security'){
-
-                  result[x].careertype = 'Security Services for Hire';
-
-                }else if(result[x].careertype == 'Charting Regular'){
-
-                  result[x].careertype = 'Regular Charter for Hire';
-
-                }else if(result[x].careertype == 'Charting Luxury'){
-
-                  result[x].careertype = 'Luxurious Charter for Hire';
-
-                }
               }
-              result[x].unsecure = decodeEntities(result[x].unsecure);
-              result[x].unsecure = truncate(result[x].unsecure, 10);
-              result[x].price = result[x].price+' aUEC';
+            }else if(result[x].type == 'O'){
+
+              if(result[x].careertype == 'Scouting'){
+
+                result[x].careertype = 'Scout for Hire';
+
+              }else if(result[x].careertype == 'Delivery'){
+
+                result[x].careertype = 'Courier for Hire';
+
+              }else if(result[x].careertype == 'Racing'){
+
+                result[x].careertype = 'Racer for Hire';
+
+              }else if(result[x].careertype == 'Medical'){
+
+                result[x].careertype = 'Medical Services for Hire';
+
+              }else if(result[x].careertype == 'Security'){
+
+                result[x].careertype = 'Security Services for Hire';
+
+              }else if(result[x].careertype == 'Charting Regular'){
+
+                result[x].careertype = 'Regular Charter for Hire';
+
+              }else if(result[x].careertype == 'Charting Luxury'){
+
+                result[x].careertype = 'Luxurious Charter for Hire';
+
+              }
             }
+            result[x].unsecure = decodeEntities(result[x].unsecure);
+            result[x].unsecure = truncate(result[x].unsecure, 10);
+            result[x].price = result[x].price+' aUEC';
           }
           p++;
           var embed = new MessageEmbed()
