@@ -367,7 +367,6 @@ client.on('message', message => {
           newDesc[x] = { name: 'Description', value:result[x].unsecure, inline:true };
           spacer = { name: '\u200B', value: '\u200B' };
         }
-        console.log(newCreator);
         p++;
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
