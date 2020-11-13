@@ -96,6 +96,9 @@ function affiliations(aff){
 function decodeEntities(encodedString) {
   return encodedString.replace('&#039;', "'");
 }
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 var truncate = function (elem, limit) {
 	if (!elem || !limit) return;
@@ -362,7 +365,7 @@ client.on('message', message => {
             result[x].escrow = "False";
           }
           newCreator[x] = { name: result[x].u_creator, value: result[x].careertype, inline: true };
-          newPrice[x] = { name: 'Price', value: result[x].price, inline: true };
+          newPrice[x] = { name: 'Price', value: numberWithCommas(result[x].price), inline: true };
           newEscrow[x] = { name: 'Escrow', value:result[x].escrow, inline:true };
           newDesc[x] = { name: 'Description', value:result[x].unsecure, inline:true };
           spacer = { name: '\u200B', value: '\u200B' };
