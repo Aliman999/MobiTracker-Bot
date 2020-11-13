@@ -313,7 +313,7 @@ client.on('message', message => {
 
             }else if(result[x].careertype == 'Delivery'){
 
-              result[x].careertype = 'Need a Courier';
+              result[x].careertype = 'Looking for a Courier';
 
             }else if(result[x].careertype == 'Racing'){
 
@@ -381,8 +381,8 @@ client.on('message', message => {
           newEscrow[x] = { name: 'Escrow', value:result[x].escrow, inline:true };
           newDesc[x] = { name: 'Description', value:result[x].unsecure, inline:true };
           spacer = { name: '\u200B', value: '\u200B' };
-          console.log(newCreator);
         }
+        console.log(newCreator);
         p++;
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
