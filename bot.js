@@ -33,6 +33,7 @@ function socket(){
   }
 
   wsClient.onclose = function(){
+    console.log("Reconnecting to Event Server");
     setTimeout(socket, 3000);
   };
 
