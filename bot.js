@@ -237,7 +237,7 @@ client.on('message', message => {
                 if (err) throw err;
                 if(result.length > 0){
                   if(decoded.contracts === result[0].contracts && decoded.applicants === result[0].applicants && decoded.reviews === result[0].reviews ){
-                    message.author.send('Your policies are the same.');
+                    message.author.send('Your policies are the same. \nContracts: '+resuilt[0].contracts+'\nApplicants: '+result[0].applicants+'\nReviews: '+result[0].reviews);
                   }else{
                     decoded.update = true;
                     const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
