@@ -25,9 +25,8 @@ function socket(){
     heartbeat();
   }
 
-  wsClient.onmessage = function(event){
-    response = JSON.parse(response);
-    console.log(response.event);
+  wsClient.onmessage = function(response){
+    console.log(response);
   }
 
   wsClient.onclose = function(){
