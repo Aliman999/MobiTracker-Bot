@@ -266,7 +266,7 @@ client.on('message', message => {
                   }else if(decoded.contracts != 0 && decoded.reviews == 0){
                     span = " for review alerts.";
                   }else{
-                    span = " for contract and review alerts.";
+                    span = " for contracts and review alerts.";
                   }
                   message.author.send('Your discord is now linked with '+decoded.username+''+span+' \nhttps://mobitracker.co/'+decoded.username+' \nRemember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
                 }
