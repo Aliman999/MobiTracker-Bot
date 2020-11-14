@@ -33,11 +33,11 @@ function socket(){
   }
 
   wsClient.onclose = function(){
-    socket();
+    setTimeout(socket, 3000);
   };
 
   wsClient.onerror = function(){
-    socket();
+    setTimeout(socket, 3000);
   };
 }
 
