@@ -218,6 +218,9 @@ client.on('message', message => {
       if(err){
         let allKeys = Object.getOwnPropertyNames(err);
         console.log(allKeys);
+        console.log(err.stack);
+        console.log(err.name);
+        console.log(err.message);
         if(err.name){
 
         }
