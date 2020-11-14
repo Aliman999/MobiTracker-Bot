@@ -216,8 +216,9 @@ client.on('message', message => {
     }
     jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
       if(err){
-        console.log(err);
-        console.log(`${args}`);
+        if(err.TokenExpiredError){
+          console.log(err.TokenExpiredError);
+        }
       }else{
         if(decoded.cid != "" && decoded.username != ""){
           const authUser = message.author;
