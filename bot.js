@@ -18,46 +18,30 @@ const msg = {
   token: botToken
 };
 
-function connectEvent(){
-  try{
-    wsClient = new WebSocket('wss://mobitracker.co:8000');
+function socket(){
+  wsClient = new WebSocket('wss://mobitracker.co:8000');
 
-    wsClient.on('open', function(){
-      wsClient.send(JSON.stringify(msg));
-      console.log("Connected to Event Server");
-    });
+  wsClient.on('open', function(){
+    wsClient.send(JSON.stringify(msg));
+    console.log("Connected to Event Server");
+    heartbeat();
+  });
 
-    wsClient.on('message', function(response){
-      response = JSON.parse(response);
-      console.log(response.event);
-    });
+  wsClient.on('message', function(response){
+    response = JSON.parse(response);
+    console.log(response.event);
+  });
 
-    wsClient.on('close', function(){
-      clearTimeout(this.pingTimeout);
-    })
-
-    wsClient.on('error', function(err){
-      console.log('Failed to connect to Event Server');
-      reconnect();
-    });
-  }catch(e){
-    reconnect();
-  }
+  webSocket.on('close', function(){
+    socket();
+  });
 }
 
-connectEvent();
-
-function reconnect(){
-  setTimeout(() => {
-    connectEvent();
-  }, 10000);
-}
-
-function heartbeat(){
-  clearTimeout(this.pingTimeout);
-  this.pingTimeout = setTimeout(() => {
-    reconnect();
-  }, 30000 + 1000);
+function heartbeat() {
+  if (!webSocket) return;
+  if (webSocket.readyState !== 1) return;
+  webSocket.send(JSON.stringify({type:"ping"}));
+  setTimeout(heartbeat, 3000);
 }
 
 var trueLog = console.log;
