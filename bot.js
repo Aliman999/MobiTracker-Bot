@@ -6,9 +6,9 @@ const MySQLEvents = require('@rodrigogs/mysql-events');
 const fs = require('fs');
 const https = require('https');
 const mysql = require('mysql');
-var WebSocket = require('ws');
+const WebSocket = require('ws');
 const client = new Client();
-const webSocket = new WebSocket("wss://mobitracker.co:8000");
+const wsClient = new WebSocket("wss://mobitracker.co:8000");
 var jwt = require('jsonwebtoken');
 var discordClients = [];
 
@@ -19,8 +19,7 @@ const msg = {
 };
 
 function socket(){
-  console.log(webSocket);
-  const wsClient = webSocket;
+  console.log(wsClient);
 
   wsClient.onopen = function(){
     wsClient.send(JSON.stringify(msg));
