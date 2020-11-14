@@ -251,7 +251,7 @@ client.on('message', message => {
                     console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
                   }
                 }else{
-                  console.log(mag);
+                  console.log(msg);
                   wsClient.send(JSON.stringify(msg));
                   var span = "";
                   if(decoded.contracts == 0 && decoded.reviews != 0){
