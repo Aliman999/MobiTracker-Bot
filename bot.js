@@ -32,6 +32,10 @@ function socket(){
     console.log(response.event);
   }
 
+  wsClient.onclose = function(){
+    socket();
+  };
+  
   wsClient.onerror = function(){
     socket();
   };
