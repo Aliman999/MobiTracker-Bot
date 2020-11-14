@@ -232,7 +232,7 @@ client.on('message', message => {
           con.query(sql, function (err, result, fields){
             if (err) throw err;
             if(result.length > 0){
-              const sql = "SELECT contracts->'$.active', applicants->'$.active', reviews->'$.active' FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+              const sql = "SELECT contracts->'$.active' AS contracts, applicants->'$.active' AS applicants, reviews->'$.active' AS reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 if(result.length > 0){
