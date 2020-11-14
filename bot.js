@@ -33,7 +33,6 @@ function socket(){
   }
 
   wsClient.onclose = function(){
-    console.log("Lost Connection to the Event Server");
     socket();
   };
 
