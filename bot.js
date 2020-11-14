@@ -216,12 +216,10 @@ client.on('message', message => {
     }
     jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
       if(err){
-        if(err.message === 'invalid token'){
-          message.author.send('Invalid Token!');
-        }else if(err.message === 'invalid signature'){
-          message.author.send('Invalid Token!');
-        }else if(err.message === 'jwt expired'){
+        if(err.message === 'jwt expired'){
           message.author.send('This Token has expired!');
+        }else{
+          message.author.send('Invalid Token!');
         }
       }else{
         if(decoded.cid != "" && decoded.username != ""){
