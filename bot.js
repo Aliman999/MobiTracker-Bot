@@ -32,7 +32,7 @@ function socket(){
     console.log(response.event);
   }
 
-  wsClient.onclose = function(){
+  wsClient.onerror = function(){
     socket();
   };
 }
