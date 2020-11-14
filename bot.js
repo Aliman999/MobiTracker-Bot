@@ -1,3 +1,4 @@
+'use strict';
 const { Client, MessageEmbed } = require('discord.js');
 const config  = require('./config');
 const prefix = '!';
