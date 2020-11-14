@@ -31,6 +31,7 @@ function socket(){
   }
 
   wsClient.onclose = function(){
+    console.log("Reconnecting to Event Server");
     setInterval(socket, 3000);
   };
 
