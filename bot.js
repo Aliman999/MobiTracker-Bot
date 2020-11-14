@@ -8,7 +8,7 @@ const https = require('https');
 const mysql = require('mysql');
 const WebSocket = require('ws');
 const client = new Client();
-;
+const webSocket = new WebSocket("wss://mobitracker.co:8000");
 var jwt = require('jsonwebtoken');
 var discordClients = [];
 
@@ -19,7 +19,8 @@ const msg = {
 };
 
 function socket(){
-  const wsClient = new WebSocket("wss://mobitracker.co:8000");
+  console.log(webSocket);
+  const wsClient = webSocket;
 
   wsClient.onopen = function(){
     wsClient.send(JSON.stringify(msg));
