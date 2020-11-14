@@ -236,8 +236,8 @@ client.on('message', message => {
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 if(result.length > 0){
-                  console.log("jwt: "+decoded);
-                  console.log("result: "+result[0]);
+                  console.log(decoded);
+                  console.log(result[0]);
                   if(decoded.contracts == result[0].contracts && decoded.applicants == result[0].applicants && decoded.reviews == result[0].reviews ){
                     message.author.send('Your policies are the same.');
                   }else{
