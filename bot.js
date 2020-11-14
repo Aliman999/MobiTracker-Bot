@@ -39,9 +39,9 @@ function socket(){
 
 
 function heartbeat() {
-  if (!webSocket) return;
-  if (webSocket.readyState !== 1) return;
-  webSocket.send(JSON.stringify({type:"ping"}));
+  if (!wsClient) return;
+  if (wsClient.readyState !== 1) return;
+  wsClient.send(JSON.stringify({type:"ping"}));
   setTimeout(heartbeat, 3000);
 }
 
