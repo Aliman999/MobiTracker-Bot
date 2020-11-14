@@ -232,13 +232,12 @@ client.on('message', message => {
           con.query(sql, function (err, result, fields){
             if (err) throw err;
             if(result.length > 0){
-              const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+              const sql = "SELECT contracts->'$.active', applicants->'$.active', reviews->'$.active' FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
               con.query(sql, function (err, result, fields) {
                 if (err) throw err;
                 if(result.length > 0){
-                  if(decoded.contracts.toString() == result[0].contracts && decoded.applicants.toString() == result[0].applicants && decoded.reviews.toString() == result[0].reviews ){
+                  if(decoded.contracts == result[0].contracts && decoded.applicants == result[0].applicants && decoded.reviews == result[0].reviews ){
                     message.author.send('Your policies are the same.');
-                    console.log(decoded.username+':'+decoded.cid+' gave existing policies');
                   }else{
                     decoded.update = true;
                     const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
@@ -248,7 +247,6 @@ client.on('message', message => {
                     };
                     wsClient.send(JSON.stringify(msg));
                     message.author.send('Updated your alert policies!');
-                    console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
                   }
                 }else{
                   wsClient.send(JSON.stringify(msg));
