@@ -19,8 +19,6 @@ const msg = {
 };
 
 function socket(){
-  console.log(wsClient);
-
   wsClient.onopen = function(){
     wsClient.send(JSON.stringify(msg));
     console.log("Connected to Event Server");
