@@ -216,7 +216,11 @@ client.on('message', message => {
     }
     jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
       if(err){
-        console.log(err);
+        let allKeys = Object.getOwnPropertyNames(e);
+        console.log(allKeys);
+        if(err.name){
+
+        }
         console.log(err.name);
       }else{
         if(decoded.cid != "" && decoded.username != ""){
