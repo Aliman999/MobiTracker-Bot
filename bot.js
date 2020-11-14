@@ -26,7 +26,8 @@ function socket(){
   }
 
   wsClient.onmessage = function(response){
-    console.log(response);
+    response = JSON.parse(response);
+    console.log(response.event);
   }
 
   wsClient.onclose = function(){
