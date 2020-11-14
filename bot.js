@@ -19,8 +19,8 @@ const msg = {
 };
 
 function socket(){
-  wsClient = = new WebSocket("wss://mobitracker.co:8000");
-  
+  wsClient = new WebSocket("wss://mobitracker.co:8000");
+
   wsClient.onopen = function(){
     wsClient.send(JSON.stringify(msg));
     console.log("Connected to Event Server");
