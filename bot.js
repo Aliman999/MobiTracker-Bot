@@ -19,7 +19,7 @@ const msg = {
 };
 
 function socket(){
-  console.log(webSocket);
+  console.log(WebSocket);
   const wsClient = webSocket;
 
   wsClient.onopen = function(){
