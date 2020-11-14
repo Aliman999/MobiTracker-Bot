@@ -163,7 +163,7 @@ client.on('message', message => {
             user.data.organization.name = "None";
           }
           var cID = '';
-          if(user.data.profile.id != '#No ID'){
+          if(user.data.profile.id != 'n/a'){
             cID = 'AND cID ='+user.data.profile.id.substring(1);
           }
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
