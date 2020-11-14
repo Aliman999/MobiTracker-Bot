@@ -210,7 +210,7 @@ client.on('message', message => {
   }
   if(command == 'auth'){
     if(!args.length){
-      return message.channel.send('Sign in at https://mobitracker.co/login and click the button that says "Authenticate with Discord". \nThen and copy the text provided and paste it here.');
+      return message.channel.send('Sign in at https://mobitracker.co/login and click the button at the top that says "Discord Bot". \nThen and copy the text provided and paste it here.');
     }else if(args.length>1){
       return message.channel.send('Too many arguments.');
     }
@@ -251,6 +251,7 @@ client.on('message', message => {
                     console.log(decoded.username+':'+decoded.cid+' updated their alert policies');
                   }
                 }else{
+                  console.log(decoded);
                   wsClient.send(JSON.stringify(msg));
                   var span = "";
                   if(decoded.contracts == 0 && decoded.reviews != 0){
