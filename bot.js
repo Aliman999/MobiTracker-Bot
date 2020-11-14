@@ -19,22 +19,22 @@ const msg = {
 };
 
 function socket(){
-  wsClient = new WebSocket('wss://mobitracker.co:8000');
+  wsClient = new WebSocket("wss://mobitracker.co:8000");
 
-  wsClient.on('open', function(){
+  wsClient.onopen = function(){
     wsClient.send(JSON.stringify(msg));
     console.log("Connected to Event Server");
     heartbeat();
-  });
+  }
 
-  wsClient.on('message', function(response){
+  wsClient.onmessage = function(event){
     response = JSON.parse(response);
     console.log(response.event);
-  });
+  }
 
-  webSocket.on('close', function(){
+  wsClient.onclose = function(){
     socket();
-  });
+  };
 }
 
 function heartbeat() {
