@@ -482,12 +482,12 @@ const program = async () => {
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
           .setTitle(notiCount+" Notifications")
           .setFooter(alert.username+' - Mobitracker.co');
-        
+
         for(var i = 0; i < Object.keys(show).length; i++){
           var index = Object.keys(show);
           if(show[index[i]].active){
             var title = index[i];
-            console.log(show[title].count);
+            console.log(title);
             for(var ii = 0; ii < show[index[i]].count; ii++){
               embed.addFields({ name: title.charAt(0).toUpperCase() + title.slice(1), value: "", inline: true });
             }
