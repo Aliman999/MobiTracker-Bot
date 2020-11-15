@@ -110,7 +110,7 @@ Object.size = function(obj) {
 Object.keys = function(obj){
   var key;
   for (key in obj) {
-    console.log(obj.hasOwnProperty(key));
+    console.log(key);
   }
   return 0;
 }
