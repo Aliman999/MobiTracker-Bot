@@ -480,7 +480,7 @@ const program = async () => {
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
-          .setTitle('Page '+p+' of '+mp)
+          .setTitle(notiCount+" Notifications")
           .setFooter(alert.username+' - Mobitracker.co');
 
         for(var i = 0; i < Object.keys(show).length; i++){
