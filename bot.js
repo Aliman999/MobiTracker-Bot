@@ -461,6 +461,8 @@ const program = async () => {
     expression: '*',
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
+
+        client.users.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
       if(event.table == 'discordAlerts'){
         const alertBefore = event.affectedRows[0].before;
         const alertAfter = event.affectedRows[0].after;
@@ -474,7 +476,6 @@ const program = async () => {
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
         if(event.affectedColumns[0] == 'reviews'){
-          client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
           embed.addFields(spacer);
         }
         client.users.get(id.id).send(embed);
