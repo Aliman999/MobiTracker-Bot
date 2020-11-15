@@ -472,17 +472,18 @@ const program = async () => {
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
 
-        var embed = new MessageEmbed()
+        var noti = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
-        for(var i = 0; i < show.length; i++){
-          console.log(show[Object.keys(show)[0]].active);
-          console.log(show[Object.keys(show)[1]].active);
-          embed.addFields({ name: "Test", value: "This Works", inline: true });
+
+        console.log(show[Object.keys(show)[0]].active);
+        console.log(show[Object.keys(show)[1]].active);
+        for(var i = 0; i < Object.keys(show).length; i++){
+          noti.addFields({ name: "Test", value: "This Works", inline: true });
         }
         client.users.fetch(id.id).then((user) =>{
-          user.send(embed);
+          user.send(noti);
         });
       }
     },
