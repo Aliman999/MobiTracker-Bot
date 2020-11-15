@@ -467,7 +467,7 @@ const program = async () => {
         const applicants = JSON.parse(alert.applicants);
         const reviews = JSON.parse(alert.reviews);
         const escrow = JSON.parse(alert.reviews);
-        const show = { contracts:(contracts.active), applicants:(applicants.active), reviews:(reviews.active), escrow:(escrow.active) };
+        const show = { contracts:contracts.active, applicants:applicants.active, reviews:reviews.active, escrow:escrow.active };
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
@@ -478,8 +478,15 @@ const program = async () => {
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
+        show.forEach((item, i) => {
+          if(item){
+            const test = Object.keys({item})[0];
+            console.log(test);
+            embed.addFields({ name: "Test", value: "This Works", inline: true });
+          }
+        });
+
         if(col == 'reviews'){
-          embed.addFields({ name: "Test", value: "This Works", inline: true });
         }
 
         client.users.fetch(id.id).then((user) =>{
