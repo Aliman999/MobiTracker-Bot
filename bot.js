@@ -446,6 +446,10 @@ client.on('message', message => {
   if (!message.content.startsWith(`${prefix}`)) return;
 });
 
+function test(){
+  console.log("test");
+};
+
 const program = async () => {
   const instance = new MySQLEvents(con, {
     startAtEnd: true,
@@ -467,7 +471,7 @@ const program = async () => {
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-
+        test();
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
@@ -477,7 +481,7 @@ const program = async () => {
             embed.addFields({ name: "Test", value: "This Works", inline: true });
           }
         }
-
+        test();
         client.users.fetch(id.id).then((user) =>{
           user.send(embed);
         });
