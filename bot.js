@@ -473,9 +473,9 @@ const program = async () => {
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
+        console.log(Object.keys(show));
         for (var i = 0; i < show.length; i++) {
           if(show[Object.keys(show)[i]].active){
-            console.log(show[Object.keys(show)[i]]);
             embed.addFields({ name: "Test", value: "This Works", inline: true });
           }
         }
