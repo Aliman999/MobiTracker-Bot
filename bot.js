@@ -461,12 +461,12 @@ const program = async () => {
     expression: '*',
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
-      if(event.table == 'discordAlerts' && (event.affectedColumns === 'contracts' || event.affectedColumns === 'applicants' || event.affectedColumns === 'reviews' || event.affectedColumns === 'escrow')){
+      if(event.table == 'discordAlerts'){
         const alertBefore = event.affectedRows[0].before;
         const alertAfter = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        console.log(event.affectedColumns);
+        console.log((event.affectedColumns === 'contracts' || event.affectedColumns === 'applicants' || event.affectedColumns === 'reviews' || event.affectedColumns === 'escrow'));
 
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
