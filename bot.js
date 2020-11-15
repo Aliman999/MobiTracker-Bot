@@ -107,7 +107,13 @@ Object.size = function(obj) {
   return size;
 };
 
-console.log(Object);
+Object.keys = function(obj){
+  var key;
+  for (key in obj) {
+    console.log(obj.hasOwnProperty(key));
+  }
+  return 0;
+}
 
 client.on("ready", () => {
   console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
