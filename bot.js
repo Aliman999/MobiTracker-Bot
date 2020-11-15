@@ -476,7 +476,7 @@ const program = async () => {
 
         show.forEach((item, i) => {
           if(item.active){
-            const test = Object.keys({item})[0];
+            const test = Object.keys({item})[i];
             console.log(test);
             embed.addFields({ name: "Test", value: "This Works", inline: true });
           }
