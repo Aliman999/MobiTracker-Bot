@@ -491,7 +491,6 @@ const program = async () => {
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
               embed.addFields({ name: show[index[i]].count+" new "+title, value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
-              embed.addFields({ name: show[index[i]].count+" new "+title, value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
             }else{
               embed.addFields({ name: show[index[i]].count+" new "+title, value: "No notifications", inline: true });
             }
