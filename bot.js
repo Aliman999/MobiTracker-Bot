@@ -486,10 +486,10 @@ const program = async () => {
         for(var i = 0; i < Object.keys(show).length; i++){
           var index = Object.keys(show);
           if(show[index[i]].active){
-            var title = String(index[i]).charAt(0).toUpperCase();
+            var title = String(index[i]).charAt(0).toUpperCase() + title.slice(1);
             console.log(title);
             for(var ii = 0; ii < show[index[i]].count; ii++){
-              embed.addFields({ name: title + title.slice(1), value: "", inline: true });
+              embed.addFields({ name: title, value: "", inline: true });
             }
           }
           embed.addFields(spacer);
