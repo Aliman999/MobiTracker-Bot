@@ -107,7 +107,7 @@ Object.size = function(obj) {
   return size;
 };
 
-Object.keys = function(obj){
+Object.key = function(obj){
   var key;
   for (key in obj) {
     console.log(key);
@@ -484,7 +484,7 @@ const program = async () => {
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
         for(var i = 0; i < show.length; i++){
-          if(show[Object.keys(show)[i]].active){
+          if(show[Object.key(show)[i]].active){
             embed.addFields({ name: "Test", value: "This Works", inline: true });
           }
         }
