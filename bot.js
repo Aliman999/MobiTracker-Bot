@@ -487,10 +487,8 @@ const program = async () => {
           var index = Object.keys(show);
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
-            for(var ii = 0; ii < show[index[i]].count; ii++){
-              embed.addFields({ name: title, value: "Test", inline: false });
-              embed.addFields({ name: '\u200B', value: '\u200B' });
-            }
+            embed.addFields({ name: show[index[i]].count+" "+title, value: "Test", inline: false });
+            embed.addFields({ name: '\u200B', value: '\u200B' });
           }
         }
         client.users.fetch(id.id).then((user) =>{
