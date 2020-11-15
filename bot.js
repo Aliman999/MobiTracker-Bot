@@ -461,7 +461,6 @@ const program = async () => {
     expression: '*',
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
-
       if(event.table == 'discordAlerts'){
         const alertBefore = event.affectedRows[0].before;
         const alertAfter = event.affectedRows[0].after;
@@ -469,7 +468,7 @@ const program = async () => {
         const id = JSON.parse(user);
         console.log(event.affectedColumns);
 
-        client.users.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+        client.users.get(id.id).send("test");
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
