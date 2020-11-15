@@ -466,45 +466,18 @@ const program = async () => {
         const alertAfter = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        if(alertAfter.contracts > alertBefore.contracts){
-          if(alertAfter.contracts != -1){
-            if(alertAfter.contracts == 1){
-              client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
-            }else if(alertAfter.contracts > 1){
-              client.users.cache.get(id.id).send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
-            }
-          }
-        }else if(alertAfter.contracts < alertBefore.contracts){
-          if(alertAfter.contracts != -1){
-            if(alertAfter.contracts == 1){
-              client.users.cache.get(id.id).send("You have a new contract available to you! \nhttps://mobitracker.co/contracts");
-            }else if(alertAfter.contracts > 1){
-              client.users.cache.get(id.id).send("You have "+alertAfter.contracts+" contracts available to you! \nhttps://mobitracker.co/contracts");
-            }
-          }
+        console.log(event.affectedColumns);
+
+        var embed = new MessageEmbed()
+          .setColor(0x25a6dd)
+          .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
+          .setFooter(alertAfter.username+' - Mobitracker.co');
+
+        if(event.affectedColumns == 'reviews'){
+          embed.addFields(spacer);
         }
-        if(alertAfter.applicants > alertBefore.applicants){
-          if(alertAfter.applicants != -1){
-            if(alertAfter.applicants == 1){
-              client.users.cache.get(id.id).send("Someone applied to one of your contracts! \nhttps://mobitracker.co/contracts");
-            }else if(alertAfter.applicants > 1){
-              client.users.cache.get(id.id).send(alertAfter.applicants+" people have applied to one of your contracts! \nhttps://mobitracker.co/contracts");
-            }
-          }
-        }
-        if(alertAfter.reviews > alertBefore.reviews){
-          if(alertAfter.reviews != -1){
-            if(alertAfter.reviews == 1){
-              client.users.cache.get(id.id).send("You have a new review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
-            }else if(alertAfter.reviews > 1){
-              client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
-            }
-          }
-        }else if(alertAfter.reviews < alertBefore.reviews){
-          if(alertAfter.reviews != -1){
-            client.users.cache.get(id.id).send("Someone removed review on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
-          }
-        }
+
+        client.users.get(id.id).send(embed);
       }
     },
   });
