@@ -112,7 +112,7 @@ Object.keys = function(obj){
   for (key in obj) {
     console.log(obj.hasOwnProperty(key));
   }
-  return null;
+  return 0;
 }
 
 client.on("ready", () => {
