@@ -474,7 +474,7 @@ const program = async () => {
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
         if(event.affectedColumns[0] == 'reviews'){
-          embed.addFields(spacer);
+          embed.addFields({ name: "Test", value: "This Works", inline: true });
         }
 
         client.users.fetch(id.id).then((user) =>{
