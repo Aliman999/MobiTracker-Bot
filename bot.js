@@ -466,7 +466,7 @@ const program = async () => {
         const alertAfter = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        console.log((event.affectedColumns === 'contracts' || event.affectedColumns === 'applicants' || event.affectedColumns === 'reviews' || event.affectedColumns === 'escrow'));
+        console.log((event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow'));
 
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
