@@ -490,7 +490,7 @@ const program = async () => {
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
-              embed.addFields({ name: show[index[i]].count+" new "+title, value:"x", inline: false });
+              embed.addFields({ name: show[index[i]].count+" new "+title, value:"", inline: false });
               embed.addFields({ name: "Newest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
               embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
             }else{
