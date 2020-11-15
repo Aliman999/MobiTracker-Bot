@@ -486,9 +486,9 @@ const program = async () => {
 
         var index = Object.keys(show);
         for(var i = 0; i < Object.keys(show).length; i++){
-          if(show[index[i]].active){
+          if(show[index[i]].active && show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
-            embed.addFields({ name: show[index[i]].count+" new "+title, value: show[index[i]].events, inline: false });
+            embed.addFields({ name: show[index[i]].count+" new "+title, value: "Test", inline: false });
             embed.addFields({ name: '\u200B', value: '\u200B' });
           }
         }
