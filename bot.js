@@ -461,7 +461,7 @@ const program = async () => {
     expression: '*',
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
-      if(event.table == 'discordAlerts'){
+      if(event.table == 'discordAlerts' && (event.affectedColumns === 'contracts' || event.affectedColumns === 'applicants' || event.affectedColumns === 'reviews' || event.affectedColumns === 'escrow')){
         const alertBefore = event.affectedRows[0].before;
         const alertAfter = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
