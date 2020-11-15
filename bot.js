@@ -468,6 +468,11 @@ const program = async () => {
       if(event.table == 'discordAlerts' && (event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow')){
         const alert = event.affectedRows[0].after;
         const show = { contracts:JSON.parse(alert.contracts), cpplicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
+        var notiCount = 0;
+        for(var i = 0; i < Object.keys(show).length){
+          notiCount = show[Object.keys(show)[i]].count + notiCount;
+        }
+        console.log(notiCount);
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
@@ -475,14 +480,15 @@ const program = async () => {
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
+          .setTitle('Page '+p+' of '+mp)
           .setFooter(alert.username+' - Mobitracker.co');
 
         for(var i = 0; i < Object.keys(show).length; i++){
           var index = Object.keys(show);
           if(show[index[i]].active && show[index[i]].count>1){
+            var title = index[i];
             for (var i = 0; i < show[index[i]].length; i++){
-              var title = Object.keys(show)[i];
-              embed.addFields({ name: title, value: "", inline: true });
+              embed.addFields({ name: title.charAt(0).toUpperCase() + title.slice(1), value: "", inline: true });
             }
           }
           embed.addFields(spacer);
