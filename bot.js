@@ -487,7 +487,6 @@ const program = async () => {
             embed.addFields({ name: "Test", value: "This Works", inline: true });
           }
         }
-        test();
         client.users.fetch(id.id).then((user) =>{
           user.send(embed);
         });
