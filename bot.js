@@ -482,6 +482,7 @@ const program = async () => {
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
           .setTitle(notiCount+" Notifications")
           .setFooter(alert.username+' - Mobitracker.co');
+        
         for(var i = 0; i < Object.keys(show).length; i++){
           var index = Object.keys(show);
           if(show[index[i]].active){
