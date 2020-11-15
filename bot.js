@@ -486,7 +486,7 @@ const program = async () => {
         for(var i = 0; i < Object.keys(show).length; i++){
           var index = Object.keys(show);
           if(show[index[i]].active){
-            var title = String(index[i]).charAt(0).toUpperCase() + title.slice(1);
+            var title = String(index[i]).charAt(0).toUpperCase() + index[i].slice(1);
             console.log(title);
             for(var ii = 0; ii < show[index[i]].count; ii++){
               embed.addFields({ name: title, value: "", inline: true });
