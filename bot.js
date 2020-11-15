@@ -467,7 +467,7 @@ const program = async () => {
     onEvent: (event) => {
       if(event.table == 'discordAlerts' && (event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow')){
         const alert = event.affectedRows[0].after;
-        const show = { contracts:JSON.parse(alert.contracts), cpplicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
+        const show = { contracts:JSON.parse(alert.contracts), applicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
         var notiCount = 0;
         for(var i = 0; i < Object.keys(show).length; i++){
           notiCount = show[Object.keys(show)[i]].count + notiCount;
@@ -483,8 +483,8 @@ const program = async () => {
           .setTitle(notiCount+" Notifications")
           .setFooter(alert.username+' - Mobitracker.co');
 
+        var index = Object.keys(show);
         for(var i = 0; i < Object.keys(show).length; i++){
-          var index = Object.keys(show);
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             console.log(title);
