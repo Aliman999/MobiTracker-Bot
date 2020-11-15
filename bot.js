@@ -107,8 +107,9 @@ Object.size = function(obj) {
   return size;
 };
 
-Object.key = function(obj){
+Object.keys = function(obj){
   for (key in obj) {
+    console.log(obj);
     return obj;
   }
 }
@@ -477,7 +478,6 @@ const program = async () => {
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        test();
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
