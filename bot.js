@@ -474,8 +474,8 @@ const program = async () => {
 
         var noti = new MessageEmbed()
           .setColor(0x25a6dd)
-          .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
-          .setFooter(alertAfter.username+' - Mobitracker.co');
+          .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
+          .setFooter(alert.username+' - Mobitracker.co');
 
         console.log(show[Object.keys(show)[0]].active);
         console.log(show[Object.keys(show)[1]].active);
