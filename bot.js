@@ -110,9 +110,9 @@ Object.size = function(obj) {
 Object.keys = function(obj){
   var key;
   for (key in obj) {
-    console.log(obj);
-    return obj;
+    console.log(obj.hasOwnProperty(key));
   }
+  return null;
 }
 
 client.on("ready", () => {
