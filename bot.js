@@ -472,16 +472,15 @@ const program = async () => {
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
-          client.users.fetch(id.id).then((user) =>{
-            user.send(embed);
-          });
         for(var i = 0; i < show.length; i++){
           if(show[Object.keys(show)[i]].active){
             embed.addFields({ name: "Test", value: "This Works", inline: true });
           }
         }
 
-
+        client.users.fetch(id.id).then((user) =>{
+          user.send(embed);
+        });
       }
     },
   });
