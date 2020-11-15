@@ -463,7 +463,7 @@ const program = async () => {
     onEvent: (event) => {
       if(event.table == 'discordAlerts' && (event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow')){
         const alert = event.affectedRows[0].after;
-        const show = { contracts:JSON.parse(alert.contracts), applicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.reviews) };
+        const show = { contracts:JSON.parse(alert.contracts), applicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
