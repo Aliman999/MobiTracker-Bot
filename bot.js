@@ -472,7 +472,6 @@ const program = async () => {
         for(var i = 0; i < Object.keys(show).length; i++){
           notiCount = show[Object.keys(show)[i]].count + notiCount;
         }
-        console.log(notiCount);
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
