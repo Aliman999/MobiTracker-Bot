@@ -467,7 +467,7 @@ const program = async () => {
     onEvent: (event) => {
       if(event.table == 'discordAlerts' && (event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow')){
         const alert = event.affectedRows[0].after;
-        const show = { contracts:JSON.parse(alert.contracts), applicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) , length: 4};
+        const show = { contracts:JSON.parse(alert.contracts), applicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
@@ -476,7 +476,7 @@ const program = async () => {
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
-        for(var i = 0; i < show.length; i++){
+        for(var i = 0; i < Object.keys(show).length; i++){
           if(show[Object.keys(show)[i]].active){
             embed.addFields({ name: "Test", value: "This Works", inline: true });
           }
