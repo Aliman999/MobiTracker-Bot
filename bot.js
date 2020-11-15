@@ -461,12 +461,11 @@ const program = async () => {
     expression: '*',
     statement: MySQLEvents.STATEMENTS.ALL,
     onEvent: (event) => {
-      if(event.table == 'discordAlerts'){
-        const alertBefore = event.affectedRows[0].before;
-        const alertAfter = event.affectedRows[0].after;
+      if(event.table == 'discordAlerts' && (event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow')){
+        const alert = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        console.log((event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow'));
+        console.log(alert);
 
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
@@ -474,6 +473,9 @@ const program = async () => {
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
         if(event.affectedColumns[0] == 'reviews'){
+          for (var i = 0; i < array.length; i++) {
+            array[i]
+          }
           embed.addFields({ name: "Test", value: "This Works", inline: true });
         }
 
