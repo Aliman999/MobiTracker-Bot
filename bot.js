@@ -474,9 +474,9 @@ const program = async () => {
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
         if(event.affectedColumns == 'reviews'){
+          client.users.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
           embed.addFields(spacer);
         }
-
         client.users.get(id.id).send(embed);
       }
     },
