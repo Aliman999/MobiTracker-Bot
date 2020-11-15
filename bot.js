@@ -484,9 +484,9 @@ const program = async () => {
           .setFooter(alert.username+' - Mobitracker.co');
         for(var i = 0; i < Object.keys(show).length; i++){
           var index = Object.keys(show);
-          console.log(show[index[i]].count);
           if(show[index[i]].active){
             var title = index[i];
+            console.log(show[title].count);
             for(var i = 0; i < show[index[i]].count; i++){
               embed.addFields({ name: title.charAt(0).toUpperCase() + title.slice(1), value: "", inline: true });
             }
