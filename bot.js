@@ -498,7 +498,7 @@ const program = async () => {
             }else{
               embed.addFields({ name: show[index[i]].count+" new "+title, value: "No notifications", inline: true });
             }
-            embed.addFields({ name: '\u200B', value: '\u200B' });
+            //embed.addFields({ name: '\u200B', value: '\u200B' });
           }
         }
         client.users.fetch(id.id).then((user) =>{
