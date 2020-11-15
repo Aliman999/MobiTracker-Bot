@@ -484,7 +484,7 @@ const program = async () => {
           .setFooter(alert.username+' - Mobitracker.co');
         for(var i = 0; i < Object.keys(show).length; i++){
           var index = Object.keys(show);
-          console.log(show[index[i]]);
+          console.log(show[index[i]].count);
           if(show[index[i]].active && show[index[i]].count>1){
             var title = index[i];
             for(var i = 0; i < show[index[i]].count; i++){
