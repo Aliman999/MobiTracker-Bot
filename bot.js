@@ -468,7 +468,9 @@ const program = async () => {
         const id = JSON.parse(user);
         console.log(client.users);
 
-        client.users.cache.get(id.id).send("test");
+        client.users.fetch(id.id).then((user) =>{
+          user.send("test");
+        });
         /*
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
