@@ -487,12 +487,11 @@ const program = async () => {
           var index = Object.keys(show);
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
-            console.log(title);
             for(var ii = 0; ii < show[index[i]].count; ii++){
               embed.addFields({ name: title, value: "", inline: true });
             }
           }
-          embed.addFields(spacer);
+          embed.addFields({ name: '\u200B', value: '\u200B' });
         }
         client.users.fetch(id.id).then((user) =>{
           user.send(embed);
