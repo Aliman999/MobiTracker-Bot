@@ -475,8 +475,8 @@ const program = async () => {
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
         show.forEach((item, i) => {
-          if(item.active){
-            console.log(item);
+          if(i.active){
+            console.log(i);
           }
         });
 
