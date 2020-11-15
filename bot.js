@@ -113,7 +113,7 @@ Object.key = function(obj){
     console.log(key);
   }
   return key;
-}
+};
 
 client.on("ready", () => {
   console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
