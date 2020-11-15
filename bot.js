@@ -467,13 +467,10 @@ const program = async () => {
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
+
+        var embed = new MessageEmbed().setColor(0x25a6dd).setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username).setFooter(alertAfter.username+' - Mobitracker.co');
+
         console.log(show);
-
-        var embed = new MessageEmbed()
-          .setColor(0x25a6dd)
-          .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
-          .setFooter(alertAfter.username+' - Mobitracker.co');
-
         for (var i = 0; i < show.length; i++) {
           if(show[Object.keys(show)[i]].active){
             embed.addFields({ name: "Test", value: "This Works", inline: true });
