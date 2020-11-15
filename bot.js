@@ -468,7 +468,7 @@ const program = async () => {
         const id = JSON.parse(user);
         console.log(event.affectedColumns);
 
-        client.users.get(id.id).send("test");
+        client.channels.cache.get(id.id).send("test");
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
