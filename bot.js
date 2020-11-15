@@ -473,8 +473,8 @@ const program = async () => {
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
-        if(event.affectedColumns == 'reviews'){
-          client.users.cache.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
+        if(event.affectedColumns[0] == 'reviews'){
+          client.users.get(id.id).send("You have "+alertAfter.reviews+" new reviews on your profile! \nhttps://mobitracker.co/"+alertAfter.username);
           embed.addFields(spacer);
         }
         client.users.get(id.id).send(embed);
