@@ -473,13 +473,7 @@ const program = async () => {
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
-
-        show.forEach((item, i) => {
-          if(i.active){
-            console.log(i);
-          }
-        });
-
+        console.log(show.length);
         if(col == 'reviews'){
           embed.addFields({ name: "Test", value: "This Works", inline: true });
         }
