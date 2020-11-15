@@ -476,13 +476,12 @@ const program = async () => {
 
         show.forEach((item, i) => {
           if(item.active){
-            const test = Object.keys({item})[i];
-            console.log(test);
-            embed.addFields({ name: "Test", value: "This Works", inline: true });
+            console.log(item);
           }
         });
 
         if(col == 'reviews'){
+          embed.addFields({ name: "Test", value: "This Works", inline: true });
         }
 
         client.users.fetch(id.id).then((user) =>{
