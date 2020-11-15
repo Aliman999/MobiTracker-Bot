@@ -466,7 +466,7 @@ const program = async () => {
         const alertAfter = event.affectedRows[0].after;
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        console.log(client.users);
+        console.log(event.affectedColumns);
 
         client.users.fetch(id.id).then((user) =>{
           user.send("test");
