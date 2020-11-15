@@ -446,15 +446,6 @@ client.on('message', message => {
   if (!message.content.startsWith(`${prefix}`)) return;
 });
 
-function test(show){
-  console.log(Object.keys(show));
-  for (var i = 0; i < show.length; i++) {
-    if(show[Object.keys(show)[i]].active){
-      embed.addFields({ name: "Test", value: "This Works", inline: true });
-    }
-  }
-}
-
 const program = async () => {
   const instance = new MySQLEvents(con, {
     startAtEnd: true,
@@ -473,7 +464,6 @@ const program = async () => {
       if(event.table == 'discordAlerts' && (event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow')){
         const alert = event.affectedRows[0].after;
         const show = { contracts:JSON.parse(alert.contracts), applicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) , length: 4};
-        test(show);
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
@@ -483,7 +473,12 @@ const program = async () => {
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
           .setFooter(alertAfter.username+' - Mobitracker.co');
 
-
+        console.log(Object.keys(show));
+        for (var i = 0; i < show.length; i++) {
+          if(show[Object.keys(show)[i]].active){
+            embed.addFields({ name: "Test", value: "This Works", inline: true });
+          }
+        }
 
         client.users.fetch(id.id).then((user) =>{
           user.send(embed);
