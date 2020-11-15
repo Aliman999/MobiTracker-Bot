@@ -471,7 +471,6 @@ const program = async () => {
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-        console.log(Object.keys(show)[0]);
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alertAfter.username)
