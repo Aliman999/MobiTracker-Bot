@@ -467,23 +467,28 @@ const program = async () => {
     onEvent: (event) => {
       if(event.table == 'discordAlerts' && (event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow')){
         const alert = event.affectedRows[0].after;
-        const show = { contracts:JSON.parse(alert.contracts), applicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow), length:4};
+        const show = { contracts:JSON.parse(alert.contracts), cpplicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
 
-        var noti = new MessageEmbed()
+        var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
           .setFooter(alert.username+' - Mobitracker.co');
 
-        console.log(show[Object.keys(show)[0]].active);
-        console.log(show[Object.keys(show)[1]].active);
         for(var i = 0; i < Object.keys(show).length; i++){
-          noti.addFields({ name: "Test", value: "This Works", inline: true });
+          var index = Object.keys(show);
+          if(show[index[i]].active && show[index[i]].count>1){
+            for (var i = 0; i < show[index[i]].length; i++){
+              var title = Object.keys(show)[i];
+              embed.addFields({ name: title, value: "", inline: true });
+            }
+          }
+          embed.addFields(spacer);
         }
         client.users.fetch(id.id).then((user) =>{
-          user.send(noti);
+          user.send(embed);
         });
       }
     },
