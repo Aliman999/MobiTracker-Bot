@@ -501,7 +501,9 @@ const program = async () => {
             }else{
               embed.addFields({ name: title+" - "+show[index[i]].count, value: "No notifications" });
             }
-            embed.addFields({ name: '\u200B', value: '\u200B' });
+            if(i != 3){
+              embed.addFields({ name: '\u200B', value: '\u200B' });
+            }
           }
         }
         if(notiCount > 0){
