@@ -487,7 +487,7 @@ const program = async () => {
 
         var index = Object.keys(show);
         for(var i = 0; i < Object.keys(show).length; i++){
-          if(show[index[i]].active && show[index[i]].count > 0){
+          if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
               embed.addFields({ name: show[index[i]].count+" new "+title, value:"\u200B" });
@@ -501,9 +501,11 @@ const program = async () => {
             embed.addFields({ name: '\u200B', value: '\u200B' });
           }
         }
-        client.users.fetch(id.id).then((user) =>{
-          user.send(embed);
-        });
+        if(notiCount > 0){
+          client.users.fetch(id.id).then((user) =>{
+            user.send(embed);
+          });
+        }
       }
     },
   });
