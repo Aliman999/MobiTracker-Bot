@@ -489,6 +489,9 @@ const program = async () => {
         for(var i = 0; i < Object.keys(show).length; i++){
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
+            if(i != 3 && show[index[i]].count == 1){
+              var title = title.slice(-1);
+            }
             if(show[index[i]].count>0){
               embed.addFields({ name: show[index[i]].count+" new "+title, value:"\u200B" });
               embed.addFields({ name: "Newest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
