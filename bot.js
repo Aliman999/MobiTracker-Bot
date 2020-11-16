@@ -490,7 +490,7 @@ const program = async () => {
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(i != 3 && show[index[i]].count == 1){
-              var title = title.slice(-1);
+              var title = title.slice(0, -1);
             }
             if(show[index[i]].count>0){
               embed.addFields({ name: show[index[i]].count+" new "+title, value:"\u200B" });
