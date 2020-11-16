@@ -493,7 +493,7 @@ const program = async () => {
               var title = title.slice(0, -1);
             }
             if(show[index[i]].count>0){
-              embed.addFields({ name: show[index[i]].count+" new "+title, value:"\u200B" });
+              embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
               embed.addFields({ name: "Newest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
               if(show[index[i]].count>1){
                 embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
