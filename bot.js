@@ -481,7 +481,7 @@ const program = async () => {
 
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
-          .setAuthor('MobiTracker Notifications', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
+          .setAuthor(alert.username, 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
           .setTitle(notiCount+" Notifications")
           .setFooter(alert.username+' - Mobitracker.co');
 
