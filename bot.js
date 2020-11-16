@@ -487,7 +487,7 @@ const program = async () => {
 
         var index = Object.keys(show);
         for(var i = 0; i < Object.keys(show).length; i++){
-          if(show[index[i]].active){
+          if(show[index[i]].active && show[index[i]].count > 0){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
               embed.addFields({ name: show[index[i]].count+" new "+title, value:"\u200B", inline: false });
