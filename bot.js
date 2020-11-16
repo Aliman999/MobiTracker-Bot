@@ -490,13 +490,13 @@ const program = async () => {
           if(show[index[i]].active && show[index[i]].count > 0){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
-              embed.addFields({ name: show[index[i]].count+" new "+title, value:"\u200B", inline: false });
+              embed.addFields({ name: show[index[i]].count+" new "+title, value:"\u200B" });
               embed.addFields({ name: "Newest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
               if(show[index[i]].count>1){
                 embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
               }
             }else{
-              embed.addFields({ name: show[index[i]].count+" new "+title, value: "No notifications", inline: false });
+              embed.addFields({ name: show[index[i]].count+" new "+title, value: "No notifications" });
             }
             embed.addFields({ name: '\u200B', value: '\u200B' });
           }
