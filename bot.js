@@ -496,9 +496,9 @@ const program = async () => {
                 embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
               }
             }else{
-              embed.addFields({ name: show[index[i]].count+" new "+title, value: "No notifications", inline: true });
+              embed.addFields({ name: show[index[i]].count+" new "+title, value: "No notifications", inline: false });
             }
-            //embed.addFields({ name: '\u200B', value: '\u200B' });
+            embed.addFields({ name: '\u200B', value: '\u200B' });
           }
         }
         client.users.fetch(id.id).then((user) =>{
