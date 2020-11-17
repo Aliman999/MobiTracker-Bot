@@ -489,29 +489,28 @@ const program = async () => {
         var index = Object.keys(show);
         for(var i = 0; i < Object.keys(show).length; i++){
           if(show[index[i]].active){
-            var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(i == 1){
-              if(show[index[i]].count>0){
-                console.log(index[i]);
-                console.log(show[index[i]]);
-                embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B", inline: true });
-                embed.addFields({ name: "Latest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
-                if(show[index[i]].count>1){
-                  embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
-                }
-              }else{
-                embed.addFields({ name: title+" - "+show[index[i]].count, value: "No notifications" });
-              }
+
             }else{
-              if(show[index[i]].count>0){
+              
+            }
+            var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
+            if(show[index[i]].count>0){
+              if(i == 1){
                 embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
                 embed.addFields({ name: "Latest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
                 if(show[index[i]].count>1){
                   embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
                 }
               }else{
-                embed.addFields({ name: title+" - "+show[index[i]].count, value: "No notifications" });
+                embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
+                embed.addFields({ name: "Latest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
+                if(show[index[i]].count>1){
+                  embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
+                }
               }
+            }else{
+              embed.addFields({ name: title+" - "+show[index[i]].count, value: "No notifications" });
             }
             if(i != 3){
               embed.addFields({ name: '\u200B', value: '\u200B' });
