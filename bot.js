@@ -499,6 +499,7 @@ const program = async () => {
                 if(show[index[i]].myApplications.events.length>1){
                   embed.addFields({ name: "Previous", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)], inline: true });
                 }
+                embed.addFields({ name: '\u200B', value: '\u200B' });
                 embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: "\u200B", inline: true });
                 embed.addFields({ name: "Latest", value: show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-1)], inline: true });
                 if(show[index[i]].myContracts.events.length>1){
