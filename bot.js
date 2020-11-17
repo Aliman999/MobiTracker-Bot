@@ -493,10 +493,10 @@ const program = async () => {
             if(show[index[i]].count>0){
               if(i == 1){
                 console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
-                embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
+                embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B", inline: true });
                 embed.addFields({ name: "Latest", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)], inline: true });
                 if(show[index[i]].count>1){
-                  embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
+                  embed.addFields({ name: "Previous", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)], inline: true });
                 }
               }else{
                 embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
