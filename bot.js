@@ -512,9 +512,9 @@ const program = async () => {
                   embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
                 }
               }
-            }
-            if(i != 3){
-              embed.addFields({ name: '\u200B', value: '\u200B' });
+              if(i != 3){
+                embed.addFields({ name: '\u200B', value: '\u200B' });
+              }
             }
           }
         }
