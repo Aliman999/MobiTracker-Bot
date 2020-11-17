@@ -469,6 +469,7 @@ const program = async () => {
         const alert = event.affectedRows[0].after;
         const after = alert;
         const before = event.affectedRows[0].before;
+        console.log(alert.applicants);
         const show = { contracts:JSON.parse(alert.contracts), applications:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
         var notiCount = 0;
         for(var i = 0; i < Object.keys(show).length; i++){
