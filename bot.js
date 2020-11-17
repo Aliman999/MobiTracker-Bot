@@ -490,7 +490,8 @@ const program = async () => {
         for(var i = 0; i < Object.keys(show).length; i++){
           if(show[index[i]].active){
             if(i == 1){
-              var title = [ index[i].charAt(0).toUpperCase() + index[i].slice(1), index[i].charAt(0).toUpperCase() + index[i].slice(1) ];
+              var title = [ index[i].myApplications.charAt(0).toUpperCase() + index[i].slice(1), index[i].myContracts.charAt(0).toUpperCase() + index[i].slice(1) ];
+              console.log(title);
             }else{
               var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             }
