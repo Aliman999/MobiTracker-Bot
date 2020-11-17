@@ -492,8 +492,7 @@ const program = async () => {
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
               if(i == 1){
-                console.log(title);
-                console.log(show[index[i]]);
+                console.log(show[index[i]].myApplications.events.length);
                 embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
                 embed.addFields({ name: "Latest", value: show[index[i]].myApplications.events[(show[index[i]].count-1)], inline: true });
                 if(show[index[i]].count>1){
