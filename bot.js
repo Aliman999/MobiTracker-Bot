@@ -512,8 +512,6 @@ const program = async () => {
                   embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
                 }
               }
-            }else{
-              embed.addFields({ name: title+" - "+show[index[i]].count, value: "No notifications" });
             }
             if(i != 3){
               embed.addFields({ name: '\u200B', value: '\u200B' });
