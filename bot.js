@@ -491,10 +491,12 @@ const program = async () => {
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
-              console.log(title);
               if(i == 1){
+                console.log(title);
+                console.log(show[index[i]].count);
+                console.log(show[index[i]].myApplications.events[(show[index[i]].count-1)]);
                 embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
-                embed.addFields({ name: "Latest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
+                embed.addFields({ name: "Latest", value: show[index[i]].myApplications.events[(show[index[i]].count-1)], inline: true });
                 if(show[index[i]].count>1){
                   embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
                 }
