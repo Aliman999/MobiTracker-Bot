@@ -488,13 +488,8 @@ const program = async () => {
 
         var index = Object.keys(show);
         for(var i = 0; i < Object.keys(show).length; i++){
-          console.log(index[i]);
           if(show[index[i]].active){
-            if(i == 1){
-              var title = [ index[i].myApplications.charAt(0).toUpperCase() + index[i].slice(1), index[i].myContracts.charAt(0).toUpperCase() + index[i].slice(1) ];
-            }else{
-              var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
-            }
+            var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
               if(i == 1){
                 embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
