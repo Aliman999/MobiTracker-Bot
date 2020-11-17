@@ -469,7 +469,7 @@ const program = async () => {
         const alert = event.affectedRows[0].after;
         const after = alert;
         const before = event.affectedRows[0].before;
-        const show = { contracts:JSON.parse(alert.contracts), applicants:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
+        const show = { contracts:JSON.parse(alert.contracts), applications:JSON.parse(alert.applicants), reviews:JSON.parse(alert.reviews), escrow:JSON.parse(alert.escrow) };
         var notiCount = 0;
         for(var i = 0; i < Object.keys(show).length; i++){
           notiCount = show[Object.keys(show)[i]].count + notiCount;
@@ -489,14 +489,28 @@ const program = async () => {
         for(var i = 0; i < Object.keys(show).length; i++){
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
-            if(show[index[i]].count>0){
-              embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
-              embed.addFields({ name: "Newest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
-              if(show[index[i]].count>1){
-                embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
+            if(i == 1){
+              if(show[index[i]].count>0){
+                console.log(index[i]);
+                console.log(show[index[i]]);
+                embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B", inline: true });
+                embed.addFields({ name: "Latest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
+                if(show[index[i]].count>1){
+                  embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
+                }
+              }else{
+                embed.addFields({ name: title+" - "+show[index[i]].count, value: "No notifications" });
               }
             }else{
-              embed.addFields({ name: title+" - "+show[index[i]].count, value: "No notifications" });
+              if(show[index[i]].count>0){
+                embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
+                embed.addFields({ name: "Latest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
+                if(show[index[i]].count>1){
+                  embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
+                }
+              }else{
+                embed.addFields({ name: title+" - "+show[index[i]].count, value: "No notifications" });
+              }
             }
             if(i != 3){
               embed.addFields({ name: '\u200B', value: '\u200B' });
