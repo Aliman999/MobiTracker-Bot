@@ -484,7 +484,8 @@ const program = async () => {
           .setColor(0x25a6dd)
           .setAuthor(alert.username, 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
           .setTitle(notiCount+" Notifications")
-          .setFooter(alert.username+' - Mobitracker.co');
+          .setFooter(alert.username+' - Mobitracker.co')
+          .setTimestamp();
 
         var index = Object.keys(show);
         for(var i = 0; i < Object.keys(show).length; i++){
