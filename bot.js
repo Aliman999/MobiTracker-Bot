@@ -518,7 +518,6 @@ const program = async () => {
                   embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: latest+previous });
                 }else{
                   embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: "No Notifications"});
-                  embed.addFields({ name: '\u200B', value: '\u200B' });
                 }
                 /*
                   console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
