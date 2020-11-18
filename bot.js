@@ -470,7 +470,6 @@ const program = async () => {
         const after = alert;
         const before = event.affectedRows[0].before;
         const show = { contracts:JSON.parse(alert.contracts), applications:JSON.parse(alert.applicants), escrow:JSON.parse(alert.escrow), reviews:JSON.parse(alert.reviews) };
-        console.log(show.applications);
         var notiCount = 0;
         for(var i = 0; i < Object.keys(show).length; i++){
           notiCount = show[Object.keys(show)[i]].count + notiCount;
@@ -494,7 +493,6 @@ const program = async () => {
             if(show[index[i]].count>0){
               var previous = "", latest = "";
               if(i == 1){
-                console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
                 if(show[index[i]].myApplications.events.length>1){
                   previous = "\n\nPrevious - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)];
                 }
