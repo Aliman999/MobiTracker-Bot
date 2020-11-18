@@ -495,17 +495,35 @@ const program = async () => {
               if(i == 1){
                 console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
                 embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
-                embed.addFields({ name: "My Applications - "+show[index[i]].myApplications.events.length, value: "\u200B" });
-                embed.addFields({ name: "Latest", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)], inline: true });
+                var previous, latest;
                 if(show[index[i]].myApplications.events.length>1){
-                  embed.addFields({ name: "Previous", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)], inline: true });
+                  previous = "\n\nPrevious - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)];
                 }
+                latest = "Latest - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]
+                embed.addFields({ name: "My Applications - "+show[index[i]].myApplications.events.length, value: latest+previous });
                 embed.addFields({ name: '\u200B', value: '\u200B' });
-                embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: "\u200B" });
-                embed.addFields({ name: "Latest", value: show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-1)], inline: true });
                 if(show[index[i]].myContracts.events.length>1){
-                  embed.addFields({ name: "Previous", value: show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-2)], inline: true });
+                  previous = "\n\nPrevious - "+show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-2)];
+                }else{
+                  previous = "";
                 }
+                latest = "Latest - "+show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-1)];
+                embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: latest+previous });
+                /*
+                  console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
+                  embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
+                  embed.addFields({ name: "My Applications - "+show[index[i]].myApplications.events.length, value: "\u200B" });
+                  embed.addFields({ name: "Latest", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)], inline: true });
+                  if(show[index[i]].myApplications.events.length>1){
+                    embed.addFields({ name: "Previous", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)], inline: true });
+                  }
+                  embed.addFields({ name: '\u200B', value: '\u200B' });
+                  embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: "\u200B" });
+                  embed.addFields({ name: "Latest", value: show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-1)], inline: true });
+                  if(show[index[i]].myContracts.events.length>1){
+                    embed.addFields({ name: "Previous", value: show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-2)], inline: true });
+                  }
+                */
               }else{
                 embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
                 embed.addFields({ name: "Latest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
