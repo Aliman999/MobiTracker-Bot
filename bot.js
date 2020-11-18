@@ -492,10 +492,10 @@ const program = async () => {
           if(show[index[i]].active){
             var title = index[i].charAt(0).toUpperCase() + index[i].slice(1);
             if(show[index[i]].count>0){
+              var previous, latest;
               if(i == 1){
                 console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
                 embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
-                var previous, latest;
                 if(show[index[i]].myApplications.events.length>1){
                   previous = "\n\nPrevious - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)];
                 }
@@ -525,11 +525,11 @@ const program = async () => {
                   }
                 */
               }else{
-                embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
-                embed.addFields({ name: "Latest", value: show[index[i]].events[(show[index[i]].count-1)], inline: true });
                 if(show[index[i]].count>1){
-                  embed.addFields({ name: "Previous", value: show[index[i]].events[(show[index[i]].count-2)], inline: true });
+                  previous = "\n\nPrevious - "+show[index[i]].events[(show[index[i]].count-2)];
                 }
+                latest = "Latest - "+show[index[i]].events[(show[index[i]].count-1)];
+                embed.addFields({ name: title+" - "+show[index[i]].count, value: latest+previous });
               }
             }else{
               embed.addFields({ name: title+" - "+show[index[i]].count, value:"No Notifications" });
