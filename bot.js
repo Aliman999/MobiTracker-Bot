@@ -493,19 +493,33 @@ const program = async () => {
             if(show[index[i]].count>0){
               var previous = "", latest = "";
               if(i == 1){
-                if(show[index[i]].myApplications.events.length>1){
-                  previous = "\n\nPrevious - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)];
-                }
-                latest = "Latest - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]
-                embed.addFields({ name: "My Applications - "+show[index[i]].myApplications.events.length, value: latest+previous });
-                embed.addFields({ name: '\u200B', value: '\u200B' });
-                if(show[index[i]].myContracts.events.length>1){
-                  previous = "\n\nPrevious - "+show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-2)];
+
+                if(show[index[i]].myApplications.events.length>0){
+                  if(show[index[i]].myApplications.events.length>1){
+                    previous = "\n\nPrevious - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)];
+                  }else{
+                    previous = "";
+                  }
+                  latest = "Latest - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]
+
+                  embed.addFields({ name: "My Applications - "+show[index[i]].myApplications.events.length, value: latest+previous });
+                  embed.addFields({ name: '\u200B', value: '\u200B' });
                 }else{
-                  previous = "";
+                  embed.addFields({ name: "My Applications - "+show[index[i]].myApplications.events.length, value: "No Notifications" });
+                  embed.addFields({ name: '\u200B', value: '\u200B' });
                 }
-                latest = "Latest - "+show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-1)];
-                embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: latest+previous });
+                if(show[index[i]].myContracts.events.length>0){
+                  if(show[index[i]].myContracts.events.length>1){
+                    previous = "\n\nPrevious - "+show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-2)];
+                  }else{
+                    previous = "";
+                  }
+                  latest = "Latest - "+show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-1)];
+                  embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: latest+previous });
+                }else{
+                  embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: "No Notifications"});
+                  embed.addFields({ name: '\u200B', value: '\u200B' });
+                }
                 /*
                   console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
                   embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
