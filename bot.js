@@ -495,7 +495,6 @@ const program = async () => {
               var previous, latest;
               if(i == 1){
                 console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
-                embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
                 if(show[index[i]].myApplications.events.length>1){
                   previous = "\n\nPrevious - "+show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)];
                 }
