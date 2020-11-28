@@ -183,9 +183,9 @@ client.on('message', message => {
             }
             var embed = new MessageEmbed()
               .setColor(0x25a6dd)
-              .setTitle("RSI Page")
-              .setURL("https://robertsspaceindustries.com/citizens/"+user.data.profile.handle)
-              .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+              .setTitle(user.data.profile.handle+user.data.profile.id)
+              .setURL("https://mobitracker.co/"+user.data.profile.handle)
+              .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://robertsspaceindustries.com/citizens/"+user.data.profile.handle)
               .setDescription("AKA "+user.data.profile.display)
               .setThumbnail(user.data.profile.image)
               .addFields(
