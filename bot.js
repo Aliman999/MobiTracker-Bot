@@ -183,7 +183,7 @@ client.on('message', message => {
             }
             var embed = new MessageEmbed()
               .setColor(0x25a6dd)
-              .setTitle(user.data.profile.handle+user.data.profile.id)
+              .setTitle("RSI Page")
               .setURL("https://robertsspaceindustries.com/citizens/"+user.data.profile.handle)
               .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
               .setDescription("AKA "+user.data.profile.display)
