@@ -138,7 +138,8 @@ client.on('message', message => {
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
     var handle = message.content.split("/");
     handle = handle.pop();
-    client.channels.cache.get("827064226807283722").send(handle);
+    client.channels.cache.get("827064226807283722").send("Detected Handle: "+handle);
+    client.channels.cache.get("827064226807283722").send("!search "+handle);
   }
   if (!message.content.startsWith(prefix)) return;
 
