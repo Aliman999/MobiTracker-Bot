@@ -157,7 +157,7 @@ client.on('message', message => {
       method: 'GET'
     }
     const req = https.request(options, res => {
-      console.log('Looked up '+`${args}`);
+      console.log(message.member.user.tag+' Looked up '+`${args}`+' in 'message.guild.name);
       res.on('data', d => {
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
