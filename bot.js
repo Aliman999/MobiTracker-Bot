@@ -135,6 +135,9 @@ client.on("ready", () => {
 });
 
 client.on('message', message => {
+  if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
+    message.channels.get("827064226807283722").send("Test!");
+  }
   if (!message.content.startsWith(prefix)) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
