@@ -138,7 +138,7 @@ client.on('message', message => {
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
     var handle = message.content.split("/");
     handle = handle.pop();
-    handle = handle.substr(0,handle.indexOf(' '));
+    if(handle.includes(" ")) handle = handle.substr(0,handle.indexOf(' '));
     client.channels.cache.get("827064226807283722").send(message.member.user.tag+" linked a handle: "+handle);
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }
