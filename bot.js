@@ -148,7 +148,7 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
-    console.log(new Date().toLocaleString());
+    console.log();
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}else if (args.length > 1) return message.channel.send(`Too many arguments.`);
@@ -160,7 +160,7 @@ client.on('message', message => {
     }
     const req = https.request(options, res => {
       if(message.member.user.tag != "MobiTracker#2117"){
-        console.log(message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
+        console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
       }
       res.on('data', d => {
         const user = JSON.parse(d);
