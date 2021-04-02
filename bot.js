@@ -148,7 +148,6 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
-    console.log();
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}else if (args.length > 1) return message.channel.send(`Too many arguments.`);
