@@ -148,9 +148,11 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
+    console.log(new Date().toLocaleString());
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}else if (args.length > 1) return message.channel.send(`Too many arguments.`);
+    args[0] = args[0].replace(/\s/g, '');
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
