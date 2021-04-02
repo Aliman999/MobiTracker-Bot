@@ -152,11 +152,10 @@ client.on('message', message => {
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}else if (args.length > 1) return message.channel.send(`Too many arguments.`);
-    args[0] = args[0].replace(/\s/g, '');
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+`${args}`,
+      path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(`${args}`),
       method: 'GET'
     }
     const req = https.request(options, res => {
