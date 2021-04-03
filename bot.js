@@ -111,6 +111,7 @@ async function lookUp(message, args){
         }else{
           user.data.organization.name = "None";
         }
+        console.log(user.data.affiliation);
         if(Object.size(user.data.affiliation) > 1){
           user.data.affiliation.name = user.data.affiliation.rank+' in '+'['+user.data.affiliation.name+'](https://robertsspaceindustries.com/orgs/'+user.data.affiliation.sid+')';
         }else if (user.data.affiliation.name == ""){
