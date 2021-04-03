@@ -94,7 +94,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(message, args){
+async function lookUp(message, args, batch){
   const options = {
     hostname: 'api.starcitizen-api.com',
     port: 443,
@@ -159,6 +159,9 @@ async function lookUp(message, args){
   })
 
   req.end()
+  if(batch){
+    console.log(new Date().toLocaleString()+" --- BATCH END ---");
+  }
 }
 
 var truncate = function (elem, limit) {
@@ -224,10 +227,8 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
-        console.log(i);
-        lookUp(message, args[i]);
+        lookUp(message, args[i], function(){if(i==args.length-1){return true}else{return false}});
         if(i==args.length-1){
-          console.log(new Date().toLocaleString()+" --- BATCH END ---");
         }
       }
     }else{
