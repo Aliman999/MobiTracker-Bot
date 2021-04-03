@@ -168,8 +168,9 @@ function queryApi(message, args){
     console.error(error)
   })
 
-  req.end()
-  return result;
+  req.end();
+  console.log(result);
+  result;
 }
 
 var truncate = function (elem, limit) {
