@@ -218,10 +218,12 @@ client.on('message', message => {
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}
+    args.forEach((item, i) => {
+      args[i].replace("\n", "");
+    });
     console.log(args);
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
-        args[i].replace("\n", "");
         lookUp(message, args);
       }
     }else{
