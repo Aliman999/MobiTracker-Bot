@@ -222,8 +222,9 @@ client.on('message', message => {
       for(var i = 0; i < args.length; i++){
         lookUp(message, args[i]);
       }
-      console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
+      console.log(new Date().toLocaleString()+" --- BATCH END ---");
     }else{
+      console.log("NOT BATCH");
       lookUp(message, args);
     }
   }
