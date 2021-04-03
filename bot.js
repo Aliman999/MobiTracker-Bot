@@ -163,7 +163,7 @@ function queryApi(message, args){
           });
         }else{
           var result = "Could not find "+`${args}`;
-          promiseSearch(result;
+          promiseSearch(result);
         }
       })
     })
