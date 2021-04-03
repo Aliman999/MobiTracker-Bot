@@ -171,7 +171,9 @@ function queryApi(message, args){
     })
 
     req.end()
-    promiseSearch(embed);
+    setTimeout(() => {
+      promiseSearch(embed);
+    }, 500);
   });
 }
 
