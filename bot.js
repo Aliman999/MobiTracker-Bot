@@ -145,6 +145,7 @@ async function lookUp(message, args){
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
             await message.channel.send(embed);
+            result();
           });
         }else{
           message.channel.send(`That user doesnt exist.`);
