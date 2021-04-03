@@ -91,7 +91,7 @@ function numberWithCommas(x) {
 }
 
 async function lookUp(message, args){
-  return new Promise(){
+  return new Promise(result =>{
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
@@ -156,7 +156,7 @@ async function lookUp(message, args){
     })
 
     req.end()
-  }
+  });
 }
 
 var truncate = function (elem, limit) {
