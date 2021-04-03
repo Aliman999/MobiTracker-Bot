@@ -105,75 +105,73 @@ async function lookUp(message, args, finished = false){
 
 function queryApi(message, args){
   var result;
-  var embed;
-  const options = {
-    hostname: 'api.starcitizen-api.com',
-    port: 443,
-    path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(args),
-    method: 'GET'
-  }
-  const req = https.request(options, res =>{
-    if(message.member.user.tag != "MobiTracker#2117"){
-      console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
+  return new Promise(function promiseSearch(){
+    const options = {
+      hostname: 'api.starcitizen-api.com',
+      port: 443,
+      path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(args),
+      method: 'GET'
     }
-    res.on('data', d => {
-      const user = JSON.parse(d);
-      if(Object.size(user.data) > 0){
-        if(Object.size(user.data.organization) > 1){
-          user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
-        }else if (user.data.organization.name == ""){
-          user.data.organization.name = "REDACTED";
-        }else{
-          user.data.organization.name = "None";
-        }
-        var cID = '';
-        if(user.data.profile.id != 'n/a'){
-          cID = 'AND cID ='+user.data.profile.id.substring(1);
-        }else{
-          user.data.profile.id = '#No Citizen ID';
-        }
-        const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
-        con.query(sql, function (err, result, fields) {
-          if (err) throw err;
-          var rating = "";
-          if(result.length == 0){
-            rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
+    const req = https.request(options, res =>{
+      if(message.member.user.tag != "MobiTracker#2117"){
+        console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
+      }
+      res.on('data', d => {
+        const user = JSON.parse(d);
+        if(Object.size(user.data) > 0){
+          if(Object.size(user.data.organization) > 1){
+            user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
+          }else if (user.data.organization.name == ""){
+            user.data.organization.name = "REDACTED";
           }else{
-            if(result[0].rating == -1){
+            user.data.organization.name = "None";
+          }
+          var cID = '';
+          if(user.data.profile.id != 'n/a'){
+            cID = 'AND cID ='+user.data.profile.id.substring(1);
+          }else{
+            user.data.profile.id = '#No Citizen ID';
+          }
+          const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
+          con.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            var rating = "";
+            if(result.length == 0){
               rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
             }else{
-              rating = result[0].rating+"/5 "+"("+result[0].count+")";
+              if(result[0].rating == -1){
+                rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
+              }else{
+                rating = result[0].rating+"/5 "+"("+result[0].count+")";
+              }
             }
-          }
-          embed = new MessageEmbed()
-            .setColor(0x25a6dd)
-            .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-            .setDescription("AKA "+user.data.profile.display)
-            .setThumbnail(user.data.profile.image)
-            .addFields(
-              { name: 'Badge', value: user.data.profile.badge, inline: true},
-              { name: 'Mobitracker Rating', value: rating, inline: true},
-              { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
-              { name: 'Main Organization', value: user.data.organization.name },
-              { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
-             )
-             .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-             console.log(embed);
-          message.channel.send(embed);
-          result = embed;
-        });
-      }else{
-        result = "Could not find "+`${args}`;
-      }
+            var embed = new MessageEmbed()
+              .setColor(0x25a6dd)
+              .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+              .setDescription("AKA "+user.data.profile.display)
+              .setThumbnail(user.data.profile.image)
+              .addFields(
+                { name: 'Badge', value: user.data.profile.badge, inline: true},
+                { name: 'Mobitracker Rating', value: rating, inline: true},
+                { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
+                { name: 'Main Organization', value: user.data.organization.name },
+                { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+               )
+               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
+            result = embed;
+          });
+        }else{
+          result = "Could not find "+`${args}`;
+        }
+      })
     })
-  })
-  req.on('error', error => {
-    console.error(error)
-  })
+    req.on('error', error => {
+      console.error(error)
+    })
 
-  req.end();
-  //console.log(embed);
-  //result;
+    req.end()
+    //result;
+  });
 }
 
 var truncate = function (elem, limit) {
