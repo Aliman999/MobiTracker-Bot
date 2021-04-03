@@ -159,7 +159,7 @@ function queryApi(message, args){
             return embed;
           });
         }else{
-          message.channel.send(`That user doesnt exist.`);
+          message.channel.send("Could not find "+args);
         }
       })
     })
