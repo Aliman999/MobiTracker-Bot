@@ -95,9 +95,7 @@ function numberWithCommas(x) {
 }
 
 async function lookUp(message, args, finished = false){
-  //console.log(finished);
   message.channel.send(await queryApi(message, args));
-  //message.channel.send();
   if(finished){
     console.log(new Date().toLocaleString()+" --- BATCH END ---");
   }
@@ -113,9 +111,6 @@ function queryApi(message, args){
       method: 'GET'
     }
     const req = https.request(options, res =>{
-      if(message.member.user.tag != "MobiTracker#2117"){
-        console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
-      }
       res.on('data', d => {
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
@@ -242,7 +237,9 @@ client.on('message', message => {
         if(i == args.length-1){
           finished = true;
         }
-        console.log("new");
+        if(message.member.user.tag != "MobiTracker#2117"){
+          console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
+        }
         lookUp(message, args[i], finished);
         //message.channel.send();
       }
