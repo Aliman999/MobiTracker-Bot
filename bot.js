@@ -210,7 +210,6 @@ client.on('message', message => {
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }
   if (!message.content.startsWith(prefix)) return;
-  console.log(message.content.slice(prefix.length).trim().split(" "));
   var args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
@@ -223,7 +222,7 @@ client.on('message', message => {
     console.log(args);
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
-        lookUp(message, args);
+        lookUp(message, args[i]);
       }
     }else{
       lookUp(message, args);
