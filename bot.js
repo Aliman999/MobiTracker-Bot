@@ -224,6 +224,7 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
+        console.log(i);
         lookUp(message, args[i]);
         if(i==args.length-1){
           console.log(new Date().toLocaleString()+" --- BATCH END ---");
