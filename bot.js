@@ -104,8 +104,8 @@ async function lookUp(message, args, finished = false){
 }
 
 function queryApi(message, args){
-  console.log("looking up "+args);
-  return new Promise(function result(){
+  var result;
+  return new Promise(function promiseSearch(){
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
@@ -133,7 +133,7 @@ function queryApi(message, args){
             user.data.profile.id = '#No Citizen ID';
           }
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
-          return con.query(sql, async function (err, result, fields) {
+          con.query(sql, async function (err, result, fields) {
             if (err) throw err;
             var rating = "";
             if(result.length == 0){
@@ -158,10 +158,10 @@ function queryApi(message, args){
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-            return embed;
+            result = embed;
           });
         }else{
-          return "Could not find "+`${args}`;
+          result = "Could not find "+`${args}`;
         }
       })
     })
@@ -170,6 +170,7 @@ function queryApi(message, args){
     })
 
     req.end()
+    promiseSearch(result);
   });
 }
 
