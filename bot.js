@@ -211,7 +211,7 @@ client.on('message', message => {
   }
   if (!message.content.startsWith(prefix)) return;
   console.log(message.content.slice(prefix.length).trim().split(/\r?\n+/));
-  const args = message.content.slice(prefix.length).trim().split(/\r?\n+/);
+  const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
