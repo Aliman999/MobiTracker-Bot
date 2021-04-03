@@ -162,7 +162,8 @@ function queryApi(message, args){
             promiseSearch(embed);
           });
         }else{
-          result = "Could not find "+`${args}`;
+          var result = "Could not find "+`${args}`;
+          promiseSearch(result;
         }
       })
     })
