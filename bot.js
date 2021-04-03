@@ -239,7 +239,6 @@ client.on('message', message => {
         if(i == args.length-1){
           finished = true;
         }
-        console.log();
         console.log(lookUp(message, args[i]), finished);
         //message.channel.send();
       }
