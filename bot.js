@@ -91,6 +91,12 @@ function numberWithCommas(x) {
 }
 
 function lookUp(){
+  const options = {
+    hostname: 'api.starcitizen-api.com',
+    port: 443,
+    path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(`${args}`),
+    method: 'GET'
+  }
   const req = https.request(options, res => {
     if(message.member.user.tag != "MobiTracker#2117"){
       console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
@@ -207,12 +213,6 @@ client.on('message', message => {
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}else if (args.length > 1) return message.channel.send(`Too many arguments.`);
-    const options = {
-      hostname: 'api.starcitizen-api.com',
-      port: 443,
-      path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(`${args}`),
-      method: 'GET'
-    }
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
         lookUp(args);
