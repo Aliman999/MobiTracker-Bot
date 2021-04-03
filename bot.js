@@ -97,7 +97,7 @@ async function lookUp(message, args){
     path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(args),
     method: 'GET'
   }
-  var req = https.request(async function (options, res) {
+  const req = https.request(options, res => {
     if(message.member.user.tag != "MobiTracker#2117"){
       console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
     }
