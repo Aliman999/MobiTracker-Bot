@@ -133,7 +133,7 @@ function queryApi(message, args){
             user.data.profile.id = '#No Citizen ID';
           }
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
-          con.query(sql, async function (err, result, fields) {
+          con.query(sql, function (err, result, fields) {
             if (err) throw err;
             var rating = "";
             if(result.length == 0){
