@@ -95,7 +95,11 @@ async function lookUp(message, args){
     hostname: 'api.starcitizen-api.com',
     port: 443,
     path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(args),
-    method: 'GET'
+    method: 'GET',
+    headers:{
+      'Content-Type': 'application/x-www-form-urlencoded;',
+      'Content-Length': Buffer.byteLength(postData)
+    }
   }
   const req = https.request(async function(options, res){
     if(message.member.user.tag != "MobiTracker#2117"){
