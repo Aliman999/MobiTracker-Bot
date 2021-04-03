@@ -75,8 +75,7 @@ function affiliations(aff){
   var display = "";
   if(aff.length > 0){
     for (var i = 0; i < aff.length; i++) {
-      console.log(aff[i].name);
-      if(aff[i].name = ""){
+      if(!aff[i].name){
         display = display+"REDACTED"+'\n';
       }else{
         display = display+aff[i].rank+' in '+'['+aff[i].name+']'+'(https://robertsspaceindustries.com/orgs/'+aff[i].sid+')'+'\n';
