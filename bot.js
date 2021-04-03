@@ -111,6 +111,13 @@ async function lookUp(message, args){
         }else{
           user.data.organization.name = "None";
         }
+        if(Object.size(user.data.affiliation) > 1){
+          user.data.affiliation.name = user.data.affiliation.rank+' in '+'['+user.data.affiliation.name+'](https://robertsspaceindustries.com/orgs/'+user.data.affiliation.sid+')';
+        }else if (user.data.affiliation.name == ""){
+          user.data.affiliation.name = "REDACTED";
+        }else{
+          user.data.affiliation.name = "None";
+        }
         var cID = '';
         if(user.data.profile.id != 'n/a'){
           cID = 'AND cID ='+user.data.profile.id.substring(1);
