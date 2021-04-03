@@ -218,7 +218,8 @@ client.on('message', message => {
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}
-    args.forEach(item => console.log(item)); //item.replace("\n", " ")
+
+    args.forEach((item, index) => console.log(index)); //item.replace("\n", " ")
     console.log(args);
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
