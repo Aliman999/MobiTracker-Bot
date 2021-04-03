@@ -216,7 +216,7 @@ client.on('message', message => {
   if (command === 'search'){
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
-  	} //else if (args.length > 1) {args = args[0].split(/\n/);}
+  	}else if (args.length = 1) {args = args[0].split(/\n/);}
     console.log(args.length);
     console.log(args);
     if(args.length > 1){
