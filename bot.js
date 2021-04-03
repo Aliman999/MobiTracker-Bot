@@ -222,7 +222,7 @@ client.on('message', message => {
       for(var i = 0; i < args.length; i++){
         lookUp(message, args[i]);
       }
-      await console.log(new Date().toLocaleString()+" --- BATCH END ---");
+      console.log(new Date().toLocaleString()+" --- BATCH END ---");
     }else{
       console.log("NOT BATCH");
       lookUp(message, args);
