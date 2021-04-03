@@ -211,14 +211,14 @@ client.on('message', message => {
   }
   if (!message.content.startsWith(prefix)) return;
 
-  const args = message.content.slice(prefix.length).trim().split(" ");
+  const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}
-    args.forEach(item => item.replace("\n", ""));
+    args.forEach(item => console.log(item);); //item.replace("\n", " ")
     console.log(args);
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
