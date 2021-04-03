@@ -97,8 +97,7 @@ async function lookUp(message, args){
     path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(args),
     method: 'GET',
     headers:{
-      'Content-Type': 'application/x-www-form-urlencoded;',
-      'Content-Length': Buffer.byteLength(postData)
+      'Content-Type': 'application/x-www-form-urlencoded;'
     }
   }
   const req = https.request(async function(options, res){
