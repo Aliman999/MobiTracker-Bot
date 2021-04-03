@@ -224,7 +224,6 @@ client.on('message', message => {
       }
       console.log(new Date().toLocaleString()+" --- BATCH END ---");
     }else{
-      console.log("NOT BATCH");
       lookUp(message, args);
     }
   }
