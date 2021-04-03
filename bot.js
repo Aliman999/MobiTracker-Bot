@@ -96,7 +96,8 @@ function numberWithCommas(x) {
 
 async function lookUp(message, args, finished = false){
   console.log(finished);
-  message.channel.send(await queryApi(message, args));
+  console.log(queryApi(message, args));
+  //message.channel.send();
   if(finished){
     console.log(new Date().toLocaleString()+" --- BATCH END ---");
   }
