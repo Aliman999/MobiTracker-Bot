@@ -74,6 +74,7 @@ con.getConnection(function(err, connection) {
 function affiliations(aff){
   var display = "";
   if(aff.length > 0){
+    console.log(aff);
     for (var i = 0; i < aff.length; i++) {
       if(aff[i].name = ""){
         display = display+"REDACTED"+'\n';
