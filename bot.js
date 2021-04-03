@@ -95,12 +95,9 @@ async function lookUp(message, args){
     hostname: 'api.starcitizen-api.com',
     port: 443,
     path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(args),
-    method: 'GET',
-    headers:{
-      'Content-Type': 'application/x-www-form-urlencoded;'
-    }
+    method: 'GET'
   }
-  const req = https.request(async function(options, res){
+  const req = https.request(options, res =>{
     if(message.member.user.tag != "MobiTracker#2117"){
       console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
     }
@@ -121,7 +118,7 @@ async function lookUp(message, args){
           user.data.profile.id = '#No Citizen ID';
         }
         const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
-        con.query(sql, function (err, result, fields) {
+        con.query(sql, async function (err, result, fields) {
           if (err) throw err;
           var rating = "";
           if(result.length == 0){
@@ -146,7 +143,7 @@ async function lookUp(message, args){
               { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
              )
              .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-          message.channel.send(embed);
+          await message.channel.send(embed);
         });
       }else{
         message.channel.send(`That user doesnt exist.`);
@@ -157,7 +154,7 @@ async function lookUp(message, args){
     console.error(error)
   })
 
-  req.end();
+  req.end()
 }
 
 var truncate = function (elem, limit) {
@@ -221,13 +218,11 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}else if (args[0].includes("\n")) {args = args[0].split(/\n/);}
     if(args.length > 1){
-      async function initLookUp(){
-        console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
-        for(var i = 0; i < args.length; i++){
-          await lookUp(message, args[i]);
-        }
-        console.log(new Date().toLocaleString()+" --- BATCH END ---");
-      }initLookUp();
+      console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
+      for(var i = 0; i < args.length; i++){
+        lookUp(message, args[i]);
+      }
+      console.log(new Date().toLocaleString()+" --- BATCH END ---");
     }else{
       lookUp(message, args);
     }
