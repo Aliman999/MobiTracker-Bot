@@ -94,7 +94,14 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(message, args){
+async function lookUp(message, args, finished = false){
+  await queryApi();
+  if(finished){
+    console.log(new Date().toLocaleString()+" --- BATCH END ---");
+  }
+}
+
+function queryApi(message, args){
   return new Promise(function result(){
     const options = {
       hostname: 'api.starcitizen-api.com',
@@ -226,9 +233,13 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
-        message.channel.send(lookUp(message, args[i]));
+        var finished = false;
+        if(i == args.length-1){
+          finished = true;
+        }
+        console.log(lookUp(message, args[i]), finished);
+        //message.channel.send();
       }
-      console.log(new Date().toLocaleString()+" --- BATCH END ---");
     }else{
       lookUp(message, args);
     }
