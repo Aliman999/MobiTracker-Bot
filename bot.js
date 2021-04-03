@@ -150,7 +150,7 @@ client.on('message', message => {
   if (command === 'search'){
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
-  	}else if (args.length > 1) return message.channel.send(`Too many arguments.`);
+  	}
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
