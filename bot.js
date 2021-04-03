@@ -95,7 +95,7 @@ function numberWithCommas(x) {
 }
 
 async function lookUp(message, args, finished = false){
-  await queryApi(message, args);
+  return await queryApi(message, args);
   if(finished){
     console.log(new Date().toLocaleString()+" --- BATCH END ---");
   }
@@ -155,7 +155,7 @@ function queryApi(message, args){
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-            result(embed);
+            return embed;
           });
         }else{
           message.channel.send(`That user doesnt exist.`);
