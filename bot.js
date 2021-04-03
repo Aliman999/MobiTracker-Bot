@@ -211,7 +211,7 @@ client.on('message', message => {
   }
   if (!message.content.startsWith(prefix)) return;
 
-  const args = message.content.slice(prefix.length).trim().split(/\n+/);
+  const args = message.content.slice(prefix.length).trim().split(/"\n+"/);
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
@@ -221,7 +221,7 @@ client.on('message', message => {
     console.log(args);
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
-        lookUp(message, args[i]);
+        lookUp(message, args);
       }
     }else{
       lookUp(message, args);
