@@ -239,7 +239,7 @@ client.on('message', message => {
         if(i == args.length-1){
           finished = true;
         }
-        console.log(lookUp(message, args[i]), finished);
+        lookUp(message, args[i]), finished);
         //message.channel.send();
       }
     }else{
