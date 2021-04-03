@@ -132,7 +132,7 @@ function queryApi(message, args){
             user.data.profile.id = '#No Citizen ID';
           }
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
-          con.query(sql, async function (err, result, fields) {
+          return con.query(sql, async function (err, result, fields) {
             if (err) throw err;
             var rating = "";
             if(result.length == 0){
@@ -157,10 +157,10 @@ function queryApi(message, args){
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-            result(embed);
+            return embed;
           });
         }else{
-          result("Could not find "+`${args}`);
+          return "Could not find "+`${args}`;
         }
       })
     })
