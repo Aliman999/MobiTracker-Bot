@@ -157,6 +157,7 @@ function queryApi(message, args){
               { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
              )
              .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
+             console.log(embed);
           result = embed;
         });
       }else{
