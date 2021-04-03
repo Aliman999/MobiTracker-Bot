@@ -104,7 +104,7 @@ async function lookUp(message, args){
     if(message.member.user.tag != "MobiTracker#2117"){
       console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
     }
-    await res.on('data', d => {
+    res.on('data', d => {
       const user = JSON.parse(d);
       if(Object.size(user.data) > 0){
         if(Object.size(user.data.organization) > 1){
