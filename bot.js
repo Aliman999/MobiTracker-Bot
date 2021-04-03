@@ -150,6 +150,11 @@ function lookUp(args){
       }
     })
   })
+  req.on('error', error => {
+    console.error(error)
+  })
+
+  req.end()
 }
 
 var truncate = function (elem, limit) {
@@ -221,13 +226,6 @@ client.on('message', message => {
     }else{
       lookUp(args);
     }
-
-    req.on('error', error => {
-      console.error(error)
-    })
-
-    req.end()
-
   }
   if(command == 'auth'){
     if(!args.length){
