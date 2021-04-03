@@ -95,7 +95,7 @@ function numberWithCommas(x) {
 }
 
 async function lookUp(message, args, finished = false){
-  console.log(finished);
+  //console.log(finished);
   console.log(await queryApi(message, args));
   //message.channel.send();
   if(finished){
@@ -157,10 +157,9 @@ function queryApi(message, args){
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-            setTimeout(() => {
-              promiseSearch(embed);
-            }, 2000);
+               console.log(embed);
             //message.channel.send(embed);
+            promiseSearch(embed);
           });
         }else{
           result = "Could not find "+`${args}`;
