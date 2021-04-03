@@ -90,7 +90,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function lookUp(message, args){
+async function lookUp(message, args){
   return new Promise(result =>{
     const options = {
       hostname: 'api.starcitizen-api.com',
@@ -220,11 +220,13 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}else if (args[0].includes("\n")) {args = args[0].split(/\n/);}
     if(args.length > 1){
-      console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
-      for(var i = 0; i < args.length; i++){
-        await lookUp(message, args[i]);
-      }
-      console.log(new Date().toLocaleString()+" --- BATCH END ---");
+      async function initLookUp(){
+        console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
+        for(var i = 0; i < args.length; i++){
+          await lookUp(message, args[i]);
+        }
+        console.log(new Date().toLocaleString()+" --- BATCH END ---");
+      }initLookUp();
     }else{
       lookUp(message, args);
     }
