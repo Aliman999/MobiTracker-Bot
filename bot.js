@@ -90,7 +90,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function lookUp(args){
+function lookUp(message, args){
   const options = {
     hostname: 'api.starcitizen-api.com',
     port: 443,
@@ -221,12 +221,13 @@ client.on('message', message => {
     console.log(args);
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
-        lookUp(args);
+        lookUp(message, args);
       }
     }else{
-      lookUp(args);
+      lookUp(message, args);
     }
   }
+
   if(command == 'auth'){
     if(!args.length){
       return message.channel.send('Sign in at https://mobitracker.co/login and click the button at the top that says "Discord Bot". \nThen and copy the text provided and paste it here.');
