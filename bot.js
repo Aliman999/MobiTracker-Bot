@@ -90,7 +90,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function lookUp(message, args){
+async function lookUp(message, args){
   const options = {
     hostname: 'api.starcitizen-api.com',
     port: 443,
