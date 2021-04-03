@@ -218,9 +218,11 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}else if (args[0].includes("\n")) {args = args[0].split(/\n/);}
     if(args.length > 1){
+      console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
         lookUp(message, args[i]);
       }
+      console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+`${args}`+' in the '+message.guild.name+' server');
     }else{
       lookUp(message, args);
     }
