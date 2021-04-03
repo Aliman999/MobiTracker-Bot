@@ -157,10 +157,10 @@ function queryApi(message, args){
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-            return embed;
+            result(embed);
           });
         }else{
-          return "Could not find "+`${args}`;
+          result("Could not find "+`${args}`);
         }
       })
     })
@@ -239,6 +239,7 @@ client.on('message', message => {
         if(i == args.length-1){
           finished = true;
         }
+        console.log();
         console.log(lookUp(message, args[i]), finished);
         //message.channel.send();
       }
