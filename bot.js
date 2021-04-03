@@ -221,7 +221,7 @@ client.on('message', message => {
     console.log(args);
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
-        lookUp(message, args);
+        lookUp(message, args[i]);
       }
     }else{
       lookUp(message, args);
