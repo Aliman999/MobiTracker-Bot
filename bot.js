@@ -143,7 +143,7 @@ async function lookUp(message, args){
               { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
              )
              .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-          message.channel.send(embed);
+          await message.channel.send(embed);
         });
       }else{
         message.channel.send(`That user doesnt exist.`);
@@ -220,7 +220,7 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
-        await lookUp(message, args[i]);
+        lookUp(message, args[i]);
       }
       console.log(new Date().toLocaleString()+" --- BATCH END ---");
     }else{
