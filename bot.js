@@ -227,7 +227,7 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
-        message.channel.send(lookUp(message, args[i], batch));
+        message.channel.send(lookUp(message, args[i]));
       }
     }else{
       lookUp(message, args);
