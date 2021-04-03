@@ -227,9 +227,13 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
-        lookUp(message, args[i], function(){if(i==args.length-1){return true}else{return false}});
         if(i==args.length-1){
+          var batch = true;
         }
+        else{
+          var batch = false;
+        };
+        lookUp(message, args[i], batch);
       }
     }else{
       lookUp(message, args);
