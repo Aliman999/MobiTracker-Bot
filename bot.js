@@ -221,6 +221,7 @@ client.on('message', message => {
     console.log(args);
     if(args.length > 1){
       for(var i = 0; i < args.length; i++){
+        args[i].replace("\n", "");
         lookUp(message, args);
       }
     }else{
