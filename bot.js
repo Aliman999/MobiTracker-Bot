@@ -104,7 +104,7 @@ async function lookUp(message, args, finished = false){
 }
 
 function queryApi(message, args){
-  var result;
+  var embed;
   return new Promise(function promiseSearch(){
     const options = {
       hostname: 'api.starcitizen-api.com',
@@ -145,7 +145,7 @@ function queryApi(message, args){
                 rating = result[0].rating+"/5 "+"("+result[0].count+")";
               }
             }
-            var embed = new MessageEmbed()
+            embed = new MessageEmbed()
               .setColor(0x25a6dd)
               .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
               .setDescription("AKA "+user.data.profile.display)
@@ -158,8 +158,6 @@ function queryApi(message, args){
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-               message.channel.send(embed);
-            result = embed;
           });
         }else{
           result = "Could not find "+`${args}`;
@@ -171,7 +169,7 @@ function queryApi(message, args){
     })
 
     req.end()
-    //result;
+    message.channel.send(embed);
   });
 }
 
