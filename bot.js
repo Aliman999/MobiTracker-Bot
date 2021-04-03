@@ -95,8 +95,8 @@ function numberWithCommas(x) {
 }
 
 async function lookUp(message, args, finished = false){
-  const result = await queryApi(message, args);
   console.log(result);
+  const result = await queryApi(message, args);
   if(finished){
     console.log(new Date().toLocaleString()+" --- BATCH END ---");
   }
@@ -160,7 +160,7 @@ function queryApi(message, args){
             return embed;
           });
         }else{
-          message.channel.send("Could not find "+`${args}`);
+          return "Could not find "+`${args}`;
         }
       })
     })
