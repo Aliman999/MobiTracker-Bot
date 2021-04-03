@@ -90,7 +90,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(message, args){
+function lookUp(message, args){
   const options = {
     hostname: 'api.starcitizen-api.com',
     port: 443,
@@ -118,7 +118,7 @@ async function lookUp(message, args){
           user.data.profile.id = '#No Citizen ID';
         }
         const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
-        con.query(sql, function (err, result, fields) {
+        con.query(sql, async function (err, result, fields) {
           if (err) throw err;
           var rating = "";
           if(result.length == 0){
