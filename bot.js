@@ -243,11 +243,10 @@ client.on('message', message => {
           console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args[i]+' in the '+message.guild.name+' server');
         }
         lookUp(message, args[i], finished);
-        //message.channel.send();
       }
     }else{
       console.log(args);
-      lookUp(message, args[i]);
+      queryApi(message, args[i]);
     }
   }
 
