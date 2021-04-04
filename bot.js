@@ -113,7 +113,6 @@ function queryApi(message, argz){
     }
     const req = https.request(options, res =>{
       res.on('data', d => {
-        console.log(args);
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
           if(Object.size(user.data.organization) > 1){
@@ -233,13 +232,6 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}
     if(args.length > 1){
-      //console.log(args);
-      /*
-      for (var i = 0; i < args.length; i++) {
-        args = args[i].replace(/\s+/, ' ').split(/\s+/)
-      }
-      */
-      console.log(args);
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
         var finished = false;
