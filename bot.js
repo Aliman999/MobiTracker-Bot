@@ -247,7 +247,7 @@ client.on('message', message => {
       if(message.member.user.tag != "MobiTracker#2117"){
         console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
       }
-      console.log(args);
+      console.log(args[i]);
       lookUp(message, args[i]);
     }
   }
