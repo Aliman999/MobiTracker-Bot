@@ -108,7 +108,7 @@ function queryApi(message, args){
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(args.replace("—", "_")),
+      path: '/c13b1badf9ccd433c90b4160c7664107/v1/auto/user/'+escape(args[0].replace("—", "_")),
       method: 'GET'
     }
     const req = https.request(options, res =>{
