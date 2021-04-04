@@ -233,7 +233,7 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
-        var args = args[i].replace(/[^a-zA-Z0-9]/g, '_');
+        var args = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
         var finished = false;
         if(i == args.length-1){
           finished = true;
