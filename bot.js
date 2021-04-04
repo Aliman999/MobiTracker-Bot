@@ -233,7 +233,6 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
-        console.log(args);
         args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
         var finished = false;
         if(i == args.length-1){
@@ -242,6 +241,7 @@ client.on('message', message => {
         if(message.member.user.tag != "MobiTracker#2117"){
           console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args[i]+' in the '+message.guild.name+' server');
         }
+        args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
         lookUp(message, args[i], finished);
       }
     }else{
