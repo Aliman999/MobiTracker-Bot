@@ -248,7 +248,7 @@ client.on('message', message => {
         console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
-      lookUp(message, args[i]);
+      lookUp(message, args);
     }
   }
 
