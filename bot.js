@@ -102,9 +102,9 @@ async function lookUp(message, args, finished = false){
 }
 
 function queryApi(message, argz){
-  console.log("test "+argz);
   return new Promise(promiseSearch =>{
     var embed;
+    console.log("test "+argz);
     var args = argz.replace(/[^a-zA-Z0-9]/g, '_');
     const options = {
       hostname: 'api.starcitizen-api.com',
@@ -225,7 +225,7 @@ client.on('message', message => {
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }
   if (!message.content.startsWith(prefix)) return;
-  var args = message.content.slice(prefix.length).trim().split(/\s+/);
+  var args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
