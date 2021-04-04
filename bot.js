@@ -246,7 +246,7 @@ client.on('message', message => {
         //message.channel.send();
       }
     }else{
-      lookUp(message, args);
+      lookUp(message, args[i]);
     }
   }
 
