@@ -104,7 +104,6 @@ async function lookUp(message, args, finished = false){
 function queryApi(message, args){
   return new Promise(promiseSearch =>{
     var embed;
-    console.log(args);
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
@@ -113,6 +112,7 @@ function queryApi(message, args){
     }
     const req = https.request(options, res =>{
       res.on('data', d => {
+        console.log(args);
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
           if(Object.size(user.data.organization) > 1){
