@@ -95,6 +95,7 @@ function numberWithCommas(x) {
 }
 
 async function lookUp(message, args, finished = false){
+  console.log("pre query "+args);
   message.channel.send(await queryApi(message, args));
   if(finished){
     console.log(new Date().toLocaleString()+" --- BATCH END ---");
@@ -245,7 +246,7 @@ client.on('message', message => {
         lookUp(message, args[i], finished);
       }
     }else{
-      console.log("before test"+args);
+      console.log(args);
       lookUp(message, args[i]);
     }
   }
