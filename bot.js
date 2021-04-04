@@ -245,7 +245,7 @@ client.on('message', message => {
         lookUp(message, args[i], finished);
       }
     }else{
-      console.log(args);
+      console.log("before test"+args);
       lookUp(message, args[i]);
     }
   }
