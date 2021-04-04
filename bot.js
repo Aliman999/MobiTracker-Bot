@@ -232,6 +232,7 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}
     if(args.length > 1){
+      console.log(args);
       args = args[0].replace(/\s+/, ' ').split(/\s+/);
       console.log(args);
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
