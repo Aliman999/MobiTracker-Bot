@@ -101,6 +101,115 @@ async function lookUp(message, args, finished = false){
   }
 }
 
+function showContracts(args){
+  const pp = 4;
+  if(!args.length){
+    var p = 0;
+  }else if(args.length == 1 && args[0] > 0){
+    var p = args[0]-1;
+  }else{
+    return message.channel.send('Invalid Arguments.');
+  }
+  var mp;
+  var limit;
+  var sql = "SELECT id FROM contracts WHERE faction = 0";
+  con.query(sql, function (err, result, fields) {
+    if(err) throw err;
+    mp = Math.ceil(result.length/pp);
+    if(p > mp){
+      p = mp;
+    }
+    if(p*pp == 0){
+      limit = 'LIMIT 4';
+    }else{
+      limit = 'LIMIT 4, '+(p*pp-1);
+    }
+    var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, escrow->'$.ESCROW' AS escrow, created_at FROM contracts WHERE faction = 0 AND completed = 0 AND markComplete = 0 AND escrow->'$.ACTIVE' = true ORDER BY id DESC "+limit+";";
+    con.query(sql, function (err, result, fields) {
+      if(err) throw err;
+      var newCreator = [], newPrice = [], newEscrow = [], newDesc = [], spacer, field = [];
+      for(var x = 0; x<result.length; x++){
+        if(result[x].type == 'R'){
+          if(result[x].careertype == 'Scouting'){
+            result[x].careertype = 'Looking for a Scout';
+
+          }else if(result[x].careertype == 'Delivery'){
+            result[x].careertype = 'Looking for a Courier';
+
+          }else if(result[x].careertype == 'Racing'){
+            result[x].careertype = 'Looking to Race';
+
+          }else if(result[x].careertype == 'Medical'){
+            result[x].careertype = 'Looking for Medical Services';
+
+          }else if(result[x].careertype == 'Security'){
+            result[x].careertype = 'Looking for Security Services';
+
+          }else if(result[x].careertype == 'Charting Regular'){
+            result[x].careertype = 'Looking for a Charter';
+
+          }else if(result[x].careertype == 'Charting Luxury'){
+            result[x].careertype = 'Looking for a Luxurious Charter';
+
+          }
+        }else if(result[x].type == 'O'){
+          if(result[x].careertype == 'Scouting'){
+            result[x].careertype = 'Scout for Hire';
+
+          }else if(result[x].careertype == 'Delivery'){
+            result[x].careertype = 'Courier for Hire';
+
+          }else if(result[x].careertype == 'Racing'){
+            result[x].careertype = 'Racer for Hire';
+
+          }else if(result[x].careertype == 'Medical'){
+            result[x].careertype = 'Medical Services for Hire';
+
+          }else if(result[x].careertype == 'Security'){
+            result[x].careertype = 'Security Services for Hire';
+
+          }else if(result[x].careertype == 'Charting Regular'){
+            result[x].careertype = 'Regular Charter for Hire';
+
+          }else if(result[x].careertype == 'Charting Luxury'){
+            result[x].careertype = 'Luxurious Charter for Hire';
+
+          }
+        }
+        result[x].unsecure = decodeEntities(result[x].unsecure);
+        result[x].unsecure = truncate(result[x].unsecure, 10);
+        result[x].price = result[x].price+' aUEC';
+        if(result[x].escrow == 1){
+          result[x].escrow = "Active";
+        }else{
+          result[x].escrow = "Inactive";
+        }
+        newCreator[x] = { name: result[x].u_creator, value: result[x].careertype, inline: true };
+        newPrice[x] = { name: 'Price', value: numberWithCommas(result[x].price), inline: true };
+        newEscrow[x] = { name: 'Escrow', value:result[x].escrow, inline:true };
+        newDesc[x] = { name: 'Description', value:result[x].unsecure, inline:true };
+        spacer = { name: '\u200B', value: '\u200B' };
+      }
+      p++;
+      var embed = new MessageEmbed()
+        .setColor(0x25a6dd)
+        .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
+        .setTitle('Page '+p+' of '+mp)
+        .setFooter('Contracts - Mobitracker.co');
+      for(var x = 0; x < result.length; x++){
+        embed.addFields(newCreator[x]);
+        embed.addFields(newPrice[x]);
+        embed.addFields(newEscrow[x]);
+        embed.addFields(newDesc[x]);
+        if(x != result.length-1){
+          embed.addFields(spacer);
+        }
+      }
+      message.channel.send(embed);
+    });
+  });
+}
+
 function queryApi(message, args){
   return new Promise(promiseSearch =>{
     var embed;
@@ -319,112 +428,7 @@ client.on('message', message => {
     });
   }
   if(command == 'contracts'){
-    const pp = 4;
-    if(!args.length){
-      var p = 0;
-    }else if(args.length == 1 && args[0] > 0){
-      var p = args[0]-1;
-    }else{
-      return message.channel.send('Invalid Arguments.');
-    }
-    var mp;
-    var limit;
-    var sql = "SELECT id FROM contracts WHERE faction = 0";
-    con.query(sql, function (err, result, fields) {
-      if(err) throw err;
-      mp = Math.ceil(result.length/pp);
-      if(p > mp){
-        p = mp;
-      }
-      if(p*pp == 0){
-        limit = 'LIMIT 4';
-      }else{
-        limit = 'LIMIT 4, '+(p*pp-1);
-      }
-      var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, escrow->'$.ESCROW' AS escrow, created_at FROM contracts WHERE faction = 0 AND completed = 0 AND markComplete = 0 AND escrow->'$.ACTIVE' = true ORDER BY id DESC "+limit+";";
-      con.query(sql, function (err, result, fields) {
-        if(err) throw err;
-        var newCreator = [], newPrice = [], newEscrow = [], newDesc = [], spacer, field = [];
-        for(var x = 0; x<result.length; x++){
-          if(result[x].type == 'R'){
-            if(result[x].careertype == 'Scouting'){
-              result[x].careertype = 'Looking for a Scout';
-
-            }else if(result[x].careertype == 'Delivery'){
-              result[x].careertype = 'Looking for a Courier';
-
-            }else if(result[x].careertype == 'Racing'){
-              result[x].careertype = 'Looking to Race';
-
-            }else if(result[x].careertype == 'Medical'){
-              result[x].careertype = 'Looking for Medical Services';
-
-            }else if(result[x].careertype == 'Security'){
-              result[x].careertype = 'Looking for Security Services';
-
-            }else if(result[x].careertype == 'Charting Regular'){
-              result[x].careertype = 'Looking for a Charter';
-
-            }else if(result[x].careertype == 'Charting Luxury'){
-              result[x].careertype = 'Looking for a Luxurious Charter';
-
-            }
-          }else if(result[x].type == 'O'){
-            if(result[x].careertype == 'Scouting'){
-              result[x].careertype = 'Scout for Hire';
-
-            }else if(result[x].careertype == 'Delivery'){
-              result[x].careertype = 'Courier for Hire';
-
-            }else if(result[x].careertype == 'Racing'){
-              result[x].careertype = 'Racer for Hire';
-
-            }else if(result[x].careertype == 'Medical'){
-              result[x].careertype = 'Medical Services for Hire';
-
-            }else if(result[x].careertype == 'Security'){
-              result[x].careertype = 'Security Services for Hire';
-
-            }else if(result[x].careertype == 'Charting Regular'){
-              result[x].careertype = 'Regular Charter for Hire';
-
-            }else if(result[x].careertype == 'Charting Luxury'){
-              result[x].careertype = 'Luxurious Charter for Hire';
-
-            }
-          }
-          result[x].unsecure = decodeEntities(result[x].unsecure);
-          result[x].unsecure = truncate(result[x].unsecure, 10);
-          result[x].price = result[x].price+' aUEC';
-          if(result[x].escrow == 1){
-            result[x].escrow = "Active";
-          }else{
-            result[x].escrow = "Inactive";
-          }
-          newCreator[x] = { name: result[x].u_creator, value: result[x].careertype, inline: true };
-          newPrice[x] = { name: 'Price', value: numberWithCommas(result[x].price), inline: true };
-          newEscrow[x] = { name: 'Escrow', value:result[x].escrow, inline:true };
-          newDesc[x] = { name: 'Description', value:result[x].unsecure, inline:true };
-          spacer = { name: '\u200B', value: '\u200B' };
-        }
-        p++;
-        var embed = new MessageEmbed()
-          .setColor(0x25a6dd)
-          .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
-          .setTitle('Page '+p+' of '+mp)
-          .setFooter('Contracts - Mobitracker.co');
-        for(var x = 0; x < result.length; x++){
-          embed.addFields(newCreator[x]);
-          embed.addFields(newPrice[x]);
-          embed.addFields(newEscrow[x]);
-          embed.addFields(newDesc[x]);
-          if(x != result.length-1){
-            embed.addFields(spacer);
-          }
-        }
-        message.channel.send(embed);
-      });
-    });
+    showContracts(args);
   }
   if(command == 'alerts'){
     if(args.length>1){
