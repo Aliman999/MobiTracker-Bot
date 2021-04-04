@@ -113,6 +113,7 @@ function queryApi(message, argz){
     }
     const req = https.request(options, res =>{
       res.on('data', d => {
+        console.log(args);
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
           if(Object.size(user.data.organization) > 1){
