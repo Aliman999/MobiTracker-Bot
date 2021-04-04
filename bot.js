@@ -233,7 +233,9 @@ client.on('message', message => {
   	}
     if(args.length > 1){
       console.log(args);
-      args = args[0].replace(/\s+/, ' ').split(/\s+/);
+      for (var i = 0; i < args.length; i++) {
+        args = args[i].replace(/\s+/, ' ').split(/\s+/)
+      }
       console.log(args);
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
