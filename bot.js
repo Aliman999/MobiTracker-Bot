@@ -246,8 +246,7 @@ client.on('message', message => {
         lookUp(message, args[i], finished);
       }
     }else{
-      console.log(args);
-      lookUp(message, args[i]);
+      lookUp(message, args);
     }
   }
 
