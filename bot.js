@@ -101,7 +101,7 @@ async function lookUp(message, args, finished = false){
   }
 }
 
-function showContracts(args){
+function showContracts(message, args){
   const pp = 4;
   if(!args.length){
     var p = 0;
@@ -428,7 +428,7 @@ client.on('message', message => {
     });
   }
   if(command == 'contracts'){
-    showContracts(args);
+    showContracts(message, args);
   }
   if(command == 'alerts'){
     if(args.length>1){
