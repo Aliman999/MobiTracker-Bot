@@ -106,7 +106,7 @@ function queryApi(message, argz){
   return new Promise(promiseSearch =>{
     var embed;
     console.log("test "+argz);
-    var args = argz.toString().replace(/[^a-zA-Z0-9]/g, '_');
+    var args = argz.toString().replace(/[-^a-zA-Z0-9]/g, '_');
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
