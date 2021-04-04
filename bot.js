@@ -232,7 +232,7 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}
     if(args.length > 1){
-      args = args[0].replace( /\n/g, " " ).split( " " );
+      args = args[0].replace( /\s/g, " " ).split( " " );
       console.log(args);
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
