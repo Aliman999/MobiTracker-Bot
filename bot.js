@@ -494,10 +494,6 @@ client.on('message', message => {
   if (!message.content.startsWith(`${prefix}`)) return;
 });
 
-function test(){
-  console.log("test");
-};
-
 const program = async () => {
   const instance = new MySQLEvents(con, {
     startAtEnd: true,
@@ -567,21 +563,6 @@ const program = async () => {
                 }else{
                   embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: "No Notifications"});
                 }
-                /*
-                  console.log(show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)]);
-                  embed.addFields({ name: title+" - "+show[index[i]].count, value:"\u200B" });
-                  embed.addFields({ name: "My Applications - "+show[index[i]].myApplications.events.length, value: "\u200B" });
-                  embed.addFields({ name: "Latest", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-1)], inline: true });
-                  if(show[index[i]].myApplications.events.length>1){
-                    embed.addFields({ name: "Previous", value: show[index[i]].myApplications.events[(show[index[i]].myApplications.events.length-2)], inline: true });
-                  }
-                  embed.addFields({ name: '\u200B', value: '\u200B' });
-                  embed.addFields({ name: "My Contracts - "+show[index[i]].myContracts.events.length, value: "\u200B" });
-                  embed.addFields({ name: "Latest", value: show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-1)], inline: true });
-                  if(show[index[i]].myContracts.events.length>1){
-                    embed.addFields({ name: "Previous", value: show[index[i]].myContracts.events[(show[index[i]].myContracts.events.length-2)], inline: true });
-                  }
-                */
               }else{
                 if(show[index[i]].count>1){
                   previous = "\n\nPrevious - "+show[index[i]].events[(show[index[i]].count-2)];
