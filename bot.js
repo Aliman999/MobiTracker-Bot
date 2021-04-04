@@ -230,8 +230,9 @@ client.on('message', message => {
   if (command === 'search'){
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
-  	}else if (args[0].includes("\n")) {args = args[0].split(/\n/);}
+  	}
     if(args.length > 1){
+      args = args[0].replace( /\n/g, " " ).split( " " );
       console.log(args);
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
