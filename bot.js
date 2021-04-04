@@ -104,7 +104,6 @@ async function lookUp(message, args, finished = false){
 function queryApi(message, argz){
   return new Promise(promiseSearch =>{
     var embed;
-    var args = argz.toString().replace(/[^a-zA-Z0-9]/g, '_');
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
@@ -113,7 +112,6 @@ function queryApi(message, argz){
     }
     const req = https.request(options, res =>{
       res.on('data', d => {
-        console.log(args);
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
           if(Object.size(user.data.organization) > 1){
@@ -235,6 +233,7 @@ client.on('message', message => {
     if(args.length > 1){
       console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
+        var args = args[i].replace(/[^a-zA-Z0-9]/g, '_');
         var finished = false;
         if(i == args.length-1){
           finished = true;
