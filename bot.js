@@ -104,7 +104,7 @@ async function lookUp(message, args, finished = false){
 function queryApi(message, args){
   return new Promise(promiseSearch =>{
     var embed;
-    var args = args[0].replace("—", "_");
+    var args = args[0];
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
