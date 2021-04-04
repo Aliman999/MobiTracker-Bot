@@ -101,7 +101,7 @@ async function lookUp(message, args, finished = false){
   }
 }
 
-function queryApi(message, argz){
+function queryApi(message, args){
   return new Promise(promiseSearch =>{
     var embed;
     const options = {
