@@ -246,7 +246,7 @@ client.on('message', message => {
       }
     }else{
       console.log(args);
-      queryApi(message, args[i]);
+      lookUp(message, args[i]);
     }
   }
 
