@@ -101,7 +101,7 @@ async function lookUp(message, args, finished = false){
   }
 }
 
-function toggleAlerts(){
+function toggleAlerts(message, args){
   if(args.length>1){
     return message.author.send('Too many arguments.');
   }else if(args.length == 0){
@@ -268,6 +268,36 @@ function showContracts(message, args){
   });
 }
 
+function userSearch(message, args){
+  if (!args.length){
+    return message.channel.send(`You didnt provide a username.`);
+  }
+  if(args.length > 1){
+    console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
+    for(var i = 0; i < args.length; i++){
+      args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
+      var finished = false;
+      if(i == args.length-1){
+        finished = true;
+      }
+      if(message.member.user.tag != "MobiTracker#2117"){
+        console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args[i]+' in the '+message.guild.name+' server');
+      }
+      lookUp(message, args[i], finished);
+    }
+  }else{
+    if(message.member.user.tag != "MobiTracker#2117"){
+      console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
+    }
+    args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
+    lookUp(message, args);
+  }
+}
+
+function registerUser(){
+
+}
+
 function queryApi(message, args){
   return new Promise(promiseSearch =>{
     var embed;
@@ -394,29 +424,7 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'search'){
-  	if (!args.length){
-  		return message.channel.send(`You didnt provide a username.`);
-  	}
-    if(args.length > 1){
-      console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
-      for(var i = 0; i < args.length; i++){
-        args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-        var finished = false;
-        if(i == args.length-1){
-          finished = true;
-        }
-        if(message.member.user.tag != "MobiTracker#2117"){
-          console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args[i]+' in the '+message.guild.name+' server');
-        }
-        lookUp(message, args[i], finished);
-      }
-    }else{
-      if(message.member.user.tag != "MobiTracker#2117"){
-        console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
-      }
-      args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
-      lookUp(message, args);
-    }
+    userSearch(message, args)
   }
 
   if(command == 'auth'){
