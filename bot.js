@@ -71,6 +71,18 @@ con.getConnection(function(err, connection) {
   if (err) throw err;
 });
 
+function cachePlayer(user){
+  console.log(user);
+  var cID = '';
+  if(user.profile.id != 'n/a'){
+    cID = user.profile.id.substring(1);
+  }
+  const sql = "INSERT INTO `CACHE players`(`timestamp`, `cID`, `username`, `organization`, `avatar`, `signup`) VALUES (now(), "+cID+", "+user.profile.username+")";
+  con.query(sql, function (err, result, fields) {
+
+  }
+}
+
 function affiliations(aff){
   var display = "";
   if(aff.length > 0){
@@ -307,6 +319,7 @@ function queryApi(message, args){
                 rating = result[0].rating+"/5 "+"("+result[0].count+")";
               }
             }
+            cachePlayer(user.data);
             embed = new MessageEmbed()
               .setColor(0x25a6dd)
               .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
