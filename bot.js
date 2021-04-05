@@ -101,6 +101,64 @@ async function lookUp(message, args, finished = false){
   }
 }
 
+function toggleAlerts(){
+  if(args.length>1){
+    return message.author.send('Too many arguments.');
+  }else if(args.length == 0){
+    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
+    con.query(sql, function (err, result, fields) {
+      if(err) throw err;
+      if(result.length > 0){
+        var string = '';
+        if(result[0].paused == 1){
+          return message.author.send('Your Alerts are paused!');
+        }else{
+          if(result[0].contracts != -1){
+            result[0].contracts = 'ON';
+          }else{
+            result[0].contracts = 'OFF';
+          }
+          if(result[0].applicants != -1){
+            result[0].applicants = 'ON';
+          }else{
+            result[0].applicants = 'OFF';
+          }
+          if(result[0].reviews != -1){
+            result[0].reviews = 'ON';
+          }else{
+            result[0].reviews = 'OFF';
+          }
+          return message.author.send('Your Alert Policy: \nContracts: '+result[0].contracts+' \nApplicants: '+result[0].applicants+' \nReviews: '+result[0].reviews);
+        }
+      }else{
+        message.author.send("This command is used for toggling on and off your discord alerts of MobiTracker.co \nIf you'd like to received discord alerts sign up at https://mobitracker.co");
+      }
+    });
+  }
+  const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
+  con.query(sql, function (err, result, fields) {
+    if(err) throw err;
+    if(result.length > 0 && args.length > 0){
+      args[0] = args[0].toString().toLowerCase();
+      if(args[0] == "off"){
+        const sql = "UPDATE discordAlerts SET userPause = 1 WHERE discordUser->'$.id' = '"+message.author.id+"'";
+        con.query(sql, function (err, result, fields) {
+          if(err) throw err;
+          console.log(message.author.tag+" turned off their alerts");
+          message.author.send("Paused Alerts.");
+        });
+      }else if(args[0] == "on"){
+        const sql = "UPDATE discordAlerts SET userPause = 0 WHERE discordUser->'$.id' = '"+message.author.id+"'";
+        con.query(sql, function (err, result, fields) {
+          if(err) throw err;
+          console.log(message.author.tag+" turned on their alerts");
+          message.author.send("Resumed Alerts.");
+        });
+      }
+    }
+  });
+}
+
 function showContracts(message, args){
   const pp = 4;
   if(!args.length){
@@ -431,61 +489,7 @@ client.on('message', message => {
     showContracts(message, args);
   }
   if(command == 'alerts'){
-    if(args.length>1){
-      return message.author.send('Too many arguments.');
-    }else if(args.length == 0){
-      const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
-      con.query(sql, function (err, result, fields) {
-        if(err) throw err;
-        if(result.length > 0){
-          var string = '';
-          if(result[0].paused == 1){
-            return message.author.send('Your Alerts are paused!');
-          }else{
-            if(result[0].contracts != -1){
-              result[0].contracts = 'ON';
-            }else{
-              result[0].contracts = 'OFF';
-            }
-            if(result[0].applicants != -1){
-              result[0].applicants = 'ON';
-            }else{
-              result[0].applicants = 'OFF';
-            }
-            if(result[0].reviews != -1){
-              result[0].reviews = 'ON';
-            }else{
-              result[0].reviews = 'OFF';
-            }
-            return message.author.send('Your Alert Policy: \nContracts: '+result[0].contracts+' \nApplicants: '+result[0].applicants+' \nReviews: '+result[0].reviews);
-          }
-        }else{
-          message.author.send("This command is used for toggling on and off your discord alerts of MobiTracker.co \nIf you'd like to received discord alerts sign up at https://mobitracker.co");
-        }
-      });
-    }
-    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
-    con.query(sql, function (err, result, fields) {
-      if(err) throw err;
-      if(result.length > 0 && args.length > 0){
-        args[0] = args[0].toString().toLowerCase();
-        if(args[0] == "off"){
-          const sql = "UPDATE discordAlerts SET userPause = 1 WHERE discordUser->'$.id' = '"+message.author.id+"'";
-          con.query(sql, function (err, result, fields) {
-            if(err) throw err;
-            console.log(message.author.tag+" turned off their alerts");
-            message.author.send("Paused Alerts.");
-          });
-        }else if(args[0] == "on"){
-          const sql = "UPDATE discordAlerts SET userPause = 0 WHERE discordUser->'$.id' = '"+message.author.id+"'";
-          con.query(sql, function (err, result, fields) {
-            if(err) throw err;
-            console.log(message.author.tag+" turned on their alerts");
-            message.author.send("Resumed Alerts.");
-          });
-        }
-      }
-    });
+    toggleAlerts(message, args);
   }
   if(command == 'help'){
     message.channel.send("MobiTracker's Discord bot is very simple to use! \n\n!help - Bring up this help message \n\n!search USERNAME - Find any user in the verse by their ingame name quickly and displaying all the information you'd find online at https://mobitracker.co \n\n !contracts PAGENUMBER - Search through MobiTrackers Contracts by the page number and See what people are doing! \n\n!auth - The command to authorize and edit your alert policies! \nGet your auth token at https://mobitracker.co/discord \n\n!alerts on/off - Pause and Resume your alert policy!");
