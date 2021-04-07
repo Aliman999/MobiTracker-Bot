@@ -299,6 +299,7 @@ function queryApi(message, args){
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
+          console.log(user.data.organization);
           if(Object.size(user.data.organization) > 1){
             user.data.organization.name = user.data.organization.rank+' ['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
           }else if (user.data.organization.name == ""){
