@@ -306,6 +306,7 @@ function cachePlayer(user){
     var data = result[result.length-1];
     data.organization = JSON.parse(data.organization);
     data.organization = Object.values(data.organization);
+    data.badge = JSON.parse(data.badge);
     console.log(data);
     /*
     result[result.lenght-1].organization = JSON.parse(result[result.lenght-1].organization);
