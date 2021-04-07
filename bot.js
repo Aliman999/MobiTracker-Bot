@@ -273,20 +273,32 @@ function cachePlayer(user){
   var check = { cID:0,
                 username:'',
                 badge: { src:'', title:'' },
-                organization: '',
+                organization: [],
                 avatar: '',
                 bio: ''
               };
   check.username = user.profile.handle;
   check.badge.title = user.badge;
   check.badge.src = user.badge_image;
-  user.orgLength = Object.size(user.organization) + Object.size(user.affiliation);
+  if(Object.size(user.affiliation) > 0){
+    user.orgLength = Object.size(user.affiliation) + 1;
+  }
+  if(user.organization.sid){
+    check.organization.push({ sid: user.organization.sid, rank: user.organization.stars });
+  }else{
+    check.organization.push({ sid: "N/A", rank: 0 });
+  }
+  for(var i = 0; i < Object.size(user.affiliation); i++){
+    if(user.affiliation[i].sid){
+      check.organization.push({ sid: user.organization.sid, rank: user.organization.stars });
+    }
+  }
   console.log(user);
   //check.organization
   const sql = "SELECT * FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1);
   con.query(sql, function (err, result, fields) {
-    console.log(result);
-    console.log(result[result.length-1]);
+    //console.log(result);
+    //console.log(result[result.length-1]);
     //result.badge = JSON.parse(result.badge);
     //console.log(result);
   });
