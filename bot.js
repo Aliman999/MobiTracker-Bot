@@ -78,10 +78,12 @@ function cachePlayer(user){
     cID = user.profile.id.substring(1);
   }
   console.log(user);
+  /*
   const sql = "INSERT INTO `CACHE players`(`timestamp`, `cID`, `username`, `organization`, `avatar`, ) VALUES (now(), "+cID+", '"+user.profile.username+"', '"++"' )";
   con.query(sql, function (err, result, fields) {
 
   }
+  */
 }
 
 function affiliations(aff){
