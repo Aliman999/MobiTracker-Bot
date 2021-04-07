@@ -309,7 +309,7 @@ function cachePlayer(user){
     data.badge = JSON.parse(data.badge);
     console.log(data);
     console.log(check);
-    console.log(data[Object.keys(data)]);
+    console.log(Object.keys(data));
     //for(var i = 0; i < Object.size(data); i++){
     //}
 
