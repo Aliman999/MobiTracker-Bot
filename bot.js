@@ -313,6 +313,7 @@ function cachePlayer(user){
               update = true;
               eventUpdate.push("Org Change");
             }else if(data.organization[x].rank != data.organization[x].rank){
+              console.log("Rank check");
               update = true;
               eventUpdate.push("Org Promotion/Demotion");
             }
