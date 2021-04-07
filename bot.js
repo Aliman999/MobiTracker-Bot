@@ -303,7 +303,7 @@ function cachePlayer(user){
   //console.log(check);
   const sql = "SELECT cID, username, badge, organization, avatar, bio FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
-    console.log(result);
+    console.log(result.length);
     /*
     result[result.lenght-1].organization = JSON.parse(result[result.lenght-1].organization);
     result[result.lenght-1].badge = JSON.parse(result[result.lenght-1].badge);
