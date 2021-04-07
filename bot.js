@@ -270,6 +270,7 @@ function showContracts(message, args){
 
 function cachePlayer(user){
   //console.log(con.escape(user.profile.bio));
+  var update = false;
   var check = { cID:0,
                 username:'',
                 badge: { src:'', title:'' },
@@ -296,7 +297,6 @@ function cachePlayer(user){
       check.organization.push({ sid: "N/A", rank: 0 });
     }
   }
-  var update = false;
   var eventUpdate = new Array();
   //console.log(check);
   const sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
