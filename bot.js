@@ -26,9 +26,9 @@ const msg = {
 };
 
 function selectKey(){
-  console.log(apiKeys[Math.floor(Math.random() * apiKeys.length)]);
+  return apiKeys[Math.floor(Math.random() * apiKeys.length)];
 }
-selectKey();
+
 function socket(){
   wsClient.onopen = function(){
     wsClient.send(JSON.stringify(msg));
