@@ -331,11 +331,13 @@ function cachePlayer(user){
     }else{
       check.badge = JSON.stringify(check.badge);
       check.organization = JSON.stringify(Object.assign({}, check.organization));
-      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar, bio) VALUES ('entry', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
+      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('entry', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
       console.log(sql);
-      //con.query(sql, function (err, result, fields) {
-
-      //});
+      con.query(sql, function (err, result, fields) {
+        if(err){
+          console.log(err);
+        }
+      });
     }
 
     if(err){
