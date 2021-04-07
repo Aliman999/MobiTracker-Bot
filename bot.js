@@ -283,7 +283,7 @@ function cachePlayer(user){
   check.badge.src = user.profile.badge_image;
   check.avatar = user.profile.image;
   if(user.profile.bio){
-    check.bio = con.escape(user.profile.bio.slice(1, -1));
+    check.bio = con.escape(user.profile.bio.slice(0, -1));
   }
   if(Object.size(user.affiliation) > 0){
     user.orgLength = Object.size(user.affiliation) + 1;
