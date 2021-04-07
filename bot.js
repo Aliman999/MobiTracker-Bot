@@ -335,6 +335,8 @@ function cachePlayer(user){
           console.log("UPDATE BIO");
         }
       }
+    }else{
+      console.log("NOT FOUND");
     }
 
     if(err){
