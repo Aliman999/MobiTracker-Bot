@@ -337,7 +337,7 @@ function cachePlayer(user){
       }
     }else{
       console.log(cache);
-      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar, bio) VALUES ('entry', "++", )";
+      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar, bio) VALUES ('entry', , )";
       //con.query(sql, function (err, result, fields) {
 
       //});
