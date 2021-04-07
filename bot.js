@@ -77,6 +77,9 @@ function cachePlayer(user){
   if(user.profile.id != 'n/a'){
     cID = user.profile.id.substring(1);
   }
+  if(){
+
+  }
   console.log(user);
   /*
   const sql = "INSERT INTO `CACHE players`(`timestamp`, `cID`, `username`, `organization`, `avatar`, ) VALUES (now(), "+cID+", '"+user.profile.username+"', '"++"' )";
@@ -296,6 +299,7 @@ function queryApi(message, args){
       res.on('data', d => {
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
+          cachePlayer(user.data);
           if(Object.size(user.data.organization) > 1){
             user.data.organization.name = user.data.organization.rank+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
           }else if (user.data.organization.name == ""){
