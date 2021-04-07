@@ -26,7 +26,7 @@ const msg = {
 };
 
 function selectKey(){
-  console.log(Math.random() * (apiKeys.length - 0) + min);
+  console.log(Math.random() * (apiKeys.length - 0) + 0);
 }
 selectKey();
 function socket(){
