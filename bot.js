@@ -308,11 +308,11 @@ function cachePlayer(user){
     data.organization = Object.values(data.organization);
     data.badge = JSON.parse(data.badge);
     console.log(data);
-    /*
-    result[result.lenght-1].organization = JSON.parse(result[result.lenght-1].organization);
-    result[result.lenght-1].badge = JSON.parse(result[result.lenght-1].badge);
-    */
     console.log(check);
+    for(var i = 0; i < Object.size(data)){
+      console.log(data[Object.keys(data)]);
+    }
+
 
     if(err){
       console.log(err);
