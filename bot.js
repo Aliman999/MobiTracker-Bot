@@ -304,10 +304,10 @@ function cachePlayer(user){
   const sql = "SELECT cID, username, badge, organization, avatar, bio FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
     var result = result[result.lenght-1];
+    console.log(result);
     result.organization = JSON.parse(result.organization);
     result.badge = JSON.parse(result.badge);
     console.log(check);
-    console.log(result);
 
     if(err){
       console.log(err);
