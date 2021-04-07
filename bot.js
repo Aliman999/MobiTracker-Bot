@@ -305,7 +305,7 @@ function cachePlayer(user){
   con.query(sql, function (err, result, fields) {
     var data = result[result.length-1];
     data.organization = Object.values(data.organization);
-    console.log();
+    console.log(data);
     /*
     result[result.lenght-1].organization = JSON.parse(result[result.lenght-1].organization);
     result[result.lenght-1].badge = JSON.parse(result[result.lenght-1].badge);
