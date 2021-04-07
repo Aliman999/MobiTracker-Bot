@@ -310,6 +310,7 @@ function cachePlayer(user){
         if(i == 3){
           for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
             if(data.organization[x].sid != check.organization[x].sid){
+              console.log("org check");
               update = true;
               eventUpdate.push("Org Change");
             }else if(data.organization[x].rank != data.organization[x].rank){
