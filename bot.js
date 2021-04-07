@@ -277,7 +277,6 @@ function cachePlayer(user){
                 avatar: '',
                 bio: ''
               };
-  console.log(user.profile);
   check.cID = parseInt(user.profile.id.substring(1));
   check.username = user.profile.handle;
   check.badge.title = user.profile.badge;
@@ -299,8 +298,7 @@ function cachePlayer(user){
       check.organization.push({ sid: "N/A", rank: 0 });
     }
   }
-  console.log(check);
-  //check.organization
+  //console.log(check);
   const sql = "SELECT * FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1);
   con.query(sql, function (err, result, fields) {
     //console.log(result);
