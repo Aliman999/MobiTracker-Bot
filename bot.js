@@ -278,8 +278,8 @@ function cachePlayer(user){
                 bio: ''
               };
   check.username = user.profile.handle;
-  check.badge.title = user.badge;
-  check.badge.src = user.badge_image;
+  check.badge.title = user.profile.badge;
+  check.badge.src = user.profile.badge_image;
   if(Object.size(user.affiliation) > 0){
     user.orgLength = Object.size(user.affiliation) + 1;
   }
