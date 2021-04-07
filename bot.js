@@ -345,6 +345,7 @@ function cachePlayer(user){
       console.log(err);
     }
   });
+  console.log(update);
   if(update){
     check.badge = JSON.stringify(check.badge);
     check.organization = JSON.stringify(Object.assign({}, check.organization));
