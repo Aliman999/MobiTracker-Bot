@@ -336,7 +336,11 @@ function cachePlayer(user){
         }
       }
     }else{
-      console.log("NOT FOUND");
+      console.log(cache);
+      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar, bio) VALUES ('entry', "++", )";
+      //con.query(sql, function (err, result, fields) {
+
+      //});
     }
 
     if(err){
@@ -344,10 +348,10 @@ function cachePlayer(user){
     }
   });
   if(update){
-    const sql = "";
-    con.query(sql, function (err, result, fields) {
+    //const sql = "";
+    //con.query(sql, function (err, result, fields) {
 
-    });
+    //});
   }
   /*
   var cID = '';
