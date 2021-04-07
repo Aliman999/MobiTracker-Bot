@@ -302,6 +302,9 @@ function cachePlayer(user){
   const sql = "SELECT cID, username, badge, organization, avatar, bio FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
     console.log(result[result.length-1]);
+    if(err){
+      console.log(err);
+    }
     //result.badge = JSON.parse(result.badge);
     //console.log(result);
   });
