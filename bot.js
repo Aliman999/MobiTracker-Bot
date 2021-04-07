@@ -73,12 +73,13 @@ con.getConnection(function(err, connection) {
 
 function cachePlayer(user){
   var cID = '';
-  if(user.profile.id != 'n/a'){
-    cID = user.profile.id.substring(1);
+  var cache = user;
+  if(cache.profile.id != 'n/a'){
+    cID = cache.profile.id.substring(1);
   }
-  console.log(user);
-  if(user.organization.name == ""){
-    user.organization.name = "REDACTED";
+  console.log(cache);
+  if(cache.organization.name == ""){
+    cache.organization.name = "REDACTED";
   }
   /*
   const sql = "INSERT INTO `CACHE players`(`timestamp`, `cID`, `username`, `organization`, `avatar`, ) VALUES (now(), "+cID+", '"+user.profile.username+"', '"++"' )";
