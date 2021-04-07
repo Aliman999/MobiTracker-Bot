@@ -313,7 +313,7 @@ function cachePlayer(user){
     for(var i = 0; i < Object.size(data); i++){
       if(i == 3){
         for(var x = 0; x < Object.size(data.organization); x++){
-          console.log(x);
+          console.log(data.organization[x]);
         }
       }else{
 
