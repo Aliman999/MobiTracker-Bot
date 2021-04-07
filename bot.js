@@ -324,16 +324,13 @@ function cachePlayer(user){
       if(data.username != check.username){
         update = true;
         console.log("UPDATING USERNAME");
-      }
-      if(data.badge.title != check.badge.title){
+      }else if (data.badge.title != check.badge.title) {
         update = true;
         console.log("UPDATE BADGE");
-      }
-      if(data.avatar != check.avatar){
+      }else if (data.avatar != check.avatar) {
         update = true;
         console.log("UPDATE AVATAR");
-      }
-      if(data.bio != check.bio){
+      }else if (data.bio != check.bio) {
         update = true;
         console.log("UPDATE BIO");
       }
