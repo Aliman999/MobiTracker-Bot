@@ -282,10 +282,9 @@ function cachePlayer(user){
   check.badge.title = user.profile.badge;
   check.badge.src = user.profile.badge_image;
   check.avatar = user.profile.image;
-  if(){
-
+  if(user.profile.bio){
+    check.bio = con.escape(user.profile.bio);
   }
-  check.bio = con.escape(user.profile.bio);
   if(Object.size(user.affiliation) > 0){
     user.orgLength = Object.size(user.affiliation) + 1;
   }
@@ -307,6 +306,8 @@ function cachePlayer(user){
     var result = result[result.lenght-1];
     result.organization = JSON.parse(result.organization);
     result.badge = JSON.parse(result.badge);
+    console.log(check);
+    console.log(result);
 
     if(err){
       console.log(err);
