@@ -309,14 +309,10 @@ function cachePlayer(user){
       for(var i = 0; i < Object.size(data); i++){
         if(i == 3){
           for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
-            console.log(data.organization[x].sid+" | "+check.organization[x].sid);
-            console.log(data.organization[x].rank+" | "+check.organization[x].rank);
             if(data.organization[x].sid != check.organization[x].sid){
-              console.log("org check");
               update = true;
               eventUpdate.push("Org Change");
             }else if(data.organization[x].rank != check.organization[x].rank){
-              console.log("Rank check");
               update = true;
               eventUpdate.push("Org Promotion/Demotion");
             }
@@ -351,9 +347,15 @@ function cachePlayer(user){
     }
   });
   if(update){
-    //const sql = "";
+    check.badge = JSON.stringify(check.badge);
+    check.organization = JSON.stringify(Object.assign({}, check.organization));
+    eventUpdate = eventUpdate.join();
+    const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('First Entry', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
+    console.log(sql);
     //con.query(sql, function (err, result, fields) {
-
+    //  if(err){
+    //    console.log(err);
+    //  }
     //});
   }
   /*
