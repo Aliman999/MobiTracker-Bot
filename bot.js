@@ -290,7 +290,9 @@ function cachePlayer(user){
   }
   for(var i = 0; i < Object.size(user.affiliation); i++){
     if(user.affiliation[i].sid){
-      check.organization.push({ sid: user.organization.sid, rank: user.organization.stars });
+      check.organization.push({ sid: user.affiliation[i].sid, rank: user.affiliation[i].stars });
+    }else{
+      check.organization.push({ sid: "N/A", rank: 0 });
     }
   }
   console.log(check);
