@@ -270,7 +270,13 @@ function showContracts(message, args){
 
 function cachePlayer(user){
   //console.log(con.escape(user.profile.bio));
+  var check;
+  check.username = user.profile.handle;
+  check.badge.title = user.badge;
+  check.badge.src = user.badge_image;
+  user.orgLength = Object.size(user.organization) + Object.size(user.affiliation);
   console.log(user);
+  //check.organization
   const sql = "SELECT * FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1);
   con.query(sql, function (err, result, fields) {
     console.log(result);
