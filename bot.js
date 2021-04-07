@@ -282,6 +282,9 @@ function cachePlayer(user){
   check.badge.title = user.profile.badge;
   check.badge.src = user.profile.badge_image;
   check.avatar = user.profile.image;
+  if(){
+
+  }
   check.bio = con.escape(user.profile.bio);
   if(Object.size(user.affiliation) > 0){
     user.orgLength = Object.size(user.affiliation) + 1;
@@ -298,13 +301,13 @@ function cachePlayer(user){
       check.organization.push({ sid: "N/A", rank: 0 });
     }
   }
-  check.organization = JSON.stringify(Object.assign({}, check.organization));
-  check.badge = JSON.stringify(check.badge);
   //console.log(check);
   const sql = "SELECT cID, username, badge, organization, avatar, bio FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
-    console.log(check);
-    console.log(result[result.length-1]);
+    var result = result[result.lenght-1];
+    result.organization = JSON.parse(result.organization);
+    result.badge = JSON.parse(result.badge);
+
     if(err){
       console.log(err);
     }
