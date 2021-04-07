@@ -318,16 +318,16 @@ function cachePlayer(user){
             }
           }
         }
-        if(data.username != check.username){
-          update = true;
-          eventUpdate.push("Username Changed");
-        }else if (data.badge.title != check.badge.title) {
-          update = true;
-          eventUpdate.push("Badge Changed");
-        }else if (data.avatar != check.avatar) {
-          update = true;
-          eventUpdate.push("Avatar Changed");
-        }
+      }
+      if(data.username != check.username){
+        update = true;
+        eventUpdate.push("Username Changed");
+      }else if (data.badge.title != check.badge.title) {
+        update = true;
+        eventUpdate.push("Badge Changed");
+      }else if (data.avatar != check.avatar) {
+        update = true;
+        eventUpdate.push("Avatar Changed");
       }
       console.log(eventUpdate);
     }else{
