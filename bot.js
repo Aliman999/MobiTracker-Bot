@@ -329,7 +329,6 @@ function cachePlayer(user){
         update = true;
         eventUpdate.push("Avatar Changed");
       }
-      console.log(eventUpdate);
     }else{
       check.badge = JSON.stringify(check.badge);
       check.organization = JSON.stringify(Object.assign({}, check.organization));
@@ -349,8 +348,8 @@ function cachePlayer(user){
   if(update){
     check.badge = JSON.stringify(check.badge);
     check.organization = JSON.stringify(Object.assign({}, check.organization));
-    eventUpdate = eventUpdate.join();
-    const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('"+eventUpdate+"', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
+    var eventString = eventUpdate.join();
+    const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('"+eventString+"', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
     console.log(sql);
     //con.query(sql, function (err, result, fields) {
     //  if(err){
