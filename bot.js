@@ -298,6 +298,8 @@ function cachePlayer(user){
       check.organization.push({ sid: "N/A", rank: 0 });
     }
   }
+  check.organization = JSON.stringify(check.organization);
+  check.badge = JSON.stringify(check.badge);
   //console.log(check);
   const sql = "SELECT cID, username, badge, organization, avatar, bio FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
