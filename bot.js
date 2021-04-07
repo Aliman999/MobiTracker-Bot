@@ -71,24 +71,6 @@ con.getConnection(function(err, connection) {
   if (err) throw err;
 });
 
-function cachePlayer(user){
-  var cID = '';
-  var cache = user;
-  if(cache.profile.id != 'n/a'){
-    cID = cache.profile.id.substring(1);
-  }
-  console.log(cache);
-  if(cache.organization.name == ""){
-    cache.organization.name = "REDACTED";
-  }
-  /*
-  const sql = "INSERT INTO `CACHE players`(`timestamp`, `cID`, `username`, `organization`, `avatar`, ) VALUES (now(), "+cID+", '"+user.profile.username+"', '"++"' )";
-  con.query(sql, function (err, result, fields) {
-
-  }
-  */
-}
-
 function affiliations(aff){
   var display = "";
   if(aff.length > 0){
@@ -284,6 +266,30 @@ function showContracts(message, args){
       message.channel.send(embed);
     });
   });
+}
+
+function cachePlayer(user){
+  const sql = "SELECT * FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1);
+  con.query(sql, function (err, result, fields) {
+    console.log(result);
+  }
+  /*
+  var cID = '';
+  var badge = '';
+
+  var cache = user;
+  if(cache.profile.id != 'n/a'){
+    cID = cache.profile.id.substring(1);
+  }
+  console.log(cache);
+  if(cache.organization.name == ""){
+    cache.organization.name = "REDACTED";
+  }
+  const sql = "INSERT INTO `CACHE players`(`timestamp`, `cID`, `username`, `organization`, `avatar`, ) VALUES (now(), "+cID+", '"+user.profile.username+"', '"++"' )";
+  con.query(sql, function (err, result, fields) {
+
+  }
+  */
 }
 
 function queryApi(message, args){
