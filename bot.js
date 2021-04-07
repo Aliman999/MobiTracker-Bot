@@ -311,8 +311,13 @@ function cachePlayer(user){
     console.log(check);
     console.log(Object.keys(data));
     for(var i = 0; i < Object.size(data); i++){
-      console.log("Size of Data.Organization "+Object.size(data.organization));
-      console.log("Size of Data.Avatar "+Object.size(data.avatar));
+      if(i == 3){
+        for(var ii = 0; ii < Object.size(data.organization); ii++){
+          console.log(data[Object.keys(data)[i]]);
+        }
+      }else{
+
+      }
       //data[Object.keys(data)[i]]
 
     }
