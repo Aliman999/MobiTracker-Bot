@@ -310,8 +310,9 @@ function cachePlayer(user){
     console.log(data);
     console.log(check);
     console.log(Object.keys(data));
-    //for(var i = 0; i < Object.size(data); i++){
-    //}
+    for(var i = 0; i < Object.size(data); i++){
+      console.log(data[Object.keys(data)[i]]);
+    }
 
 
     if(err){
