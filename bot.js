@@ -347,7 +347,7 @@ function cachePlayer(user){
     const sql = "";
     con.query(sql, function (err, result, fields) {
 
-    }
+    });
   }
   /*
   var cID = '';
