@@ -95,7 +95,7 @@ function affiliations(aff){
       if(!aff[i].name){
         display = display+"REDACTED"+'\n';
       }else{
-        display = display+aff[i].rank+'['+aff[i].stars+']'+' in '+'['+aff[i].name+']'+'(https://robertsspaceindustries.com/orgs/'+aff[i].sid+')'+'\n';
+        display = display+aff[i].rank+' ['+aff[i].stars+']'+' in '+'['+aff[i].name+']'+'(https://robertsspaceindustries.com/orgs/'+aff[i].sid+')'+'\n';
       }
     }
     return display;
@@ -300,7 +300,7 @@ function queryApi(message, args){
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
           if(Object.size(user.data.organization) > 1){
-            user.data.organization.name = user.data.organization.rank+'['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
+            user.data.organization.name = user.data.organization.rank+' ['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
           }else if (user.data.organization.name == ""){
             user.data.organization.name = "REDACTED";
           }else{
