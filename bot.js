@@ -277,6 +277,7 @@ function cachePlayer(user){
                 avatar: '',
                 bio: ''
               };
+  check.cid = user.profile.id.substring(1);
   check.username = user.profile.handle;
   check.badge.title = user.profile.badge;
   check.badge.src = user.profile.badge_image;
@@ -336,7 +337,7 @@ function queryApi(message, args){
       res.on('data', d => {
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
-          console.log(user.data.organization);
+          //console.log(user.data.organization);
           cachePlayer(user.data);
           if(Object.size(user.data.organization) > 1){
             user.data.organization.name = user.data.organization.rank+' ['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
