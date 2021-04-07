@@ -323,7 +323,6 @@ function queryApi(message, args){
                 rating = result[0].rating+"/5 "+"("+result[0].count+")";
               }
             }
-            cachePlayer(user.data);
             embed = new MessageEmbed()
               .setColor(0x25a6dd)
               .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
