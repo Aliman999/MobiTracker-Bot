@@ -297,6 +297,7 @@ function cachePlayer(user){
     }
   }
   var update = false;
+  var eventUpdate = new Array();
   //console.log(check);
   const sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
@@ -310,28 +311,29 @@ function cachePlayer(user){
           for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
             if(data.organization[x].sid != check.organization[x].sid){
               update = true;
-              console.log("UPDATING SID");
+              eventUpdate.push("Org Change");
             }else if(data.organization[x].rank != data.organization[x].rank){
               update = true;
-              console.log("UPDATING RANK");
+              eventUpdate.push("Org Promotion/Demotion");
             }
           }
         }
         if(data.username != check.username){
           update = true;
-          console.log("UPDATING USERNAME");
+          eventUpdate.push("Username Changed");
         }else if (data.badge.title != check.badge.title) {
           update = true;
-          console.log("UPDATE BADGE");
+          eventUpdate.push("Badge Changed");
         }else if (data.avatar != check.avatar) {
           update = true;
-          console.log("UPDATE AVATAR");
+          eventUpdate.push("Avatar Changed");
         }
       }
+      console.log(eventUpdate);
     }else{
       check.badge = JSON.stringify(check.badge);
       check.organization = JSON.stringify(Object.assign({}, check.organization));
-      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('entry', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
+      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('First Entry', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
       console.log(sql);
       con.query(sql, function (err, result, fields) {
         if(err){
