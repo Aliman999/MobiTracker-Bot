@@ -271,7 +271,7 @@ function showContracts(message, args){
 function cachePlayer(user){
   //console.log(con.escape(user.profile.bio));
   var update = false;
-  var eventUpdate = new Array();
+  var eventUpdate = new Array("Test");
   var check = { cID:0,
                 username:'',
                 badge: { src:'', title:'' },
@@ -340,12 +340,11 @@ function cachePlayer(user){
         }
       });
     }
-
+    console.log(eventUpdate);
     if(err){
       console.log(err);
     }
   });
-  console.log(eventUpdate);
   console.log(update);
   if(update){
     check.badge = JSON.stringify(check.badge);
