@@ -27,6 +27,7 @@ const msg = {
 
 function selectKey(){
   //apiKeys[]
+  console.log(apiKeys.length);
   console.log(Math.floor(Math.random() * apiKeys.length));
 }
 selectKey();
