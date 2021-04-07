@@ -270,7 +270,13 @@ function showContracts(message, args){
 
 function cachePlayer(user){
   //console.log(con.escape(user.profile.bio));
-  var check = {};
+  var check = { cID:0,
+                username:'',
+                badge: { src:'', title:'' },
+                organization: '',
+                avatar: '',
+                bio: ''
+              };
   check.username = user.profile.handle;
   check.badge.title = user.badge;
   check.badge.src = user.badge_image;
