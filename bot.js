@@ -301,8 +301,7 @@ function cachePlayer(user){
   //console.log(check);
   const sql = "SELECT * FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1);
   con.query(sql, function (err, result, fields) {
-    //console.log(result);
-    //console.log(result[result.length-1]);
+    console.log(result[result.length-1]);
     //result.badge = JSON.parse(result.badge);
     //console.log(result);
   });
