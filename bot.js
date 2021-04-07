@@ -314,7 +314,7 @@ function cachePlayer(user){
       console.log(i);
       if(i == 3){
         for(var ii = 0; ii < Object.size(data.organization); ii++){
-          console.log(data[Object.keys(data)[i]]);
+          console.log(data[Object.keys(data)[ii]]);
         }
       }else{
 
