@@ -77,9 +77,6 @@ function cachePlayer(user){
   if(user.profile.id != 'n/a'){
     cID = user.profile.id.substring(1);
   }
-  if(){
-
-  }
   console.log(user);
   /*
   const sql = "INSERT INTO `CACHE players`(`timestamp`, `cID`, `username`, `organization`, `avatar`, ) VALUES (now(), "+cID+", '"+user.profile.username+"', '"++"' )";
