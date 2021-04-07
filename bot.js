@@ -269,6 +269,7 @@ function showContracts(message, args){
 }
 
 function cachePlayer(user){
+  console.log(user.profile.bio);
   const sql = "SELECT * FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1);
   con.query(sql, function (err, result, fields) {
     console.log(result);
