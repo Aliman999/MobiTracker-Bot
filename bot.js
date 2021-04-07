@@ -271,7 +271,7 @@ function showContracts(message, args){
 function cachePlayer(user){
   //console.log(con.escape(user.profile.bio));
   var update = false;
-  eventUpdate = new Array();
+  var eventUpdate = new Array();
   var check = { cID:0,
                 username:'',
                 badge: { src:'', title:'' },
