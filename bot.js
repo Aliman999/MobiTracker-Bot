@@ -311,7 +311,8 @@ function cachePlayer(user){
     console.log(check);
     console.log(Object.keys(data));
     for(var i = 0; i < Object.size(data); i++){
-      console.log(data[Object.keys(data)[i]]);
+      console.log(Object.keys(data)[i]);
+      //data[Object.keys(data)[i]]
     }
 
 
