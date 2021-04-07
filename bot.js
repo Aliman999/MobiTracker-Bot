@@ -304,44 +304,42 @@ function cachePlayer(user){
   //console.log(check);
   const sql = "SELECT cID, username, badge, organization, avatar, bio FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
-    console.log(result);
-    var data = result[result.length-1];
-    data.organization = JSON.parse(data.organization);
-    data.organization = Object.values(data.organization);
-    data.badge = JSON.parse(data.badge);
-    for(var i = 0; i < Object.size(data); i++){
-      if(i == 3){
-        for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
-          if(data.organization[x].sid != check.organization[x].sid){
-            update = true;
-            console.log("UPDATING SID");
-          }else if(data.organization[x].rank != data.organization[x].rank){
-            update = true;
-            console.log("UPDATING RANK");
+    if(Object.size(result) > 0){
+      var data = result[result.length-1];
+      data.organization = JSON.parse(data.organization);
+      data.organization = Object.values(data.organization);
+      data.badge = JSON.parse(data.badge);
+      for(var i = 0; i < Object.size(data); i++){
+        if(i == 3){
+          for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
+            if(data.organization[x].sid != check.organization[x].sid){
+              update = true;
+              console.log("UPDATING SID");
+            }else if(data.organization[x].rank != data.organization[x].rank){
+              update = true;
+              console.log("UPDATING RANK");
+            }
           }
         }
-      }
-      if(data.username != check.username){
-        update = true;
-        console.log("UPDATING USERNAME");
-      }else if (data.badge.title != check.badge.title) {
-        update = true;
-        console.log("UPDATE BADGE");
-      }else if (data.avatar != check.avatar) {
-        update = true;
-        console.log("UPDATE AVATAR");
-      }else if (data.bio != check.bio) {
-        update = true;
-        console.log("UPDATE BIO");
+        if(data.username != check.username){
+          update = true;
+          console.log("UPDATING USERNAME");
+        }else if (data.badge.title != check.badge.title) {
+          update = true;
+          console.log("UPDATE BADGE");
+        }else if (data.avatar != check.avatar) {
+          update = true;
+          console.log("UPDATE AVATAR");
+        }else if (data.bio != check.bio) {
+          update = true;
+          console.log("UPDATE BIO");
+        }
       }
     }
-
 
     if(err){
       console.log(err);
     }
-    //result.badge = JSON.parse(result.badge);
-    //console.log(result);
   });
   if(update){
     const sql = "";
