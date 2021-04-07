@@ -293,7 +293,7 @@ function cachePlayer(user){
       check.organization.push({ sid: user.organization.sid, rank: user.organization.stars });
     }
   }
-  console.log(user);
+  console.log(check);
   //check.organization
   const sql = "SELECT * FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1);
   con.query(sql, function (err, result, fields) {
