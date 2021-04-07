@@ -309,6 +309,8 @@ function cachePlayer(user){
       for(var i = 0; i < Object.size(data); i++){
         if(i == 3){
           for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
+            console.log(data.organization[x].sid+" | "+check.organization[x].sid);
+            console.log(data.organization[x].rank+" | "+data.organization[x].rank);
             if(data.organization[x].sid != check.organization[x].sid){
               console.log("org check");
               update = true;
