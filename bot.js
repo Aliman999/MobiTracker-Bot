@@ -17,6 +17,7 @@ const WebSocket = require('ws');
 const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
 const crypto = require('crypto-js');
+require('console-stamp')(console, '[HH:MM:ss.l]');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
 
@@ -322,15 +323,15 @@ function registerUser(message, args){
     con.query(sql, function (err, result, fields) {
       console.log(result);
       if(result.length == 0){
-        console.log("ADDING TO DB");
-        //const sql = "INSERT INTO `discord` (discID, verification) VALUES ("+message.author.id+", '"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"');";
-        //con.query(sql, function (err, result, fields) {
-        //  if(err){
-        //    console.log(err);
-        //  }
-        //});
+        console.log(message.author.username+"#"+message.author);
+        const sql = "INSERT INTO `discord` (discID, verification) VALUES ("+message.author.id+", '"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"');";
+        con.query(sql, function (err, result, fields) {
+          if(err){
+            console.log(err);
+          }
+        });
       }else{
-        console.log("CHECKING IF VERIFIED");
+
       }
       if(err){
         console.log(err);
