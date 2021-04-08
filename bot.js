@@ -393,7 +393,6 @@ function queryApi(message, args){
       path: '/'+selectKey()+'/v1/live/user/'+escape(args),
       method: 'GET'
     }
-    console.log(options);
     const req = https.request(options, res =>{
       res.on('data', d => {
         const user = JSON.parse(d);
