@@ -312,8 +312,7 @@ function registerUser(message, args){
       });
     }
   }else{
-    //message.author.username
-    console.log(hashCode("1"));
+    console.log(hashCode(message.author.username+"#"+message.author.discriminator));
   }
 }
 
