@@ -307,7 +307,12 @@ function registerUser(message, args){
           const user = JSON.parse(d);
           console.log(user);
         })
-      });
+      })
+      req.on('error', error => {
+        console.error(error)
+      })
+
+      req.end();
     }
   }else{
     message.channel.send("You're almost done! Put this key into your RSI Bio: `"+crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator).toString()+"` \nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1");
