@@ -302,11 +302,10 @@ function registerUser(message, args){
         path: '/'+selectKey()+'/v1/live/user/'+escape(args[i]),
         method: 'GET'
       }
-      console.log(options);
       const req = https.request(options, res =>{
         res.on('data', d => {
           var user = JSON.parse(d);
-          console.log(user.data.profile);
+          console.log(user);
         });
       });
     }
