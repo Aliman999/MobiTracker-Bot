@@ -17,7 +17,7 @@ const WebSocket = require('ws');
 const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
 const crypto = require('crypto-js');
-require('console-stamp')(console, '[HH:MM:ss.l]');
+require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
 
