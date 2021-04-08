@@ -307,7 +307,7 @@ function registerUser(message, args){
       });
     }
   }else{
-    message.channel.send("You're almost done! Put this key into your RSI Bio. `"+crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator).toString()+"` \nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky JamesDusky");
+    message.channel.send("You're almost done! Put this key into your RSI Bio: `"+crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator).toString()+"` \nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1");
     console.log(crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator).toString());
   }
 }
@@ -669,7 +669,7 @@ client.on('message', message => {
   */
   if (!message.content.startsWith(`${prefix}`)) return;
 });
-
+//EVENTS
 const program = async () => {
   const instance = new MySQLEvents(con, {
     startAtEnd: true,
