@@ -542,7 +542,7 @@ client.on('message', message => {
         if(message.channel.type == "text"){
           console.log(message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
         }else{
-          console.log(message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args+' in '+message.channel.type+'s server');
+          console.log(message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args+' in '+message.channel.type+'s');
         }
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
