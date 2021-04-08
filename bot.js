@@ -307,7 +307,7 @@ function registerUser(message, args){
       });
     }
   }else{
-    console.log(Base64.stringify("Message"));
+    console.log(crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator));
   }
 }
 
