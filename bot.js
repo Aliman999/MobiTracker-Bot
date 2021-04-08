@@ -310,11 +310,10 @@ function cachePlayer(user){
     }
   }
   if(check.cID){
-    console.log("HAS A CID");
+    const sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   }else{
-    console.log("DOES NOT HAVE A CID");
+    const sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE username = '"+user.profile.id.substring(1)+"';";
   }
-  const sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
     if(Object.size(result) > 0){
       var data = result[result.length-1];
