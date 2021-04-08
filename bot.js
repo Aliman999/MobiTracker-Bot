@@ -317,7 +317,8 @@ function registerUser(message, args){
       });
     }
   }else{
-    console.log(message.author.username.hashCode;);
+
+    console.log(String.hashCode(message.author.username));
   }
 }
 
