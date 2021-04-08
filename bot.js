@@ -307,8 +307,8 @@ function registerUser(message, args){
       });
     }
   }else{
-    var encrypt = crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator);
-    console.log(encrypt.toString());
+    message.channel.send("You're almost done! Put this key into your RSI Bio. Then type !register and the RSI Handle(s) \n IE: !register James Dusky");
+    console.log(crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator).toString());
   }
 }
 
