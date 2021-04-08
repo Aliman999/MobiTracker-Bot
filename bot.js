@@ -16,6 +16,7 @@ const mysql = require('mysql');
 const WebSocket = require('ws');
 const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
+const crypto = require('crypto-random-string');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
 
@@ -292,12 +293,6 @@ function getUserFromMention(mention) {
 	}
 }
 
-function hashCode(s) {
-    for(var i = 0, h = 0; i < s.length; i++)
-        h = Math.imul(31, h) + s.charCodeAt(i) | 0;
-    return h;
-}
-
 function registerUser(message, args){
   if(args.length > 0){
     for(var i = 0; i < args.length; i++){
@@ -312,7 +307,7 @@ function registerUser(message, args){
       });
     }
   }else{
-    console.log(hashCode(message.author.username+"#"+message.author.discriminator));
+    console.log(crypto.cryptoRandomString({length: 10, type: base64}));
   }
 }
 
