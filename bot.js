@@ -533,14 +533,14 @@ client.on('message', message => {
           finished = true;
         }
         if(message.author.id != "751252617451143219"){
-          console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args[i]+' in the '+message.guild.name+' server');
+          console.log(new Date().toLocaleString()+" - "+message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
         }
         lookUp(message, args[i], finished);
       }
     }else{
       console.log(message);
       if(message.author.id != "751252617451143219"){
-        console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
+        console.log(new Date().toLocaleString()+" - "+message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args+' in the '+message.guild.name+' server');
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
       lookUp(message, args);
