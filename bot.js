@@ -292,13 +292,11 @@ function getUserFromMention(mention) {
 	}
 }
 
-hashCode = function(s) {
-  var h = 0, l = s.length, i = 0;
-  if ( l > 0 )
-    while (i < l)
-      h = (h << 5) - h + s.charCodeAt(i++) | 0;
-  return h;
-};
+function hashCode(s) {
+    for(var i = 0, h = 0; i < s.length; i++)
+        h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+    return h;
+}
 
 function registerUser(message, args){
   if(args.length > 0){
