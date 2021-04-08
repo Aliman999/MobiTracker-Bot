@@ -309,7 +309,11 @@ function cachePlayer(user){
       check.organization.push({ sid: "N/A", rank: 0 });
     }
   }
-  console.log(check);
+  if(check.cID){
+    console.log("HAS A CID");
+  }else{
+    console.log("DOES NOT HAVE A CID");
+  }
   const sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   con.query(sql, function (err, result, fields) {
     if(Object.size(result) > 0){
