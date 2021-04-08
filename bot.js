@@ -65,7 +65,7 @@ socket();
 
 var trueLog = console.log;
 console.log = function(msg) {
-    fs.appendFile('/home/ubuntu/logs/bot.log', new Date().toLocaleString()+" - "+msg+'\n', function(err) {      if(err) {
+    fs.appendFile('/home/ubuntu/logs/bot.log', msg+'\n', function(err) {      if(err) {
         return trueLog(err);
       }
     });
