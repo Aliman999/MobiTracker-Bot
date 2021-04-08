@@ -307,7 +307,8 @@ function registerUser(message, args){
       });
     }
   }else{
-    console.log(crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator));
+    var encrypt = crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator);
+    console.log(encrypt.toString());
   }
 }
 
