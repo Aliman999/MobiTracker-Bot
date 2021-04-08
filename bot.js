@@ -63,8 +63,7 @@ socket();
 
 var trueLog = console.log;
 console.log = function(msg) {
-    fs.appendFile('/home/ubuntu/logs/bot.log', msg+'\n', function(err) {
-      if(err) {
+    fs.appendFile('/home/ubuntu/logs/bot.log', new Date().toLocaleString()+" - "+msg+'\n', function(err) {      if(err) {
         return trueLog(err);
       }
     });
@@ -108,7 +107,7 @@ function numberWithCommas(x) {
 async function lookUp(message, args, finished = false){
   message.channel.send(await queryApi(message, args));
   if(finished){
-    console.log(new Date().toLocaleString()+" --- BATCH END ---");
+    console.log(" --- BATCH END ---");
   }
 }
 
@@ -525,7 +524,7 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}
     if(args.length > 1){
-      console.log(new Date().toLocaleString()+" --- BATCH BEGIN ---");
+      console.log(" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
         args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
         var finished = false;
@@ -533,14 +532,14 @@ client.on('message', message => {
           finished = true;
         }
         if(message.author.id != "751252617451143219"){
-          console.log(new Date().toLocaleString()+" - "+message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
+          console.log(message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
         }
         lookUp(message, args[i], finished);
       }
     }else{
       console.log(message);
       if(message.author.id != "751252617451143219"){
-        console.log(new Date().toLocaleString()+" - "+message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args+' in the '+message.guild.name+' server');
+        console.log(message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args+' in the '+message.guild.name+' server');
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
       lookUp(message, args);
