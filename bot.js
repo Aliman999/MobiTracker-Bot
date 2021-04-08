@@ -278,6 +278,26 @@ function showContracts(message, args){
   });
 }
 
+function getUserFromMention(mention) {
+	if (!mention) return;
+
+	if (mention.startsWith('<@') && mention.endsWith('>')) {
+		mention = mention.slice(2, -1);
+
+		if (mention.startsWith('!')) {
+			mention = mention.slice(1);
+		}
+
+		return client.users.cache.get(mention);
+	}
+}
+
+function registerUser(message, args){
+  console.log(message.content);
+  console.log(getuserFromMention(mention));
+
+}
+
 function cachePlayer(user){
   //console.log(con.escape(user.profile.bio));
   var update = false;
@@ -555,6 +575,10 @@ client.on('message', message => {
 
   if(command == 'alerts'){
     toggleAlerts(message, args);
+  }
+
+  if(command == 'register'){
+    registerUser(message, args);
   }
 
   if(command == 'help'){
