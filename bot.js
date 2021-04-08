@@ -509,7 +509,6 @@ client.on("ready", () => {
 });
 
 client.on('message', message => {
-  console.log(message);
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
     var handle = message.content.split("/");
     handle = handle.pop();
@@ -539,7 +538,7 @@ client.on('message', message => {
         lookUp(message, args[i], finished);
       }
     }else{
-      console.log(message.member);
+      console.log(message);
       if(message.member.user.tag != "MobiTracker#2117"){
         console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
       }
