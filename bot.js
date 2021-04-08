@@ -508,7 +508,6 @@ client.on("ready", () => {
 });
 
 client.on('message', message => {
-  message.channel.send("!search Kindmiss");
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
     var handle = message.content.split("/");
     handle = handle.pop();
