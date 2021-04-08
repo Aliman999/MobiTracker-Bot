@@ -322,6 +322,7 @@ function registerUser(message, args){
     con.query(sql, function (err, result, fields) {
       console.log(result);
       if(result){
+        console.log("ADDING TO DB");
         //const sql = "INSERT INTO `discord` (discID, verification) VALUES ("+message.author.id+", '"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"');";
         //con.query(sql, function (err, result, fields) {
         //  if(err){
