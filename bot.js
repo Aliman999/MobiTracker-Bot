@@ -16,7 +16,7 @@ const mysql = require('mysql');
 const WebSocket = require('ws');
 const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
-import cryptoRandomString from 'crypto-random-string';
+const SHA256 = require('crypto-js/sha256');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
 
@@ -307,7 +307,7 @@ function registerUser(message, args){
       });
     }
   }else{
-    console.log(cryptoRandomString({length: 10, type: base64}));
+    console.log(SHA256("message"));
   }
 }
 
