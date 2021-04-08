@@ -323,7 +323,7 @@ function registerUser(message, args){
     con.query(sql, function (err, result, fields) {
       console.log(result);
       if(result.length == 0){
-        console.log(message.author.username+"#"+message.author);
+        console.log(message.author.username+"#"+message.author+" Registered!");
         const sql = "INSERT INTO `discord` (discID, verification) VALUES ("+message.author.id+", '"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"');";
         con.query(sql, function (err, result, fields) {
           if(err){
