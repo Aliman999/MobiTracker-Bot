@@ -305,17 +305,35 @@ function registerUser(message, args){
       const req = https.request(options, res =>{
         res.on('data', d => {
           const user = JSON.parse(d);
-          console.log(user.data.profile.bio);
+          if(user.data.profile.bio.includes()){
+
+          }
         })
       })
+
       req.on('error', error => {
         console.error(error)
-      })
+      });
 
       req.end();
     }
   }else{
-    message.channel.send("You're almost done! Put this key into your RSI Bio: `"+crypto.AES.encrypt("mt.co", message.author.username+"#"+message.author.discriminator).toString()+"` \nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1");
+    const sql = "SELECT verification FROM discord WHERE discID = "+message.author.id;
+    con.query(sql, function (err, result, fields) {
+      console.log(result[0]);
+      if(result[0].verification){
+        //const sql = "INSERT INTO `discord` (discID, verification) VALUES ("+message.author.id+", '"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"');";
+        //con.query(sql, function (err, result, fields) {
+        //  if(err){
+        //    console.log(err);
+        //  }
+        //});
+      }
+      if(err){
+        console.log(err);
+      }
+    });
+    message.channel.send("You're almost done! Put this key into your RSI Bio: `"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"` \nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1");
   }
 }
 
