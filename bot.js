@@ -305,7 +305,7 @@ function registerUser(message, args){
       const req = https.request(options, res =>{
         res.on('data', d => {
           const user = JSON.parse(d);
-          console.log(user);
+          console.log(user.data.profile.bio);
         })
       })
       req.on('error', error => {
