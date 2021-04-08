@@ -295,6 +295,7 @@ function getUserFromMention(mention) {
 
 function registerUser(message, args){
   if(args.length > 0){
+    console.log(args);
     for(var i = 0; i < args.length; i++){
       const options = {
         hostname: 'api.starcitizen-api.com',
