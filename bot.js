@@ -320,8 +320,8 @@ function registerUser(message, args){
   }else{
     const sql = "SELECT verification FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
-      console.log(result[0]);
-      if(result[0]){
+      console.log(result);
+      if(result){
         //const sql = "INSERT INTO `discord` (discID, verification) VALUES ("+message.author.id+", '"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"');";
         //con.query(sql, function (err, result, fields) {
         //  if(err){
