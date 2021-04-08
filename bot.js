@@ -318,7 +318,7 @@ function registerUser(message, args){
       req.end();
     }
   }else{
-    const sql = "SELECT cID, verification FROM discord WHERE discID = "+message.author.id;
+    const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       console.log(result);
       if(result.length == 0){
@@ -336,7 +336,7 @@ function registerUser(message, args){
         console.log(err);
       }
     });
-    message.channel.send("You're almost done! \nPut this key into your account's bio: `"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \n\nIE: !register JamesDusky0 JamesDusky1");
+    message.channel.send("You're almost done! \nPut this key into your account's bio: `"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1");
   }
 }
 
