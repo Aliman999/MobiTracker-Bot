@@ -333,6 +333,10 @@ function cachePlayer(user){
           }
         }
       }
+      if(data.cID != check.cID){
+        update = true;
+        eventUpdate.push("Obtained ID");
+      }
       if(data.username != check.username){
         update = true;
         eventUpdate.push("Username Changed");
