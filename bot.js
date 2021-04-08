@@ -532,14 +532,14 @@ client.on('message', message => {
         if(i == args.length-1){
           finished = true;
         }
-        if(message.member.user.tag != "MobiTracker#2117"){
+        if(message.author.id != "751252617451143219"){
           console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args[i]+' in the '+message.guild.name+' server');
         }
         lookUp(message, args[i], finished);
       }
     }else{
       console.log(message);
-      if(message.member.user.tag != "MobiTracker#2117"){
+      if(message.author.id != "751252617451143219"){
         console.log(new Date().toLocaleString()+" - "+message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
