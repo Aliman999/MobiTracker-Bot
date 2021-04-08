@@ -318,10 +318,10 @@ function registerUser(message, args){
       req.end();
     }
   }else{
-    const sql = "SELECT verification FROM discord WHERE discID = "+message.author.id;
+    const sql = "SELECT cID, verification FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       console.log(result);
-      if(result){
+      if(result.length = 0){
         console.log("ADDING TO DB");
         //const sql = "INSERT INTO `discord` (discID, verification) VALUES ("+message.author.id+", '"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"');";
         //con.query(sql, function (err, result, fields) {
@@ -329,6 +329,8 @@ function registerUser(message, args){
         //    console.log(err);
         //  }
         //});
+      }else{
+        console.log("CHECKING IF VERIFIED");
       }
       if(err){
         console.log(err);
