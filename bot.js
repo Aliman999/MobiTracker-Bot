@@ -538,7 +538,6 @@ client.on('message', message => {
         lookUp(message, args[i], finished);
       }
     }else{
-      console.log(message);
       if(message.author.id != "751252617451143219"){
         if(message.channel.type == "text"){
           console.log(message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
