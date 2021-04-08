@@ -295,12 +295,11 @@ function getUserFromMention(mention) {
 
 function registerUser(message, args){
   if(args.length > 0){
-    console.log(args);
     for(var i = 0; i < args.length; i++){
       const options = {
         hostname: 'api.starcitizen-api.com',
         port: 443,
-        path: '/'+selectKey()+'/v1/live/user/'+escape(args),
+        path: '/'+selectKey()+'/v1/live/user/'+escape(args[i]),
         method: 'GET'
       }
       const req = https.request(options, res =>{
