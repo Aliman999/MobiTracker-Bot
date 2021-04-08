@@ -539,7 +539,11 @@ client.on('message', message => {
     }else{
       console.log(message);
       if(message.author.id != "751252617451143219"){
+        if(message.channel.type == "text"){
+          console.log(message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
+        }else{
         console.log(message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args+' in the '+message.guild.name+' server');
+        }
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
       lookUp(message, args);
