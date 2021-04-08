@@ -292,10 +292,33 @@ function getUserFromMention(mention) {
 	}
 }
 
-function registerUser(message, args){
-  console.log(message.content);
-  console.log(getuserFromMention(mention));
+String.prototype.hashCode = function() {
+  var hash = 0, i, chr;
+  if (this.length === 0) return hash;
+  for (i = 0; i < this.length; i++) {
+    chr   = this.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
 
+function registerUser(message, args){
+  if(args.length > 0){
+    for(var i = 0; i < args.length; i++){
+      const options = {
+        hostname: 'api.starcitizen-api.com',
+        port: 443,
+        path: '/'+selectKey()+'/v1/live/user/'+escape(args),
+        method: 'GET'
+      }
+      const req = https.request(options, res =>{
+
+      });
+    }
+  }else{
+    console.log(message.author.username.hashCode(););
+  }
 }
 
 function cachePlayer(user){
