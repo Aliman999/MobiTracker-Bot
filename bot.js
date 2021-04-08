@@ -309,10 +309,11 @@ function cachePlayer(user){
       check.organization.push({ sid: "N/A", rank: 0 });
     }
   }
+  var sql = "";
   if(check.cID){
-    const sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
+    sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
   }else{
-    const sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE username = '"+user.profile.id.substring(1)+"';";
+    sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE username = '"+user.profile.handle+"';";
   }
   con.query(sql, function (err, result, fields) {
     if(Object.size(result) > 0){
