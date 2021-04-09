@@ -319,11 +319,11 @@ async function registerUser(message, args){
             const req = https.request(options, res =>{
               res.on('data', d => {
                 const user = JSON.parse(d);
-                console.log(user.data);
                 if(user.data){
                   if(user.data.profile.id != "n/a"){
                     if(user.data.profile.bio){
                       const bio = user.data.profile.bio.split(/\s+/);
+                      console.log(user.data.profile);
                       for(var x = 0; x < bio.length; x++){
                         var encrypted = bio[x];
                         try{
