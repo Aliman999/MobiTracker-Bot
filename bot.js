@@ -305,7 +305,7 @@ async function registerUser(message, argz){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       console.log(result.length);
-      if(result.length == 0){
+      if(result.length > 0){
         if(result[0].cid){
           console.log("CID EXISTS");
         }else{
