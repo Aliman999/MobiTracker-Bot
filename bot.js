@@ -323,7 +323,6 @@ async function registerUser(message, args){
                   if(user.data.profile.id != "n/a"){
                     if(user.data.profile.bio){
                       const bio = user.data.profile.bio.split(/\s+/);
-                      console.log(user.data.profile);
                       for(var x = 0; x < bio.length; x++){
                         var encrypted = bio[x];
                         try{
@@ -341,6 +340,7 @@ async function registerUser(message, args){
                           }
                         }
                       }
+                      console.log(ii);
                       if(ii == args.length-1){
                         console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
                         console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
