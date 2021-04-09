@@ -294,6 +294,12 @@ function getUserFromMention(mention) {
 	}
 }
 
+Array.prototype.removeDuplicates = function () {
+  return this.filter(function (item, index, self) {
+    return self.indexOf(item) == index;
+  });
+};
+
 async function registerUser(message, args){
   if(args.length > 0){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
@@ -306,9 +312,7 @@ async function registerUser(message, args){
         const unique = (value, index, self) => {
           return self.indexOf(value) === index
         }
-        args = args.filter( function( item, index, inputArray ) {
-          return inputArray.indexOf(item) == index;
-        });
+        args.removeDuplicates();
         console.log(args);
         var registeredNames = [];
         var failedNames = [];
