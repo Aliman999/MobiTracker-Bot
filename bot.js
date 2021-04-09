@@ -311,7 +311,7 @@ async function registerUser(message, args){
           console.log(err);
         }
       });
-      const req = https.request(options, res await =>{
+      await const req = https.request(options, res =>{
         res.on('data', d => {
           const user = JSON.parse(d);
           const bio = user.data.profile.bio.split(/\s+/);
