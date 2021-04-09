@@ -346,7 +346,6 @@ async function registerUser(message, argz){
                   const user = JSON.parse(d);
                   if(Object.keys(user.data).length > 0){
                     if(user.data.profile.id != "n/a"){
-                      console.log("working");
                       if(user.data.profile.bio){
                         const bio = user.data.profile.bio.split(/\s+/);
                         for(var x = 0; x < bio.length; x++){
@@ -366,6 +365,7 @@ async function registerUser(message, argz){
                             }
                           }
                         }
+                          console.log("working");
                         if(ii == args.length-1){
                           var rString = "", fString = "", drString = "", dfString = "";
                           if(registeredNames.length > 0){
