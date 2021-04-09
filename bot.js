@@ -386,6 +386,7 @@ async function registerUser(message, argz){
                   }else{
                     if(tries != 3){
                       console.log("Failed to find "+name+", retrying.");
+                      tries++;
                       retry(name);
                     }else{
                       message.channel.send("Could not find Citizen: "+name);
