@@ -350,7 +350,7 @@ async function registerUser(message, args){
                     }else{
                       console.log("EMPTY BIO");
                     }
-                  }else{
+                  }else if(user.data.profile.id == "n/a"){
                     console.log("NO CITIZEN ID");
                   }
                 }else{
