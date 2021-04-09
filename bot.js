@@ -300,8 +300,9 @@ async function registerUser(message, args){
     con.query(sql, function (err, result, fields) {
       console.log(result);
       if(result.length > 0){
-
+        console.log("CID NOT FOUND");
       }else{
+        console.log("CID FOUND");
         var registeredNames = [];
         var failedNames = [];
         var ii = 0;
