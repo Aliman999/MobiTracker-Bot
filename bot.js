@@ -390,7 +390,7 @@ async function registerUser(message, argz){
                       retry();
                     }
                   }catch{
-                    console.log("Failed to query, retrying.");
+                    console.log("catch block");
                     retry();
                   }
 
