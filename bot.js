@@ -334,6 +334,7 @@ async function registerUser(message, args){
               }
             }
           }
+          console.log(i+" | "+args.length);
           if(i == args.length-1){
             console.log(registeredNames);
             console.log(failedNames);
