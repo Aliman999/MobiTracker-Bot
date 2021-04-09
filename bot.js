@@ -319,6 +319,7 @@ async function registerUser(message, args){
             const req = https.request(options, res =>{
               res.on('data', d => {
                 const user = JSON.parse(d);
+                console.log(user.data);
                 if(user.data){
                   if(user.data.profile.id != "n/a"){
                     if(user.data.profile.bio){
