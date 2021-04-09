@@ -312,23 +312,26 @@ function registerUser(message, args){
       const req = https.request(options, res =>{
         res.on('data', d => {
           const user = JSON.parse(d);
+          var registeredNames = [];
+          var failedNames = [];
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
             var encrypted = bio[x];
             try{
               var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
             }catch{
-              console.log("Decryption Error - "+encrypted);
             }
             if(result == "mt.co"){
-              console.log(bio[x]);
+              console.log(user.data.profile.handle+" - Registered");
+              registeredNames.push(user.data.profile.handle);
             }else{
-
+              console.log(user.data.profile.handle+" - Failed to Register");
+              failedNames.push(user.data.profile.handle);
             }
           }
-          if(user.data.profile.bio.includes()){
+          console.log(registeredNames);
+          console.log(failedNames);
 
-          }
         })
       })
 
