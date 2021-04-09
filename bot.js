@@ -412,7 +412,9 @@ async function registerUser(message, argz){
                       retry(name);
                     }else{
                       args.remove(name);
-                      message.channel.send("Could not find Citizen: "+name);
+                      setTimeout(() => {
+                        message.channel.send("Could not find Citizen: "+name);
+                      }, 5000);
                     }
                   }
                 })
