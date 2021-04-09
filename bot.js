@@ -298,6 +298,7 @@ async function registerUser(message, args){
   if(args.length > 0){
     var registeredNames = [];
     var failedNames = [];
+    var ii = 0;
     for(var i = 0; i < args.length; i++){
       const options = {
         hostname: 'api.starcitizen-api.com',
@@ -311,8 +312,8 @@ async function registerUser(message, args){
           console.log(err);
         }
       });
-      const req = https.request(options, (res, i) =>{
-        res.on('data', (i, d) => {
+      const req = https.request(options, res =>{
+        res.on('data', d => {
           const user = JSON.parse(d);
           const bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
@@ -335,10 +336,11 @@ async function registerUser(message, args){
             }
           }
           console.log(i+" | "+args.length);
-          if(i == args.length-1){
+          if(ii == args.length-1){
             console.log(registeredNames);
             console.log(failedNames);
           }
+          ii++;
         })
       })
       req.on('error', error => {
