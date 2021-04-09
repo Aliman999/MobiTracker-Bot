@@ -328,6 +328,7 @@ async function registerUser(message, argz){
           });
           console.log(message.author.username+"#"+message.author.discriminator+" requested to Register "+args.join(", "));
           var registeredNames = [];
+          var registeredCID = [];
           var failedNames = [];
           var ii = 0;
           var tries = 0;
@@ -356,6 +357,7 @@ async function registerUser(message, argz){
                           if(result == "mt.co"){
                             if(!registeredNames.includes(user.data.profile.handle)){
                               registeredNames.push(user.data.profile.handle);
+                              registeredCID.push(user.data.profile.id);
                             }
                             x = bio.length
                           }else{
@@ -383,6 +385,16 @@ async function registerUser(message, argz){
                           }else{
                             message.channel.send(drString+"\n"+dfString);
                           }
+                          var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
+                          password = password.substring(0, password.length/2);
+                          console.log(password);
+                          const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"' username = '"+JSON.stringify(registeredNames)+"' password = "";";
+                          con.query(sql, function (err, result, fields) {
+
+                            if(err){
+                              console.log(err);
+                            }
+                          });
                         }
                         ii++;
                       }else{
@@ -411,7 +423,6 @@ async function registerUser(message, argz){
               req.end();
             }
           }
-          const sql = "UPDATE discord SET cID = "; //cID, username, Generate password
         }
       }else{
         firstRegister();
