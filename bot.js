@@ -316,8 +316,7 @@ function registerUser(message, args){
           for(var x = 0; x < bio.length; x++){
             var result = crypto.AES.decrypt(bio[x], message.author.id);
             result = result.toString();
-            console.log(result);
-            if(result){
+            if(result.length > 0){
               console.log(bio[x]);
             }
           }
