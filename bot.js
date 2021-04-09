@@ -303,10 +303,9 @@ async function registerUser(message, argz){
         console.log("CID FOUND");
       }else{
         console.log("CID NOT FOUND");
-        for(var y = 0; y < argz.length; y++){
-          console.log(argz[y]);
-        }
-        console.log(argz.indexOf("Bo-Fone"));
+        chars.forEach((c, index) => {
+          console.log(`${c} - ${index} - ${chars.indexOf(c)}`);
+        });
         var args = argz;
         var registeredNames = [];
         var failedNames = [];
