@@ -345,7 +345,6 @@ async function registerUser(message, argz){
                 res.on('data', d => {
                   const user = JSON.parse(d);
                   if(Object.keys(user.data).length > 0){
-                    console.log(user.data);
                     if(user.data.profile.id != "n/a"){
                       if(user.data.profile.bio){
                         const bio = user.data.profile.bio.split(/\s+/);
@@ -402,8 +401,6 @@ async function registerUser(message, argz){
                       retry(name);
                     }else{
                       message.channel.send("Could not find Citizen: "+name);
-                      args.remove(name);
-                      retry();
                     }
                   }
                 })
