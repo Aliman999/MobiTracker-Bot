@@ -355,7 +355,7 @@ async function registerUser(message, argz){
                         }
                         if(ii == args.length-1){
                           console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
-                          console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (NO TOKEN/WRONG TOKEN)");
+                          console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (No Token/Wrong Token)");
 
                           var rString = "", fString = "", drString = "", dfString = "";
                           if(registeredNames.length > 0){
@@ -363,8 +363,8 @@ async function registerUser(message, argz){
                             drString = "Registered: "+registeredNames.join(", ")+" ";
                           }
                           if(failedNames.length > 0){
-                            fString = " | Failed: "+failedNames.join(", ")+" (NO TOKEN/WRONG TOKEN)";
-                            dfString = dfString+"Failed: "+failedNames.join(", ")+" (NO TOKEN/WRONG TOKEN)";
+                            fString = " | Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
+                            dfString = dfString+"Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
                           }
                           var finalString = rString+fString;
                           console.log(message.author.username+"#"+message.author.discriminator+finalString);
