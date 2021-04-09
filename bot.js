@@ -356,7 +356,7 @@ async function registerUser(message, argz){
                         if(failedNames.length > 0){
                           fString = "\nFailed: "+failedNames.join(", ")+" (NO TOKEN)";
                         }
-                        finalString = rString+fString;
+                        var finalString = rString+fString;
                         console.log("\n"+message.author.username+"#"+message.author.discriminator+finalString);
                       }
                       ii++;
