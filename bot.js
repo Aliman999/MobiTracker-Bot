@@ -395,10 +395,14 @@ async function registerUser(message, argz){
                       console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                     }
                   }else{
-                    if(tries != 3){
+                    if(tries != 4){
                       console.log("Failed to find "+name+", retrying.");
                       tries++;
                       retry(name);
+                    }else if (tries == 3) {
+                      console.log("Removing "+name+" from registry.");
+                      tries++;
+                      retry();
                     }else{
                       message.channel.send("Could not find Citizen: "+name);
                     }
