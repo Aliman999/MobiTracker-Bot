@@ -361,16 +361,16 @@ async function registerUser(message, args){
                     console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                   }
                 }else{
-                  retry(args);
                   console.log(i);
                   console.log("Failed to query "+args+", retrying.");
+                  retry(args);
                 }
-                req.end();
               })
             })
             req.on('error', error => {
               console.error(error)
             });
+            req.end();
           }
         }
         const sql = "UPDATE discord SET cID = "; //cID, username, Generate password
