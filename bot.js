@@ -357,7 +357,7 @@ async function registerUser(message, argz){
                           fString = " | Failed: "+failedNames.join(", ")+" (NO TOKEN)";
                         }
                         var finalString = rString+fString;
-                        console.log("\n"+message.author.username+"#"+message.author.discriminator+finalString);
+                        console.log(message.author.username+"#"+message.author.discriminator+finalString);
                       }
                       ii++;
                     }else{
