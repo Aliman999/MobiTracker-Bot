@@ -300,9 +300,9 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       console.log(result);
       if(result[0].cid){
-        console.log("CID FOUND");
+        console.log("CID EXISTS");
       }else{
-        console.log("CID NOT FOUND");
+        console.log("READY TO ADD NEW USER");
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
@@ -358,6 +358,7 @@ async function registerUser(message, argz){
                         }
                         var finalString = rString+fString;
                         console.log(message.author.username+"#"+message.author.discriminator+finalString);
+                        message.channel.send(finalString);
                       }
                       ii++;
                     }else{
