@@ -303,6 +303,12 @@ function registerUser(message, args){
         path: '/'+selectKey()+'/v1/live/user/'+escape(args[i]),
         method: 'GET'
       }
+      const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
+      con.query(sql, function (err, result, fields) {
+        if(err){
+          console.log(err);
+        }
+      });
       const req = https.request(options, res =>{
         res.on('data', d => {
           const user = JSON.parse(d);
@@ -321,17 +327,20 @@ function registerUser(message, args){
   }else{
     const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
-      console.log(result);
+      //console.log(result);
       if(result.length == 0){
+
         console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
+
         const sql = "INSERT INTO `discord` (discID) VALUES ("+message.author.id+");";
         con.query(sql, function (err, result, fields) {
+          client.users.cache.get(message.author.id).send("your password is 123");
           if(err){
             console.log(err);
           }
         });
       }else{
-
+        message.channel.send("");
       }
       if(err){
         console.log(err);
