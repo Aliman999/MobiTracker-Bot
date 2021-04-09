@@ -312,7 +312,7 @@ async function registerUser(message, args){
         }
       });
       const req = https.request(options, (res, i) =>{
-        res.on('data', d => {
+        res.on('data', (i, d) => {
           const user = JSON.parse(d);
           const bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
