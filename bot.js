@@ -343,19 +343,26 @@ async function registerUser(message, args){
                       if(ii == args.length-1){
                         console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
                         console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
-                        console.log(registeredNames);
-                        console.log(failedNames);
+                        if(registeredNames.length > 0){
+                          var rString = registeredNames.join(", ");
+                        }
+                        if(failedNames.length > 0){
+                          var fString = failedNames.join(", ");
+                        }
+                        console.log(message.author.username+"#"+message.author.discriminator+" registered");
                       }
                       ii++;
                     }else{
-                      console.log("EMPTY BIO");
+                      message.channel.send("Could not find "+user.data.profile.handle+"'s bio.");
+                      console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                     }
                   }else{
-                    console.log("NO CITIZEN ID");
+                    message.channel.send(user.data.profile.handle+" doesn't have a Citizen ID.");
+                    console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                   }
                 }else{
                   retry();
-                  console.log("Failed to query retrying");
+                  console.log("Failed to query "+user.data.profile.handle+", retrying.");
                 }
               })
             })
