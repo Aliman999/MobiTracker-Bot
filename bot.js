@@ -312,7 +312,7 @@ async function registerUser(message, args){
         const unique = (value, index, self) => {
           return self.indexOf(value) === index
         }
-        args.removeDuplicates();
+        args = args.removeDuplicates();
         console.log(args);
         var registeredNames = [];
         var failedNames = [];
