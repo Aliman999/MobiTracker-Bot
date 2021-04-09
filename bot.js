@@ -334,7 +334,7 @@ function registerUser(message, args){
 
         const sql = "INSERT INTO `discord` (discID) VALUES ("+message.author.id+");";
         con.query(sql, function (err, result, fields) {
-          client.users.cache.get(message.author.id).send("your password is 123");
+          //client.users.cache.get(message.author.id).send("your password is 123");
           if(err){
             console.log(err);
           }
