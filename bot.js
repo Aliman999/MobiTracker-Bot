@@ -334,6 +334,10 @@ async function registerUser(message, args){
               }
             }
           }
+          if(x == bio.length-1){
+            console.log(registeredNames);
+            console.log(failedNames);
+          }
         })
       })
       req.on('error', error => {
