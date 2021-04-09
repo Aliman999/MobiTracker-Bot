@@ -327,6 +327,7 @@ function registerUser(message, args){
               if(!registeredNames.includes(user.data.profile.handle)){
                 registeredNames.push(user.data.profile.handle);
               }
+              x = bio.length
             }else{
               if(x == bio.length-1){
                 console.log(user.data.profile.handle+" - Failed to Register");
