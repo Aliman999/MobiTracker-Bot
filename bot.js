@@ -335,7 +335,7 @@ async function registerUser(message, args){
             }
           }
         })
-      })
+      }).then(print());
 
 
 
@@ -344,7 +344,6 @@ async function registerUser(message, args){
       });
 
       req.end();
-      print();
     }
     function print(){
       console.log(registeredNames);
