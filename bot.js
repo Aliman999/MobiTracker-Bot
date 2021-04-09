@@ -336,7 +336,6 @@ async function registerUser(message, args){
           }
         })
       })
-      console.log(req);
       req.on('error', error => {
         console.error(error)
       });
