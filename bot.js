@@ -314,7 +314,7 @@ async function registerUser(message, args){
       }
       setTimeout(() => {
         retry();
-      }, 1000);
+      }, 10000);
       function retry(){
         const req = https.request(options, res =>{
           res.on('data', d => {
