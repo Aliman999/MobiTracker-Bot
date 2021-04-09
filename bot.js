@@ -294,7 +294,7 @@ function getUserFromMention(mention) {
 	}
 }
 
-function registerUser(message, args){
+async function registerUser(message, args){
   if(args.length > 0){
     var registeredNames = [];
     var failedNames = [];
@@ -311,7 +311,7 @@ function registerUser(message, args){
           console.log(err);
         }
       });
-      const req = https.request(options, res =>{
+      const req = https.request(options, res await =>{
         res.on('data', d => {
           const user = JSON.parse(d);
           const bio = user.data.profile.bio.split(/\s+/);
