@@ -364,7 +364,7 @@ async function registerUser(message, argz){
                           }
                           if(failedNames.length > 0){
                             fString = " | Failed: "+failedNames.join(", ")+" (NO TOKEN)";
-                            dfString = dString+"Failed: "+failedNames.join(", ")+" (NO TOKEN)";
+                            dfString = dfString+"Failed: "+failedNames.join(", ")+" (NO TOKEN)";
                           }
                           var finalString = rString+fString;
                           console.log(message.author.username+"#"+message.author.discriminator+finalString);
