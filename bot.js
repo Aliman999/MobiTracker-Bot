@@ -313,8 +313,8 @@ async function registerUser(message, args){
             path: '/'+selectKey()+'/v1/live/user/'+escape(args[i]),
             method: 'GET'
           }
-          retry(args[i]);
-          function retry(args){
+          retry();
+          function retry(){
             console.log(args);
             const req = https.request(options, res =>{
               res.on('data', d => {
@@ -363,8 +363,8 @@ async function registerUser(message, args){
                   }
                 }else{
                   console.log(i);
-                  console.log("Failed to query "+args+", retrying.");
-                  retry(args);
+                  console.log("Failed to query, retrying.");
+                  retry();
                 }
               })
             })
