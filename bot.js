@@ -309,6 +309,7 @@ async function registerUser(message, args){
         args = args.filter((c, index) => {
           return args.indexOf(c) === index;
         });
+        console.log(args);
         var registeredNames = [];
         var failedNames = [];
         var ii = 0;
