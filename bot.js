@@ -312,6 +312,8 @@ function registerUser(message, args){
       const req = https.request(options, res =>{
         res.on('data', d => {
           const user = JSON.parse(d);
+          var bio = user.data.profile.bio.split(/\s+/);
+          console.log(bio);
           if(user.data.profile.bio.includes()){
 
           }
