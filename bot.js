@@ -296,6 +296,8 @@ function getUserFromMention(mention) {
 
 function registerUser(message, args){
   if(args.length > 0){
+    var registeredNames = [];
+    var failedNames = [];
     for(var i = 0; i < args.length; i++){
       const options = {
         hostname: 'api.starcitizen-api.com',
@@ -312,8 +314,6 @@ function registerUser(message, args){
       const req = https.request(options, res =>{
         res.on('data', d => {
           const user = JSON.parse(d);
-          var registeredNames = [];
-          var failedNames = [];
           var hold = 0;
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
