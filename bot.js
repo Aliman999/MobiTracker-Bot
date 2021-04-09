@@ -306,8 +306,9 @@ async function registerUser(message, args){
         const unique = (value, index, self) => {
           return self.indexOf(value) === index
         }
-        args = args.filter(unique);
-        console.log(args);
+        args = args.filter((c, index) => {
+          return args.indexOf(c) === index;
+        });
         var registeredNames = [];
         var failedNames = [];
         var ii = 0;
