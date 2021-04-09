@@ -303,10 +303,10 @@ async function registerUser(message, argz){
         console.log("CID FOUND");
       }else{
         console.log("CID NOT FOUND");
-        function onlyUnique(value, index, self) {
-          return self.indexOf(value) === index;
+        function removeDupe(data){
+          return data.filter((value, index) => data.indexOf(value) === index);
         }
-        var args = argz.filter(onlyUnique);
+        var args = removeDupe(argz);
         console.log(args);
         var registeredNames = [];
         var failedNames = [];
