@@ -319,6 +319,10 @@ async function registerUser(message, args){
               res.on('data', d => {
                 const user = JSON.parse(d);
                 if(user.data.profile){
+                  console.log(user.data.profile);
+                  if(user.data.profile){
+
+                  }
                   const bio = user.data.profile.bio.split(/\s+/);
                   for(var x = 0; x < bio.length; x++){
                     var encrypted = bio[x];
