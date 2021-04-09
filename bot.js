@@ -356,20 +356,22 @@ async function registerUser(message, argz){
                         if(ii == args.length-1){
                           console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
                           console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
-                          var rString = "", fString = "";
+                          var rString = "", fString = "", dString = "";
                           if(registeredNames.length > 0){
-                            rString = "Registered: "+registeredNames.join(", ");
+                            rString = " | Registered: "+registeredNames.join(", ");
+                            dString = "Registered: "+registeredNames.join(", ")+" ";
                           }
                           if(failedNames.length > 0){
-                            fString = "Failed: "+failedNames.join(", ")+" (NO TOKEN)";
+                            fString = " | Failed: "+failedNames.join(", ")+" (NO TOKEN)";
+                            dString = dString+"Failed: "+failedNames.join(", ")+" (NO TOKEN)";
                           }
-                          var finalString = " | "+rString+" "+fString;
+                          var finalString = rString+fString;
                           console.log(message.author.username+"#"+message.author.discriminator+finalString);
-                          message.channel.send(finalString);
+                          message.channel.send();
                         }
                         ii++;
                       }else{
-                        message.channel.send("Could not find "+user.data.profile.handle+"'s bio.");
+                        message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
                         console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                       }
                     }else{
