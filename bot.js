@@ -324,8 +324,9 @@ function registerUser(message, args){
             }
             if(result == "mt.co"){
               console.log(user.data.profile.handle+" - Registered");
-              registeredNames.push(user.data.profile.handle);
-
+              if(!registeredNames.includes(user.data.profile.handle)){
+                registeredNames.push(user.data.profile.handle);
+              }
             }else{
               if(x == bio.length-1){
                 console.log(user.data.profile.handle+" - Failed to Register");
