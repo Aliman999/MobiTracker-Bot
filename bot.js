@@ -16,7 +16,7 @@ const mysql = require('mysql');
 const WebSocket = require('ws');
 const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
-const crypto = require('crypto-js');
+const CryptoJS = require('CryptoJS-js');
 require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
@@ -314,8 +314,8 @@ function registerUser(message, args){
           const user = JSON.parse(d);
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
-            var result = crypto.AES.decrypt(bio[x], message.author.id);
-            result = result.toString();
+            var result = CryptoJS.AES.decrypt(bio[x], message.author.id);
+            result = result.toString(CryptoJS.enc.Utf8);
             if(result.length > 0){
               console.log(bio[x]);
             }
@@ -333,13 +333,13 @@ function registerUser(message, args){
       req.end();
     }
   }else{
-    const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
+    const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
     const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       //console.log(result);
       if(result.length == 0){
         console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
-        var password = crypto.AES.encrypt("mt.co", message.author.id).toString();
+        var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
         password = password.slice(0, password.length/2);
         const sql = "INSERT INTO `discord` (discID) VALUES ("+message.author.id+");";
         con.query(sql, function (err, result, fields) {
