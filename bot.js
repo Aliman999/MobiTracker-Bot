@@ -310,7 +310,6 @@ async function registerUser(message, argz){
         var args = args.filter((c, index) => {
           return args.indexOf(c) === index;
         });
-        console.log(args);
         var registeredNames = [];
         var failedNames = [];
         var ii = 0;
@@ -356,7 +355,7 @@ async function registerUser(message, argz){
                         if(failedNames.length > 0){
                           var fString = failedNames.join(", ");
                         }
-                        console.log(message.author.username+"#"+message.author.discriminator+" registered");
+                        console.log(message.author.username+"#"+message.author.discriminator+" registered "+registeredNames.join(", ")+" and failed  to register "+failedNames.join(", "));
                       }
                       ii++;
                     }else{
