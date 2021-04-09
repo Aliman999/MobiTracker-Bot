@@ -345,6 +345,7 @@ async function registerUser(message, argz){
                 res.on('data', d => {
                   const user = JSON.parse(d);
                   if(user.data != null){
+                    console.log(user.data);
                     if(user.data.profile.id != "n/a"){
                       if(user.data.profile.bio){
                         const bio = user.data.profile.bio.split(/\s+/);
