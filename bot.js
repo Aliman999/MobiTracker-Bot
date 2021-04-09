@@ -361,6 +361,7 @@ async function registerUser(message, args){
                   }
                 }else{
                   retry();
+                  console.log(args);
                   console.log("Failed to query "+args+", retrying.");
                 }
               })
