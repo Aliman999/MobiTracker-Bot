@@ -303,6 +303,11 @@ async function registerUser(message, args){
         console.log("CID FOUND");
       }else{
         console.log("CID NOT FOUND");
+        const unique = (value, index, self) => {
+          return self.indexOf(value) === index
+        }
+        args = args.filter(unique);
+        console.log(args);
         var registeredNames = [];
         var failedNames = [];
         var ii = 0;
@@ -339,7 +344,6 @@ async function registerUser(message, args){
                           }
                         }
                       }
-                      console.log(ii);
                       if(ii == args.length-1){
                         console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
                         console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
