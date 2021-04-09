@@ -299,6 +299,12 @@ async function registerUser(message, args){
     var registeredNames = [];
     var failedNames = [];
     var ii = 0;
+    const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
+    con.query(sql, function (err, result, fields) {
+      if(err){
+        console.log(err);
+      }
+    });
     for(var i = 0; i < args.length; i++){
       const options = {
         hostname: 'api.starcitizen-api.com',
@@ -306,46 +312,46 @@ async function registerUser(message, args){
         path: '/'+selectKey()+'/v1/live/user/'+escape(args[i]),
         method: 'GET'
       }
-      const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
-      con.query(sql, function (err, result, fields) {
-        if(err){
-          console.log(err);
-        }
-      });
-      const req = https.request(options, res =>{
-        res.on('data', d => {
-          const user = JSON.parse(d);
-          const bio = user.data.profile.bio.split(/\s+/);
-          for(var x = 0; x < bio.length; x++){
-            var encrypted = bio[x];
-            try{
-              var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
-            }catch{
-            }
-            if(result == "mt.co"){
-              if(!registeredNames.includes(user.data.profile.handle)){
-                registeredNames.push(user.data.profile.handle);
+      function retry(){
+        const req = https.request(options, res =>{
+          res.on('data', d => {
+            const user = JSON.parse(d);
+            if(user.data.profile){
+              const bio = user.data.profile.bio.split(/\s+/);
+              for(var x = 0; x < bio.length; x++){
+                var encrypted = bio[x];
+                try{
+                  var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+                }catch{
+                }
+                if(result == "mt.co"){
+                  if(!registeredNames.includes(user.data.profile.handle)){
+                    registeredNames.push(user.data.profile.handle);
+                  }
+                  x = bio.length
+                }else{
+                  if(x == bio.length-1){
+                    failedNames.push(user.data.profile.handle);
+                  }
+                }
               }
-              x = bio.length
+              if(ii == args.length-1){
+                console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
+                console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
+                console.log(registeredNames);
+                console.log(failedNames);
+              }
+              ii++;
             }else{
-              if(x == bio.length-1){
-                failedNames.push(user.data.profile.handle);
-              }
+              retry();
             }
-          }
-          if(ii == args.length-1){
-            console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
-            console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
-            console.log(registeredNames);
-            console.log(failedNames);
-          }
-          ii++;
+          })
         })
-      })
-      req.on('error', error => {
-        console.error(error)
-      });
-      req.end();
+        req.on('error', error => {
+          console.error(error)
+        });
+        req.end();
+      }
     }
   }else{
     const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
