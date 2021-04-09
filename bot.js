@@ -295,7 +295,6 @@ function getUserFromMention(mention) {
 }
 
 function registerUser(message, args){
-  const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
   if(args.length > 0){
     for(var i = 0; i < args.length; i++){
       const options = {
@@ -326,6 +325,7 @@ function registerUser(message, args){
       req.end();
     }
   }else{
+    const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
     const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       //console.log(result);
