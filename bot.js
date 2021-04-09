@@ -295,6 +295,7 @@ function getUserFromMention(mention) {
 }
 
 function registerUser(message, args){
+  const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
   if(args.length > 0){
     for(var i = 0; i < args.length; i++){
       const options = {
@@ -329,24 +330,22 @@ function registerUser(message, args){
     con.query(sql, function (err, result, fields) {
       //console.log(result);
       if(result.length == 0){
-
         console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
-
         const sql = "INSERT INTO `discord` (discID) VALUES ("+message.author.id+");";
         con.query(sql, function (err, result, fields) {
-          //client.users.cache.get(message.author.id).send("your password is 123");
+          client.users.cache.get(message.author.id).send("your password is 123");
           if(err){
             console.log(err);
           }
         });
       }else{
-        message.channel.send("");
+        message.channel.send(registerP1);
       }
       if(err){
         console.log(err);
       }
     });
-    message.channel.send("You're almost done! \nPut this key into your account's bio: `"+crypto.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1");
+    message.channel.send(registerP1);
   }
 }
 
