@@ -320,34 +320,39 @@ async function registerUser(message, args){
                 const user = JSON.parse(d);
                 if(user.data.profile){
                   console.log(user.data.profile);
-                  if(user.data.profile){
-
-                  }
-                  const bio = user.data.profile.bio.split(/\s+/);
-                  for(var x = 0; x < bio.length; x++){
-                    var encrypted = bio[x];
-                    try{
-                      var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
-                    }catch{
-                    }
-                    if(result == "mt.co"){
-                      if(!registeredNames.includes(user.data.profile.handle)){
-                        registeredNames.push(user.data.profile.handle);
+                  if(user.data.profile.id){
+                    if(user.data.profile.bio){
+                      const bio = user.data.profile.bio.split(/\s+/);
+                      for(var x = 0; x < bio.length; x++){
+                        var encrypted = bio[x];
+                        try{
+                          var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+                        }catch{
+                        }
+                        if(result == "mt.co"){
+                          if(!registeredNames.includes(user.data.profile.handle)){
+                            registeredNames.push(user.data.profile.handle);
+                          }
+                          x = bio.length
+                        }else{
+                          if(x == bio.length-1){
+                            failedNames.push(user.data.profile.handle);
+                          }
+                        }
                       }
-                      x = bio.length
+                      if(ii == args.length-1){
+                        console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
+                        console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
+                        console.log(registeredNames);
+                        console.log(failedNames);
+                      }
+                      ii++;
                     }else{
-                      if(x == bio.length-1){
-                        failedNames.push(user.data.profile.handle);
-                      }
+                      console.log("EMPTY BIO");
                     }
+                  }else{
+                    console.log("NO CITIZEN ID");
                   }
-                  if(ii == args.length-1){
-                    console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
-                    console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
-                    console.log(registeredNames);
-                    console.log(failedNames);
-                  }
-                  ii++;
                 }else{
                   retry();
                   console.log("Failed to query retrying");
