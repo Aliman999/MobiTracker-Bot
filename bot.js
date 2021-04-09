@@ -296,13 +296,13 @@ function getUserFromMention(mention) {
 
 async function registerUser(message, args){
   if(args.length > 0){
-    const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
+    const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       console.log(result);
       if(result.length > 0){
-        console.log("CID NOT FOUND");
-      }else{
         console.log("CID FOUND");
+      }else{
+        console.log("CID NOT FOUND");
         var registeredNames = [];
         var failedNames = [];
         var ii = 0;
