@@ -319,7 +319,6 @@ function registerUser(message, args){
               var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
             }catch{
               console.log("Decryption Error");
-              console.log(encrypted);
             }
             if(result == "mt.co"){
               console.log(bio[x]);
