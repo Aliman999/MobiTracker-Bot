@@ -373,7 +373,7 @@ async function registerUser(message, argz){
                         console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                       }
                     }else{
-                      message.channel.send(user.data.profile.handle+" doesn't have a Citizen ID.");
+                      message.channel.send(user.data.profile.handle+" unfortunately doesn't have a Citizen ID. \n\nThis is because\n1. You don't own a Star Citizen Game Package\n2. Your game package was gifted and you need to spend 45$ of your own to get a Citizen ID.");
                       console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                     }
                   }else{
