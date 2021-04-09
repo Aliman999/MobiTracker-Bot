@@ -315,7 +315,6 @@ async function registerUser(message, argz){
   function linkRSI(){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
-      console.log(result.length);
       if(result.length > 0){
         if(result[0].cid){
           console.log("CID EXISTS");
@@ -365,7 +364,6 @@ async function registerUser(message, argz){
                             }
                           }
                         }
-                        console.log(args);
                         if(ii == args.length-1){
                           var rString = "", fString = "", drString = "", dfString = "";
                           if(registeredNames.length > 0){
