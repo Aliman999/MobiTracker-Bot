@@ -307,10 +307,10 @@ async function registerUser(message, argz){
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
         }
-        console.log(args);
         var args = args.filter((c, index) => {
           return args.indexOf(c) === index;
         });
+        console.log(args);
         var registeredNames = [];
         var failedNames = [];
         var ii = 0;
