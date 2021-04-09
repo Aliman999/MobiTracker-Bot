@@ -355,7 +355,7 @@ async function registerUser(message, argz){
                         if(failedNames.length > 0){
                           var fString = failedNames.join(", ");
                         }
-                        console.log(message.author.username+"#"+message.author.discriminator+" registered "+registeredNames.join(", ")+" and failed  to register "+failedNames.join(", "));
+                        console.log(message.author.username+"#"+message.author.discriminator+" registered: "+registeredNames.join(", ")+" and failed to register: "+failedNames.join(", "));
                       }
                       ii++;
                     }else{
