@@ -365,7 +365,7 @@ async function registerUser(message, argz){
                             }
                           }
                         }
-                        console.log("working");
+                        console.log(args);
                         if(ii == args.length-1){
                           var rString = "", fString = "", drString = "", dfString = "";
                           if(registeredNames.length > 0){
