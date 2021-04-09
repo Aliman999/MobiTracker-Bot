@@ -306,6 +306,7 @@ async function registerUser(message, argz){
         for(var y = 0; y < argz.length; y++){
           console.log(argz.indexOf(argz[y]));
         }
+        var args;
         var registeredNames = [];
         var failedNames = [];
         var ii = 0;
