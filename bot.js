@@ -316,8 +316,7 @@ function registerUser(message, args){
           for(var x = 0; x < bio.length; x++){
             var encrypted = bio[x];
             var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
-            console.log(result);
-            if(result.length > 0){
+            if(result == "mt.co"){
               console.log(bio[x]);
             }
           }
