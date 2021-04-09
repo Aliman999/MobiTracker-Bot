@@ -332,68 +332,62 @@ async function registerUser(message, argz){
               const req = https.request(options, res =>{
                 res.on('data', d => {
                   const user = JSON.parse(d);
-                  try{
-                    if(user.data.profile){
-                      if(user.data.profile.id != "n/a"){
-                        if(user.data.profile.bio){
-                          const bio = user.data.profile.bio.split(/\s+/);
-                          for(var x = 0; x < bio.length; x++){
-                            var encrypted = bio[x];
-                            try{
-                              var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
-                            }catch{
+                  if(user.data.profile){
+                    if(user.data.profile.id != "n/a"){
+                      if(user.data.profile.bio){
+                        const bio = user.data.profile.bio.split(/\s+/);
+                        for(var x = 0; x < bio.length; x++){
+                          var encrypted = bio[x];
+                          try{
+                            var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+                          }catch{
+                          }
+                          if(result == "mt.co"){
+                            if(!registeredNames.includes(user.data.profile.handle)){
+                              registeredNames.push(user.data.profile.handle);
                             }
-                            if(result == "mt.co"){
-                              if(!registeredNames.includes(user.data.profile.handle)){
-                                registeredNames.push(user.data.profile.handle);
-                              }
-                              x = bio.length
-                            }else{
-                              if(x == bio.length-1){
-                                failedNames.push(user.data.profile.handle);
-                              }
+                            x = bio.length
+                          }else{
+                            if(x == bio.length-1){
+                              failedNames.push(user.data.profile.handle);
                             }
                           }
-                          if(ii == args.length-1){
-                            console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
-                            console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
-                            var rString = "", fString = "", dString = "";
-                            if(registeredNames.length > 0){
-                              rString = " | Registered: "+registeredNames.join(", ");
-                              drString = "Registered: "+registeredNames.join(", ")+" ";
-                            }
-                            if(failedNames.length > 0){
-                              fString = " | Failed: "+failedNames.join(", ")+" (NO TOKEN)";
-                              dfString = dString+"Failed: "+failedNames.join(", ")+" (NO TOKEN)";
-                            }
-                            var finalString = rString+fString;
-                            console.log(message.author.username+"#"+message.author.discriminator+finalString);
-                            if(drString && !dfString){
-                              message.channel.send(drString);
-                            }else if (!drString && drString) {
-                              message.channel.send(dfString);
-                            }else{
-                              message.channel.send(drString+"\n"+dfString);
-                            }
-                          }
-                          ii++;
-                        }else{
-                          message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
-                          console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                         }
+                        if(ii == args.length-1){
+                          console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
+                          console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
+                          var rString = "", fString = "", dString = "";
+                          if(registeredNames.length > 0){
+                            rString = " | Registered: "+registeredNames.join(", ");
+                            drString = "Registered: "+registeredNames.join(", ")+" ";
+                          }
+                          if(failedNames.length > 0){
+                            fString = " | Failed: "+failedNames.join(", ")+" (NO TOKEN)";
+                            dfString = dString+"Failed: "+failedNames.join(", ")+" (NO TOKEN)";
+                          }
+                          var finalString = rString+fString;
+                          console.log(message.author.username+"#"+message.author.discriminator+finalString);
+                          if(drString && !dfString){
+                            message.channel.send(drString);
+                          }else if (!drString && drString) {
+                            message.channel.send(dfString);
+                          }else{
+                            message.channel.send(drString+"\n"+dfString);
+                          }
+                        }
+                        ii++;
                       }else{
-                        message.channel.send(user.data.profile.handle+" unfortunately doesn't have a Citizen ID. \n\nThis is because:\n1. You don't own a Star Citizen Game Package\n2. Your game package was gifted and you need to add 45(USD) of credit to your account to get a Citizen ID.");
-                        console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
+                        message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
+                        console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                       }
                     }else{
-                      console.log("Failed to query, retrying.");
-                      retry();
+                      message.channel.send(user.data.profile.handle+" unfortunately doesn't have a Citizen ID. \n\nThis is because:\n1. You don't own a Star Citizen Game Package\n2. Your game package was gifted and you need to add 45(USD) of credit to your account to get a Citizen ID.");
+                      console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                     }
-                  }catch{
-                    console.log("catch block");
+                  }else{
+                    console.log("Failed to query, retrying.");
                     retry();
                   }
-
                 })
               })
               req.on('error', error => {
