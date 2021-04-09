@@ -414,7 +414,7 @@ async function registerUser(message, argz){
                       args.remove(name);
                       setTimeout(() => {
                         message.channel.send("Could not find Citizen: "+name);
-                      }, 5000);
+                      }, 3000);
                     }
                   }
                 })
