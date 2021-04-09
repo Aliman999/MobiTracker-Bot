@@ -314,6 +314,7 @@ function registerUser(message, args){
           const user = JSON.parse(d);
           var registeredNames = [];
           var failedNames = [];
+          var hold = 0;
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
             var encrypted = bio[x];
@@ -328,8 +329,12 @@ function registerUser(message, args){
             }else{
               if(x == bio.length-1){
                 console.log(user.data.profile.handle+" - Failed to Register");
-                failedNames.push(user.data.profile.handle);
+                if(!hold){
+                  failedNames.push(user.data.profile.handle);
+                  hold = 1;
+                }
               }
+            }
           }
           console.log(registeredNames);
           console.log(failedNames);
