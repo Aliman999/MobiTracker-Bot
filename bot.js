@@ -396,7 +396,7 @@ async function registerUser(message, argz){
                       console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                     }
                   }else{
-                    if(tries != 2){
+                    if(tries != 1){
                       console.log("Failed to find "+name+", retrying.");
                       tries++;
                       retry(name);
