@@ -306,8 +306,6 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       console.log(result.length);
       if(result.length == 0){
-        firstRegister();
-      }else{
         if(result[0].cid){
           console.log("CID EXISTS");
         }else{
@@ -392,6 +390,8 @@ async function registerUser(message, argz){
           }
           const sql = "UPDATE discord SET cID = "; //cID, username, Generate password
         }
+      }else{
+        firstRegister();
       }
       if(err){
         console.log(err);
