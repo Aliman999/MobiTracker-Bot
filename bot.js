@@ -307,6 +307,7 @@ async function registerUser(message, argz){
           return data.filter((value, index) => data.indexOf(value) === index);
         }
         var args = removeDupe(argz);
+        console.log(argz);
         console.log(args);
         var registeredNames = [];
         var failedNames = [];
