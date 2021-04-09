@@ -365,12 +365,12 @@ async function registerUser(message, args){
                   console.log(i);
                   console.log("Failed to query "+args+", retrying.");
                 }
+                req.end();
               })
             })
             req.on('error', error => {
               console.error(error)
             });
-            req.end();
           }
         }
         const sql = "UPDATE discord SET cID = "; //cID, username, Generate password
