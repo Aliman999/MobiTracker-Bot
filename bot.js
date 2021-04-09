@@ -365,7 +365,7 @@ async function registerUser(message, argz){
                             }
                           }
                         }
-                          console.log("working");
+                        console.log("working");
                         if(ii == args.length-1){
                           var rString = "", fString = "", drString = "", dfString = "";
                           if(registeredNames.length > 0){
@@ -396,9 +396,10 @@ async function registerUser(message, argz){
                       console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                     }
                   }else{
-                    if(tries != 3){
+                    if(tries != 2){
                       console.log("Failed to find "+name+", retrying.");
                       tries++;
+                      args.remove(name);
                       retry(name);
                     }else{
                       message.channel.send("Could not find Citizen: "+name);
