@@ -315,7 +315,7 @@ function registerUser(message, args){
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
             var encrypted = bio[x];
-            var result = CryptoJS.AES.decrypt(bio[x], message.author.id).toString(CryptoJS.enc.Utf8);
+            var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
             console.log(result);
             if(result.length > 0){
               console.log(bio[x]);
