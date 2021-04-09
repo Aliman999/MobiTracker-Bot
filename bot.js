@@ -294,6 +294,17 @@ function getUserFromMention(mention) {
 	}
 }
 
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+
 async function registerUser(message, argz){
   if(argz.length > 0){
     linkRSI();
@@ -390,6 +401,8 @@ async function registerUser(message, argz){
                       retry(name);
                     }else{
                       message.channel.send("Could not find Citizen: "+name);
+                      args.remove(name);
+                      retry();
                     }
                   }
                 })
