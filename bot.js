@@ -320,7 +320,7 @@ async function registerUser(message, argz){
           var registeredNames = [];
           var failedNames = [];
           var ii = 0;
-          var tried = 0;
+          var tries = 0;
           for(var i = 0; i < args.length; i++){
             const options = {
               hostname: 'api.starcitizen-api.com',
