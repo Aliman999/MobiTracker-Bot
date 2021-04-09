@@ -358,12 +358,12 @@ async function registerUser(message, argz){
                           console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
                           var rString = "", fString = "";
                           if(registeredNames.length > 0){
-                            rString = " | Registered: "+registeredNames.join(", ");
+                            rString = "Registered: "+registeredNames.join(", ");
                           }
                           if(failedNames.length > 0){
-                            fString = " | Failed: "+failedNames.join(", ")+" (NO TOKEN)";
+                            fString = "Failed: "+failedNames.join(", ")+" (NO TOKEN)";
                           }
-                          var finalString = rString+fString;
+                          var finalString = " | "+rString+" "fString;
                           console.log(message.author.username+"#"+message.author.discriminator+finalString);
                           message.channel.send(finalString);
                         }
