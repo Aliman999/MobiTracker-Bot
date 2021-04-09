@@ -323,20 +323,20 @@ async function registerUser(message, args){
             }catch{
             }
             if(result == "mt.co"){
-              console.log(user.data.profile.handle+" - Registered");
               if(!registeredNames.includes(user.data.profile.handle)){
                 registeredNames.push(user.data.profile.handle);
               }
               x = bio.length
             }else{
               if(x == bio.length-1){
-                console.log(user.data.profile.handle+" - Failed to Register");
                 failedNames.push(user.data.profile.handle);
               }
             }
           }
           console.log(ii+" | "+args.length);
           if(ii == args.length-1){
+            console.log(registeredNames.join(", ")+" - Registered");
+            console.log(failedNames.join(", ")+" - Failed to Register");
             console.log(registeredNames);
             console.log(failedNames);
           }
