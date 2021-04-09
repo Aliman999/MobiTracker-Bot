@@ -320,7 +320,7 @@ async function registerUser(message, args){
                 const user = JSON.parse(d);
                 if(user.data.profile){
                   console.log(user.data.profile);
-                  if(user.data.profile.id){
+                  if(user.data.profile.id != "n/a"){
                     if(user.data.profile.bio){
                       const bio = user.data.profile.bio.split(/\s+/);
                       for(var x = 0; x < bio.length; x++){
@@ -350,7 +350,7 @@ async function registerUser(message, args){
                     }else{
                       console.log("EMPTY BIO");
                     }
-                  }else if(user.data.profile.id == "n/a"){
+                  }else{
                     console.log("NO CITIZEN ID");
                   }
                 }else{
