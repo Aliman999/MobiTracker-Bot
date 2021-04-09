@@ -314,7 +314,9 @@ function registerUser(message, args){
           const user = JSON.parse(d);
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
-            console.log(crypto.AES.decrypt(bio[x], message.author.id).toString());
+            if(crypto.AES.decrypt(bio[x], message.author.id)){
+              console.log(crypto.AES.decrypt(bio[x], message.author.id).toString());
+            }
           }
           console.log(bio);
           if(user.data.profile.bio.includes()){
