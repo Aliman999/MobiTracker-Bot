@@ -368,7 +368,7 @@ async function registerUser(message, argz){
                             }
                             var finalString = rString+fString;
                             console.log(message.author.username+"#"+message.author.discriminator+finalString);
-                            message.channel.send();
+                            message.channel.send(dString);
                           }
                           ii++;
                         }else{
