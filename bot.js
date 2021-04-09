@@ -311,7 +311,6 @@ async function registerUser(message, argz){
   }else{
     firstRegister();
   }
-
   function linkRSI(){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
@@ -385,16 +384,16 @@ async function registerUser(message, argz){
                           }else{
                             message.channel.send(drString+"\n"+dfString);
                           }
+                          
                           var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
                           password = password.substring(password.length/2, password.length);
-                          console.log(password);
-                          //const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"' username = '"+JSON.stringify(registeredNames)+"' password = "";";
-                          //con.query(sql, function (err, result, fields) {
 
-                          //  if(err){
-                          //    console.log(err);
-                          //  }
-                          //});
+                          const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"' username = '"+JSON.stringify(registeredNames)+"' password = '"+password+"';";
+                          con.query(sql, function (err, result, fields) {
+                            if(err){
+                              console.log(err);
+                            }
+                          });
                         }
                         ii++;
                       }else{
