@@ -340,7 +340,7 @@ async function registerUser(message, argz){
               method: 'GET'
             }
             retry(args[i]);
-            function retry(name){
+            async function retry(name){
               const req = https.request(options, res =>{
                 res.on('data', d => {
                   const user = JSON.parse(d);
