@@ -314,8 +314,7 @@ function registerUser(message, args){
           const user = JSON.parse(d);
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
-            var result = CryptoJS.AES.decrypt(JSON.stringify({ bio[x] }), message.author.id);
-            result = result.toString(CryptoJS.enc.Utf8);
+            var result = CryptoJS.AES.decrypt(bio[x], message.author.id).toString();
             if(result.length > 0){
               console.log(bio[x]);
             }
