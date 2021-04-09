@@ -315,6 +315,7 @@ function registerUser(message, args){
           var registeredNames = [];
           var failedNames = [];
           var hold = 0;
+          console.log(user.data);
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
             var encrypted = bio[x];
