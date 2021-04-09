@@ -349,11 +349,12 @@ async function registerUser(message, argz){
                       if(ii == args.length-1){
                         console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
                         console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
+                        var rString = "", fString = "";
                         if(registeredNames.length > 0){
-                          var rString = "\nRegistered: "+registeredNames.join(", ");
+                          rString = "\nRegistered: "+registeredNames.join(", ");
                         }
                         if(failedNames.length > 0){
-                          var fString = "\nFailed: "+failedNames.join(", ")+" (NO TOKEN)";
+                          fString = "\nFailed: "+failedNames.join(", ")+" (NO TOKEN)";
                         }
                         finalString = rString+fString;
                         console.log("\n"+message.author.username+"#"+message.author.discriminator+finalString);
