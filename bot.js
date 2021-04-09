@@ -333,7 +333,7 @@ async function registerUser(message, argz){
               const req = https.request(options, res =>{
                 res.on('data', d => {
                   const user = JSON.parse(d);
-                  if(user.data.profile){
+                  if(user.data){
                     if(user.data.profile.id != "n/a"){
                       if(user.data.profile.bio){
                         const bio = user.data.profile.bio.split(/\s+/);
