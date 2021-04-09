@@ -336,15 +336,15 @@ async function registerUser(message, args){
           }
         })
       })
-      req.then(
-        console.log(registeredNames)
-        console.log(failedNames)
-      );
+
       req.on('error', error => {
         console.error(error)
       });
 
-      req.end();
+      req.end(
+        console.log(registeredNames)
+        console.log(failedNames)
+      );
     }
   }else{
     const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
