@@ -356,7 +356,7 @@ async function registerUser(message, argz){
                         if(ii == args.length-1){
                           console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
                           console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
-                          var rString = "", fString = "", dString = "";
+                          var rString = fString = drString = dfString = "";
                           if(registeredNames.length > 0){
                             rString = " | Registered: "+registeredNames.join(", ");
                             drString = "Registered: "+registeredNames.join(", ")+" ";
