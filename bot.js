@@ -320,6 +320,7 @@ async function registerUser(message, argz){
           var registeredNames = [];
           var failedNames = [];
           var ii = 0;
+          var tried = 0;
           for(var i = 0; i < args.length; i++){
             const options = {
               hostname: 'api.starcitizen-api.com',
@@ -327,8 +328,8 @@ async function registerUser(message, argz){
               path: '/'+selectKey()+'/v1/live/user/'+escape(args[i]),
               method: 'GET'
             }
-            retry();
-            function retry(){
+            retry(args[i]);
+            function retry(name){
               const req = https.request(options, res =>{
                 res.on('data', d => {
                   const user = JSON.parse(d);
@@ -383,8 +384,12 @@ async function registerUser(message, argz){
                       console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                     }
                   }else{
-                    console.log("Failed to query, retrying.");
-                    retry();
+                    if(tries != 3){
+                      console.log("Failed to find "+name+", retrying.");
+                      retry(name);
+                    }else{
+                      message.channel.send("Could not find Citizen: "+name);
+                    }
                   }
                 })
               })
