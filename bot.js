@@ -386,7 +386,7 @@ async function registerUser(message, argz){
                             message.channel.send(drString+"\n"+dfString);
                           }
                           var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-                          password = password.substring(0, password.length/2);
+                          password = password.substring(password.length/2, password.length);
                           console.log(password);
                           //const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"' username = '"+JSON.stringify(registeredNames)+"' password = "";";
                           //con.query(sql, function (err, result, fields) {
