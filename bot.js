@@ -333,15 +333,12 @@ function registerUser(message, args){
         console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
         var password = crypto.AES.encrypt("mt.co", message.author.id).toString();
         password = password.slice(0, password.length/2);
-        const sql = "INSERT INTO `discord` (discID, password) VALUES ("+message.author.id+", '"+password+"');";
+        const sql = "INSERT INTO `discord` (discID) VALUES ("+message.author.id+");";
         con.query(sql, function (err, result, fields) {
-          client.users.cache.get(message.author.id).send("Your password to https://mobitracker.co is `"+password+"`");
           if(err){
             console.log(err);
           }
         });
-      }else{
-        message.channel.send(registerP1);
       }
       if(err){
         console.log(err);
