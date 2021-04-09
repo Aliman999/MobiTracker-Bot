@@ -315,6 +315,7 @@ async function registerUser(message, args){
           }
           retry(args[i]);
           function retry(args){
+            console.log(args);
             const req = https.request(options, res =>{
               res.on('data', d => {
                 const user = JSON.parse(d);
