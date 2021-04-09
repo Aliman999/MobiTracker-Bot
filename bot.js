@@ -312,9 +312,7 @@ async function registerUser(message, args){
         path: '/'+selectKey()+'/v1/live/user/'+escape(args[i]),
         method: 'GET'
       }
-      setTimeout(() => {
-        retry();
-      }, 10000);
+      retry();
       function retry(){
         const req = https.request(options, res =>{
           res.on('data', d => {
