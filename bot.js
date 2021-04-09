@@ -300,10 +300,11 @@ async function registerUser(message, argz){
   }else{
     firstRegister();
   }
+
   function linkRSI(){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
-      console.log(result);
+      console.log(result.length);
       if(result.length > 0){
         firstRegister();
       }else{
