@@ -315,7 +315,6 @@ async function registerUser(message, args){
           }
           retry();
           function retry(){
-            console.log(args);
             const req = https.request(options, res =>{
               res.on('data', d => {
                 const user = JSON.parse(d);
@@ -340,7 +339,7 @@ async function registerUser(message, args){
                           }
                         }
                       }
-                      console.log(ii+" | "+args.length-1);
+                      console.log(ii);
                       if(ii == args.length-1){
                         console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
                         console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
