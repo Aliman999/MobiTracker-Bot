@@ -334,12 +334,10 @@ function registerUser(message, args){
               }
             }
           }
-          console.log(registeredNames);
-          console.log(failedNames);
-
         })
       })
-
+      console.log(registeredNames);
+      console.log(failedNames);
       req.on('error', error => {
         console.error(error)
       });
