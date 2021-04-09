@@ -315,61 +315,63 @@ async function registerUser(message, args){
           }
           retry();
           function retry(){
-            const req = https.request(options, res =>{
-              res.on('data', d => {
-                const user = JSON.parse(d);
-                if(user.data){
-                  if(user.data.profile.id != "n/a"){
-                    if(user.data.profile.bio){
-                      const bio = user.data.profile.bio.split(/\s+/);
-                      for(var x = 0; x < bio.length; x++){
-                        var encrypted = bio[x];
-                        try{
-                          var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
-                        }catch{
-                        }
-                        if(result == "mt.co"){
-                          if(!registeredNames.includes(user.data.profile.handle)){
-                            registeredNames.push(user.data.profile.handle);
+            setTimeout(() => {
+              const req = https.request(options, res =>{
+                res.on('data', d => {
+                  const user = JSON.parse(d);
+                  if(user.data){
+                    if(user.data.profile.id != "n/a"){
+                      if(user.data.profile.bio){
+                        const bio = user.data.profile.bio.split(/\s+/);
+                        for(var x = 0; x < bio.length; x++){
+                          var encrypted = bio[x];
+                          try{
+                            var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+                          }catch{
                           }
-                          x = bio.length
-                        }else{
-                          if(x == bio.length-1){
-                            failedNames.push(user.data.profile.handle);
+                          if(result == "mt.co"){
+                            if(!registeredNames.includes(user.data.profile.handle)){
+                              registeredNames.push(user.data.profile.handle);
+                            }
+                            x = bio.length
+                          }else{
+                            if(x == bio.length-1){
+                              failedNames.push(user.data.profile.handle);
+                            }
                           }
                         }
-                      }
-                      if(ii == args.length-1){
-                        console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
-                        console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
-                        if(registeredNames.length > 0){
-                          var rString = registeredNames.join(", ");
+                        if(ii == args.length-1){
+                          console.log(registeredNames.join(", ")+" registered to "+message.author.username+"#"+message.author.discriminator);
+                          console.log(failedNames.join(", ")+" failed to register to "+message.author.username+"#"+message.author.discriminator+" (Token Not Found)");
+                          if(registeredNames.length > 0){
+                            var rString = registeredNames.join(", ");
+                          }
+                          if(failedNames.length > 0){
+                            var fString = failedNames.join(", ");
+                          }
+                          console.log(message.author.username+"#"+message.author.discriminator+" registered");
                         }
-                        if(failedNames.length > 0){
-                          var fString = failedNames.join(", ");
-                        }
-                        console.log(message.author.username+"#"+message.author.discriminator+" registered");
+                        ii++;
+                      }else{
+                        message.channel.send("Could not find "+user.data.profile.handle+"'s bio.");
+                        console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                       }
-                      ii++;
                     }else{
-                      message.channel.send("Could not find "+user.data.profile.handle+"'s bio.");
-                      console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
+                      message.channel.send(user.data.profile.handle+" doesn't have a Citizen ID.");
+                      console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                     }
                   }else{
-                    message.channel.send(user.data.profile.handle+" doesn't have a Citizen ID.");
-                    console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
+                    retry();
+                    console.log(i);
+                    console.log("Failed to query "+args+", retrying.");
                   }
-                }else{
-                  retry();
-                  console.log(i);
-                  console.log("Failed to query "+args+", retrying.");
-                }
+                })
               })
-            })
-            req.on('error', error => {
-              console.error(error)
-            });
-            req.end();
+              req.on('error', error => {
+                console.error(error)
+              });
+              req.end();
+            }, 5000);
           }
         }
         const sql = "UPDATE discord SET cID = "; //cID, username, Generate password
