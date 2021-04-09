@@ -388,13 +388,13 @@ async function registerUser(message, argz){
                           var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
                           password = password.substring(0, password.length/2);
                           console.log(password);
-                          const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"' username = '"+JSON.stringify(registeredNames)+"' password = "";";
-                          con.query(sql, function (err, result, fields) {
+                          //const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"' username = '"+JSON.stringify(registeredNames)+"' password = "";";
+                          //con.query(sql, function (err, result, fields) {
 
-                            if(err){
-                              console.log(err);
-                            }
-                          });
+                          //  if(err){
+                          //    console.log(err);
+                          //  }
+                          //});
                         }
                         ii++;
                       }else{
