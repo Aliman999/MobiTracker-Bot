@@ -361,7 +361,7 @@ async function registerUser(message, args){
                   }
                 }else{
                   retry();
-                  console.log("Failed to query "+user.data.profile.handle+", retrying.");
+                  console.log("Failed to query "+args[i]+", retrying.");
                 }
               })
             })
