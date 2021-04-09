@@ -315,9 +315,15 @@ function registerUser(message, args){
           var bio = user.data.profile.bio.split(/\s+/);
           for(var x = 0; x < bio.length; x++){
             var encrypted = bio[x];
-            var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+            try{
+              var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+            }catch{
+              console.log("Decryption Error");
+            }
             if(result == "mt.co"){
               console.log(bio[x]);
+            }else{
+
             }
           }
           if(user.data.profile.bio.includes()){
