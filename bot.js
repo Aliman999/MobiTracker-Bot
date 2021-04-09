@@ -294,12 +294,6 @@ function getUserFromMention(mention) {
 	}
 }
 
-Array.prototype.removeDuplicates = function () {
-  return this.filter(function (item, index, self) {
-    return self.indexOf(item) == index;
-  });
-};
-
 async function registerUser(message, argz){
   if(argz.length > 0){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
@@ -309,10 +303,10 @@ async function registerUser(message, argz){
         console.log("CID FOUND");
       }else{
         console.log("CID NOT FOUND");
-        const unique = (value, index, self) => {
-          return self.indexOf(value) === index
+        function onlyUnique(value, index, self) {
+          return self.indexOf(value) === index;
         }
-        var args = argz.removeDuplicates();
+        var args = argz.filter(onlyUnique);
         console.log(args);
         var registeredNames = [];
         var failedNames = [];
