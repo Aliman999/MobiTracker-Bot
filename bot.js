@@ -331,7 +331,7 @@ async function registerUser(message, argz){
           var registeredNames = [];
           var failedNames = [];
           var ii = 0;
-          var tries = 4;
+          var tries = 0;
           for(var i = 0; i < args.length; i++){
             const options = {
               hostname: 'api.starcitizen-api.com',
@@ -340,12 +340,13 @@ async function registerUser(message, argz){
               method: 'GET'
             }
             retry(args[i]);
-            async function retry(name){
+            function retry(name){
               const req = https.request(options, res =>{
                 res.on('data', d => {
                   const user = JSON.parse(d);
                   if(Object.keys(user.data).length > 0){
                     if(user.data.profile.id != "n/a"){
+                      console.log("working");
                       if(user.data.profile.bio){
                         const bio = user.data.profile.bio.split(/\s+/);
                         for(var x = 0; x < bio.length; x++){
@@ -395,14 +396,10 @@ async function registerUser(message, argz){
                       console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                     }
                   }else{
-                    if(tries == 0){
+                    if(tries != 3){
                       console.log("Failed to find "+name+", retrying.");
-                      tries--;
+                      tries++;
                       retry(name);
-                    }else if (tries == 1) {
-                      console.log("Removing "+name+" from registry.");
-                      tries--;
-                      retry();
                     }else{
                       message.channel.send("Could not find Citizen: "+name);
                     }
