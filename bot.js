@@ -360,7 +360,7 @@ async function registerUser(message, args){
                     console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                   }
                 }else{
-                  retry();
+                  retry(args);
                   console.log(i);
                   console.log("Failed to query "+args+", retrying.");
                 }
