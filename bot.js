@@ -360,15 +360,21 @@ async function registerUser(message, argz){
                             var rString = "", fString = "", dString = "";
                             if(registeredNames.length > 0){
                               rString = " | Registered: "+registeredNames.join(", ");
-                              dString = "Registered: "+registeredNames.join(", ")+" ";
+                              drString = "Registered: "+registeredNames.join(", ")+" ";
                             }
                             if(failedNames.length > 0){
                               fString = " | Failed: "+failedNames.join(", ")+" (NO TOKEN)";
-                              dString = dString+"Failed: "+failedNames.join(", ")+" (NO TOKEN)";
+                              dfString = dString+"Failed: "+failedNames.join(", ")+" (NO TOKEN)";
                             }
                             var finalString = rString+fString;
                             console.log(message.author.username+"#"+message.author.discriminator+finalString);
-                            message.channel.send(dString);
+                            if(drString && !dfString){
+                              message.channel.send(drString);
+                            }else if (!drString && drString) {
+                              message.channel.send(dfString);
+                            }else{
+                              message.channel.send(drString+"\n"+dfString);
+                            }
                           }
                           ii++;
                         }else{
