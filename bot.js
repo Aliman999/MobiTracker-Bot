@@ -633,6 +633,7 @@ function queryApi(message, args){
           });
         }else{
           if(tries != 3){
+            console.log("Failed to find "+`${args}`+", retrying.");
             queryApi(message, args);
           }else{
             var result = "Could not find "+`${args}`;
