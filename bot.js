@@ -585,6 +585,7 @@ function queryApi(message, args){
     const req = https.request(options, res =>{
       res.on('data', d => {
         const user = JSON.parse(d);
+        var try = 0;
         if(Object.size(user.data) > 0){
           //console.log(user.data.organization);
           cachePlayer(user.data);
@@ -631,8 +632,12 @@ function queryApi(message, args){
             promiseSearch(embed);
           });
         }else{
-          var result = "Could not find "+`${args}`;
-          promiseSearch(result);
+          if(try != 3){
+            queryApi(message, args);
+          }else{
+            var result = "Could not find "+`${args}`;
+            promiseSearch(result);
+          }
         }
       })
     })
