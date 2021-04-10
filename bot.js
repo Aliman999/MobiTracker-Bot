@@ -394,6 +394,7 @@ async function registerUser(message, argz){
                               console.log(err);
                             }
                           });
+
                         }
                         ii++;
                       }else{
@@ -712,7 +713,7 @@ client.on('message', message => {
           finished = true;
         }
         if(message.author.id != "751252617451143219"){
-          console.log(message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
+          console.log(message.channel.author.username+'#'+message.channel.author.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
         }
         lookUp(message, args[i], finished);
       }
@@ -721,7 +722,7 @@ client.on('message', message => {
         if(message.channel.type == "text"){
           console.log(message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
         }else{
-          console.log(message.channel.recipient.username+'#'+message.channel.recipient.discriminator+' Looked up '+args+' in '+message.channel.type+'s');
+          console.log(message.channel.author.username+'#'+message.channel.author.discriminator+' Looked up '+args+' in '+message.channel.type+'s');
         }
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
