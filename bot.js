@@ -576,7 +576,6 @@ function cachePlayer(user){
 function queryApi(message, args){
   return new Promise(promiseSearch =>{
     var embed;
-    var tries = 0;
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
@@ -632,15 +631,8 @@ function queryApi(message, args){
             promiseSearch(embed);
           });
         }else{
-          if(tries != 3){
-            console.log("Failed to find "+`${args}`+", retrying.");
-            queryApi(message, args);
-            console.log(tries);
-            tries++;
-          }else{
-            var result = "Could not find "+`${args}`;
-            promiseSearch(result);
-          }
+          var result = "Could not find "+`${args}`;
+          promiseSearch(result);
         }
       })
     })
