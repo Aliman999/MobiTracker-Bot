@@ -632,6 +632,7 @@ function queryApi(message, args){
           });
         }else{
           var result = "Could not find "+`${args}`;
+          console.log(result);
           promiseSearch(result);
         }
       })
