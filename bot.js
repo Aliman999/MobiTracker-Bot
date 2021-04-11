@@ -586,7 +586,6 @@ function queryApi(message, args){
       res.on('data', d => {
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
-          //console.log(user.data.organization);
           cachePlayer(user.data);
           if(Object.size(user.data.organization) > 1 && user.data.organization.name != ""){
             user.data.organization.name = user.data.organization.rank+' ['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
@@ -631,7 +630,8 @@ function queryApi(message, args){
             promiseSearch(embed);
           });
         }else{
-          var result = "Could not find "+`${args}`;
+          //var result = "Could not find "+`${args}`;
+          var result = "The bot is currently broken because i am monke. Will be working in 24 hours";
           console.log(result);
           promiseSearch(result);
         }
