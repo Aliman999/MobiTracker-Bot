@@ -576,6 +576,7 @@ function cachePlayer(user){
 function queryApi(message, args){
   return new Promise(promiseSearch =>{
     var embed;
+    var tries = 0;
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
@@ -585,7 +586,6 @@ function queryApi(message, args){
     const req = https.request(options, res =>{
       res.on('data', d => {
         const user = JSON.parse(d);
-        var tries = 0;
         if(Object.size(user.data) > 0){
           //console.log(user.data.organization);
           cachePlayer(user.data);
