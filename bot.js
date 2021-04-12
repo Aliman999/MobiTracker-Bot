@@ -630,8 +630,7 @@ function queryApi(message, args){
             promiseSearch(embed);
           });
         }else{
-          //var result = "Could not find "+`${args}`;
-          var result = "The bot is currently broken because i am monke. Will be working in 24 hours";
+          var result = "Could not find "+`${args}`;
           console.log(result);
           promiseSearch(result);
         }
