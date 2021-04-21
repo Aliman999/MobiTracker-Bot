@@ -625,12 +625,12 @@ function queryApi(message, args){
                 { name: 'Badge', value: user.data.profile.badge, inline: true},
                 { name: 'Mobitracker Rating', value: rating, inline: true},
                 { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
-                { name: 'Enlisted', value: user.data.profile.enlisted }
+                { name: 'Enlisted', value: user.data.profile.enlisted, inline: true}
                )
                .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
             if(user.data.profile.location){
               embed.addFields(
-                { name: 'Location', value: user.data.profile.location.region+", "+user.data.profile.location.country }
+                { name: 'Location', value: user.data.profile.location.region+", "+user.data.profile.location.country, inline: true}
               );
             }
             embed.addFields(
