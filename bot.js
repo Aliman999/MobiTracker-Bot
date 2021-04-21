@@ -65,7 +65,7 @@ socket();
 
 var trueLog = console.log;
 console.log = function(msg) {
-    fs.appendFile('/home/ubuntu/logs/bot.log', new Date().toLocaleTimeString('en-US')+msg+'\n', function(err) {      if(err) {
+    fs.appendFile('/home/ubuntu/logs/bot.log', new Date().toLocaleTimeString('en-US')+" - "+msg+'\n', function(err) { if(err) {
         return trueLog(err);
       }
     });
@@ -622,6 +622,7 @@ function queryApi(message, args){
                 { name: 'Badge', value: user.data.profile.badge, inline: true},
                 { name: 'Mobitracker Rating', value: rating, inline: true},
                 { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
+                { name: 'Date Created', value: user.data.profile.enlisted.toLocaleTimeString('en-US') }
                 { name: 'Main Organization', value: user.data.organization.name },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
                )
