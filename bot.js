@@ -632,10 +632,18 @@ function queryApi(message, args){
               embed.addFields(
                 { name: 'Location', value: user.data.profile.location.region+", "+user.data.profile.location.country, inline: true}
               );
+            }else{
+              embed.addFields(
+                { name: 'Location', value: "REDACTED", inline: true}
+              );
             }
             if(user.data.profile.fluency){
               embed.addFields(
                 { name: 'Languages', value: user.data.profile.fluency.join(", "), inline: true}
+              );
+            }else{
+              embed.addFields(
+                { name: 'Languages', value: "REDACTED", inline: true}
               );
             }
             embed.addFields(
