@@ -614,7 +614,7 @@ function queryApi(message, args){
               }
             }
             user.data.profile.enlisted = new Date(user.data.profile.enlisted);
-            user.data.profile.enlisted = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+            user.data.profile.enlisted = ((user.data.profile.enlisted.getMonth() > 8) ? (user.data.profile.enlisted.getMonth() + 1) : ('0' + (user.data.profile.enlisted.getMonth() + 1))) + '/' + ((user.data.profile.enlisted.getDate() > 9) ? user.data.profile.enlisted.getDate() : ('0' + user.data.profile.enlisted.getDate())) + '/' + user.data.profile.enlisted.getFullYear();
             embed = new MessageEmbed()
               .setColor(0x25a6dd)
               .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
