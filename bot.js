@@ -633,6 +633,11 @@ function queryApi(message, args){
                 { name: 'Location', value: user.data.profile.location.region+", "+user.data.profile.location.country, inline: true}
               );
             }
+            if(user.data.profile.fluency){
+              embed.addFields(
+                { name: 'Languages', value: user.data.profile.fluency.join(", "), inline: true}
+              );
+            }
             embed.addFields(
               { name: 'Main Organization', value: user.data.organization.name },
               { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
