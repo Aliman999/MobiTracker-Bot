@@ -32,7 +32,6 @@ Message {
   system: false,
   content: '!search JamesDusky',
   author: User {
-    test: "yes",
     id: '216222384095625216',
     system: null,
     locale: null,
