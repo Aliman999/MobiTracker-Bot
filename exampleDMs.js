@@ -28,7 +28,7 @@ Message {
   },
   deleted: false,
   id: '829770280296775730',
-  type: 'DEFAULT',
+  type: 'DEFAULT yeah',
   system: false,
   content: '!search JamesDusky',
   author: User {
