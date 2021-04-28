@@ -737,7 +737,11 @@ client.on('message', message => {
           finished = true;
         }
         if(message.author.id != "751252617451143219"){
-          console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
+          if(message.channel.type == "text"){
+            console.log(message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
+          }else{
+            console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args+' in '+message.channel.type+'s');
+          }
         }
         lookUp(message, args[i], finished);
       }
