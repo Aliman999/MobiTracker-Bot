@@ -729,19 +729,19 @@ client.on('message', message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}
     if(args.length > 1){
+      if(message.author.id != "751252617451143219"){
+        if(message.channel.type == "text"){
+          console.log(message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
+        }else{
+          console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args+' in '+message.channel.type+'s');
+        }
+      }
       console.log(" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
         args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
         var finished = false;
         if(i == args.length-1){
           finished = true;
-        }
-        if(message.author.id != "751252617451143219"){
-          if(message.channel.type == "text"){
-            console.log(message.member.user.tag+' Looked up '+args+' in the '+message.guild.name+' server');
-          }else{
-            console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args+' in '+message.channel.type+'s');
-          }
         }
         lookUp(message, args[i], finished);
       }
