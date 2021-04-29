@@ -584,8 +584,8 @@ function queryApi(message, args){
     }
     const req = https.request(options, res =>{
       res.on('data', d => {
-
-        const user = JSON.parse(escape(d));
+        console.log(JSON.stringify(d));
+        const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
           if(Object.size(user.data.organization) > 1 && user.data.organization.name != ""){
