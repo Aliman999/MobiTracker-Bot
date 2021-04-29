@@ -583,9 +583,15 @@ function queryApi(message, args){
       method: 'GET'
     }
     const req = https.request(options, res =>{
+      var body = "";
       res.on('data', d => {
-        console.log(JSON.parse(JSON.stringify(JSON.stringify(d))).toString());
-        const user = JSON.parse(d);
+        body += d;
+      })
+      req.on('error', error => {
+        console.error(error)
+      })
+      req.on('end', function(){
+        const user = JSON.parse(body);
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
           if(Object.size(user.data.organization) > 1 && user.data.organization.name != ""){
@@ -661,10 +667,6 @@ function queryApi(message, args){
         }
       })
     })
-    req.on('error', error => {
-      console.error(error)
-    })
-
     req.end()
   });
 }
