@@ -341,7 +341,14 @@ async function registerUser(message, argz){
             retry(args[i]);
             function retry(name){
               const req = https.request(options, res =>{
-                res.on('data', d => {
+                var body = "";
+                res.on('data', d =>{
+                  body += d;
+                })
+                res.on('error', err =>{
+                  console.log(err);
+                });
+                res.on('end', function(){
                   const user = JSON.parse(d);
                   if(Object.keys(user.data).length > 0){
                     if(user.data.profile.id != "n/a"){
@@ -417,7 +424,7 @@ async function registerUser(message, argz){
                       }, 3000);
                     }
                   }
-                })
+                });
               })
               req.on('error', error => {
                 console.error(error)
