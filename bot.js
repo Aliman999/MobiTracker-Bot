@@ -586,12 +586,14 @@ function queryApi(message, args){
       var body = "";
       res.on('data', d => {
         body += d;
+        console.log("body");
       })
       res.end();
       res.on('error', error => {
         console.error(error)
       })
       res.on('end', function(){
+        console.log("End");
         const user = JSON.parse(body);
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
