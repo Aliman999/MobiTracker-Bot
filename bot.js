@@ -668,6 +668,7 @@ function queryApi(message, args){
         }
       })
     })
+    res.end();
   });
 }
 
