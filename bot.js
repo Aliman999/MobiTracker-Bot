@@ -586,11 +586,11 @@ function queryApi(message, args){
       var body = "";
       res.on('data', d => {
         body += d;
-      })
-      req.on('error', error => {
+      }).end();
+      res.on('error', error => {
         console.error(error)
       })
-      req.on('end', function(){
+      res.on('end', function(){
         const user = JSON.parse(body);
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
@@ -666,7 +666,7 @@ function queryApi(message, args){
           promiseSearch(result);
         }
       })
-    }).end();
+    })
   });
 }
 
