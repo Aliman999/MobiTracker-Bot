@@ -582,7 +582,7 @@ function queryApi(message, args){
       path: '/'+selectKey()+'/v1/live/user/'+escape(args),
       method: 'GET'
     }
-    const req = https.get(options, res =>{
+    const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
         body += d;
@@ -666,8 +666,7 @@ function queryApi(message, args){
           promiseSearch(result);
         }
       })
-    })
-    req.end()
+    }).end();
   });
 }
 
