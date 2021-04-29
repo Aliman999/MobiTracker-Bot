@@ -586,7 +586,6 @@ function queryApi(message, args){
       var body = "";
       res.on('data', d => {
         body += d;
-        console.log("Test");
       })
       res.on('error', error => {
         console.error(error)
