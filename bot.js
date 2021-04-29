@@ -667,8 +667,8 @@ function queryApi(message, args){
           promiseSearch(result);
         }
       })
+      res.end();
     })
-    res.end();
   });
 }
 
