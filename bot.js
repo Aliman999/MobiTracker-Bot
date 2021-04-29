@@ -588,10 +588,10 @@ function queryApi(message, args){
         body += d;
         console.log("Test");
       })
-      req.on('error', error => {
+      res.on('error', error => {
         console.error(error)
       })
-      req.on('end', function(){
+      res.on('end', function(){
         const user = JSON.parse(body);
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
@@ -667,7 +667,6 @@ function queryApi(message, args){
           promiseSearch(result);
         }
       })
-      res.end();
     })
     req.end()
   });
