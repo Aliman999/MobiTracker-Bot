@@ -346,7 +346,7 @@ async function registerUser(message, argz){
                   if(Object.keys(user.data).length > 0){
                     if(user.data.profile.id != "n/a"){
                       if(user.data.profile.bio){
-                        const bio = user.data.profile.bio.split(/\s+/).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        const bio = user.data.profile.bio.split(/\s+/);
                         for(var x = 0; x < bio.length; x++){
                           var encrypted = bio[x];
                           try{
@@ -584,6 +584,7 @@ function queryApi(message, args){
     }
     const req = https.request(options, res =>{
       res.on('data', d => {
+        console.log(d);
         const user = JSON.parse(d);
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
