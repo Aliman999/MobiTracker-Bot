@@ -26,7 +26,6 @@ const msg = {
   type:"bot",
   token: botToken
 };
-//Testing gitlab branches
 function selectKey(){
   return apiKeys[Math.floor(Math.random() * apiKeys.length)];
 }
