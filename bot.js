@@ -110,8 +110,9 @@ con.getConnection(function(err, connection) {
   if (err) throw err;
 });
 
-getKey();
-setKey(apiKey);
+getKey(function(){
+  setKey();
+});
 
 function affiliations(aff){
   var display = "";
