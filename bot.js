@@ -604,18 +604,18 @@ function cachePlayer(user){
   */
 }
 
-function queryApi(message, args, type = 'live'){
+function queryApi(message, args, type = 'live', options){
   return new Promise(promiseSearch  =>{
     var embed;
-    var options
     getKey()
     .then(function(result){
-      options = {
+      var options = {
         hostname: 'api.starcitizen-api.com',
         port: 443,
         path: '/'+'/v1/'+type+'/user/'+escape(args),
         method: 'GET'
       }
+      queryApi(message, args, type, options);
     })
     console.log(options);
     const req = https.request(options, res =>{
