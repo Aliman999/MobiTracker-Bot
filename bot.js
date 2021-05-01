@@ -753,7 +753,7 @@ client.on('message', message => {
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }else if (message.attachments){
     message.attachments.map((currElement, index) => {
-      console.log(currElement.url.slice(0, 27));
+      console.log(currElement.url.slice(27));
 
       return currElement; //equivalent to list[index]
     });
