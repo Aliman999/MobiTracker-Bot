@@ -56,7 +56,6 @@ function setKey(){
   });
 }
 
-getKey();
 
 function socket(){
   wsClient.onopen = function(){
@@ -109,6 +108,8 @@ var con = mysql.createPool({
 con.getConnection(function(err, connection) {
   if (err) throw err;
 });
+
+getKey();
 
 function affiliations(aff){
   var display = "";
