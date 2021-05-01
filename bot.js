@@ -738,9 +738,8 @@ function readAttachment(url){
     })
     res.on('end', function(){
       console.log(body);
-      /*
-      if (!message.content.startsWith(prefix)) return;
-      var args = message.content.slice(prefix.length).trim().split(/\s+/);
+      if (!body.startsWith(prefix)) return;
+      var args = body.slice(prefix.length).trim().split(/\s+/);
       const command = args.shift().toLowerCase();
       if(command === 'search'){
         if (!args.length){
@@ -765,7 +764,6 @@ function readAttachment(url){
           }
         }
       }
-      */
     })
   })
   req.end();
