@@ -753,12 +753,9 @@ client.on('message', message => {
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }else if (message.attachments){
     message.attachments.map((currElement, index) => {
-      console.log("The current iteration is: " + index);
-      console.log("The current element is: " + currElement);
-      console.log("\n");
+      console.log(currElement);
       return currElement; //equivalent to list[index]
     });
-    //download(attachment.url);
   }
   if (!message.content.startsWith(prefix)) return;
   var args = message.content.slice(prefix.length).trim().split(/\s+/);
