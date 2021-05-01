@@ -53,7 +53,6 @@ function setKey(){
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
   con.query(sql, function (err, result, fields) {
     if(err) throw err;
-    console.log("updated key");
   });
 }
 
@@ -110,8 +109,6 @@ con.getConnection(function(err, connection) {
   if (err) throw err;
 });
 
-getKey();
-
 function affiliations(aff){
   var display = "";
   if(aff.length > 0){
@@ -137,11 +134,9 @@ function numberWithCommas(x) {
 
 async function lookUp(message, args, finished = false, type){
   for(var i = 0; i < 100; i++){
-    /*
     getKey()
     .then(async function(result){
     })
-    */
 
   }
   //message.channel.send(await queryApi(message, args, type, result))
