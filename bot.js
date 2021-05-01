@@ -41,7 +41,6 @@ function getKey(){
     apiKey.key = result[0].apiKey;
     apiKey.count = result[0].count;
   });
-  return apiKey;
 }
 
 function setKey(){
@@ -605,7 +604,8 @@ function cachePlayer(user){
 function queryApi(message, args, type = 'live'){
   return new Promise(async promiseSearch  =>{
     var embed;
-    console.log(getKey());
+    await getKey();
+    console.log(apiKey);
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
