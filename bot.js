@@ -610,15 +610,14 @@ function queryApi(message, args, type = 'live'){
     var options
     getKey()
     .then(function(result){
-      console.log(result);
+      options = {
+        hostname: 'api.starcitizen-api.com',
+        port: 443,
+        path: '/'+'/v1/'+type+'/user/'+escape(args),
+        method: 'GET'
+      }
     })
-
-    options = {
-      hostname: 'api.starcitizen-api.com',
-      port: 443,
-      path: '/'+'/v1/'+type+'/user/'+escape(args),
-      method: 'GET'
-    }
+    console.log(options);
     const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
