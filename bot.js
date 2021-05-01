@@ -41,13 +41,13 @@ function getKey(){
       apiKey.id = result[0].id;
       apiKey.key = result[0].apiKey;
       apiKey.count = result[0].count;
-      await setKey();
+      await setKey(apiKey);
       callback(apiKey.key);
     });
   })
 }
 
-function setKey(){
+function setKey(apiKey){
   console.log(apiKey);
   apiKey.count--;
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
