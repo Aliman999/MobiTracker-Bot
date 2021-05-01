@@ -722,6 +722,7 @@ client.on("ready", () => {
 });
 
 client.on('message', message => {
+  console.log(message.content);
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
     var handle = message.content.split("/");
     handle = handle.pop();
@@ -737,7 +738,6 @@ client.on('message', message => {
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}
-    console.log(message.content);
     if(args.length > 1){
       console.log(" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
