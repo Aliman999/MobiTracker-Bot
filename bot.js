@@ -602,14 +602,13 @@ function cachePlayer(user){
   */
 }
 
-async function queryApi(message, args, type = 'live'){
-  return new Promise(promiseSearch =>{
+function queryApi(message, args, type = 'live'){
+  return new Promise(promiseSearch async =>{
     var embed;
-    var key = await getKey();
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+key+'/v1/'+type+'/user/'+escape(args),
+      path: '/'+(await getKey())+'/v1/'+type+'/user/'+escape(args),
       method: 'GET'
     }
     console.log(options);
