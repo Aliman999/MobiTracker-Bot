@@ -34,26 +34,28 @@ var apiKey = {
 };
 
 function getKey(){
+  /*
   return new Promise(function(callback){
-    const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
-    con.query(sql, async function (err, result, fields) {
-      if(err) throw err;
-      apiKey.id = result[0].id;
-      apiKey.key = result[0].apiKey;
-      apiKey.count = result[0].count;
-      await setKey();
-      callback(apiKey.key);
-    });
   })
+  */
+  const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
+  return con.query(sql, function (err, result, fields){
+    if(err) throw err;
+    apiKey.id = result[0].id;
+    apiKey.key = result[0].apiKey;
+    apiKey.count = result[0].count;
+    setKey();
+    return apiKey.key;
+  });
 }
 
 function setKey(){
   apiKey.count--;
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
-  con.query(sql, function (err, result, fields) {
+  con.query(sql, function (err, result, fields){
+    if(err) throw err;
     console.log(apiKey);
     console.log("updated");
-    if(err) throw err;
   });
 }
 
@@ -133,8 +135,8 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(message, args, finished = false, type){
-  await getKey();
+function lookUp(message, args, finished = false, type){
+  getKey();
 
   //message.channel.send(await queryApi(message, args, type, result))
   if(finished){
