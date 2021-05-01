@@ -737,8 +737,7 @@ function readAttachment(url){
       console.error(error)
     })
     res.on('end', function(){
-      var message = JSON.parse(body);
-      console.log(message);
+      console.log(body);
       /*
       if (!message.content.startsWith(prefix)) return;
       var args = message.content.slice(prefix.length).trim().split(/\s+/);
