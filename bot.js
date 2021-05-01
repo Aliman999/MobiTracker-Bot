@@ -136,7 +136,7 @@ function numberWithCommas(x) {
 }
 
 function lookUp(message, args, finished = false, type){
-  getKey();
+  console.log(getKey());
 
   //message.channel.send(await queryApi(message, args, type, result))
   if(finished){
