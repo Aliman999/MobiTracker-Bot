@@ -130,7 +130,7 @@ function numberWithCommas(x) {
 }
 
 async function lookUp(message, args, finished = false, type){
-  for(var i = 0; i < 1000; i++){
+  for(var i = 0; i < 100; i++){
     getKey()
     .then(async function(result){
       setKey();
