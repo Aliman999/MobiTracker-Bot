@@ -606,7 +606,8 @@ function queryApi(message, args, type = 'live'){
   return new Promise(async promiseSearch  =>{
     var embed;
     var test;
-    getKey(function(result){console.log(result)});
+    await getKey(function(result){test = result});
+    console.log(test);
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
