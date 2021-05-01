@@ -331,7 +331,7 @@ Array.prototype.remove = function() {
     return this;
 };
 
-async function registerUser(message, argz){
+async function registerUser(message, argz, key){
   if(argz.length > 0){
     linkRSI();
   }else{
