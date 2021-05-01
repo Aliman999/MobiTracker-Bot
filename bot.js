@@ -752,7 +752,7 @@ client.on('message', message => {
     client.channels.cache.get("827064226807283722").send(message.member.user.tag+" linked a handle: "+handle);
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }else if (message.attachments){
-    console.log(message.attachments[message.id]);
+    console.log(message.attachments[0]);
     //download(attachment.url);
   }
   if (!message.content.startsWith(prefix)) return;
