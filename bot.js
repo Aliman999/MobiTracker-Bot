@@ -41,6 +41,7 @@ function getKey(){
       apiKey.id = result[0].id;
       apiKey.key = result[0].apiKey;
       apiKey.count = result[0].count;
+      setKey();
       callback(apiKey.key);
     });
   })
@@ -134,7 +135,6 @@ async function lookUp(message, args, finished = false, type){
   for(var i = 0; i < 100; i++){
     getKey()
     .then(async function(result){
-      setKey();
       console.log(result);
     })
   }
