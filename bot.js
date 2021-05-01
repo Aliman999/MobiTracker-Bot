@@ -48,11 +48,11 @@ function getKey(){
 }
 
 function setKey(){
-  console.log(apiKey);
   apiKey.count--;
   return new Promise(function(){
     const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
     con.query(sql, function (err, result, fields) {
+      console.log(apiKey);
       console.log("updated");
       if(err) throw err;
     });
