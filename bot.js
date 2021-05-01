@@ -40,6 +40,7 @@ function getKey(){
     apiKey.id = result[0].id;
     apiKey.key = result[0].apiKey;
     apiKey.count = result[0].count;
+    console.log(apiKey);
     return apiKey.key;
   });
 }
