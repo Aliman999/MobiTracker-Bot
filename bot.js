@@ -38,15 +38,17 @@ function getKey(){
     const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      apiKey = result[0];
+      apiKey.id = result[0].id;
+      apiKey.key = result[0].apiKey;
+      apiKey.count = result[0].count;
       callback(apiKey.apiKey);
     });
   })
 }
 
 function setKey(){
-  apiKey.count--;
   console.log(apiKey);
+  apiKey.count--;
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
   con.query(sql, function (err, result, fields) {
     if(err) throw err;
