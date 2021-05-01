@@ -26,8 +26,30 @@ const msg = {
   type:"bot",
   token: botToken
 };
-function selectKey(){
-  return apiKeys[Math.floor(Math.random() * apiKeys.length)];
+
+var apiKey = {
+  id:0,
+  key:"",
+  count:0
+};
+
+function getKey(){
+  const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
+  con.query(sql, function (err, result, fields) {
+    if(err) throw err;
+    apiKey.id = result[0].id;
+    apiKey.key = result[0].apiKey;
+    apiKey.count = result[0].count;
+    return apiKey.key;
+  });
+}
+
+function setKey(){
+  apiKey.count--;
+  const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
+  con.query(sql, function (err, result, fields) {
+    if(err) throw err;
+  });
 }
 
 function socket(){
@@ -334,7 +356,7 @@ async function registerUser(message, argz){
             const options = {
               hostname: 'api.starcitizen-api.com',
               port: 443,
-              path: '/'+selectKey()+'/v1/live/user/'+escape(args[i]),
+              path: '/'+getKey()+'/v1/live/user/'+escape(args[i]),
               method: 'GET'
             }
             retry(args[i]);
@@ -348,6 +370,7 @@ async function registerUser(message, argz){
                   console.log(err);
                 });
                 res.on('end', function(){
+                  setKey();
                   const user = JSON.parse(d);
                   if(Object.keys(user.data).length > 0){
                     if(user.data.profile.id != "n/a"){
@@ -585,7 +608,7 @@ function queryApi(message, args, type = 'live'){
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+selectKey()+'/v1/'+type+'/user/'+escape(args),
+      path: '/'+getKey()+'/v1/'+type+'/user/'+escape(args),
       method: 'GET'
     }
     const req = https.request(options, res =>{
@@ -597,6 +620,7 @@ function queryApi(message, args, type = 'live'){
         console.error(error)
       })
       res.on('end', function(){
+        setKey();
         try{
           var user = JSON.parse(body);
         }catch(err){
