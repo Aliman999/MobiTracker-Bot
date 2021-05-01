@@ -33,15 +33,17 @@ var apiKey = {
   count:0
 };
 
-function getKey(callback){
-  const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
-  con.query(sql, function (err, result, fields) {
-    if(err) throw err;
-    apiKey.id = result[0].id;
-    apiKey.key = result[0].apiKey;
-    apiKey.count = result[0].count;
-    return callback(apiKey);
-  });
+function getKey(){
+  return new Promise(function(callback){
+    const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
+    con.query(sql, function (err, result, fields) {
+      if(err) throw err;
+      apiKey.id = result[0].id;
+      apiKey.key = result[0].apiKey;
+      apiKey.count = result[0].count;
+      callback(apiKey);
+    });
+  })
 }
 
 function setKey(){
@@ -603,12 +605,15 @@ function cachePlayer(user){
 }
 
 function queryApi(message, args, type = 'live'){
-  return new Promise(async promiseSearch  =>{
+  return new Promise(promiseSearch  =>{
     var embed;
-    var test;
-    await getKey(function(result){test = result});
-    console.log(test);
-    const options = {
+    var options
+    getKey()
+    .then(function(result){
+      console.log(result);
+    })
+
+    options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
       path: '/'+'/v1/'+type+'/user/'+escape(args),
