@@ -603,7 +603,7 @@ function cachePlayer(user){
 }
 
 function queryApi(message, args, type = 'live'){
-  return new Promise(promiseSearch async =>{
+  return new Promise(async promiseSearch  =>{
     var embed;
     const options = {
       hostname: 'api.starcitizen-api.com',
