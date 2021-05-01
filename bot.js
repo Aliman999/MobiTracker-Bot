@@ -42,7 +42,7 @@ function getKey(){
       apiKey.key = result[0].apiKey;
       apiKey.count = result[0].count;
       setKey();
-      callback(apiKey.apiKey);
+      callback(apiKey.key);
     });
   })
 }
@@ -134,8 +134,8 @@ function numberWithCommas(x) {
 
 async function lookUp(message, args, finished = false, type){
   for(var i = 0; i < 100; i++){
-    getKey()
-    .then(async function(result){
+    getKey((key)=>{
+      console.log(key);
     })
 
   }
