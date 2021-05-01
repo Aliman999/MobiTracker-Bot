@@ -773,7 +773,6 @@ function readAttachment(url){
 }
 
 client.on('message', message => {
-  console.log(message);
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
     var handle = message.content.split("/");
     handle = handle.pop();
