@@ -598,7 +598,7 @@ function queryApi(message, args){
       })
       res.on('end', function(){
         try{
-          user = JSON.parse(body);
+          var user = JSON.parse(body);
           if(Object.size(user.data) > 0){
             cachePlayer(user.data);
             if(Object.size(user.data.organization) > 1 && user.data.organization.name != ""){
