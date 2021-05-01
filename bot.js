@@ -133,7 +133,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function lookUp(message, args, finished = false, type){
+async function lookUp(message, args, finished = false, type){
   console.log(await getKey());
   //message.channel.send(await queryApi(message, args, type, result))
   if(finished){
