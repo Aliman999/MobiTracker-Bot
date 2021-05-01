@@ -722,13 +722,15 @@ client.on("ready", () => {
 });
 
 client.on('message', message => {
-  console.log(message);
+  console.log(message.attachments);
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
     var handle = message.content.split("/");
     handle = handle.pop();
     if(handle.includes(" ")) handle = handle.substr(0,handle.indexOf(' '));
     client.channels.cache.get("827064226807283722").send(message.member.user.tag+" linked a handle: "+handle);
     client.channels.cache.get("827064226807283722").send("!search "+handle);
+  }else if (message.attachments.url) {
+    console.log("attachment");
   }
   if (!message.content.startsWith(prefix)) return;
   var args = message.content.slice(prefix.length).trim().split(/\s+/);
