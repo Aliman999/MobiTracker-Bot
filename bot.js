@@ -605,13 +605,13 @@ function cachePlayer(user){
 function queryApi(message, args, type = 'live'){
   return new Promise(async promiseSearch  =>{
     var embed;
+    console.log(getKey());
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+(await getKey())+'/v1/'+type+'/user/'+escape(args),
+      path: '/''/v1/'+type+'/user/'+escape(args),
       method: 'GET'
     }
-    console.log(options);
     const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
