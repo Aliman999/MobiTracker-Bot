@@ -105,8 +105,8 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(message, args, finished = false){
-  message.channel.send(await queryApi(message, args));
+async function lookUp(message, args, finished = false, type){
+  message.channel.send(await queryApi(message, args, type));
   if(finished){
     console.log(" --- BATCH END ---");
   }
@@ -579,13 +579,13 @@ function cachePlayer(user){
   */
 }
 
-function queryApi(message, args){
+function queryApi(message, args, type = 'live'){
   return new Promise(promiseSearch =>{
     var embed;
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+selectKey()+'/v1/auto/user/'+escape(args),
+      path: '/'+selectKey()+'/v1/'+type+'/user/'+escape(args),
       method: 'GET'
     }
     const req = https.request(options, res =>{
@@ -600,9 +600,9 @@ function queryApi(message, args){
         try{
           var user = JSON.parse(body);
         }catch(err){
-          return;
           console.log("Failed to parse "+args);
           console.log(err);
+          return;
         };
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
@@ -766,7 +766,7 @@ function readAttachment(message, url){
                 console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
               }
             }
-            lookUp(message, args[i], finished);
+            lookUp(message, args[i], finished, "auto");
           }
         }
       }
