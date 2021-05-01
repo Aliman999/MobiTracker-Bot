@@ -110,6 +110,7 @@ con.getConnection(function(err, connection) {
 });
 
 getKey();
+setKey();
 
 function affiliations(aff){
   var display = "";
