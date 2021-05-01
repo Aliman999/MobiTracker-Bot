@@ -41,7 +41,6 @@ function getKey(){
       apiKey.id = result[0].id;
       apiKey.key = result[0].apiKey;
       apiKey.count = result[0].count;
-      setKey();
       console.log(apiKey);
       callback(apiKey.key);
     });
@@ -53,8 +52,11 @@ function setKey(){
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
   con.query(sql, function (err, result, fields) {
     if(err) throw err;
+    getKey();
   });
 }
+
+getKey();
 
 function socket(){
   wsClient.onopen = function(){
@@ -133,9 +135,12 @@ function numberWithCommas(x) {
 
 async function lookUp(message, args, finished = false, type){
   for(var i = 0; i < 100; i++){
+    /*
     getKey()
     .then(async function(result){
     })
+    */
+
   }
   //message.channel.send(await queryApi(message, args, type, result))
   if(finished){
