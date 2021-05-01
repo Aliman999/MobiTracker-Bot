@@ -33,7 +33,7 @@ var apiKey = {
   count:0
 };
 
-function getKey(){
+function getKey(callback){
   /*
   return new Promise(function(callback){
   })
@@ -137,9 +137,7 @@ function numberWithCommas(x) {
 
 function lookUp(message, args, finished = false, type){
   console.log(getKey());
-
   //message.channel.send(await queryApi(message, args, type, result))
-  message.channel.send("The bot is currently being worked on and will be available later, please use https://mobitracker.co at this time.");
   if(finished){
     console.log(" --- BATCH END ---");
   }
