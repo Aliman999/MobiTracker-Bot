@@ -599,7 +599,7 @@ function queryApi(message, args){
       res.on('end', function(){
         var user = {data:""};
         try{
-          const user = JSON.parse(body);
+          var user = JSON.parse(body);
         }catch(err){
           console.log("Failed to parse "+args);
           console.log(err);
