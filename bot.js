@@ -133,9 +133,9 @@ function numberWithCommas(x) {
 }
 
 function lookUp(message, args, finished = false, type){
-  getKey().then(
+  getKey().then(function(){
     console.log(apiKey);
-  )
+  })
   //message.channel.send(await queryApi(message, args, type, result))
   if(finished){
     console.log(" --- BATCH END ---");
