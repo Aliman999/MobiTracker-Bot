@@ -609,7 +609,7 @@ function queryApi(message, args, type = 'live'){
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/''/v1/'+type+'/user/'+escape(args),
+      path: '/'+'/v1/'+type+'/user/'+escape(args),
       method: 'GET'
     }
     const req = https.request(options, res =>{
