@@ -42,7 +42,6 @@ function getKey(callback){
       apiKey.key = result[0].apiKey;
       apiKey.count = result[0].count;
       setKey();
-      return callback(apiKey);
     });
   })
 }
@@ -133,8 +132,10 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(message, args, finished = false, type){
-  console.log(await getKey());
+function lookUp(message, args, finished = false, type){
+  getKey().then(
+    console.log(apiKey;
+  )
   //message.channel.send(await queryApi(message, args, type, result))
   if(finished){
     console.log(" --- BATCH END ---");
