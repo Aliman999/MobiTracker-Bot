@@ -130,10 +130,13 @@ function numberWithCommas(x) {
 }
 
 async function lookUp(message, args, finished = false, type){
-  getKey()
-  .then(async function(result){
-    message.channel.send(await queryApi(message, args, type, result))
-  })
+  for(var i = 0; i < 1000; i++){
+    getKey()
+    .then(async function(result){
+      console.log(result);
+    })
+  }
+  //message.channel.send(await queryApi(message, args, type, result))
   if(finished){
     console.log(" --- BATCH END ---");
   }
