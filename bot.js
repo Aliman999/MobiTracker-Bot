@@ -725,7 +725,7 @@ function readAttachment(url){
   const options = {
     hostname: 'cdn.discordapp.com',
     port: 443,
-    path: '',
+    path: url,
     method: 'GET'
   }
   const req = https.request(options, res =>{
@@ -737,7 +737,36 @@ function readAttachment(url){
       console.error(error)
     })
     res.on('end', function(){
-
+      var message = JSON.parse(body);
+      console.log(message);
+      /*
+      if (!message.content.startsWith(prefix)) return;
+      var args = message.content.slice(prefix.length).trim().split(/\s+/);
+      const command = args.shift().toLowerCase();
+      if(command === 'search'){
+        if (!args.length){
+      		return message.channel.send(`You didnt provide a username.`);
+      	}
+        if(args.length > 1){
+          console.log(" --- BATCH BEGIN ---");
+          for(var i = 0; i < args.length; i++){
+            args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
+            var finished = false;
+            if(i == args.length-1){
+              finished = true;
+            }
+            if(message.author.id != "751252617451143219"){
+              if(message.channel.type == "text"){
+                console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
+              }else{
+                console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
+              }
+            }
+            lookUp(message, args[i], finished);
+          }
+        }
+      }
+      */
     })
   })
   req.end();
@@ -753,9 +782,7 @@ client.on('message', message => {
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }else if (message.attachments){
     message.attachments.map((currElement, index) => {
-      console.log(currElement.url.slice(27));
-
-      return currElement; //equivalent to list[index]
+      readAttachment(currElement.url.slice(27));
     });
   }
   if (!message.content.startsWith(prefix)) return;
