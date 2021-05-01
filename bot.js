@@ -41,7 +41,7 @@ function getKey(){
       apiKey.id = result[0].id;
       apiKey.key = result[0].apiKey;
       apiKey.count = result[0].count;
-      setKey(apiKey);
+      await setKey(apiKey);
       callback(apiKey.key);
     });
   })
@@ -50,11 +50,13 @@ function getKey(){
 function setKey(apiKey){
   console.log(apiKey);
   apiKey.count--;
-  const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
-  con.query(sql, function (err, result, fields) {
-    if(err) throw err;
-    return;
-  });
+  return new Promise(function(callback){
+    const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
+    con.query(sql, function (err, result, fields) {
+      if(err) throw err;
+      callback();
+    });
+  })
 }
 
 
