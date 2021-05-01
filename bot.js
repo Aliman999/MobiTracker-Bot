@@ -775,7 +775,7 @@ function readAttachment(message, url){
     res.on('error', error => {
       console.error(error)
     })
-    res.on('end', function(){
+    res.on('end', async function(){
       console.log(body);
       if (!body.startsWith(prefix)) return;
       var args = body.slice(prefix.length).trim().split(/\s+/);
@@ -799,7 +799,7 @@ function readAttachment(message, url){
                 console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
               }
             }
-            lookUp(message, args[i], finished, "auto");
+            await lookUp(message, args[i], finished, "auto");
           }
         }
       }
