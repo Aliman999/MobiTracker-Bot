@@ -33,10 +33,10 @@ var apiKey = {
   count:0
 };
 
-function getKey(){
+async function getKey(){
   return new Promise(function(callback){
     const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
-    con.query(sql, async function (err, result, fields) {
+    await con.query(sql, async function (err, result, fields) {
       if(err) throw err;
       apiKey.id = result[0].id;
       apiKey.key = result[0].apiKey;
@@ -50,11 +50,10 @@ function getKey(){
 function setKey(apiKey){
   console.log(apiKey);
   apiKey.count--;
-  return new Promise(function(callback){
+  return new Promise(function(){
     const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      callback();
     });
   })
 }
