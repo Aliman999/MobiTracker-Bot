@@ -56,7 +56,7 @@ function setKey(){
   });
 }
 
-getKey();
+await getKey();
 
 function socket(){
   wsClient.onopen = function(){
