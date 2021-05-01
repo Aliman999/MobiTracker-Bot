@@ -34,16 +34,13 @@ var apiKey = {
 };
 
 function getKey(callback){
-  return new Promise(function(callback){
-    const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
-    con.query(sql, function (err, result, fields){
-      if(err) throw err;
-      apiKey.id = result[0].id;
-      apiKey.key = result[0].apiKey;
-      apiKey.count = result[0].count;
-      setKey();
-    });
-  })
+  const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
+  con.query(sql, function (err, result, fields){
+    if(err) throw err;
+    apiKey.id = result[0].id;
+    apiKey.key = result[0].apiKey;
+    apiKey.count = result[0].count;
+  });
 }
 
 function setKey(){
@@ -135,6 +132,7 @@ function numberWithCommas(x) {
 function lookUp(message, args, finished = false, type){
   getKey().then(function(){
     console.log(apiKey);
+    setKey();
   })
   //message.channel.send(await queryApi(message, args, type, result))
   if(finished){
