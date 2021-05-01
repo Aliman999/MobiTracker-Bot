@@ -39,7 +39,7 @@ function getKey(){
   })
   */
   const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
-  return con.query(sql, function (err, result, fields){
+  con.query(sql, function (err, result, fields){
     if(err) throw err;
     apiKey.id = result[0].id;
     apiKey.key = result[0].apiKey;
@@ -139,6 +139,7 @@ function lookUp(message, args, finished = false, type){
   console.log(getKey());
 
   //message.channel.send(await queryApi(message, args, type, result))
+  message.channel.send("The bot is currently being worked on and will be available later, please use https://mobitracker.co at this time.");
   if(finished){
     console.log(" --- BATCH END ---");
   }
