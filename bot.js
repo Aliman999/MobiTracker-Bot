@@ -600,6 +600,7 @@ function queryApi(message, args){
         try{
           const user = JSON.parse(body);
         }catch(err){
+          console.log("Failed to parse "+args);
           console.log(err);
         };
         if(Object.size(user.data) > 0){
