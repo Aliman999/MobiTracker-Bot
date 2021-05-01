@@ -46,7 +46,7 @@ function getKey(){
   })
 }
 
-function setKey(){
+function setKey(apiKey){
   console.log(apiKey);
   apiKey.count--;
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
@@ -111,7 +111,7 @@ con.getConnection(function(err, connection) {
 });
 
 getKey();
-setKey();
+setKey(apiKey);
 
 function affiliations(aff){
   var display = "";
