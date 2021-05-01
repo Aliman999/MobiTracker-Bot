@@ -41,12 +41,13 @@ function getKey(){
       apiKey.id = result[0].id;
       apiKey.key = result[0].apiKey;
       apiKey.count = result[0].count;
+      setKey();
       callback(apiKey.apiKey);
     });
   })
 }
 
-function setKey(apiKey){
+function setKey(){
   console.log(apiKey);
   apiKey.count--;
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
@@ -110,9 +111,7 @@ con.getConnection(function(err, connection) {
   if (err) throw err;
 });
 
-getKey(function(){
-  setKey();
-});
+getKey();
 
 function affiliations(aff){
   var display = "";
