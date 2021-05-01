@@ -40,7 +40,6 @@ function getKey(){
     apiKey.id = result[0].id;
     apiKey.key = result[0].apiKey;
     apiKey.count = result[0].count;
-    console.log(apiKey);
     return apiKey.key;
   });
 }
@@ -612,6 +611,7 @@ function queryApi(message, args, type = 'live'){
       path: '/'+getKey()+'/v1/'+type+'/user/'+escape(args),
       method: 'GET'
     }
+    console.log(options);
     const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
