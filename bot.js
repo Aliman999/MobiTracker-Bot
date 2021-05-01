@@ -721,6 +721,28 @@ client.on("ready", () => {
   loopStatus();
 });
 
+function readAttachment(url){
+  const options = {
+    hostname: 'cdn.discordapp.com',
+    port: 443,
+    path: '',
+    method: 'GET'
+  }
+  const req = https.request(options, res =>{
+    var body = "";
+    res.on('data', d => {
+      body += d;
+    })
+    res.on('error', error => {
+      console.error(error)
+    })
+    res.on('end', function(){
+
+    })
+  })
+  req.end();
+}
+
 client.on('message', message => {
   console.log(message.attachments);
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
@@ -729,8 +751,9 @@ client.on('message', message => {
     if(handle.includes(" ")) handle = handle.substr(0,handle.indexOf(' '));
     client.channels.cache.get("827064226807283722").send(message.member.user.tag+" linked a handle: "+handle);
     client.channels.cache.get("827064226807283722").send("!search "+handle);
-  }else if (message.attachments.url) {
-    console.log("attachment");
+  }else if (message.attachments){
+    console.log(message.attachments.url);
+    //download(attachment.url);
   }
   if (!message.content.startsWith(prefix)) return;
   var args = message.content.slice(prefix.length).trim().split(/\s+/);
