@@ -33,14 +33,14 @@ var apiKey = {
   count:0
 };
 
-function getKey(){
+function getKey(callback){
   const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
   con.query(sql, function (err, result, fields) {
     if(err) throw err;
     apiKey.id = result[0].id;
     apiKey.key = result[0].apiKey;
     apiKey.count = result[0].count;
-    console.log(apiKey);
+    return callback(apiKey);
   });
 }
 
@@ -605,8 +605,11 @@ function cachePlayer(user){
 function queryApi(message, args, type = 'live'){
   return new Promise(async promiseSearch  =>{
     var embed;
-    await getKey();
-    console.log(apiKey);
+    var test;
+    getKey(function(result){
+      test = result;
+    });
+    console.log(test);
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
