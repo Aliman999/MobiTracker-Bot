@@ -53,6 +53,7 @@ function setKey(apiKey){
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
   con.query(sql, function (err, result, fields) {
     if(err) throw err;
+    return;
   });
 }
 
