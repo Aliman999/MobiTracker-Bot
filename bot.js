@@ -45,8 +45,8 @@ function getKey(callback){
     apiKey.key = result[0].apiKey;
     apiKey.count = result[0].count;
     setKey();
-    callback(apiKey.key);
   });
+  return apiKey;
 }
 
 function setKey(){
