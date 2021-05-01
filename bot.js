@@ -600,6 +600,7 @@ function queryApi(message, args){
         try{
           var user = JSON.parse(body);
         }catch(err){
+          return;
           console.log("Failed to parse "+args);
           console.log(err);
         };
