@@ -608,8 +608,8 @@ function queryApi(message, args, type = 'live'){
     var test;
     getKey(function(result){
       test = result;
+      console.log(result);
     });
-    console.log(apiKey);
     const options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
