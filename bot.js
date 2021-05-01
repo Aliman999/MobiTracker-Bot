@@ -33,7 +33,7 @@ var apiKey = {
   count:0
 };
 
-function getKey(){
+async function getKey(){
   return new Promise(function(callback){
     const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
     con.query(sql, function (err, result, fields) {
