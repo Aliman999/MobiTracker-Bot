@@ -721,7 +721,7 @@ client.on("ready", () => {
   loopStatus();
 });
 
-function readAttachment(url){
+function readAttachment(message, url){
   const options = {
     hostname: 'cdn.discordapp.com',
     port: 443,
@@ -778,7 +778,7 @@ client.on('message', message => {
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }else if (message.attachments){
     message.attachments.map((currElement, index) => {
-      readAttachment(currElement.url.slice(26));
+      readAttachment(message, currElement.url.slice(26));
     });
   }
   if (!message.content.startsWith(prefix)) return;
