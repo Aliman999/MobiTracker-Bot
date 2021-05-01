@@ -808,7 +808,9 @@ client.on('message', message => {
     client.channels.cache.get("827064226807283722").send("!search "+handle);
   }else if (message.attachments){
     message.attachments.map((currElement, index) => {
-      readAttachment(message, currElement.url.slice(26));
+      if(currElement.url.includes("message.txt")){
+        readAttachment(message, currElement.url.slice(26));
+      }
     });
   }
   if (!message.content.startsWith(prefix)) return;
