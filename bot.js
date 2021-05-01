@@ -737,6 +737,7 @@ client.on('message', message => {
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}
+    console.log(message.content);
     if(args.length > 1){
       console.log(" --- BATCH BEGIN ---");
       for(var i = 0; i < args.length; i++){
