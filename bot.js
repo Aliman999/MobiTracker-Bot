@@ -482,16 +482,18 @@ async function registerUser(message, argz, key){
       var username = JSON.parse(result[0].username);
       var registeredCID = [];
       var failedNames = [];
+      var alreadyLinked = [];
       var ii = 0;
       var tries = 0;
       for(var i = 0; i < argz.length; i++){
         if(username.includes(argz[i])){
-          failedNames.push(argz[i]);
+          alreadyLinked.push(argz[i]);
+          username.splice(username.indexOf(argz[i]), 1);
           argz.splice(i, 1);
         }
       }
       if(argz.length == 0){
-        message.channel.send("Failed: "+failedNames.join(", ")+" (Already Registered)");
+        message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
         return;
       }
       for(var i = 0; i < argz.length; i++){
