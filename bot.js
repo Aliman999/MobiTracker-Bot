@@ -563,9 +563,7 @@ async function registerUser(message, argz){
                     password = password.substring(password.length/2, password.length);
 
                     const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"';";
-                    con.query(sql, function (err, result, fields) {
-                      if(err) throw err;
-                    });
+                    con.query(sql);
 
                   }
                   ii++;
