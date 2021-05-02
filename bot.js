@@ -339,7 +339,9 @@ Array.prototype.remove = function() {
 
 async function registerUser(message, argz, key){
   if(argz.length > 0){
-    linkRSI();
+    await getKey();
+    await linkRSI();
+    await setKey();
   }else{
     firstRegister();
   }
@@ -367,7 +369,7 @@ async function registerUser(message, argz, key){
             const options = {
               hostname: 'api.starcitizen-api.com',
               port: 443,
-              path: '/'+getKey()+'/v1/live/user/'+escape(args[i]),
+              path: '/'+apiKey.key+'/v1/live/user/'+escape(args[i]),
               method: 'GET'
             }
             retry(args[i]);
@@ -381,7 +383,6 @@ async function registerUser(message, argz, key){
                   console.log(err);
                 });
                 res.on('end', function(){
-                  setKey();
                   const user = JSON.parse(d);
                   if(Object.keys(user.data).length > 0){
                     if(user.data.profile.id != "n/a"){
