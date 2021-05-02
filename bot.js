@@ -346,7 +346,9 @@ async function registerUser(message, argz){
     firstRegister();
   }
   async function linkRSI(){
-    const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id.toString();
+    var author = message.author.id.toString();
+    const sql = "SELECT cID, username FROM discord WHERE discID = "+author;
+    console.log(sql);
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result.length == 0){
