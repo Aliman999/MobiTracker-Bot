@@ -139,7 +139,7 @@ async function lookUp(count, message, args, type){
       }
     }
     await getKey();
-    message.channel.send(await queryApi(message, args, type));
+    message.channel.send(await queryApi(message, args[i], type));
     await setKey();
   }
   console.log(" --- BATCH END ---");
