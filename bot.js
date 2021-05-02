@@ -492,6 +492,7 @@ async function registerUser(message, argz, key){
             path: '/'+apiKey.key+'/v1/live/user/'+escape(argz[i]),
             method: 'GET'
           }
+          console.log(options);
           const req = https.request(options, res =>{
             var body = "";
             res.on('data', d =>{
@@ -501,6 +502,7 @@ async function registerUser(message, argz, key){
               console.log(err);
             });
             res.on('end', function(){
+              console.log(options);
               const user = JSON.parse(body);
               if(Object.keys(user.data).length > 0){
                 if(user.data.profile.id != "n/a"){
@@ -585,7 +587,6 @@ async function registerUser(message, argz, key){
           username.push(argz[i]);
         }
       }
-      console.log(username);
     });
   }
 
