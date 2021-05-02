@@ -349,122 +349,118 @@ async function registerUser(message, argz, key){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(result.length > 0){
-        if(result[0].cID){
-          console.log("CID EXISTS");
-        }else{
-          var args = [];
-          for(var y = 0; y < argz.length; y++){
-            args.push(argz[y].toLowerCase());
+        var args = [];
+        for(var y = 0; y < argz.length; y++){
+          args.push(argz[y].toLowerCase());
+        }
+        var args = args.filter((c, index) => {
+          return args.indexOf(c) === index;
+        });
+        console.log(message.author.username+"#"+message.author.discriminator+" requested to Register "+args.join(", "));
+        var registeredNames = [];
+        var registeredCID = [];
+        var failedNames = [];
+        var ii = 0;
+        var tries = 0;
+        for(var i = 0; i < args.length; i++){
+          const options = {
+            hostname: 'api.starcitizen-api.com',
+            port: 443,
+            path: '/'+apiKey.key+'/v1/live/user/'+escape(args[i]),
+            method: 'GET'
           }
-          var args = args.filter((c, index) => {
-            return args.indexOf(c) === index;
-          });
-          console.log(message.author.username+"#"+message.author.discriminator+" requested to Register "+args.join(", "));
-          var registeredNames = [];
-          var registeredCID = [];
-          var failedNames = [];
-          var ii = 0;
-          var tries = 0;
-          for(var i = 0; i < args.length; i++){
-            const options = {
-              hostname: 'api.starcitizen-api.com',
-              port: 443,
-              path: '/'+apiKey.key+'/v1/live/user/'+escape(args[i]),
-              method: 'GET'
-            }
-            retry(args[i]);
-            function retry(name){
-              const req = https.request(options, res =>{
-                var body = "";
-                res.on('data', d =>{
-                  body += d;
-                })
-                res.on('error', err =>{
-                  console.log(err);
-                });
-                res.on('end', function(){
-                  const user = JSON.parse(body);
-                  if(Object.keys(user.data).length > 0){
-                    if(user.data.profile.id != "n/a"){
-                      if(user.data.profile.bio){
-                        const bio = user.data.profile.bio.split(/\s+/);
-                        for(var x = 0; x < bio.length; x++){
-                          var encrypted = bio[x];
-                          try{
-                            var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
-                          }catch{
+          retry(args[i]);
+          function retry(name){
+            const req = https.request(options, res =>{
+              var body = "";
+              res.on('data', d =>{
+                body += d;
+              })
+              res.on('error', err =>{
+                console.log(err);
+              });
+              res.on('end', function(){
+                const user = JSON.parse(body);
+                if(Object.keys(user.data).length > 0){
+                  if(user.data.profile.id != "n/a"){
+                    if(user.data.profile.bio){
+                      const bio = user.data.profile.bio.split(/\s+/);
+                      for(var x = 0; x < bio.length; x++){
+                        var encrypted = bio[x];
+                        try{
+                          var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+                        }catch{
+                        }
+                        if(result == "mt.co"){
+                          if(!registeredNames.includes(user.data.profile.handle)){
+                            registeredNames.push(user.data.profile.handle);
+                            registeredCID.push(user.data.profile.id.substring(1));
                           }
-                          if(result == "mt.co"){
-                            if(!registeredNames.includes(user.data.profile.handle)){
-                              registeredNames.push(user.data.profile.handle);
-                              registeredCID.push(user.data.profile.id.substring(1));
-                            }
-                            x = bio.length
-                          }else{
-                            if(x == bio.length-1){
-                              failedNames.push(user.data.profile.handle);
-                            }
+                          x = bio.length
+                        }else{
+                          if(x == bio.length-1){
+                            failedNames.push(user.data.profile.handle);
                           }
                         }
-                        if(ii == args.length-1){
-                          var rString = "", fString = "", drString = "", dfString = "";
-                          if(registeredNames.length > 0){
-                            rString = " | Registered: "+registeredNames.join(", ");
-                            drString = "Registered: "+registeredNames.join(", ")+" ";
-                          }
-                          if(failedNames.length > 0){
-                            fString = " | Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
-                            dfString = dfString+"Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
-                          }
-                          var finalString = rString+fString;
-                          console.log(message.author.username+"#"+message.author.discriminator+finalString);
-                          if(drString && !dfString){
-                            message.channel.send(drString);
-                          }else if (!drString && drString) {
-                            message.channel.send(dfString);
-                          }else{
-                            message.channel.send(drString+"\n"+dfString);
-                          }
-
-                          var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-                          password = password.substring(password.length/2, password.length);
-
-                          const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"';";
-                          con.query(sql, function (err, result, fields) {
-                            if(err){
-                              console.log(err);
-                            }
-                          });
-
-                        }
-                        ii++;
-                      }else{
-                        message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
-                        console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                       }
+                      if(ii == args.length-1){
+                        var rString = "", fString = "", drString = "", dfString = "";
+                        if(registeredNames.length > 0){
+                          rString = " | Registered: "+registeredNames.join(", ");
+                          drString = "Registered: "+registeredNames.join(", ")+" ";
+                        }
+                        if(failedNames.length > 0){
+                          fString = " | Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
+                          dfString = dfString+"Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
+                        }
+                        var finalString = rString+fString;
+                        console.log(message.author.username+"#"+message.author.discriminator+finalString);
+                        if(drString && !dfString){
+                          message.channel.send(drString);
+                        }else if (!drString && drString) {
+                          message.channel.send(dfString);
+                        }else{
+                          message.channel.send(drString+"\n"+dfString);
+                        }
+
+                        var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
+                        password = password.substring(password.length/2, password.length);
+
+                        const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"';";
+                        con.query(sql, function (err, result, fields) {
+                          if(err){
+                            console.log(err);
+                          }
+                        });
+
+                      }
+                      ii++;
                     }else{
-                      message.channel.send(user.data.profile.handle+" unfortunately doesn't have a Citizen ID. \n\nThis is because:\n1. You don't own a Star Citizen Game Package\n2. Your game package was gifted and you need to add 45(USD) of credit to your account to get a Citizen ID.");
-                      console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
+                      message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
+                      console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                     }
                   }else{
-                    if(tries != 1){
-                      console.log("Failed to find "+name+", retrying.");
-                      tries++;
-                      retry(name);
-                    }else{
-                      args.remove(name);
-                      setTimeout(() => {
-                        message.channel.send("Could not find Citizen: "+name);
-                      }, 3000);
-                    }
+                    message.channel.send(user.data.profile.handle+" unfortunately doesn't have a Citizen ID. \n\nThis is because:\n1. You don't own a Star Citizen Game Package\n2. Your game package was gifted and you need to add 45(USD) of credit to your account to get a Citizen ID.");
+                    console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
                   }
-                });
-              })
-              req.on('error', error => {
-                console.error(error)
+                }else{
+                  if(tries != 1){
+                    console.log("Failed to find "+name+", retrying.");
+                    tries++;
+                    retry(name);
+                  }else{
+                    args.remove(name);
+                    setTimeout(() => {
+                      message.channel.send("Could not find Citizen: "+name);
+                    }, 3000);
+                  }
+                }
               });
-              req.end();
-            }
+            })
+            req.on('error', error => {
+              console.error(error)
+            });
+            req.end();
           }
         }
       }else{
