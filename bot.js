@@ -36,7 +36,7 @@ var apiKey = {
 
 function getKey(){
   return new Promise(function(callback){
-    if(apiKey.updated){
+    while(apiKey.updated){
       apiKey.updated = false;
       const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
       con.query(sql, function (err, result, fields){
@@ -45,9 +45,8 @@ function getKey(){
         apiKey.key = result[0].apiKey;
         apiKey.count = result[0].count;
         callback();
+        break;
       });
-    }else{
-      getKey();
     }
   })
 }
