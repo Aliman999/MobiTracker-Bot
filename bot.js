@@ -146,6 +146,7 @@ async function lookUp(count, message, args, type){
       }
     }
     await getKey();
+    console.log(apiKey);
     await setKey();
   }
   //message.channel.send(await queryApi(message, args, type, result))
