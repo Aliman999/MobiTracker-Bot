@@ -465,7 +465,6 @@ async function registerUser(message, argz, key){
           }
         }
       }else if(result.length > 0){
-        console.log("addRsi");
         addRSI();
       }else{
         firstRegister();
@@ -487,11 +486,13 @@ async function registerUser(message, argz, key){
       var tries = 0;
       for(var i = 0; i < argz.length; i++){
         if(username.includes(argz[i])){
+          failedNames.push(argz[i]);
           argz.splice(i, 1);
         }
       }
       if(argz.length == 0){
-        console.log("Already Registered");
+        message.channel.send("Failed: "+failedNames.join(", ")+" (Already Registered)");
+        return;
       }
       for(var i = 0; i < argz.length; i++){
         const options = {
