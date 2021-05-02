@@ -31,6 +31,7 @@ function getKey(){
     const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
+      con.release();
       apiKey.id = result[0].id;
       apiKey.key = result[0].apiKey;
       apiKey.count = result[0].count;
@@ -45,6 +46,7 @@ function setKey(){
     const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
     con.query(sql, function (err, result, fields){
       if(err) throw err;
+      con.release();
       callback();
     });
   })
@@ -152,6 +154,7 @@ function toggleAlerts(message, args){
     const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
+      con.release();
       if(result.length > 0){
         var string = '';
         if(result[0].paused == 1){
@@ -182,12 +185,14 @@ function toggleAlerts(message, args){
   const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
   con.query(sql, function (err, result, fields) {
     if(err) throw err;
+    con.release();
     if(result.length > 0 && args.length > 0){
       args[0] = args[0].toString().toLowerCase();
       if(args[0] == "off"){
         const sql = "UPDATE discordAlerts SET userPause = 1 WHERE discordUser->'$.id' = '"+message.author.id+"'";
         con.query(sql, function (err, result, fields) {
           if(err) throw err;
+          con.release();
           console.log(message.author.tag+" turned off their alerts");
           message.author.send("Paused Alerts.");
         });
@@ -195,6 +200,7 @@ function toggleAlerts(message, args){
         const sql = "UPDATE discordAlerts SET userPause = 0 WHERE discordUser->'$.id' = '"+message.author.id+"'";
         con.query(sql, function (err, result, fields) {
           if(err) throw err;
+          con.release();
           console.log(message.author.tag+" turned on their alerts");
           message.author.send("Resumed Alerts.");
         });
@@ -217,6 +223,7 @@ function showContracts(message, args){
   var sql = "SELECT id FROM contracts WHERE faction = 0";
   con.query(sql, function (err, result, fields) {
     if(err) throw err;
+    con.release();
     mp = Math.ceil(result.length/pp);
     if(p > mp){
       p = mp;
@@ -229,6 +236,7 @@ function showContracts(message, args){
     var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, escrow->'$.ESCROW' AS escrow, created_at FROM contracts WHERE faction = 0 AND completed = 0 AND markComplete = 0 AND escrow->'$.ACTIVE' = true ORDER BY id DESC "+limit+";";
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
+      con.release();
       var newCreator = [], newPrice = [], newEscrow = [], newDesc = [], spacer, field = [];
       for(var x = 0; x<result.length; x++){
         if(result[x].type == 'R'){
@@ -346,11 +354,11 @@ async function registerUser(message, argz){
     firstRegister();
   }
   async function linkRSI(){
-    var author = message.author.id.toString();
-    const sql = "SELECT cID, username FROM discord WHERE discID = "+author;
-    console.log(sql);
+    const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
+      con.release();
+      console.log(result);
       if(result.length == 0){
         var args = [];
         for(var y = 0; y < argz.length; y++){
@@ -431,9 +439,8 @@ async function registerUser(message, argz){
 
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"';";
                         con.query(sql, function (err, result, fields) {
-                          if(err){
-                            console.log(err);
-                          }
+                          if(err) throw err;
+                          con.release();
                         });
 
                       }
@@ -557,9 +564,8 @@ async function registerUser(message, argz){
 
                     const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"';";
                     con.query(sql, function (err, result, fields) {
-                      if(err){
-                        console.log(err);
-                      }
+                      if(err) throw err;
+                      con.release();
                     });
 
                   }
@@ -598,16 +604,16 @@ async function registerUser(message, argz){
     const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
     const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
-      //console.log(result);
+      con.release();
+      if(err) throw err;
       if(result.length == 0){
         console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
         var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
         password = password.slice(0, password.length/2);
         const sql = "INSERT INTO `discord` (discID) VALUES ("+message.author.id+");";
         con.query(sql, function (err, result, fields) {
-          if(err){
-            console.log(err);
-          }
+          if(err) throw err;
+          con.release();
         });
       }
       if(err){
@@ -656,6 +662,8 @@ function cachePlayer(user){
     sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE username = '"+user.profile.handle+"';";
   }
   con.query(sql, function (err, result, fields) {
+    if(err) throw err;
+    con.release();
     if(Object.size(result) > 0){
       var data = result[result.length-1];
       data.organization = JSON.parse(data.organization);
@@ -698,18 +706,13 @@ function cachePlayer(user){
         }
       });
     }
-    if(err){
-      console.log(err);
-    }
     if(update){
       check.badge = JSON.stringify(check.badge);
       check.organization = JSON.stringify(Object.assign({}, check.organization));
       var eventString = eventUpdate.join(", ");
       const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('"+eventString+"', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"');";
       con.query(sql, function (err, result, fields) {
-        if(err){
-          console.log(err);
-        }
+        if(err) throw err;
       });
     }
   });
@@ -775,6 +778,7 @@ function queryApi(message, args,){
           const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
+            con.release();
             var rating = "";
             if(result.length == 0){
               rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
