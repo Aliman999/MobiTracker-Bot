@@ -475,7 +475,7 @@ async function registerUser(message, argz){
         }
       }else if(result.length > 0){
         console.log(result[0].cID);
-        //addRSI(result);
+        addRSI(result);
       }else{
         firstRegister();
       }
@@ -562,8 +562,8 @@ async function registerUser(message, argz){
                     var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
                     password = password.substring(password.length/2, password.length);
 
-                    const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"';";
-                    con.query(sql);
+                    //const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"';";
+                    //con.query(sql);
 
                   }
                   ii++;
