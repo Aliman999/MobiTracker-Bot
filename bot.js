@@ -480,6 +480,7 @@ async function registerUser(message, argz, key){
     con.query(sql, function (err, result, fields){
       if(err) throw err;
       var username = JSON.parse(result[0].username);
+      console.log("DB Users: "+username);
       var registeredCID = [];
       var failedNames = [];
       var alreadyLinked = [];
@@ -491,9 +492,6 @@ async function registerUser(message, argz, key){
           username.splice(username.indexOf(argz[i]), 1);
           argz.splice(i, 1);
         }
-        console.log("Already Linked: "+alreadyLinked);
-        console.log("Continuing On: "+username);
-        console.log("Arguments: "+argz);
       }
       if(argz.length == 0){
         message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
