@@ -562,8 +562,7 @@ async function registerUser(message, argz){
                     var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
                     password = password.substring(password.length/2, password.length);
 
-                    const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"';";
-                    con.query(sql);
+                    update(JSON.stringify(registeredCID), JSON.stringify(username));
 
                   }
                   ii++;
@@ -619,6 +618,13 @@ async function registerUser(message, argz){
     });
     message.channel.send(registerP1);
   }
+}
+
+function update(cid, user){
+  const sql = "UPDATE discord SET cID = '"+cid+"', username = '"+user+"';";
+  con.query(sql, function(err, result, fields){
+    console.log("Updated");
+  });
 }
 
 function cachePlayer(user){
