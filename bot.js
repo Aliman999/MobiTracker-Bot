@@ -477,6 +477,7 @@ async function registerUser(message, argz, key){
 
   function addRSI(){
     const sql = "SELECT cID, username FROM discord WHERE discID = '"+message.author.id+"'";
+    console.log(sql);
     con.query(sql, function (err, result, fields){
       if(err) throw err;
       console.log(result);
