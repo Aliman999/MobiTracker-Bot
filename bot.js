@@ -491,9 +491,9 @@ async function registerUser(message, argz, key){
           username.splice(username.indexOf(argz[i]), 1);
           argz.splice(i, 1);
         }
-        console.log(alreadyLinked);
-        console.log(username);
-        console.log(argz);
+        console.log("Already Linked: "+alreadyLinked);
+        console.log("Continuing On: "+username);
+        console.log("Arguments: "+argz);
       }
       if(argz.length == 0){
         message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
