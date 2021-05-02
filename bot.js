@@ -465,6 +465,7 @@ async function registerUser(message, argz, key){
           }
         }
       }else if(result.length > 0){
+        console.log("addRsi");
         addRSI();
       }else{
         firstRegister();
