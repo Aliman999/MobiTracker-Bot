@@ -482,11 +482,12 @@ async function registerUser(message, argz, key){
       var username = JSON.parse(result[0].username);
       for(var i = 0; i < username.length; i++){
         for(var y = 0; y < argz.length; y++){
-          if(username[i] == argz[y]){
-            console.log(username[i]+" | "+argz[y]);
+          if(username[i] != argz[y]){
+            username.push(argz[y]);
           }
         }
       }
+      console.log(username);
     });
   }
 
