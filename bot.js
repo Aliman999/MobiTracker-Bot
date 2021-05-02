@@ -837,7 +837,7 @@ client.on('message', async message => {
   	}
     if(args.length > 1){
       console.log(" --- BATCH BEGIN ---");
-      lookUp(args.length, message, args[i]);
+      lookUp(args.length, message, args);
     }else{
       lookUp(args.length, message, args);
     }
