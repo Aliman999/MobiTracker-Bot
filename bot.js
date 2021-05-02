@@ -130,14 +130,11 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(count, message, args, finished = false, type){
+async function lookUp(count, message, args, type){
   var args = args;
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    var finished = false;
-    if(i == args.length-1){
-      finished = true;
-    }
+    
     if(message.author.id != "751252617451143219"){
       if(message.channel.type == "text"){
         console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
@@ -151,9 +148,7 @@ async function lookUp(count, message, args, finished = false, type){
     })
   }
   //message.channel.send(await queryApi(message, args, type, result))
-  if(finished){
-    console.log(" --- BATCH END ---");
-  }
+  console.log(" --- BATCH END ---");
 }
 
 function toggleAlerts(message, args){
