@@ -134,7 +134,7 @@ async function lookUp(count, message, args, type){
   var args = args;
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    
+
     if(message.author.id != "751252617451143219"){
       if(message.channel.type == "text"){
         console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
@@ -142,10 +142,8 @@ async function lookUp(count, message, args, type){
         console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
       }
     }
-    getKey().then(function(){
-      console.log(apiKey);
-      setKey();
-    })
+    await getKey();
+    setKey();
   }
   //message.channel.send(await queryApi(message, args, type, result))
   console.log(" --- BATCH END ---");
