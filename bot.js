@@ -481,7 +481,7 @@ async function registerUser(message, argz, key){
       if(err) throw err;
       for(var i = 0; i < result[0].username.length; i++){
         for(var y = 0; y < argz.length; y++){
-          console.log(result[0].username[i]);
+          console.log(result[0].username);
           console.log(argz[y]);
           if(result[0].username[i] == argz[y]){
           }
