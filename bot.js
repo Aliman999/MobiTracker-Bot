@@ -479,7 +479,7 @@ async function registerUser(message, argz, key){
     for(var i = 0; i < argz.length; i++){
       const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
       con.query(sql, function (err, result, fields){
-        if err throw err;
+        if(err) throw err;
         console.log(result[0]);
         if(result[0].cID){
 
