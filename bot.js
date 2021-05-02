@@ -34,7 +34,7 @@ var apiKey = {
 };
 
 function getKey(){
-  return new Promise(function(callback){
+  return new Promise(callback =>{
     const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
@@ -47,11 +47,14 @@ function getKey(){
 }
 
 function setKey(){
-  apiKey.count--;
-  const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
-  con.query(sql, function (err, result, fields){
-    if(err) throw err;
-  });
+  return new Promise(callback =>{
+    apiKey.count--;
+    const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
+    con.query(sql, function (err, result, fields){
+      if(err) throw err;
+      callback();
+    });
+  })
 }
 
 
@@ -143,7 +146,7 @@ async function lookUp(count, message, args, type){
       }
     }
     await getKey();
-    setKey();
+    await setKey();
   }
   //message.channel.send(await queryApi(message, args, type, result))
   console.log(" --- BATCH END ---");
