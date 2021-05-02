@@ -358,7 +358,6 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
 
-      console.log(result);
       if(result.length == 0){
         var args = [];
         for(var y = 0; y < argz.length; y++){
@@ -474,7 +473,6 @@ async function registerUser(message, argz){
           }
         }
       }else if(result.length > 0){
-        console.log(result[0].cID);
         addRSI(result);
       }else{
         firstRegister();
@@ -483,7 +481,6 @@ async function registerUser(message, argz){
   }
 
   function addRSI(result){
-    console.log(result);
     var username = JSON.parse(result[0].username);
     var registeredCID = [];
     var failedNames = [];
