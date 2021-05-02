@@ -529,10 +529,10 @@ async function registerUser(message, argz){
                   for(var x = 0; x < bio.length; x++){
                     var encrypted = bio[x];
                     try{
-                      var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+                      var crypto = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
                     }catch{
                     }
-                    if(result == "mt.co"){
+                    if(crypto == "mt.co"){
                       if(!username.includes(user.data.profile.handle)){
                         username.push(user.data.profile.handle);
                         registeredCID.push(user.data.profile.id.substring(1));
@@ -565,7 +565,6 @@ async function registerUser(message, argz){
                     const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"';";
                     con.query(sql, function (err, result, fields) {
                       if(err) throw err;
-
                     });
 
                   }
