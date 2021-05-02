@@ -466,7 +466,7 @@ async function registerUser(message, argz, key){
         }
       }else if(result.length > 0){
         console.log(result);
-        if(result[0].length > 0){
+        if(result[0].cID.length > 0){
           addRSI(result);
         }else{
           linkRSI();
