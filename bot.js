@@ -907,7 +907,7 @@ function readAttachment(message, url){
       	}
         if(args.length > 1){
           console.log(" --- BATCH BEGIN ---");
-          lookUp(args.length, message, args[i], finished);
+          lookUp(args.length, message, args);
         }
       }
     })
