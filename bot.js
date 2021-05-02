@@ -337,7 +337,7 @@ Array.prototype.remove = function() {
     return this;
 };
 
-async function registerUser(message, argz, key){
+async function registerUser(message, argz){
   if(argz.length > 0){
     await getKey();
     await linkRSI();
@@ -345,10 +345,9 @@ async function registerUser(message, argz, key){
   }else{
     firstRegister();
   }
-
-  function linkRSI(){
+  async function linkRSI(){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
-    con.query(sql, function (err, result, fields) {
+    await con.query(sql, function (err, result, fields) {
       if(result.length == 0){
         var args = [];
         for(var y = 0; y < argz.length; y++){
@@ -466,11 +465,7 @@ async function registerUser(message, argz, key){
         }
       }else if(result.length > 0){
         console.log(result[0].cID);
-        if(result[0].cID.length > 2){
-          addRSI(result);
-        }else{
-          registerUser(message, argz, key)
-        }
+        addRSI(result);
       }else{
         firstRegister();
       }
