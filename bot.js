@@ -542,10 +542,10 @@ async function registerUser(message, argz, key){
                     if(ii == argz.length-1){
                       var rString = "", fString = "", aString = "";
                       if(username.length > 0){
-                        rString = "Registered: "+username.join(", ");
+                        rString = "Registered: "+username.join(", ")+" ";
                       }
                       if(alreadyLinked.length > 0){
-                        aString = "Already Linked: "+username.join(", ");
+                        aString = "Already Linked: "+username.join(", ")+" ";
                       }
                       if(failedNames.length > 0){
                         fString = "Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
