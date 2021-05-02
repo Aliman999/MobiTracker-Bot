@@ -57,6 +57,7 @@ function setKey(){
   con.query(sql, function (err, result, fields){
     if(err) throw err;
     apiKey.updated = true;
+    console.log("Updated");
   });
 }
 
