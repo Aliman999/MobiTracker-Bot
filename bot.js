@@ -350,6 +350,7 @@ async function registerUser(message, argz, key){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(result.length == 0){
+        console.log("Testing");
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
