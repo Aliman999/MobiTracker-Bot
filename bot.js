@@ -480,7 +480,7 @@ async function registerUser(message, argz, key){
     con.query(sql, function (err, result, fields){
       if(err) throw err;
       var username = JSON.parse(result[0].username);
-      console.log("DB Users: "+username);
+      console.log(sql);
       var registeredCID = [];
       var failedNames = [];
       var alreadyLinked = [];
