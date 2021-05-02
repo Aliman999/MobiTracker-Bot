@@ -808,7 +808,7 @@ function readAttachment(message, url){
   req.end();
 }
 
-client.on('message', message => {
+client.on('message', async message => {
   if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
     var handle = message.content.split("/");
     handle = handle.pop();
@@ -845,7 +845,7 @@ client.on('message', message => {
             console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
           }
         }
-        lookUp(message, args[i], finished);
+        await lookUp(message, args[i], finished);
       }
     }else{
       if(message.author.id != "751252617451143219"){
@@ -856,7 +856,7 @@ client.on('message', message => {
         }
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
-      lookUp(message, args);
+      await lookUp(message, args);
     }
   }
 
