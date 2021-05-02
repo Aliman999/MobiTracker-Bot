@@ -126,7 +126,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(count, message, args, type){
+async function lookUp(count, message, args){
   var args = args;
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
@@ -139,7 +139,7 @@ async function lookUp(count, message, args, type){
       }
     }
     await getKey();
-    message.channel.send(await queryApi(message, args[i], type));
+    message.channel.send(await queryApi(message, args[i]));
     await setKey();
   }
   console.log(" --- BATCH END ---");
@@ -613,13 +613,13 @@ function cachePlayer(user){
   */
 }
 
-function queryApi(message, args, type = 'live'){
+function queryApi(message, args,){
   return new Promise(promiseSearch  =>{
     var embed;
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+apiKey.key+'/v1/'+type+'/user/'+escape(args),
+      path: '/'+apiKey.key+'/v1/live/user/'+escape(args),
       method: 'GET'
     }
     const req = https.request(options, res =>{
@@ -787,7 +787,7 @@ function readAttachment(message, url){
       	}
         if(args.length > 1){
           console.log(" --- BATCH BEGIN ---");
-          lookUp(args.length, message, args[i], finished, "auto");
+          lookUp(args.length, message, args[i], finished);
         }
       }
     })
