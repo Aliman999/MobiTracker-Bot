@@ -45,7 +45,6 @@ function getKey(){
         apiKey.key = result[0].apiKey;
         apiKey.count = result[0].count;
         callback();
-        break;
       });
     }
   })
