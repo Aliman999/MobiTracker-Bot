@@ -480,11 +480,9 @@ async function registerUser(message, argz, key){
     con.query(sql, function (err, result, fields){
       if(err) throw err;
       var username = JSON.parse(result[0].username);
-      for(var i = 0; i < username.length; i++){
-        for(var y = 0; y < argz.length; y++){
-          if(username[i] != argz[y]){
-            username.push(argz[y]);
-          }
+      for(var i = 0; i < argz.length; i++){
+        if(!username.includes(argz[i])){
+          username.push(argz[i]);
         }
       }
       console.log(username);
