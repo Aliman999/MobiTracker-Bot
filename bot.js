@@ -345,10 +345,11 @@ async function registerUser(message, argz, key){
   }else{
     firstRegister();
   }
+
   function linkRSI(){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
-      if(result.length > 0){
+      if(result.length == 0){
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
@@ -463,6 +464,8 @@ async function registerUser(message, argz, key){
             req.end();
           }
         }
+      }else if(result.length > 0){
+        addRSI();
       }else{
         firstRegister();
       }
@@ -470,6 +473,19 @@ async function registerUser(message, argz, key){
         console.log(err);
       }
     });
+  }
+
+  function addRSI(){
+    for(var i = 0; i < argz.length; i++){
+      const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
+      con.query(sql, function (err, result, fields){
+        if err throw err;
+        console.log(result[0]);
+        if(result[0].cID){
+
+        }
+      });
+    }
   }
 
   function firstRegister(){
