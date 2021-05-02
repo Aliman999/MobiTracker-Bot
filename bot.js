@@ -804,7 +804,7 @@ function readAttachment(message, url){
                 console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
               }
             }
-            await lookUp(message, args[i], finished, "auto");
+            lookUp(message, args[i], finished, "auto");
           }
         }
       }
@@ -850,7 +850,7 @@ client.on('message', async message => {
             console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
           }
         }
-        await lookUp(message, args[i], finished);
+        lookUp(message, args[i], finished);
       }
     }else{
       if(message.author.id != "751252617451143219"){
@@ -861,7 +861,7 @@ client.on('message', async message => {
         }
       }
       args = args.toString().replace(/[^\-a-zA-Z0-9]/g, '_');
-      await lookUp(message, args);
+      lookUp(message, args);
     }
   }
 
