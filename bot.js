@@ -540,24 +540,19 @@ async function registerUser(message, argz, key){
                       }
                     }
                     if(ii == argz.length-1){
-                      var rString = "", fString = "", drString = "", dfString = "";
+                      var rString = "", fString = "", aString = "";
                       if(username.length > 0){
-                        rString = " | Registered: "+username.join(", ");
-                        drString = "Registered: "+username.join(", ")+" ";
+                        drString = "Registered: "+username.join(", ");
+                      }
+                      if(alreadyLinked.length > 0){
+                        aString = "Already Linked: "+username.join(", ");
                       }
                       if(failedNames.length > 0){
-                        fString = " | Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
-                        dfString = dfString+"Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
+                        fString = "Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
                       }
-                      var finalString = rString+fString;
-                      console.log(message.author.username+"#"+message.author.discriminator+finalString);
-                      if(drString && !dfString){
-                        message.channel.send(drString);
-                      }else if (!drString && drString) {
-                        message.channel.send(dfString);
-                      }else{
-                        message.channel.send(drString+"\n"+dfString);
-                      }
+                      var finalString = rString+aString+fString;
+                      console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
+                      message.channel.send(finalString);
 
                       var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
                       password = password.substring(password.length/2, password.length);
