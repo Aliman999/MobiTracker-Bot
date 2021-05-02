@@ -30,23 +30,19 @@ const msg = {
 var apiKey = {
   id:0,
   key:"",
-  count:0,
-  updated:true
+  count:0
 };
 
 function getKey(){
   return new Promise(function(callback){
-    while(apiKey.updated){
-      apiKey.updated = false;
-      const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
-      con.query(sql, function (err, result, fields){
-        if(err) throw err;
-        apiKey.id = result[0].id;
-        apiKey.key = result[0].apiKey;
-        apiKey.count = result[0].count;
-        callback();
-      });
-    }
+    const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
+    con.query(sql, function (err, result, fields){
+      if(err) throw err;
+      apiKey.id = result[0].id;
+      apiKey.key = result[0].apiKey;
+      apiKey.count = result[0].count;
+      callback();
+    });
   })
 }
 
@@ -55,7 +51,6 @@ function setKey(){
   const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
   con.query(sql, function (err, result, fields){
     if(err) throw err;
-    apiKey.updated = true;
   });
 }
 
