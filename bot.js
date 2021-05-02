@@ -372,7 +372,6 @@ async function registerUser(message, argz, key){
               path: '/'+apiKey.key+'/v1/live/user/'+escape(args[i]),
               method: 'GET'
             }
-            console.log(args[i]);
             retry(args[i]);
             function retry(name){
               const req = https.request(options, res =>{
@@ -384,7 +383,7 @@ async function registerUser(message, argz, key){
                   console.log(err);
                 });
                 res.on('end', function(){
-                  const user = JSON.parse(d);
+                  const user = JSON.parse(body);
                   if(Object.keys(user.data).length > 0){
                     if(user.data.profile.id != "n/a"){
                       if(user.data.profile.bio){
