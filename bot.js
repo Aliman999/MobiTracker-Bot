@@ -622,7 +622,6 @@ function queryApi(message, args, type = 'live'){
       path: '/'+apiKey.key+'/v1/'+type+'/user/'+escape(args),
       method: 'GET'
     }
-    console.log(options);
     const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
