@@ -31,7 +31,7 @@ function getKey(){
       if(err) throw err;
       apiKey.key = result[0].apiKey;
       var id = result[0].id;
-      const sql = "UPDATE apiKey SET count = count-1 WHERE id = "+id;
+      const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
       con.query(sql, function (err, result, fields){
         if(err) throw err;
 
