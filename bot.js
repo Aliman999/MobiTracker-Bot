@@ -548,7 +548,7 @@ async function registerUser(message, argz, key){
                         rString = "Registered: "+username.join(", ")+" ";
                       }
                       if(alreadyLinked.length > 0){
-                        aString = "Already Linked: "+username.join(", ")+" ";
+                        aString = "Already Linked: "+alreadyLinked.join(", ")+" ";
                       }
                       if(failedNames.length > 0){
                         fString = "Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
