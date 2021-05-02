@@ -490,6 +490,9 @@ async function registerUser(message, argz, key){
           argz.splice(i, 1);
         }
       }
+      if(argz.length == 0;){
+        console.log("Already Registered");
+      }
       for(var i = 0; i < argz.length; i++){
         const options = {
           hostname: 'api.starcitizen-api.com',
