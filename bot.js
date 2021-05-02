@@ -21,33 +21,22 @@ const msg = {
 };
 
 var apiKey = {
-  id:0,
-  key:"",
-  count:0
+  key:""
 };
 
 function getKey(){
   return new Promise(callback =>{
-    const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
+    const sql = "SELECT id, apiKey FROM apiKeys WHERE note like '%main%' GROUP BY apiKey, count ORDER BY count desc LIMIT 1;";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
-
-      apiKey.id = result[0].id;
       apiKey.key = result[0].apiKey;
-      apiKey.count = result[0].count;
-      callback();
-    });
-  })
-}
+      var id = result[0].id;
+      const sql = "UPDATE apiKey SET count = count-1 WHERE id = "+id;
+      con.query(sql, function (err, result, fields){
+        if(err) throw err;
 
-function setKey(){
-  return new Promise(callback =>{
-    apiKey.count--;
-    const sql = "UPDATE apiKeys SET count = "+apiKey.count+" WHERE id = "+apiKey.id;
-    con.query(sql, function (err, result, fields){
-      if(err) throw err;
-
-      callback();
+        callback();
+      })
     });
   })
 }
@@ -142,7 +131,6 @@ async function lookUp(count, message, args){
     }
     await getKey();
     message.channel.send(await queryApi(message, args[i]));
-    await setKey();
   }
   console.log(" --- BATCH END ---");
 }
@@ -349,7 +337,6 @@ async function registerUser(message, argz){
   if(argz.length > 0){
     await getKey();
     await linkRSI();
-    await setKey();
   }else{
     firstRegister();
   }
