@@ -479,8 +479,8 @@ async function registerUser(message, argz, key){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields){
       if(err) throw err;
+      console.log(result);
       var username = JSON.parse(result[0].username);
-      console.log(sql);
       var registeredCID = [];
       var failedNames = [];
       var alreadyLinked = [];
