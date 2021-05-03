@@ -131,8 +131,11 @@ async function lookUp(count, message, args){
     }
     await getKey();
     message.channel.send(await queryApi(message, args[i]));
+
+    if(args.length > 1 && i == args.length-1){
+      console.log(" --- BATCH END ---");
+    }
   }
-  console.log(" --- BATCH END ---");
 }
 
 function toggleAlerts(message, args){
