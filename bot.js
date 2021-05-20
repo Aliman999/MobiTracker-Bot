@@ -818,7 +818,7 @@ function queryApi(message, args,){
           });
         }else{
           var result = "Could not find "+`${args}`;
-          console.log(result);
+          //console.log(result);
           promiseSearch(result);
         }
       })
@@ -887,7 +887,6 @@ function readAttachment(message, url){
       console.error(error)
     })
     res.on('end', async function(){
-      console.log(body);
       if (!body.startsWith(prefix)) return;
       var args = body.slice(prefix.length).trim().split(/\s+/);
       const command = args.shift().toLowerCase();
