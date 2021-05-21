@@ -129,8 +129,8 @@ async function lookUp(count, message, args){
         console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
       }
     }
-    await getKey();
-    message.channel.send(await queryApi(message, args[i]));
+     getKey().then(message.channel.send(queryApi(message, args[i])));
+
 
     if(args.length > 1 && i == args.length-1){
       console.log(" --- BATCH END ---");
@@ -703,23 +703,6 @@ function cachePlayer(user){
       });
     }
   });
-  /*
-  var cID = '';
-  var badge = '';
-
-  var cache = user;
-  if(cache.profile.id != 'n/a'){
-    cID = cache.profile.id.substring(1);
-  }
-  console.log(cache);
-  if(cache.organization.name == ""){
-    cache.organization.name = "REDACTED";
-  }
-  const sql = "INSERT INTO `CACHE players`(`timestamp`, `cID`, `username`, `organization`, `avatar`, ) VALUES (now(), "+cID+", '"+user.profile.username+"', '"++"' )";
-  con.query(sql, function (err, result, fields) {
-
-  }
-  */
 }
 
 function queryApi(message, args,){
