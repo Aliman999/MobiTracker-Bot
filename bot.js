@@ -129,7 +129,10 @@ async function lookUp(count, message, args){
         console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
       }
     }
-     getKey().then(message.channel.send(queryApi(message, args[i])));
+     getKey().then(() => {
+       console.log(apiKey.key);
+       message.channel.send(queryApi(message, args[i]));
+     });
 
 
     if(args.length > 1 && i == args.length-1){
