@@ -708,14 +708,12 @@ function cachePlayer(user){
 function queryApi(message, args,){
   return new Promise(promiseSearch =>{
     var embed;
-    console.log(apiKey.key);
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
       path: '/'+apiKey.key+'/v1/live/user/'+escape(args),
       method: 'GET'
     }
-    console.log(apiKey.key);
     const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
@@ -727,6 +725,7 @@ function queryApi(message, args,){
       res.on('end', function(){
         try{
           var user = JSON.parse(body);
+          console.log(user);
         }catch(err){
           console.log("Failed to parse "+args);
           console.log("");
