@@ -338,8 +338,7 @@ Array.prototype.remove = function() {
 
 async function registerUser(message, argz){
   if(argz.length > 0){
-    await getKey();
-    await linkRSI();
+    getKey().then(linkRSI());
   }else{
     firstRegister();
   }
@@ -706,7 +705,7 @@ function cachePlayer(user){
 }
 
 function queryApi(message, args,){
-  return new Promise(promiseSearch  =>{
+  return new Promise(promiseSearch =>{
     var embed;
     var options = {
       hostname: 'api.starcitizen-api.com',
@@ -725,6 +724,7 @@ function queryApi(message, args,){
       res.on('end', function(){
         try{
           var user = JSON.parse(body);
+          console.log(user);
         }catch(err){
           console.log("Failed to parse "+args);
           console.log("");
