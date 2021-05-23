@@ -130,7 +130,7 @@ async function lookUp(count, message, args){
       }
     }
     await getKey();
-    await message.channel.send(queryApi(message, args[i]))
+    message.channel.send(await queryApi(message, args[i]))
 
 
     if(args.length > 1 && i == args.length-1){
