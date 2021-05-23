@@ -706,7 +706,7 @@ function cachePlayer(user){
   });
 }
 
-function queryApi(message, args,){
+function queryApi(message, args){
   return new Promise(promiseSearch =>{
     var embed;
     var options = {
@@ -721,7 +721,9 @@ function queryApi(message, args,){
         body += d;
       })
       res.on('error', error => {
-        console.error(error)
+        console.error(error);
+        console.log("Encountered an error, Retrying user "+args);
+        queryApi(message, args);
       })
       res.on('end', function(){
         try{
