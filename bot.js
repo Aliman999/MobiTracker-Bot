@@ -707,6 +707,7 @@ function cachePlayer(user){
 function queryApi(message, args,){
   return new Promise(promiseSearch =>{
     var embed;
+    console.log(apiKey.key);
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
