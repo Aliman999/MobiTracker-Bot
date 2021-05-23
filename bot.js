@@ -129,8 +129,7 @@ async function lookUp(count, message, args){
         console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
       }
     }
-    await getKey();
-    await message.channel.send(queryApi(message, args[i]));
+    getKey().then(message.channel.send(queryApi(message, args[i])));
 
 
     if(args.length > 1 && i == args.length-1){
@@ -725,7 +724,6 @@ function queryApi(message, args,){
       res.on('end', function(){
         try{
           var user = JSON.parse(body);
-          console.log(user);
         }catch(err){
           console.log("Failed to parse "+args);
           console.log("");
