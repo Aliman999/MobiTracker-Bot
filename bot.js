@@ -31,10 +31,11 @@ client.on("ready", () => {
   var i = 0;
   const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
 
-    var stats = {};
-    stats.users = client.users.cache.size;
-    stats.channels = client.channels.cache.size;
-    stats.servers = client.guilds.cache.size;
+  var stats = {
+    users: client.users.cache.size,
+    channels: client.channels.cache.size,
+    servers: client.guilds.cache.size
+  };
   saveStats(stats);
   function loopStatus(){
     setTimeout(function(){
