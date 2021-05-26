@@ -80,10 +80,11 @@ schedule.scheduleJob('* 0 * * *', function(){
 });
 
 function saveStats(stats){
-  const sql = "INSERT INTO discordStats (users, channels, servers) VALUES ("+stats.users+", "+stats.channels+", "+stats.servers+");";
-  con.query(sql, function (err, result, fields){
-    if(err) throw err;
-  });
+  console.log(stats);
+  //const sql = "INSERT INTO discordStats (users, channels, servers) VALUES ("+stats.users+", "+stats.channels+", "+stats.servers+");";
+  //con.query(sql, function (err, result, fields){
+  //  if(err) throw err;
+  //});
 }
 
 function socket(){
