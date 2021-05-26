@@ -27,7 +27,6 @@ var apiKey = {
 
 client.on("ready", () => {
   console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
-  saveStats(stats);
   var i = 0;
   const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
 
@@ -80,11 +79,10 @@ schedule.scheduleJob('* 0 * * *', function(){
 });
 
 function saveStats(stats){
-  console.log(stats);
-  //const sql = "INSERT INTO discordStats (users, channels, servers) VALUES ("+stats.users+", "+stats.channels+", "+stats.servers+");";
-  //con.query(sql, function (err, result, fields){
-  //  if(err) throw err;
-  //});
+  const sql = "INSERT INTO discordStats (users, channels, servers) VALUES ("+stats.users+", "+stats.channels+", "+stats.servers+");";
+  con.query(sql, function (err, result, fields){
+    if(err) throw err;
+  });
 }
 
 function socket(){
