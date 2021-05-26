@@ -24,6 +24,39 @@ var apiKey = {
   key:""
 };
 
+client.on("ready", () => {
+  console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
+
+  var stats = {};
+  stats.users = client.users.cache.size;
+  stats.channels = client.channels.cache.size;
+  stats.servers = client.guilds.cache.size;
+  saveStats(stats);
+  var i = 0;
+  const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
+
+  function loopStatus(){
+    setTimeout(function(){
+      client.user.setPresence({
+        status: 'online',
+        activity: {
+            name: list[i],
+            type: "WATCHING"
+        }
+      });
+      i++;
+      if (i < list.length) {
+        loopStatus();
+      }else{
+        i = 0;
+        loopStatus();
+      }
+    }, 10000)
+  }
+
+  loopStatus();
+});
+
 function getKey(){
   return new Promise(callback =>{
     const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
@@ -41,6 +74,20 @@ function getKey(){
   })
 }
 
+function saveStats(stats){
+  const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
+  con.query(sql, function (err, result, fields){
+    if(err) throw err;
+    apiKey.key = result[0].apiKey;
+    var id = result[0].id;
+    const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
+    con.query(sql, function (err, result, fields){
+      if(err) throw err;
+
+      callback();
+    })
+  });
+}
 
 function socket(){
   wsClient.onopen = function(){
@@ -830,32 +877,7 @@ Object.size = function(obj) {
   return size;
 };
 
-client.on("ready", () => {
-  console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
-  var i = 0;
-  const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
 
-  function loopStatus(){
-    setTimeout(function(){
-      client.user.setPresence({
-        status: 'online',
-        activity: {
-            name: list[i],
-            type: "WATCHING"
-        }
-      });
-      i++;
-      if (i < list.length) {
-        loopStatus();
-      }else{
-        i = 0;
-        loopStatus();
-      }
-    }, 10000)
-  }
-
-  loopStatus();
-});
 
 function readAttachment(message, url){
   const options = {
