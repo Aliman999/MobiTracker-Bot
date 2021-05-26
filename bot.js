@@ -10,6 +10,7 @@ const WebSocket = require('ws');
 const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
 const CryptoJS = require('crypto-js');
+const schedule = require('node-schedule');
 require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
@@ -26,11 +27,6 @@ var apiKey = {
 
 client.on("ready", () => {
   console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
-
-  var stats = {};
-  stats.users = client.users.cache.size;
-  stats.channels = client.channels.cache.size;
-  stats.servers = client.guilds.cache.size;
   saveStats(stats);
   var i = 0;
   const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
@@ -74,18 +70,18 @@ function getKey(){
   })
 }
 
+schedule.scheduleJob('* 0 * * *', function(){
+  var stats = {};
+  stats.users = client.users.cache.size;
+  stats.channels = client.channels.cache.size;
+  stats.servers = client.guilds.cache.size;
+});
+saveStats(stats);
+
 function saveStats(stats){
-  const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
+  const sql = "INSERT INTO discordStats (users, channels, servers) VALUES ("+stats.users+", "+stats.channels+", "+stats.servers+");";
   con.query(sql, function (err, result, fields){
     if(err) throw err;
-    apiKey.key = result[0].apiKey;
-    var id = result[0].id;
-    const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
-    con.query(sql, function (err, result, fields){
-      if(err) throw err;
-
-      callback();
-    })
   });
 }
 
