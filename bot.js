@@ -29,13 +29,6 @@ client.on("ready", () => {
   console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
   var i = 0;
   const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
-
-  var stats = {
-    users: client.users.cache.size,
-    channels: client.channels.cache.size,
-    servers: client.guilds.cache.size
-  };
-  saveStats(stats);
   function loopStatus(){
     setTimeout(function(){
       client.user.setPresence({
@@ -76,6 +69,12 @@ function getKey(){
 }
 
 schedule.scheduleJob('* 0 * * *', function(){
+  var stats = {
+    users: client.users.cache.size,
+    channels: client.channels.cache.size,
+    servers: client.guilds.cache.size
+  };
+  saveStats(stats);
 });
 
 function saveStats(stats){
