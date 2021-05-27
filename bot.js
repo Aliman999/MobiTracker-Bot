@@ -787,11 +787,11 @@ function queryApi(message, args){
           }
           var cID = '';
           if(user.data.profile.id != 'n/a'){
-            cID = 'AND cID ='+user.data.profile.id.substring(1);
+            cID = user.data.profile.id.substring(1);
           }else{
             user.data.profile.id = '#No Citizen ID';
           }
-          const sql = "SELECT reviewed_count as rating FROM players WHERE cID = "+user.data.profile.id;
+          const sql = "SELECT reviewed_count as rating FROM players WHERE cID = "+cID;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
 
