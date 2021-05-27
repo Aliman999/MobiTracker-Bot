@@ -178,6 +178,7 @@ async function lookUp(count, message, args){
 
 
     if(args.length > 1 && i == args.length-1){
+      message.channel.send("Errors: "+errors.join(", "));
       console.log(" --- BATCH END ---");
     }
   }
