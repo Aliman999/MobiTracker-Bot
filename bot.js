@@ -850,6 +850,7 @@ function queryApi(message, args){
           });
         }else{
           var result = "Could not find "+`${args}`;
+          errors.push(args);
           //console.log(result);
           promiseSearch(result);
         }
