@@ -162,6 +162,7 @@ function numberWithCommas(x) {
 
 async function lookUp(count, message, args){
   var args = args;
+  var errors = [];
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
 
@@ -772,9 +773,10 @@ function queryApi(message, args){
         try{
           var user = JSON.parse(body);
         }catch(err){
-          console.log("Failed to parse "+args);
-          console.log("");
-          return;
+          errors.push(args);
+          var result = "Encountered an error, User: "+args;
+          console.log(result);
+          promiseSearch(result);
         };
         if(Object.size(user.data) > 0){
           cachePlayer(user.data);
