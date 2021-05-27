@@ -137,6 +137,7 @@ con.getConnection(function(err, connection) {
 });
 
 function affiliations(aff){
+  console.log(aff);
   var display = "";
   if(aff.length > 0){
     for (var i = 0; i < aff.length; i++) {
