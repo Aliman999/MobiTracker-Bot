@@ -337,7 +337,7 @@ function showContracts(message, args){
       }
       p++;
       var embed = new MessageEmbed()
-        .setColor(0x013f4c)
+        .setColor(0x44a4dc)
         .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
         .setTitle('Page '+p+' of '+mp)
         .setFooter('Contracts - Mobitracker.co');
