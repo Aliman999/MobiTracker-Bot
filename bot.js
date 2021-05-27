@@ -791,7 +791,7 @@ function queryApi(message, args){
           }else{
             user.data.profile.id = '#No Citizen ID';
           }
-          const sql = "SELECT reviewed_count as rating FROM players WHERE cID = "+cID;
+          const sql = "SELECT reviewed_count as rating FROM players WHERE cID = "+cID+";";
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
 
@@ -802,7 +802,7 @@ function queryApi(message, args){
               if(result[0].rating == -1){
                 rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
               }else{
-                rating += "("+result[0].rating+")";
+                rating += " ("+result[0].rating+")";
               }
             }
             user.data.profile.enlisted = new Date(user.data.profile.enlisted);
