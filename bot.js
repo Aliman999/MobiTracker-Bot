@@ -791,18 +791,18 @@ function queryApi(message, args){
           }else{
             user.data.profile.id = '#No Citizen ID';
           }
-          const sql = "SELECT avgRating as rating, reviewed_count as count FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;
+          const sql = "SELECT reviewed_count as rating, reviewed_count as count FROM players WHERE cID = "+user.data.profile.id;
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
 
-            var rating = "";
+            var rating = xp(result[0].rating);
             if(result.length == 0){
               rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
             }else{
               if(result[0].rating == -1){
                 rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
               }else{
-                rating = result[0].rating+"/5 "+"("+result[0].count+")";
+                rating += "("+result[0].rating+")";
               }
             }
             user.data.profile.enlisted = new Date(user.data.profile.enlisted);
@@ -815,7 +815,7 @@ function queryApi(message, args){
               .setThumbnail(user.data.profile.image)
               .addFields(
                 { name: 'Badge', value: user.data.profile.badge, inline: true},
-                { name: 'Mobitracker Rating', value: rating, inline: true},
+                { name: 'Mobitracker Vouchers', value: rating, inline: true},
                 { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
                 { name: 'Enlisted', value: user.data.profile.enlisted, inline: true}
                )
@@ -1024,6 +1024,27 @@ client.on('message', async message => {
   */
   if (!message.content.startsWith(`${prefix}`)) return;
 });
+
+
+function xp(rep){
+  rep = parseInt(rep);
+  if(rep < 0){
+    if(rep < -5){
+      return "Dangerous";
+    }else if (rep < 0) {
+      return "Sketchy";
+    }
+  }else{
+    if(rep == 0){
+      return "Newbie";
+    }else if (rep <= 30) {
+      return "Experienced";
+    }else if (rep <= 100) {
+      return "Reliable";
+    }
+  }
+}
+
 //EVENTS
 const program = async () => {
   const instance = new MySQLEvents(con, {
