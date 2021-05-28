@@ -791,7 +791,7 @@ function queryApi(message, args){
           }else{
             user.data.profile.id = '#No Citizen ID';
           }
-          const sql = "SELECT reviewed_count as rating FROM players WHERE username = '"+user.data.profile.handle+"'"+cID;";
+          const sql = "SELECT reviewed_count as rating FROM players WHERE username = '"+user.data.profile.handle+"'"+cID+";";
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
 
