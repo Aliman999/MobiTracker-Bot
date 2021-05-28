@@ -1064,6 +1064,7 @@ const program = async () => {
     onEvent: (event) => {
       if(event.table == 'discordAlerts' && (event.affectedColumns[0] === 'contracts' || event.affectedColumns[0] === 'applicants' || event.affectedColumns[0] === 'reviews' || event.affectedColumns[0] === 'escrow')){
         const alert = event.affectedRows[0].after;
+        console.log(alert);
         const after = alert;
         const before = event.affectedRows[0].before;
         const show = { contracts:JSON.parse(alert.contracts), applications:JSON.parse(alert.applicants), escrow:JSON.parse(alert.escrow), reviews:JSON.parse(alert.reviews) };
@@ -1075,7 +1076,6 @@ const program = async () => {
         const col = event.affectedColumns[0];
         const user = event.affectedRows[0].after.discordUser;
         const id = JSON.parse(user);
-
         var embed = new MessageEmbed()
           .setColor(0x25a6dd)
           .setAuthor(alert.username, 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/'+alert.username)
