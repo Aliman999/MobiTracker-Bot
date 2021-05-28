@@ -795,14 +795,14 @@ function queryApi(message, args){
           con.query(sql, function (err, result, fields) {
             if (err) throw err;
 
-            var rating = xp(result[0].rating);
+            var rating = "";
             if(result.length == 0){
               rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
             }else{
               if(result[0].rating == -1){
                 rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
               }else{
-                rating += " ("+result[0].rating+")";
+                rating = xp(result[0].rating)+" ("+result[0].rating+")";
               }
             }
             user.data.profile.enlisted = new Date(user.data.profile.enlisted);
