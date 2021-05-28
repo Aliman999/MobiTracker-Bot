@@ -139,15 +139,17 @@ con.getConnection(function(err, connection) {
 function affiliations(aff){
   console.log(aff);
   var display = "";
-  if(aff.length > 0){
-    for (var i = 0; i < aff.length; i++) {
-      if(!aff[i].name){
-        display = display+"REDACTED"+'\n';
-      }else{
-        display = display+aff[i].rank+' ['+aff[i].stars+']'+' in '+'['+aff[i].name+']'+'(https://robertsspaceindustries.com/orgs/'+aff[i].sid+')'+'\n';
+  if(aff){
+    if(aff.length > 0){
+      for (var i = 0; i < aff.length; i++) {
+        if(!aff[i].name){
+          display = display+"REDACTED"+'\n';
+        }else{
+          display = display+aff[i].rank+' ['+aff[i].stars+']'+' in '+'['+aff[i].name+']'+'(https://robertsspaceindustries.com/orgs/'+aff[i].sid+')'+'\n';
+        }
       }
+      return display;
     }
-    return display;
   }else{
     return "None";
   }
