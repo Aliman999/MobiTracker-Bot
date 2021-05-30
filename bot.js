@@ -68,7 +68,7 @@ function getKey(){
   })
 }
 
-schedule.scheduleJob('* 0 * * *', function(){
+schedule.scheduleJob('* * 0 * *', function(){
   var stats = {
     users: client.users.cache.size,
     channels: client.channels.cache.size,
