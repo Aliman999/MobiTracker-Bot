@@ -181,13 +181,12 @@ async function lookUp(count, message, args){
         console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
       }
     }
-    const user = args[i];
+
     await getKey();
-    limiter.schedule(user =>{
-      queryApi(user).then((result)=>{
-        message.channel.send(result);
-      });
-    });
+    const query = function(arg){
+      message.channel.send(await queryApi(args[i]));
+    }
+    limiter.schedule(query, args[i]);
 
 
     if(args.length > 1 && i == args.length-1){
