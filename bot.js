@@ -776,11 +776,13 @@ function queryApi(args, apiKey){
       res.on('error', error => {
         console.error(error);
         console.log("Encountered an error, Retrying user "+args);
-        queryApi(args, key);
       })
       res.on('end', function(){
         try{
           var user = JSON.parse(body);
+          if(user.data == null){
+            queryApi(args, apiKey);
+          }
           console.log(user);
         }catch(err){
           var result = "Encountered an error, User: "+args;
