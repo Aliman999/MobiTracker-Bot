@@ -187,7 +187,8 @@ async function lookUp(count, message, args){
       console.log(arg+" | "+key);
       message.channel.send(await queryApi(arg, key));
     }
-    limiter.submit(query, args[i], keys[i]);
+    console.log(keys[i]);
+    //limiter.submit(query, args[i], keys[i]);
   }
 }
 
