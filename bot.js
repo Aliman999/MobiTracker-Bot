@@ -179,12 +179,12 @@ async function lookUp(count, message, args){
           }
         }
         message.channel.send(await queryApi(arg, key0));
+        if(args.length > 1 && i == args.length-1){
+          console.log(" --- BATCH END ---");
+        }
       }
       limiter.schedule(query, args[i], key);
 
-      if(args.length > 1 && i == args.length-1){
-        console.log(" --- BATCH END ---");
-      }
     });
 
 
