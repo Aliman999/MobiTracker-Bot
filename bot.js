@@ -392,7 +392,7 @@ Array.prototype.remove = function() {
 async function registerUser(message, argz){
   if(argz.length > 0){
     await getKey().then((key) => {
-      await linkRSI(key);
+      linkRSI(key);
     });
   }else{
     firstRegister();
