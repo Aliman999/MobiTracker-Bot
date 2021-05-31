@@ -170,25 +170,26 @@ function numberWithCommas(x) {
 async function lookUp(count, message, args){
   var args = args;
   var msg = await message.channel.send("Preparing Queries");
-  var key = getKey(args.length);
-  msg.edit("Finished");
-  for(var i = 0; i < args.length; i++){
-    args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    const query = async function(arg, key){
-      /*
-      if(message.author.id != "751252617451143219"){
-        if(message.channel.type == "text"){
-          console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in the '+message.guild.name+' server');
-        }else{
-          console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in '+message.channel.type+'s');
+  await getKey(args.length).then((key) => {
+    msg.edit("Finished");
+    for(var i = 0; i < args.length; i++){
+      args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
+      const query = async function(arg, key){
+        /*
+        if(message.author.id != "751252617451143219"){
+          if(message.channel.type == "text"){
+            console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in the '+message.guild.name+' server');
+          }else{
+            console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in '+message.channel.type+'s');
+          }
         }
+        */
+        console.log(arg+" | "+key);
+        message.channel.send(await queryApi(arg, key));
       }
-      */
-      console.log(arg+" | "+key);
-      message.channel.send(await queryApi(arg, key));
+      limiter.submit(query, args[i], key[i]);
     }
-    limiter.submit(query, args[i], key[i]);
-  }
+  });
 }
 
 function toggleAlerts(message, args){
