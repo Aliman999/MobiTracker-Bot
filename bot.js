@@ -183,7 +183,9 @@ async function lookUp(count, message, args){
     }
     await getKey();
     limiter.schedule(()=>{
-      queryApi(message, args[i]);
+      queryApi(message, args[i]).then(()=>{
+        message.channel.send(result);
+      });
     });
 
 
