@@ -183,7 +183,7 @@ async function lookUp(count, message, args){
     }
 
     await getKey();
-    limiter.schedule(()=>{
+    limiter.schedule(args[i] =>{
       queryApi(args[i]).then((result)=>{
         message.channel.send(result);
       });
@@ -763,7 +763,7 @@ function cachePlayer(user){
   });
 }
 
-function queryApi(message, args){
+function queryApi(args){
   return new Promise(promiseSearch =>{
     var embed;
     var options = {
@@ -780,7 +780,7 @@ function queryApi(message, args){
       res.on('error', error => {
         console.error(error);
         console.log("Encountered an error, Retrying user "+args);
-        queryApi(message, args);
+        queryApi(args);
       })
       res.on('end', function(){
         try{
