@@ -169,28 +169,25 @@ async function lookUp(count, message, args){
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
 
-    /*
-    if(message.author.id != "751252617451143219"){
-      if(message.channel.type == "text"){
-        console.log(message.author.username+'#'+message.author.discriminator+' requested '+args[i]+' in the '+message.guild.name+' server');
-      }else{
-        console.log(message.author.username+'#'+message.author.discriminator+' requested '+args[i]+' in '+message.channel.type+'s');
-      }
-    }
-    */
-
     await getKey().then((key) => {
       const query = async function(arg, key0){
-        console.log("Searching for "+arg+" using key: "+key0);
+        if(message.author.id != "751252617451143219"){
+          if(message.channel.type == "text"){
+            console.log(message.author.username+'#'+message.author.discriminator+' requested '+args[i]+' in the '+message.guild.name+' server');
+          }else{
+            console.log(message.author.username+'#'+message.author.discriminator+' requested '+args[i]+' in '+message.channel.type+'s');
+          }
+        }
         message.channel.send(await queryApi(arg, key0));
       }
       limiter.schedule(query, args[i], key);
+
+      if(args.length > 1 && i == args.length-1){
+        console.log(" --- BATCH END ---");
+      }
     });
 
 
-    if(args.length > 1 && i == args.length-1){
-      console.log(" --- BATCH END ---");
-    }
   }
 }
 
