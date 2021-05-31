@@ -65,11 +65,11 @@ function getKey(i = 0){
         const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
         con.query(sql, function (err, result, fields){
           if(err) throw err;
+          if(apiKey.length == i){
+            callback(apiKey);
+          }
         })
       });
-      if(x == (i-1)){
-        callback(apiKey);
-      }
     }
   })
 }
