@@ -180,11 +180,11 @@ async function lookUp(count, message, args){
     */
 
     await getKey().then((key) => {
-      const query = async function(arg, key){
-        message.channel.send(await queryApi(arg, key));
+      const query = async function(arg, key0){
+        console.log("Searching for "+arg+" using key: "+key0);
+        message.channel.send(await queryApi(arg, key0));
       }
-      console.log("Using key "+key);
-      limiter.schedule(query, args[i], key);
+      //limiter.schedule(query, args[i], key);
     });
 
 
