@@ -175,9 +175,9 @@ async function lookUp(count, message, args){
 
     if(message.author.id != "751252617451143219"){
       if(message.channel.type == "text"){
-        console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
+        console.log(message.author.username+'#'+message.author.discriminator+' requested '+args[i]+' in the '+message.guild.name+' server');
       }else{
-        console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
+        console.log(message.author.username+'#'+message.author.discriminator+' requested '+args[i]+' in '+message.channel.type+'s');
       }
     }
 
