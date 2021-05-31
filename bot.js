@@ -15,10 +15,11 @@ const schedule = require('node-schedule');
 require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
-const limiter = new Bottleneck({
+const jobs = new Bottleneck({
   maxConcurrent: 1,
   minTime: 333
 });
+const queue = new Bottleneck();
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
@@ -187,7 +188,7 @@ async function lookUp(count, message, args){
   }
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    query(args[i], keys[i]);
+    jobs.schedule(query, args[i], keys[i]);
   }
 }
 
@@ -911,7 +912,7 @@ function readAttachment(message, url){
       	}
         if(args.length > 1){
           console.log(message.author.username+" started request for "+args.length+" searches.");
-          limiter.schedule(lookUp, args.length, message, args);
+          queue.schedule(lookUp, args.length, message, args);
         }
       }
     })
@@ -943,7 +944,7 @@ client.on('message', async message => {
   	}
     if(args.length > 1){
       console.log(message.author.username+" started request for "+args.length+" searches.");
-      limiter.schedule(lookUp, args.length, message, args);
+      queue.schedule(lookUp, args.length, message, args);
     }else{
       lookUp(args.length, message, args);
     }
