@@ -166,16 +166,14 @@ function numberWithCommas(x) {
 
 async function lookUp(count, message, args){
   var args = args;
-  var msg = await message.channel.send("Preparing Queries");
+  var msg = await message.channel.send("Preparing your request");
   var keys = [];
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then((key) => {
       keys.push(key);
     });
   }
-  msg.edit("Finished");
-  console.log(keys);
-  /*
+  msg.edit("Ready to execute.");
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
     const query = async function(arg, key){
@@ -189,9 +187,8 @@ async function lookUp(count, message, args){
       console.log(arg+" | "+key);
       message.channel.send(await queryApi(arg, key));
     }
-    limiter.submit(query, args[i], key[i]);
+    limiter.submit(query, args[i], keys[i]);
   }
-  */
 }
 
 function toggleAlerts(message, args){
