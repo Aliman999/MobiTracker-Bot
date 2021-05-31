@@ -174,7 +174,8 @@ async function lookUp(count, message, args){
   msg.edit("Finished");
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    const query = async function(arg, key0){
+    const query = async function(arg, key){
+      /*
       if(message.author.id != "751252617451143219"){
         if(message.channel.type == "text"){
           console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in the '+message.guild.name+' server');
@@ -182,9 +183,10 @@ async function lookUp(count, message, args){
           console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in '+message.channel.type+'s');
         }
       }
-      message.channel.send(await queryApi(arg, key0));
+      */
+      message.channel.send(await queryApi(arg, key));
     }
-    limiter.submit(query, args[i], key);
+    limiter.submit(query, args[i], key[i]);
   }
 }
 
@@ -756,16 +758,15 @@ function cachePlayer(user){
   });
 }
 
-function queryApi(args, key0){
+function queryApi(args, key){
   return new Promise(promiseSearch =>{
     var embed;
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+key0+'/v1/auto/user/'+escape(args),
+      path: '/'+key+'/v1/auto/user/'+escape(args),
       method: 'GET'
     }
-    console.log(options);
     const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
