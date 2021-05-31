@@ -59,6 +59,7 @@ function getKey(i = 0){
       const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
       con.query(sql, function (err, result, fields){
         if(err) throw err;
+        console.log(result[0].apiKey);
         apiKey.push(result[0].apiKey);
         var id = result[0].id;
         const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
@@ -66,7 +67,6 @@ function getKey(i = 0){
           if(err) throw err;
         })
       });
-      console.log(x+" | "+(i-1));
       if(x == (i-1)){
         callback(apiKey);
       }
