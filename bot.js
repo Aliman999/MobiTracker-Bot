@@ -768,7 +768,7 @@ function queryApi(args){
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+apiKey.key+'/v1/cache/user/'+escape(args),
+      path: '/'+apiKey.key+'/v1/auto/user/'+escape(args),
       method: 'GET'
     }
     console.log(options);
