@@ -756,13 +756,13 @@ function cachePlayer(user){
   });
 }
 
-function queryApi(args, key){
+function queryApi(args, key0){
   return new Promise(promiseSearch =>{
     var embed;
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+key+'/v1/auto/user/'+escape(args),
+      path: '/'+key0+'/v1/auto/user/'+escape(args),
       method: 'GET'
     }
     console.log(options);
