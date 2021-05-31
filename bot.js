@@ -1,19 +1,24 @@
 'use strict';
-const { Client, MessageEmbed } = require('discord.js');
-const config  = require('./config');
 const prefix = '!';
+const config  = require('./config');
+const { Client, MessageEmbed } = require('discord.js');
+const WebSocket = require('ws');
+const CryptoJS = require('crypto-js');
+const Bottleneck = require('bottleneck');
 const MySQLEvents = require('@rodrigogs/mysql-events');
 const fs = require('fs');
 const https = require('https');
 const mysql = require('mysql');
-const WebSocket = require('ws');
 const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
-const CryptoJS = require('crypto-js');
 const schedule = require('node-schedule');
 require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
+const limiter = new Bottleneck({
+  maxConcurrent: 1,
+  minTime: 333
+});
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
@@ -177,7 +182,8 @@ async function lookUp(count, message, args){
       }
     }
     await getKey();
-    message.channel.send(await queryApi(message, args[i]))
+    limiter.schedule(message.channel.send(queryApi()), message, args[i]);
+
 
 
     if(args.length > 1 && i == args.length-1){
