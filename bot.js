@@ -181,10 +181,10 @@ async function lookUp(count, message, args){
         console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
       }
     }
-
+    const user = args[i];
     await getKey();
-    limiter.schedule(args[i] =>{
-      queryApi(args[i]).then((result)=>{
+    limiter.schedule(user =>{
+      queryApi(user).then((result)=>{
         message.channel.send(result);
       });
     });
