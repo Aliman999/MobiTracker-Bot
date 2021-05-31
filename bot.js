@@ -170,7 +170,7 @@ function numberWithCommas(x) {
 async function lookUp(count, message, args){
   var args = args;
   var msg = await message.channel.send("Preparing Queries");
-  var key = await getKey(args.length);
+  var key = getKey(args.length);
   msg.edit("Finished");
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
