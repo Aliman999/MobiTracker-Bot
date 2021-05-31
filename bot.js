@@ -187,7 +187,7 @@ async function lookUp(count, message, args){
   }
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    limiter.schedule(query, args[i], keys[i]);
+    query(args[i], keys[i]);
   }
 }
 
@@ -910,8 +910,8 @@ function readAttachment(message, url){
       		return message.channel.send(`You didnt provide a username.`);
       	}
         if(args.length > 1){
-          console.log(" --- BATCH BEGIN ---");
-          lookUp(args.length, message, args);
+          console.log(message.author.username+" started request for "+args.length+" searches.");
+          limiter.schedule(lookup, args.length, message, args);
         }
       }
     })
@@ -942,8 +942,8 @@ client.on('message', async message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}
     if(args.length > 1){
-      console.log(" --- BATCH BEGIN ---");
-      lookUp(args.length, message, args);
+      console.log(message.author.username+" started request for "+args.length+" searches.");
+      limiter.schedule(lookup, args.length, message, args);
     }else{
       lookUp(args.length, message, args);
     }
