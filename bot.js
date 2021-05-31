@@ -21,6 +21,10 @@ const jobs = new Bottleneck({
 });
 const queue = new Bottleneck();
 
+queue.on('scheduled', function(info){
+  console.log(info);
+});
+
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
   type:"bot",
