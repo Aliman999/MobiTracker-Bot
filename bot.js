@@ -26,10 +26,6 @@ const msg = {
   token: botToken
 };
 
-var apiKey = {
-  key:""
-};
-
 client.on("ready", () => {
   console.log(`MobiTracker Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels over ${client.guilds.cache.size} servers.`);
   var i = 0;
