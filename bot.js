@@ -183,8 +183,8 @@ async function lookUp(count, message, args){
     }
 
     await getKey();
-    const query = function(arg){
-      message.channel.send(queryApi(arg));
+    const query = async function(arg){
+      message.channel.send(await queryApi(arg));
     }
     limiter.schedule(query, args[i]);
 
