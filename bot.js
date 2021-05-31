@@ -58,16 +58,16 @@ client.on("ready", () => {
 
 function getKey(){
   return new Promise(callback =>{
+    var apiKey;
     const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
-      apiKey.key = result[0].apiKey;
+      apiKey = result[0].apiKey;
       var id = result[0].id;
       const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
       con.query(sql, function (err, result, fields){
         if(err) throw err;
-
-        callback();
+        callback(apiKey);
       })
     });
   })
@@ -181,11 +181,12 @@ async function lookUp(count, message, args){
       }
     }
 
-    await getKey();
-    const query = async function(arg){
-      message.channel.send(await queryApi(arg));
-    }
-    limiter.schedule(query, args[i]);
+    await getKey().then((key) => {
+      const query = async function(arg){
+        message.channel.send(await queryApi(arg));
+      }
+      limiter.schedule(query, args[i], key);
+    });
 
 
     if(args.length > 1 && i == args.length-1){
@@ -394,12 +395,13 @@ Array.prototype.remove = function() {
 
 async function registerUser(message, argz){
   if(argz.length > 0){
-    await getKey();
-    await linkRSI();
+    await getKey().then((key) => {
+      await linkRSI(key);
+    });
   }else{
     firstRegister();
   }
-  async function linkRSI(){
+  async function linkRSI(key){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
@@ -422,7 +424,7 @@ async function registerUser(message, argz){
           const options = {
             hostname: 'api.starcitizen-api.com',
             port: 443,
-            path: '/'+apiKey.key+'/v1/live/user/'+escape(args[i]),
+            path: '/'+key+'/v1/live/user/'+escape(args[i]),
             method: 'GET'
           }
           retry(args[i]);
@@ -519,14 +521,14 @@ async function registerUser(message, argz){
           }
         }
       }else if(result.length > 0){
-        addRSI(result);
+        addRSI(result, key);
       }else{
         firstRegister();
       }
     });
   }
 
-  function addRSI(result){
+  function addRSI(result, key){
     var username = JSON.parse(result[0].username);
     var registeredCID = [];
     var failedNames = [];
@@ -548,7 +550,7 @@ async function registerUser(message, argz){
       const options = {
         hostname: 'api.starcitizen-api.com',
         port: 443,
-        path: '/'+apiKey.key+'/v1/live/user/'+escape(argz[i]),
+        path: '/'+key+'/v1/live/user/'+escape(argz[i]),
         method: 'GET'
       }
       console.log(options);
