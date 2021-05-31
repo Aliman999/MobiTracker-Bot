@@ -165,16 +165,17 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(count, message, args){
+async function lookUp(count, message, args, msg){
   var args = args;
-  var msg = await message.channel.send("Preparing your request");
   var keys = [];
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then((key) => {
       keys.push(key);
     });
   }
-  msg.edit("Ready to execute.");
+  if(msg){
+    msg.edit("Ready to execute.");
+  }
   const query = async function(arg, key){
     if(message.author.id != "751252617451143219"){
       if(message.channel.type == "text"){
@@ -911,7 +912,8 @@ function readAttachment(message, url){
       	}
         if(args.length > 1){
           console.log(message.author.username+" started request for "+args.length+" searches.");
-          queue.schedule(lookUp, args.length, message, args);
+          var msg = await message.channel.send("Preparing your request");
+          queue.schedule(lookUp, args.length, message, args, msg);
         }
       }
     })
@@ -943,7 +945,8 @@ client.on('message', async message => {
   	}
     if(args.length > 1){
       console.log(message.author.username+" started request for "+args.length+" searches.");
-      queue.schedule(lookUp, args.length, message, args);
+      var msg = await message.channel.send("Preparing your request");
+      queue.schedule(lookUp, args.length, message, args, msg);
     }else{
       lookUp(args.length, message, args);
     }
