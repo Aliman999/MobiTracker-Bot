@@ -17,7 +17,7 @@ var jwt = require('jsonwebtoken');
 var discordClients = [];
 const limiter = new Bottleneck({
   maxConcurrent: 1,
-  minTime: 333
+  minTime: 500
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
