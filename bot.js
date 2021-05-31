@@ -184,7 +184,7 @@ async function lookUp(count, message, args){
 
     await getKey();
     limiter.schedule(()=>{
-      message.channel.send(result);
+      message.channel.send(args[i]);
       //queryApi(message, args[i]).then((result)=>{
       //  message.channel.send(result);
       //});
@@ -770,7 +770,7 @@ function queryApi(message, args){
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+apiKey.key+'/v1/live/user/'+escape(args),
+      path: '/'+apiKey.key+'/v1/cache/user/'+escape(args),
       method: 'GET'
     }
     const req = https.request(options, res =>{
@@ -858,7 +858,6 @@ function queryApi(message, args){
               { name: 'Main Organization', value: user.data.organization.name },
               { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
             );
-            //message.channel.send(embed);
             promiseSearch(embed);
           });
         }else{
