@@ -172,11 +172,12 @@ async function lookUp(count, message, args){
   var args = args;
   var msg = await message.channel.send("Preparing Queries");
   await getKey(args.length).then((key) => {
+    console.log(key);
+    /*
     msg.edit("Finished");
     for(var i = 0; i < args.length; i++){
       args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
       const query = async function(arg, key){
-        /*
         if(message.author.id != "751252617451143219"){
           if(message.channel.type == "text"){
             console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in the '+message.guild.name+' server');
@@ -184,12 +185,12 @@ async function lookUp(count, message, args){
             console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in '+message.channel.type+'s');
           }
         }
-        */
         console.log(arg+" | "+key);
         message.channel.send(await queryApi(arg, key));
       }
       limiter.submit(query, args[i], key[i]);
     }
+    */
   });
 }
 
