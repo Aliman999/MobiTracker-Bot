@@ -911,7 +911,7 @@ function readAttachment(message, url){
       	}
         if(args.length > 1){
           console.log(message.author.username+" started request for "+args.length+" searches.");
-          limiter.schedule(lookup, args.length, message, args);
+          limiter.schedule(lookUp, args.length, message, args);
         }
       }
     })
@@ -943,7 +943,7 @@ client.on('message', async message => {
   	}
     if(args.length > 1){
       console.log(message.author.username+" started request for "+args.length+" searches.");
-      limiter.schedule(lookup, args.length, message, args);
+      limiter.schedule(lookUp, args.length, message, args);
     }else{
       lookUp(args.length, message, args);
     }
