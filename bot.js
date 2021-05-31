@@ -178,12 +178,11 @@ async function lookUp(count, message, args){
   const query = async function(arg, key){
     if(message.author.id != "751252617451143219"){
       if(message.channel.type == "text"){
-        console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in the '+message.guild.name+' server');
+        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+arg+' in the '+message.guild.name+' server');
       }else{
-        console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in '+message.channel.type+'s');
+        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+arg+' in '+message.channel.type+'s');
       }
     }
-    console.log(arg+" | "+key);
     message.channel.send(await queryApi(arg, key));
   }
   for(var i = 0; i < args.length; i++){
