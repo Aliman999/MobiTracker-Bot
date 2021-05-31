@@ -66,9 +66,10 @@ function getKey(i = 0){
           if(err) throw err;
         })
       });
+      if(x == i-1){
+        callback(apiKey);
+      }
     }
-    console.log(apiKey);
-    callback(apiKey);
   })
 }
 
