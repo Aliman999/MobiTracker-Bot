@@ -187,7 +187,7 @@ async function lookUp(count, message, args){
   }
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    limiter.submit(query, args[i], keys[i]);
+    limiter.schedule(query, args[i], keys[i]);
   }
 }
 
