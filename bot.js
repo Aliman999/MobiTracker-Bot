@@ -781,6 +781,7 @@ function queryApi(args, apiKey){
       res.on('end', function(){
         try{
           var user = JSON.parse(body);
+          console.log(user);
         }catch(err){
           var result = "Encountered an error, User: "+args;
           console.log(result);
