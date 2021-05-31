@@ -169,7 +169,7 @@ async function lookUp(count, message, args){
   var msg = await message.channel.send("Preparing your request");
   var keys = [];
   for(var i = 0; i < args.length; i++){
-    getKey(args.length).then((key) => {
+    await getKey(args.length).then((key) => {
       keys.push(key);
     });
   }
