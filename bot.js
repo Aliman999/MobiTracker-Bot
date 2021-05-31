@@ -52,20 +52,23 @@ client.on("ready", () => {
   loopStatus();
 });
 
-function getKey(){
+function getKey(i = 0){
   return new Promise(callback =>{
-    var apiKey;
-    const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
-    con.query(sql, function (err, result, fields){
-      if(err) throw err;
-      apiKey = result[0].apiKey;
-      var id = result[0].id;
-      const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
+    var apiKey = [];
+    for(var x = 0; x < i; x++){
+      const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
       con.query(sql, function (err, result, fields){
         if(err) throw err;
-        callback(apiKey);
-      })
-    });
+        apiKey.push(result[0].apiKey);
+        var id = result[0].id;
+        const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
+        con.query(sql, function (err, result, fields){
+          if(err) throw err;
+        })
+      });
+    }
+    console.log(apiKey);
+    callback(apiKey);
   })
 }
 
@@ -166,28 +169,25 @@ function numberWithCommas(x) {
 
 async function lookUp(count, message, args){
   var args = args;
+  var msg = await message.channel.send("Preparing Queries");
+  var key = await getKey(args.length);
+  msg.edit("Finished");
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-
-    await getKey().then((key) => {
-      const query = async function(arg, key0){
-        if(message.author.id != "751252617451143219"){
-          if(message.channel.type == "text"){
-            console.log(message.author.username+'#'+message.author.discriminator+' requested '+args[i]+' in the '+message.guild.name+' server');
-          }else{
-            console.log(message.author.username+'#'+message.author.discriminator+' requested '+args[i]+' in '+message.channel.type+'s');
-          }
-        }
-        message.channel.send(await queryApi(arg, key0));
-        if(args.length > 1 && i == args.length-1){
-          console.log(" --- BATCH END ---");
+    const query = async function(arg, key0){
+      if(message.author.id != "751252617451143219"){
+        if(message.channel.type == "text"){
+          console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in the '+message.guild.name+' server');
+        }else{
+          console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in '+message.channel.type+'s');
         }
       }
-      limiter.schedule(query, args[i], key);
-
-    });
-
-
+      message.channel.send(await queryApi(arg, key0));
+      if(args.length > 1 && i == args.length-1){
+        console.log(" --- BATCH END ---");
+      }
+    }
+    limiter.submit(query, args[i], key);
   }
 }
 
