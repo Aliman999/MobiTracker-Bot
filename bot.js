@@ -142,7 +142,6 @@ con.getConnection(function(err, connection) {
 });
 
 function affiliations(aff){
-  console.log(aff);
   var display = "";
   if(aff != null){
     if(aff.length > 0){
@@ -771,7 +770,6 @@ function queryApi(args){
       path: '/'+apiKey.key+'/v1/auto/user/'+escape(args),
       method: 'GET'
     }
-    console.log(options);
     const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
@@ -785,7 +783,6 @@ function queryApi(args){
       res.on('end', function(){
         try{
           var user = JSON.parse(body);
-          console.log(user);
         }catch(err){
           var result = "Encountered an error, User: "+args;
           console.log(result);
