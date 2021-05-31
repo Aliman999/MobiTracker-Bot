@@ -174,17 +174,17 @@ async function lookUp(count, message, args){
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
 
+    if(message.author.id != "751252617451143219"){
+      if(message.channel.type == "text"){
+        console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
+      }else{
+        console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
+      }
+    }
 
     await getKey();
     limiter.schedule(()=>{
       queryApi(message, args[i]).then((result)=>{
-        if(message.author.id != "751252617451143219"){
-          if(message.channel.type == "text"){
-            console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in the '+message.guild.name+' server');
-          }else{
-            console.log(message.author.username+'#'+message.author.discriminator+' Looked up '+args[i]+' in '+message.channel.type+'s');
-          }
-        }
         message.channel.send(result);
       });
     });
