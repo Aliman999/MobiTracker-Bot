@@ -184,6 +184,7 @@ async function lookUp(count, message, args){
         }
       }
       */
+      console.log(arg+" | "+key);
       message.channel.send(await queryApi(arg, key));
     }
     limiter.submit(query, args[i], key[i]);
@@ -758,13 +759,13 @@ function cachePlayer(user){
   });
 }
 
-function queryApi(args, key){
+function queryApi(args, apiKey){
   return new Promise(promiseSearch =>{
     var embed;
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+key+'/v1/auto/user/'+escape(args),
+      path: '/'+apiKey+'/v1/auto/user/'+escape(args),
       method: 'GET'
     }
     const req = https.request(options, res =>{
