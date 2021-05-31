@@ -184,7 +184,7 @@ async function lookUp(count, message, args){
         console.log("Searching for "+arg+" using key: "+key0);
         message.channel.send(await queryApi(arg, key0));
       }
-      //limiter.schedule(query, args[i], key);
+      limiter.schedule(query, args[i], key);
     });
 
 
