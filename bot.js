@@ -178,8 +178,8 @@ async function lookUp(count, message, args){
     }
 
     await getKey().then((key) => {
-      const query = async function(arg){
-        message.channel.send(await queryApi(arg));
+      const query = async function(arg, key){
+        message.channel.send(await queryApi(arg, key));
       }
       limiter.schedule(query, args[i], key);
     });
@@ -759,13 +759,13 @@ function cachePlayer(user){
   });
 }
 
-function queryApi(args){
+function queryApi(args, key){
   return new Promise(promiseSearch =>{
     var embed;
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/'+apiKey.key+'/v1/live/user/'+escape(args),
+      path: '/'+key+'/v1/live/user/'+escape(args),
       method: 'GET'
     }
     const req = https.request(options, res =>{
@@ -776,7 +776,7 @@ function queryApi(args){
       res.on('error', error => {
         console.error(error);
         console.log("Encountered an error, Retrying user "+args);
-        queryApi(args);
+        queryApi(args, key);
       })
       res.on('end', function(){
         try{
