@@ -783,7 +783,6 @@ function queryApi(args, apiKey){
           if(user.data == null){
             queryApi(args, apiKey);
           }
-          console.log(user);
         }catch(err){
           var result = "Encountered an error, User: "+args;
           console.log(result);
