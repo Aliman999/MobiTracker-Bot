@@ -66,6 +66,7 @@ function getKey(i = 0){
           if(err) throw err;
         })
       });
+      console.log(x+" | "+i);
       if(x == i-1){
         callback(apiKey);
       }
