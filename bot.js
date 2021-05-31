@@ -771,6 +771,7 @@ function queryApi(args){
       path: '/'+apiKey.key+'/v1/cache/user/'+escape(args),
       method: 'GET'
     }
+    console.log(options);
     const req = https.request(options, res =>{
       var body = "";
       res.on('data', d => {
