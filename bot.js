@@ -52,25 +52,20 @@ client.on("ready", () => {
   loopStatus();
 });
 
-function getKey(i = 0){
+function getKey(){
   return new Promise(callback =>{
-    var apiKey = [];
-    for(var x = 0; x < i; x++){
-      const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
+    var apiKey;
+    const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
+    con.query(sql, function (err, result, fields){
+      if(err) throw err;
+      apiKey = result[0].apiKey;
+      var id = result[0].id;
+      const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
       con.query(sql, function (err, result, fields){
         if(err) throw err;
-        apiKey.push(result[0].apiKey);
-        var id = result[0].id;
-        const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
-        con.query(sql, function (err, result, fields){
-          if(err) throw err;
-          if(apiKey.length == i){
-            console.log(apiKey);
-            //callback(apiKey);
-          }
-        })
-      });
-    }
+        callback(apiKey);
+      })
+    });
   })
 }
 
@@ -172,27 +167,31 @@ function numberWithCommas(x) {
 async function lookUp(count, message, args){
   var args = args;
   var msg = await message.channel.send("Preparing Queries");
-  await getKey(args.length).then((key) => {
-    console.log(key);
-    /*
-    msg.edit("Finished");
-    for(var i = 0; i < args.length; i++){
-      args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-      const query = async function(arg, key){
-        if(message.author.id != "751252617451143219"){
-          if(message.channel.type == "text"){
-            console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in the '+message.guild.name+' server');
-          }else{
-            console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in '+message.channel.type+'s');
-          }
+  var keys = [];
+  for(var i = 0; i < args.length; i++){
+    await getKey(args.length).then((key) => {
+      keys.push(key);
+    });
+  }
+  msg.edit("Finished");
+  console.log(keys);
+  /*
+  for(var i = 0; i < args.length; i++){
+    args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
+    const query = async function(arg, key){
+      if(message.author.id != "751252617451143219"){
+        if(message.channel.type == "text"){
+          console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in the '+message.guild.name+' server');
+        }else{
+          console.log(message.author.username+'#'+message.author.discriminator+' requested '+arg+' in '+message.channel.type+'s');
         }
-        console.log(arg+" | "+key);
-        message.channel.send(await queryApi(arg, key));
       }
-      limiter.submit(query, args[i], key[i]);
+      console.log(arg+" | "+key);
+      message.channel.send(await queryApi(arg, key));
     }
-    */
-  });
+    limiter.submit(query, args[i], key[i]);
+  }
+  */
 }
 
 function toggleAlerts(message, args){
