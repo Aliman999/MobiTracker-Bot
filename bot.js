@@ -223,7 +223,7 @@ async function lookUp(count, message, args, msg){
   }
   const query = function(args, keys, message, i){
     for(var i = 0; i < args.length; i++){
-      final.schedule(() => {
+      final.schedule((args, keys, message, i) => {
         args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
         if(message.author.id != "751252617451143219"){
           if(message.channel.type == "text"){
