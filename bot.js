@@ -223,7 +223,7 @@ async function lookUp(count, message, args, msg){
   }
   const query = function(args, keys, message, i){
     for(var i = 0; i < args.length; i++){
-      final.schedule(async () => {
+      final.schedule(() => {
         args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
         if(message.author.id != "751252617451143219"){
           if(message.channel.type == "text"){
@@ -232,7 +232,7 @@ async function lookUp(count, message, args, msg){
             console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in '+message.channel.type+'s');
           }
         }
-        message.channel.send(await queryApi(args[i], keys[i]));
+        message.channel.send(queryApi(args[i], keys[i]));
       });
     }
   }
