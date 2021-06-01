@@ -787,7 +787,7 @@ async function registerUser(message, argz){
     var ii = 0;
     var tries = 0;
     for(var i = 0; i < argz.length; i++){
-    console.log(i);
+    console.log(argz[i]);
       if(username.includes(argz[i])){
         alreadyLinked.push(argz[i]);
         username.splice(username.indexOf(argz[i]), 1);
