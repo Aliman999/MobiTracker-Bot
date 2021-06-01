@@ -45,10 +45,6 @@ jobQueue.on("executing", function (info) {
   console.log(queued);
 });
 
-jobQueue.on("error", function (error) {
-  console.log(error);
-});
-
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
   type:"bot",
@@ -101,7 +97,12 @@ function getKey(){
 async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
   var msg = await message.channel.send("Preparing your request");
-  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg);
+  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
+  .catch((error) => {
+    if (error instanceof Bottleneck.BottleneckError) {
+      console.log(error);
+    }
+  });
 }
 
 
