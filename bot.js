@@ -230,7 +230,7 @@ async function lookUp(count, message, args, msg){
     limiter.schedule(query, args[i], keys[i], message);
   }
   var i = 0;
-  const int = setInterval(() => {
+  const int = setInterval(async () => {
     if(i == (args.length-1)){
       clearInterval(int);
     }
