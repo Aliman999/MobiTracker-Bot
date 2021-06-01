@@ -16,6 +16,7 @@ require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
 var position = [];
+var update = [];
 const limiter = new Bottleneck({
   maxConcurrent: 1,
   minTime: 333
@@ -50,7 +51,9 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("executing", function (info) {
-  console.log(position[0].author);
+  if(position[0].author.username == info.args[2].author.username){
+    console.log("test");
+  }
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
@@ -228,6 +231,7 @@ async function lookUp(count, message, args, msg){
     message.channel.send(await queryApi(arg, key));
   }
   position.push(message);
+  update.push(msg);
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
     limiter.schedule(query, args[i], keys[i], message);
