@@ -40,7 +40,7 @@ limiter.on("executing", function (info) {
     update.shift();
     console.log(position[0].author.username+" job started");
     for(var ii = 0; ii < position.length; ii++){
-      console.log(position[ii].author.username+" is "+ii+" in queue");
+      console.log(position[ii].author.username+" is "+ii+" in queue | Priority: "+position[ii].author.prio);
       update[ii].edit(ii+" in Queue");
     }
   }
