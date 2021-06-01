@@ -23,9 +23,6 @@ const jobQueue = new Bottleneck({
   maxConcurrent:1
 });
 const queueCounts = jobQueue.counts();
-jobQueue.on('received', (info) => {
-  console.log(info);
-});
 
 jobQueue.on("received", function (info) {
   console.log(jobQueue.counts());
@@ -41,8 +38,9 @@ jobQueue.on("scheduled", function (info) {
 
 jobQueue.on("executing", function (info) {
   var queued = jobQueue.jobs("QUEUED");
-  var exec = jobQueue.counts().EXECUTING;
+  var exec = jobQueue.jobs("EXECUTING");
   console.log(queued);
+  console.log(exec);
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
