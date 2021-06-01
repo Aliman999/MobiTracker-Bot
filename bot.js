@@ -222,10 +222,10 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(count, message, args, msg, boolPrio = false){
+async function lookUp(count, message, args, msg, defPrio = false){
   var args = args;
   var keys = [];
-  if(!boolPrio){
+  if(!defPrio){
     prio = await getPrio(message.author.id);
   }else{
     pro = 7;
