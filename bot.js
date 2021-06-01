@@ -15,92 +15,95 @@ const schedule = require('node-schedule');
 require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
-const group = new Bottleneck.Group({
+const limiter = new Bottleneck({
   maxConcurrent: 1,
   minTime: 333
 });
-group.on("created", (limiter, key) => {
-  console.log("A new batch was created for key: " + key)
 
-  // Prepare the limiter, for example we'll want to listen to its "error" events!
-  limiter.on("error", (err) => {
-    // Handle errors here
-  })
-  const queue = new Array();
-  const success = new Array();
-  const error = new Array();
-  let i = 0;
-  let j = 0;
+const queue = new Array();
+const success = new Array();
+const error = new Array();
+let i = 0;
+let j = 0;
 
-  // Once the limiter is idle, print out all the stats.
-  limiter.on("idle", function () {
-    // Give it a second to recieve the final success statement
-    setTimeout(() => {
-      console.log('************ QUEUE STATS *****************');
-      (success.length === 0) ? console.log('NOTHING RUNNING') : console.log(success);
-      (error.length === 0) ? console.log('NO ERRORS') : console.log(error);
-      console.log('******************************************');
-      // Reset variables for next run.
-      queue.length = 0;
-      success.length = 0;
-      error.length = 0;
-      i = 0;
-    }, 1000);
-  });
-
-
-  // Show a live status on what is happening in the queue.
-  limiter.on("queued", function (info) {
-    console.log(limiter.counts());
-  });
-
-  // Add the times to each of the id's added to the queue so that we can work out how long each takes
-  function addToQueue(id, api, company) {
-    if (!queue[id]) {
-      queue[id] = new Date();
-    }
-  }
-
-  // Once successful we take the time the id was added to the queue and then minus it from the time now. Store a string of information to print out later (on idle)
-      function addToSuccess(id, api, company) {
-        if (queue[id]) {
-          const timeToComplete = new Date() - queue[id];
-          success[i] = 'ID: ' + id + ' | API: /' + api + ' | Company: ' + company + ' | Status: Completed with Success | Time to complete: ' + timeToComplete / 10000 + ' seconds';
-          i++;
-        }
-      }
-
-      // If there is an error then work out the data and store as an error.
-      function addToError(id, api, company) {
-        if (queue[id]) {
-          const timeToComplete = new Date() - queue[id];
-          error[j] = 'ID: ' + id + ' | API: /' + api + ' | Company: ' + company + ' | Status: Error | Time to complete: ' + timeToComplete / 10000 + ' seconds';
-          j++;
-        }
-      }
-
-  // in order to get a really random number for the ID to track it (running the api multiple times, so makes it easier to distinguish the id)
-      const id = Math.floor(( Math.random() * 1000) * ( Math.random() * 10) / Math.random() * 100);
-
-        const ops = {
-          priority: 2,
-          id: id
-        };
-
-        addToQueue(ops.id, 'api', body.customerId);
-
-        limiter.schedule(ops, () => axios.post(url, body, {
-          headers
-        })).then((res) => {
-          addToSuccess(ops.id, 'api', body.customerId);
-          res.status(200).json(JSON.parse(res.data));
-        }).catch((error) => {
-          addToError(ops.id, 'api', body.customerId);
-          res.status(500).send(error);
-        });
+// Once the limiter is idle, print out all the stats.
+limiter.on("idle", function () {
+  // Give it a second to recieve the final success statement
+  setTimeout(() => {
+    console.log('************ QUEUE STATS *****************');
+    (success.length === 0) ? console.log('NOTHING RUNNING') : console.log(success);
+    (error.length === 0) ? console.log('NO ERRORS') : console.log(error);
+    console.log('******************************************');
+    // Reset variables for next run.
+    queue.length = 0;
+    success.length = 0;
+    error.length = 0;
+    i = 0;
+  }, 1000);
 });
 
-const queue = new Bottleneck();
+
+// Show a live status on what is happening in the queue.
+limiter.on("queued", function (info) {
+  console.log(limiter.counts());
+});
+
+// Add the times to each of the id's added to the queue so that we can work out how long each takes
+function addToQueue(id, api, company) {
+  if (!queue[id]) {
+    queue[id] = new Date();
+  }
+}
+
+// Once successful we take the time the id was added to the queue and then minus it from the time now. Store a string of information to print out later (on idle)
+    function addToSuccess(id, api, company) {
+      if (queue[id]) {
+        const timeToComplete = new Date() - queue[id];
+        success[i] = 'ID: ' + id + ' | API: /' + api + ' | Company: ' + company + ' | Status: Completed with Success | Time to complete: ' + timeToComplete / 10000 + ' seconds';
+        i++;
+      }
+    }
+
+    // If there is an error then work out the data and store as an error.
+    function addToError(id, api, company) {
+      if (queue[id]) {
+        const timeToComplete = new Date() - queue[id];
+        error[j] = 'ID: ' + id + ' | API: /' + api + ' | Company: ' + company + ' | Status: Error | Time to complete: ' + timeToComplete / 10000 + ' seconds';
+        j++;
+      }
+    }
+
+// in order to get a really random number for the ID to track it (running the api multiple times, so makes it easier to distinguish the id)
+    const id = Math.floor(( Math.random() * 1000) * ( Math.random() * 10) / Math.random() * 100);
+
+      const ops = {
+        priority: 2,
+        id: id
+      };
+
+      addToQueue(ops.id, 'api', body.customerId);
+
+      limiter.schedule(ops, () => axios.post(url, body, {
+        headers
+      })).then((res) => {
+        addToSuccess(ops.id, 'api', body.customerId);
+        res.status(200).json(JSON.parse(res.data));
+      }).catch((error) => {
+        addToError(ops.id, 'api', body.customerId);
+        res.status(500).send(error);
+      });
+
+
+
+
+
+
+
+
+
+const queue = new Bottleneck({
+  maxConcurrent:1
+});
 const queueCounts = queue.counts();
 queue.on('received', (info) => {
   console.log(info);
@@ -280,7 +283,7 @@ async function lookUp(count, message, args, msg){
   }
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    group.key(message.author.username).schedule(query, args[i], keys[i]);
+    limiter.schedule( {id:message.author.username}, query, args[i], keys[i]);
   }
 }
 
