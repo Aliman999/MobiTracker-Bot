@@ -29,11 +29,11 @@ jobQueue.on("received", function (info) {
 });
 
 jobQueue.on("queued", function (info) {
-  info.args[3].edit((jobQueue.jobs("QUEUED").length-1)+" in Queue");
+  info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
 });
 
 jobQueue.on("scheduled", function (info) {
-  info.args[3].edit((jobQueue.jobs("SCHEDULED").length-1)+" in Queue");
+  info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
 });
 
 jobQueue.on("executing", function (info) {
