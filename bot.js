@@ -210,7 +210,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(count, message, args, msg){
+async function lookUp(count, message, args, msg, prio = 9){
   var args = args;
   var keys = [];
   for(var i = 0; i < args.length; i++){
@@ -231,7 +231,7 @@ async function lookUp(count, message, args, msg){
       message.channel.send(await queryApi(args[i], keys[i]));
     }
   }
-  limiter.schedule(query, args, keys, message, i);
+  limiter.schedule({priority:prio}, query, args, keys, message, i);
 }
 
 function getUserFromMention(mention) {
@@ -538,7 +538,8 @@ client.on('message', async message => {
     if(args.length > 1){
       addQueue(message, args);
     }else{
-      lookUp(args.length, message, args);
+      var msg = await message.channel.send("Preparing your request");
+      lookUp(args.length, message, args, msg);
     }
   }
 
