@@ -647,6 +647,7 @@ client.on('message', async message => {
 async function registerUser(message, argz){
   if(argz.length > 0){
     await getKey().then((key) => {
+      console.log(key);
       linkRSI(key);
     });
   }else{
@@ -772,41 +773,41 @@ async function registerUser(message, argz){
           }
         }
       }else if(result.length > 0){
-        addRSI(result, key, argz);
+        addRSI(result, key);
       }else{
         firstRegister();
       }
     });
   }
 
-  function addRSI(result, key, argz){
+  function addRSI(result, key){
     var username = JSON.parse(result[0].username);
     var registeredCID = [];
     var failedNames = [];
     var alreadyLinked = [];
     var ii = 0;
     var tries = 0;
-    for(var xx = 0; xx < argz.length; xx++){
-      if(username.includes(argz[xx])){
-        alreadyLinked.push(argz[xx]);
-        username.splice(username.indexOf(argz[xx]), 1);
-        argz.splice(xx, 1);
+    for(var i = 0; i < argz.length; i++){
+      if(username.includes(argz[i])){
+        alreadyLinked.push(argz[i]);
+        username.splice(username.indexOf(argz[i]), 1);
+        argz.splice(i, 1);
       }
     }
     if(argz.length == 0){
       message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
       return;
     }
-    for(var xx = 0; xx < argz.length; xx++){
+    for(var i = 0; i < argz.length; i++){
       const options = {
         hostname: 'api.starcitizen-api.com',
         port: 443,
-        path: '/'+key+'/v1/live/user/'+escape(argz[xx]),
+        path: '/'+key+'/v1/live/user/'+escape(argz[i]),
         method: 'GET'
       }
       console.log(options);
 
-      retry(argz[xx]);
+      retry(argz[i]);
       function retry(name){
         const req = https.request(options, res =>{
           var body = "";
@@ -840,7 +841,7 @@ async function registerUser(message, argz){
                       }
                     }
                   }
-                  if(xx == argz.length-1){
+                  if(ii == argz.length-1){
                     var rString = "", fString = "", aString = "";
                     if(username.length > 0){
                       rString = "Registered: "+username.join(", ")+" ";
