@@ -33,61 +33,9 @@ const error = new Array();
 let i = 0;
 let j = 0;
 
-// Once the limiter is idle, print out all the stats.
-jobQueue.on("idle", function () {
-  // Give it a second to recieve the final success statement
-  setTimeout(() => {
-    console.log('************ QUEUE STATS *****************');
-    (success.length === 0) ? console.log('NOTHING RUNNING') : console.log(success);
-    (error.length === 0) ? console.log('NO ERRORS') : console.log(error);
-    console.log('******************************************');
-    // Reset variables for next run.
-    queue.length = 0;
-    success.length = 0;
-    error.length = 0;
-    i = 0;
-  }, 1000);
-});
-
-
-// Show a live status on what is happening in the queue.
 jobQueue.on("queued", function (info) {
   console.log(jobQueue.counts());
 });
-
-// Add the times to each of the id's added to the queue so that we can work out how long each takes
-function addToQueue(id, api, company) {
-  if (!queue[id]) {
-    queue[id] = new Date();
-  }
-}
-
-// Once successful we take the time the id was added to the queue and then minus it from the time now. Store a string of information to print out later (on idle)
-    function addToSuccess(id, api, company) {
-      if (queue[id]) {
-        const timeToComplete = new Date() - queue[id];
-        success[i] = 'ID: ' + id + ' | API: /' + api + ' | Company: ' + company + ' | Status: Completed with Success | Time to complete: ' + timeToComplete / 10000 + ' seconds';
-        i++;
-      }
-    }
-
-    // If there is an error then work out the data and store as an error.
-    function addToError(id, api, company) {
-      if (queue[id]) {
-        const timeToComplete = new Date() - queue[id];
-        error[j] = 'ID: ' + id + ' | API: /' + api + ' | Company: ' + company + ' | Status: Error | Time to complete: ' + timeToComplete / 10000 + ' seconds';
-        j++;
-      }
-    }
-
-
-
-
-
-
-
-
-
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
