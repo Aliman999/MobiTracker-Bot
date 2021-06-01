@@ -37,7 +37,7 @@ jobQueue.on("scheduled", function (info) {
 });
 
 jobQueue.on("executing", function (info) {
-  info.args[3].edit(("Running");
+  info.args[3].edit("Running");
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
