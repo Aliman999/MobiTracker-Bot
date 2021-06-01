@@ -225,15 +225,13 @@ function numberWithCommas(x) {
 async function lookUp(count, message, args, msg){
   var args = args;
   var keys = [];
-  var prio = await getPrio(message.author.id);
-  console.log(prio);
+  message.author.prio = await getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
-    console.log(i);
     await getKey(args.length).then((key) => {
       keys.push(key);
     });
   }
-  console.log(message.author.username+" Priority: "+prio);
+  console.log(message.author.username+" Priority: "+message.author.prio);
   const query = async function(args, keys, message, i){
     for(var i = 0; i < args.length; i++){
       args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
@@ -247,7 +245,7 @@ async function lookUp(count, message, args, msg){
       message.channel.send(await queryApi(args[i], keys[i]));
     }
   }
-  limiter.schedule({priority:prio}, query, args, keys, message, i);
+  limiter.schedule({priority:message.author.prio}, query, args, keys, message, i);
 }
 
 function getUserFromMention(mention) {
