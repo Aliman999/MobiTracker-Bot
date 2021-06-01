@@ -48,10 +48,6 @@ limiter.on("received", function (info) {
 
 limiter.on("executing", function (info) {
   if(position[0].author.username != info.args[2].author.username){
-    console.log(position[0].author.username+" job finished");
-    position.shift();
-    update.shift();
-    console.log(position[0].author.username+" job started");
     updateQueue(position, update, i);
   }
 });
@@ -123,10 +119,14 @@ async function addQueue(message, args){
 }
 
 function updateQueue(position, update, i){
+  console.log(position[0].author.username+" job finished");
+  position.shift();
+  update.shift();
+  console.log(position[0].author.username+" job started");
   for(var x = 0; x < position.length; x++){
     console.log(position[i].author.username+" is "+i+" in queue");
   }
-  console.log(msg);
+  //console.log(msg);
   //message.edit(msg);
 }
 
