@@ -99,7 +99,8 @@ function getKey(){
 
 function getPrio(usrID){
   return new Promise(callback =>{
-    const sql = "SELECT prio FROM discord WHERE discID = "+usrID;
+    const sql = "SELECT prio FROM discord WHERE discID = "+usrID+";";
+    console.log(sql);
     con.query(sql, function (err, result, fields){
       if(result.length > 0){
         console.log(result[0].prio);
