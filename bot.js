@@ -33,7 +33,19 @@ const error = new Array();
 let i = 0;
 let j = 0;
 
+jobQueue.on("received", function (info) {
+  console.log(jobQueue.counts());
+});
+
 jobQueue.on("queued", function (info) {
+  console.log(jobQueue.counts());
+});
+
+jobQueue.on("scheduled", function (info) {
+  console.log(jobQueue.counts());
+});
+
+jobQueue.on("executing", function (info) {
   console.log(jobQueue.counts());
 });
 
