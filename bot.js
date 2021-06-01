@@ -118,7 +118,7 @@ async function addQueue(message, args){
   }
   position.push(message);
   update.push(msg);
-  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
+  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg, false)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
       msg.edit("You must wait for your current job to finish.");
