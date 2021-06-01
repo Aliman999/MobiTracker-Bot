@@ -118,7 +118,7 @@ async function addQueue(message, args){
   }
   position.push(message);
   update.push(msg);
-  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg, false)
+  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
       msg.edit("You must wait for your current job to finish.");
@@ -222,14 +222,10 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(count, message, args, msg, defPrio = false){
+async function lookUp(count, message, args, msg){
   var args = args;
   var keys = [];
-  if(!defPrio){
-    prio = await getPrio(message.author.id);
-  }else{
-    pro = 7;
-  }
+  prio = await getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then((key) => {
       keys.push(key);
@@ -557,7 +553,7 @@ client.on('message', async message => {
       addQueue(message, args);
     }else{
       var msg = await message.channel.send("Preparing your request");
-      lookUp(args.length, message, args, msg, true);
+      lookUp(args.length, message, args, msg);
     }
   }
 
