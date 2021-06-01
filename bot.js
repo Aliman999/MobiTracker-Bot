@@ -226,7 +226,7 @@ async function lookUp(count, message, args, msg, boolPrio){
   var args = args;
   var keys = [];
   if(!boolPrio){
-    prio = getPrio(message.author.id);
+    prio = await getPrio(message.author.id);
   }else{
     pro = 7;
   }
