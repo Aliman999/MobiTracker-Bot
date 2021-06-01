@@ -250,6 +250,7 @@ async function lookUp(count, message, args, msg, boolPrio){
       message.channel.send(await queryApi(args[i], keys[i]));
     }
   }
+  console.log(message.author.username+" Priority: "+prio);
   limiter.schedule({priority:prio}, query, args, keys, message, i);
 }
 
