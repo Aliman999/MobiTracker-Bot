@@ -100,7 +100,7 @@ async function addQueue(message, args){
   jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
-      console.log(error);
+      msg.edit("You must wait for your current job to finish.");
     }
   });
 }
