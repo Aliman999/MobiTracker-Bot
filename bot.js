@@ -212,179 +212,6 @@ async function lookUp(count, message, args, msg){
   }
 }
 
-function toggleAlerts(message, args){
-  if(args.length>1){
-    return message.author.send('Too many arguments.');
-  }else if(args.length == 0){
-    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
-    con.query(sql, function (err, result, fields) {
-      if(err) throw err;
-
-      if(result.length > 0){
-        var string = '';
-        if(result[0].paused == 1){
-          return message.author.send('Your Alerts are paused!');
-        }else{
-          if(result[0].contracts != -1){
-            result[0].contracts = 'ON';
-          }else{
-            result[0].contracts = 'OFF';
-          }
-          if(result[0].applicants != -1){
-            result[0].applicants = 'ON';
-          }else{
-            result[0].applicants = 'OFF';
-          }
-          if(result[0].reviews != -1){
-            result[0].reviews = 'ON';
-          }else{
-            result[0].reviews = 'OFF';
-          }
-          return message.author.send('Your Alert Policy: \nContracts: '+result[0].contracts+' \nApplicants: '+result[0].applicants+' \nReviews: '+result[0].reviews);
-        }
-      }else{
-        message.author.send("This command is used for toggling on and off your discord alerts of MobiTracker.co \nIf you'd like to received discord alerts sign up at https://mobitracker.co");
-      }
-    });
-  }
-  const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
-  con.query(sql, function (err, result, fields) {
-    if(err) throw err;
-
-    if(result.length > 0 && args.length > 0){
-      args[0] = args[0].toString().toLowerCase();
-      if(args[0] == "off"){
-        const sql = "UPDATE discordAlerts SET userPause = 1 WHERE discordUser->'$.id' = '"+message.author.id+"'";
-        con.query(sql, function (err, result, fields) {
-          if(err) throw err;
-
-          console.log(message.author.tag+" turned off their alerts");
-          message.author.send("Paused Alerts.");
-        });
-      }else if(args[0] == "on"){
-        const sql = "UPDATE discordAlerts SET userPause = 0 WHERE discordUser->'$.id' = '"+message.author.id+"'";
-        con.query(sql, function (err, result, fields) {
-          if(err) throw err;
-
-          console.log(message.author.tag+" turned on their alerts");
-          message.author.send("Resumed Alerts.");
-        });
-      }
-    }
-  });
-}
-
-function showContracts(message, args){
-  const pp = 4;
-  if(!args.length){
-    var p = 0;
-  }else if(args.length == 1 && args[0] > 0){
-    var p = args[0]-1;
-  }else{
-    return message.channel.send('Invalid Arguments.');
-  }
-  var mp;
-  var limit;
-  var sql = "SELECT id FROM contracts WHERE faction = 0";
-  con.query(sql, function (err, result, fields) {
-    if(err) throw err;
-
-    mp = Math.ceil(result.length/pp);
-    if(p > mp){
-      p = mp;
-    }
-    if(p*pp == 0){
-      limit = 'LIMIT 4';
-    }else{
-      limit = 'LIMIT 4, '+(p*pp-1);
-    }
-    var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, escrow->'$.ESCROW' AS escrow, created_at FROM contracts WHERE faction = 0 AND completed = 0 AND markComplete = 0 AND escrow->'$.ACTIVE' = true ORDER BY id DESC "+limit+";";
-    con.query(sql, function (err, result, fields) {
-      if(err) throw err;
-
-      var newCreator = [], newPrice = [], newEscrow = [], newDesc = [], spacer, field = [];
-      for(var x = 0; x<result.length; x++){
-        if(result[x].type == 'R'){
-          if(result[x].careertype == 'Scouting'){
-            result[x].careertype = 'Looking for a Scout';
-
-          }else if(result[x].careertype == 'Delivery'){
-            result[x].careertype = 'Looking for a Courier';
-
-          }else if(result[x].careertype == 'Racing'){
-            result[x].careertype = 'Looking to Race';
-
-          }else if(result[x].careertype == 'Medical'){
-            result[x].careertype = 'Looking for Medical Services';
-
-          }else if(result[x].careertype == 'Security'){
-            result[x].careertype = 'Looking for Security Services';
-
-          }else if(result[x].careertype == 'Charting Regular'){
-            result[x].careertype = 'Looking for a Charter';
-
-          }else if(result[x].careertype == 'Charting Luxury'){
-            result[x].careertype = 'Looking for a Luxurious Charter';
-
-          }
-        }else if(result[x].type == 'O'){
-          if(result[x].careertype == 'Scouting'){
-            result[x].careertype = 'Scout for Hire';
-
-          }else if(result[x].careertype == 'Delivery'){
-            result[x].careertype = 'Courier for Hire';
-
-          }else if(result[x].careertype == 'Racing'){
-            result[x].careertype = 'Racer for Hire';
-
-          }else if(result[x].careertype == 'Medical'){
-            result[x].careertype = 'Medical Services for Hire';
-
-          }else if(result[x].careertype == 'Security'){
-            result[x].careertype = 'Security Services for Hire';
-
-          }else if(result[x].careertype == 'Charting Regular'){
-            result[x].careertype = 'Regular Charter for Hire';
-
-          }else if(result[x].careertype == 'Charting Luxury'){
-            result[x].careertype = 'Luxurious Charter for Hire';
-
-          }
-        }
-        result[x].unsecure = decodeEntities(result[x].unsecure);
-        result[x].unsecure = truncate(result[x].unsecure, 10);
-        result[x].price = result[x].price+' aUEC';
-        if(result[x].escrow == 1){
-          result[x].escrow = "Active";
-        }else{
-          result[x].escrow = "Inactive";
-        }
-        newCreator[x] = { name: result[x].u_creator, value: result[x].careertype, inline: true };
-        newPrice[x] = { name: 'Price', value: numberWithCommas(result[x].price), inline: true };
-        newEscrow[x] = { name: 'Escrow', value:result[x].escrow, inline:true };
-        newDesc[x] = { name: 'Description', value:result[x].unsecure, inline:true };
-        spacer = { name: '\u200B', value: '\u200B' };
-      }
-      p++;
-      var embed = new MessageEmbed()
-        .setColor(0x44a4dc)
-        .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
-        .setTitle('Page '+p+' of '+mp)
-        .setFooter('Contracts - Mobitracker.co');
-      for(var x = 0; x < result.length; x++){
-        embed.addFields(newCreator[x]);
-        embed.addFields(newPrice[x]);
-        embed.addFields(newEscrow[x]);
-        embed.addFields(newDesc[x]);
-        if(x != result.length-1){
-          embed.addFields(spacer);
-        }
-      }
-      message.channel.send(embed);
-    });
-  });
-}
-
 function getUserFromMention(mention) {
 	if (!mention) return;
 
@@ -409,6 +236,376 @@ Array.prototype.remove = function() {
     }
     return this;
 };
+
+function queryApi(args, apiKey){
+  return new Promise(promiseSearch =>{
+    var embed;
+    var options = {
+      hostname: 'api.starcitizen-api.com',
+      port: 443,
+      path: '/'+apiKey+'/v1/auto/user/'+escape(args),
+      method: 'GET'
+    }
+    const req = https.request(options, res =>{
+      var body = "";
+      res.on('data', d => {
+        body += d;
+      })
+      res.on('error', error => {
+        console.error(error);
+        console.log("Encountered an error, Retrying user "+args);
+      })
+      res.on('end', function(){
+        try{
+          var user = JSON.parse(body);
+          if(user.data == null){
+            queryApi(args, apiKey);
+          }
+        }catch(err){
+          var result = "Encountered an error, User: "+args;
+          console.log(result);
+          promiseSearch(result);
+        };
+        if(Object.size(user.data) > 0){
+          cachePlayer(user.data);
+          if(Object.size(user.data.organization) > 1 && user.data.organization.name != ""){
+            user.data.organization.name = user.data.organization.rank+' ['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
+          }else if (user.data.organization.name == ""){
+            user.data.organization.name = "REDACTED";
+          }else{
+            user.data.organization.name = "None";
+          }
+          var cID = '';
+          if(user.data.profile.id != 'n/a'){
+            cID = " AND cID = "+user.data.profile.id.substring(1);
+          }else{
+            user.data.profile.id = '#No Citizen ID';
+          }
+          const sql = "SELECT reviewed_count as rating FROM players WHERE username = '"+user.data.profile.handle+"'"+cID+";";
+          con.query(sql, function (err, result, fields) {
+            if (err) throw err;
+
+            var rating = "";
+            if(result.length == 0){
+              rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
+            }else{
+              if(result[0].rating == -1){
+                rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
+              }else{
+                rating = xp(result[0].rating)+" ("+result[0].rating+")";
+              }
+            }
+            user.data.profile.enlisted = new Date(user.data.profile.enlisted);
+            user.data.profile.enlisted = ((user.data.profile.enlisted.getMonth() > 8) ? (user.data.profile.enlisted.getMonth() + 1) : ('0' + (user.data.profile.enlisted.getMonth() + 1))) + '/' + ((user.data.profile.enlisted.getDate() > 9) ? user.data.profile.enlisted.getDate() : ('0' + user.data.profile.enlisted.getDate())) + '/' + user.data.profile.enlisted.getFullYear();
+
+            embed = new MessageEmbed()
+              .setColor(0x25a6dd)
+              .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+              .setDescription("AKA "+user.data.profile.display)
+              .setThumbnail(user.data.profile.image)
+              .addFields(
+                { name: 'Badge', value: user.data.profile.badge, inline: true},
+                { name: 'Mobitracker Vouchers', value: rating, inline: true},
+                { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
+                { name: 'Enlisted', value: user.data.profile.enlisted, inline: true}
+               )
+               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
+            if(user.data.profile.location){
+              embed.addFields(
+                { name: 'Location', value: user.data.profile.location.region+", "+user.data.profile.location.country, inline: true}
+              );
+            }else{
+              embed.addFields(
+                { name: 'Location', value: "REDACTED", inline: true}
+              );
+            }
+            if(user.data.profile.fluency){
+              embed.addFields(
+                { name: 'Languages', value: user.data.profile.fluency.join(", "), inline: true}
+              );
+            }else{
+              embed.addFields(
+                { name: 'Languages', value: "REDACTED", inline: true}
+              );
+            }
+            embed.addFields(
+              { name: 'Main Organization', value: user.data.organization.name },
+              { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+            );
+            promiseSearch(embed);
+          });
+        }else{
+          var result = "Could not find "+`${args}`;
+          //console.log(result);
+          promiseSearch(result);
+        }
+      })
+    })
+    req.end()
+  });
+}
+
+function cachePlayer(user){
+  //console.log(con.escape(user.profile.bio));
+  var update = false;
+  var eventUpdate = new Array();
+  var check = { cID:0,
+                username:'',
+                badge: { src:'', title:'' },
+                organization: [],
+                avatar: ''
+              };
+  check.cID = parseInt(user.profile.id.substring(1));
+  check.username = user.profile.handle;
+  check.badge.title = user.profile.badge;
+  check.badge.src = user.profile.badge_image;
+  check.avatar = user.profile.image;
+  if(Object.size(user.affiliation) > 0){
+    user.orgLength = Object.size(user.affiliation) + 1;
+  }
+  if(user.organization.sid){
+    check.organization.push({ sid: user.organization.sid, rank: user.organization.stars });
+  }else{
+    check.organization.push({ sid: "N/A", rank: 0 });
+  }
+  for(var i = 0; i < Object.size(user.affiliation); i++){
+    if(user.affiliation[i].sid){
+      check.organization.push({ sid: user.affiliation[i].sid, rank: user.affiliation[i].stars });
+    }else{
+      check.organization.push({ sid: "N/A", rank: 0 });
+    }
+  }
+  var sql = "";
+  if(check.cID){
+    sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
+  }else{
+    check.cID = 0;
+    sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE username = '"+user.profile.handle+"';";
+  }
+  con.query(sql, function (err, result, fields) {
+    if(err) throw err;
+
+    if(Object.size(result) > 0){
+      var data = result[result.length-1];
+      data.organization = JSON.parse(data.organization);
+      data.organization = Object.values(data.organization);
+      data.badge = JSON.parse(data.badge);
+      for(var i = 0; i < Object.size(data); i++){
+        if(i == 3){
+          for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
+            if(data.organization[x].sid != check.organization[x].sid){
+              update = true;
+              eventUpdate.push("Org Change");
+            }else if(data.organization[x].rank != check.organization[x].rank){
+              update = true;
+              eventUpdate.push("Org Promotion/Demotion");
+            }
+          }
+        }
+      }
+      if(data.cID != check.cID){
+        update = true;
+        eventUpdate.push("Obtained ID");
+      }
+      if(data.username != check.username){
+        update = true;
+        eventUpdate.push("Username Changed");
+      }else if (data.badge.title != check.badge.title) {
+        update = true;
+        eventUpdate.push("Badge Changed");
+      }else if (data.avatar != check.avatar) {
+        update = true;
+        eventUpdate.push("Avatar Changed");
+      }
+    }else{
+      check.badge = JSON.stringify(check.badge);
+      check.organization = JSON.stringify(Object.assign({}, check.organization));
+      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('First Entry', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
+      con.query(sql, function (err, result, fields) {
+        if(err){
+          console.log(err);
+        }
+      });
+    }
+    if(update){
+      check.badge = JSON.stringify(check.badge);
+      check.organization = JSON.stringify(Object.assign({}, check.organization));
+      var eventString = eventUpdate.join(", ");
+      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('"+eventString+"', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"');";
+      con.query(sql, function (err, result, fields) {
+        if(err) throw err;
+      });
+    }
+  });
+}
+
+
+var truncate = function (elem, limit) {
+	if (!elem || !limit) return;
+	var content = elem.trim();
+	content = content.split(' ').slice(0, limit);
+	content = content.join(' ');
+	elem = content+'...';
+  return elem;
+};
+
+Object.size = function(obj) {
+  var size = 0, key;
+  for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
+
+
+
+function readAttachment(message, url){
+  const options = {
+    hostname: 'cdn.discordapp.com',
+    port: 443,
+    path: url,
+    method: 'GET'
+  }
+  const req = https.request(options, res =>{
+    var body = "";
+    res.on('data', d => {
+      body += d;
+    })
+    res.on('error', error => {
+      console.error(error)
+    })
+    res.on('end', async function(){
+      if (!body.startsWith(prefix)) return;
+      var args = body.slice(prefix.length).trim().split(/\s+/);
+      const command = args.shift().toLowerCase();
+      if(command === 'search'){
+        if (!args.length){
+      		return message.channel.send(`You didnt provide a username.`);
+      	}
+        if(args.length > 1){
+          addQueue(message, args);
+        }
+      }
+    })
+  })
+  req.end();
+}
+
+client.on('message', async message => {
+  if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
+    var handle = message.content.split("/");
+    handle = handle.pop();
+    if(handle.includes(" ")) handle = handle.substr(0,handle.indexOf(' '));
+    client.channels.cache.get("827064226807283722").send(message.member.user.tag+" linked a handle: "+handle);
+    client.channels.cache.get("827064226807283722").send("!search "+handle);
+  }else if (message.attachments){
+    message.attachments.map((currElement, index) => {
+      if(currElement.url.includes("message.txt")){
+        readAttachment(message, currElement.url.slice(26));
+      }
+    });
+  }
+  if (!message.content.startsWith(prefix)) return;
+  var args = message.content.slice(prefix.length).trim().split(/\s+/);
+  const command = args.shift().toLowerCase();
+
+  if (command === 'search'){
+  	if (!args.length){
+  		return message.channel.send(`You didnt provide a username.`);
+  	}
+    if(args.length > 1){
+      addQueue(message, args);
+    }else{
+      lookUp(args.length, message, args);
+    }
+  }
+
+  if(command == 'contracts'){
+    showContracts(message, args);
+  }
+
+  if(command == 'alerts'){
+    toggleAlerts(message, args);
+  }
+
+  if(command == 'register'){
+    registerUser(message, args);
+  }
+
+  if(command == 'help'){
+    message.channel.send("MobiTracker's Discord bot is very simple to use! \n\n!help - Bring up this help message \n\n!search USERNAME - Find any user in the verse by their ingame name quickly and displaying all the information you'd find online at https://mobitracker.co \n\n !contracts PAGENUMBER - Search through MobiTrackers Contracts by the page number and See what people are doing! \n\n!auth - The command to authorize and edit your alert policies! \nGet your auth token at https://mobitracker.co/discord \n\n!alerts on/off - Pause and Resume your alert policy!");
+  }
+
+  /*
+  if(command == 'auth'){
+    if(!args.length){
+      return message.channel.send('Sign in at https://mobitracker.co/login and click the button at the top that says "Discord Bot". \nThen and copy the text provided and paste it here.');
+    }else if(args.length>1){
+      return message.channel.send('Too many arguments.');
+    }
+    jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
+      if(err){
+        if(err.message === 'jwt expired'){
+          message.author.send('This Token has expired!');
+        }else{
+          message.author.send('Invalid Token!');
+        }
+      }else{
+        if(decoded.cid != "" && decoded.username != ""){
+          const authUser = message.author;
+          delete decoded.exp;
+          decoded.update = false;
+          const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+          const msg = {
+            type:"authDiscord",
+            token: token
+          };
+          const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+          con.query(sql, function (err, result, fields){
+            if (err) throw err;
+            if(result.length > 0){
+              const sql = "SELECT contracts->'$.active' AS contracts, applicants->'$.active' AS applicants, reviews->'$.active' AS reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
+              con.query(sql, function (err, result, fields) {
+                if (err) throw err;
+                if(result.length > 0){
+                  if(decoded.contracts === result[0].contracts && decoded.applicants === result[0].applicants && decoded.reviews === result[0].reviews ){
+                    message.author.send('Your policies are the same. \nContracts: '+result[0].contracts+'\nApplicants & Escrow: '+result[0].applicants+'\nReviews: '+result[0].reviews);
+                  }else{
+                    decoded.update = true;
+                    const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
+                    const msg = {
+                      type:"authDiscord",
+                      token: token
+                    };
+                    wsClient.send(JSON.stringify(msg));
+                    message.author.send('Updated your alert policies!');
+                  }
+                }else{
+                  wsClient.send(JSON.stringify(msg));
+                  var span = "";
+                  if(decoded.contracts == 0 && decoded.reviews != 0){
+                    span = " for contract alerts.";
+                  }else if(decoded.contracts != 0 && decoded.reviews == 0){
+                    span = " for review alerts.";
+                  }else{
+                    span = " for contracts and review alerts.";
+                  }
+                  message.author.send('Your discord is now linked with '+decoded.username+''+span+' \nhttps://mobitracker.co/'+decoded.username+' \nRemember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
+                }
+              });
+            }else{
+              message.author.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
+            }
+          });
+        }else{
+          message.author.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
+        }
+      }
+    });
+  }
+  */
+  if (!message.content.startsWith(`${prefix}`)) return;
+});
 
 async function registerUser(message, argz){
   if(argz.length > 0){
@@ -686,375 +883,178 @@ async function registerUser(message, argz){
   }
 }
 
-function cachePlayer(user){
-  //console.log(con.escape(user.profile.bio));
-  var update = false;
-  var eventUpdate = new Array();
-  var check = { cID:0,
-                username:'',
-                badge: { src:'', title:'' },
-                organization: [],
-                avatar: ''
-              };
-  check.cID = parseInt(user.profile.id.substring(1));
-  check.username = user.profile.handle;
-  check.badge.title = user.profile.badge;
-  check.badge.src = user.profile.badge_image;
-  check.avatar = user.profile.image;
-  if(Object.size(user.affiliation) > 0){
-    user.orgLength = Object.size(user.affiliation) + 1;
+function toggleAlerts(message, args){
+  if(args.length>1){
+    return message.author.send('Too many arguments.');
+  }else if(args.length == 0){
+    const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
+    con.query(sql, function (err, result, fields) {
+      if(err) throw err;
+
+      if(result.length > 0){
+        var string = '';
+        if(result[0].paused == 1){
+          return message.author.send('Your Alerts are paused!');
+        }else{
+          if(result[0].contracts != -1){
+            result[0].contracts = 'ON';
+          }else{
+            result[0].contracts = 'OFF';
+          }
+          if(result[0].applicants != -1){
+            result[0].applicants = 'ON';
+          }else{
+            result[0].applicants = 'OFF';
+          }
+          if(result[0].reviews != -1){
+            result[0].reviews = 'ON';
+          }else{
+            result[0].reviews = 'OFF';
+          }
+          return message.author.send('Your Alert Policy: \nContracts: '+result[0].contracts+' \nApplicants: '+result[0].applicants+' \nReviews: '+result[0].reviews);
+        }
+      }else{
+        message.author.send("This command is used for toggling on and off your discord alerts of MobiTracker.co \nIf you'd like to received discord alerts sign up at https://mobitracker.co");
+      }
+    });
   }
-  if(user.organization.sid){
-    check.organization.push({ sid: user.organization.sid, rank: user.organization.stars });
-  }else{
-    check.organization.push({ sid: "N/A", rank: 0 });
-  }
-  for(var i = 0; i < Object.size(user.affiliation); i++){
-    if(user.affiliation[i].sid){
-      check.organization.push({ sid: user.affiliation[i].sid, rank: user.affiliation[i].stars });
-    }else{
-      check.organization.push({ sid: "N/A", rank: 0 });
-    }
-  }
-  var sql = "";
-  if(check.cID){
-    sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
-  }else{
-    check.cID = 0;
-    sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE username = '"+user.profile.handle+"';";
-  }
+  const sql = "SELECT contracts, applicants, reviews FROM discordAlerts WHERE discordUser->'$.id' = '"+message.author.id+"'";
   con.query(sql, function (err, result, fields) {
     if(err) throw err;
 
-    if(Object.size(result) > 0){
-      var data = result[result.length-1];
-      data.organization = JSON.parse(data.organization);
-      data.organization = Object.values(data.organization);
-      data.badge = JSON.parse(data.badge);
-      for(var i = 0; i < Object.size(data); i++){
-        if(i == 3){
-          for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
-            if(data.organization[x].sid != check.organization[x].sid){
-              update = true;
-              eventUpdate.push("Org Change");
-            }else if(data.organization[x].rank != check.organization[x].rank){
-              update = true;
-              eventUpdate.push("Org Promotion/Demotion");
-            }
-          }
-        }
+    if(result.length > 0 && args.length > 0){
+      args[0] = args[0].toString().toLowerCase();
+      if(args[0] == "off"){
+        const sql = "UPDATE discordAlerts SET userPause = 1 WHERE discordUser->'$.id' = '"+message.author.id+"'";
+        con.query(sql, function (err, result, fields) {
+          if(err) throw err;
+
+          console.log(message.author.tag+" turned off their alerts");
+          message.author.send("Paused Alerts.");
+        });
+      }else if(args[0] == "on"){
+        const sql = "UPDATE discordAlerts SET userPause = 0 WHERE discordUser->'$.id' = '"+message.author.id+"'";
+        con.query(sql, function (err, result, fields) {
+          if(err) throw err;
+
+          console.log(message.author.tag+" turned on their alerts");
+          message.author.send("Resumed Alerts.");
+        });
       }
-      if(data.cID != check.cID){
-        update = true;
-        eventUpdate.push("Obtained ID");
-      }
-      if(data.username != check.username){
-        update = true;
-        eventUpdate.push("Username Changed");
-      }else if (data.badge.title != check.badge.title) {
-        update = true;
-        eventUpdate.push("Badge Changed");
-      }else if (data.avatar != check.avatar) {
-        update = true;
-        eventUpdate.push("Avatar Changed");
-      }
-    }else{
-      check.badge = JSON.stringify(check.badge);
-      check.organization = JSON.stringify(Object.assign({}, check.organization));
-      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('First Entry', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
-      con.query(sql, function (err, result, fields) {
-        if(err){
-          console.log(err);
-        }
-      });
-    }
-    if(update){
-      check.badge = JSON.stringify(check.badge);
-      check.organization = JSON.stringify(Object.assign({}, check.organization));
-      var eventString = eventUpdate.join(", ");
-      const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('"+eventString+"', "+check.cID+", '"+check.username+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"');";
-      con.query(sql, function (err, result, fields) {
-        if(err) throw err;
-      });
     }
   });
 }
 
-function queryApi(args, apiKey){
-  return new Promise(promiseSearch =>{
-    var embed;
-    var options = {
-      hostname: 'api.starcitizen-api.com',
-      port: 443,
-      path: '/'+apiKey+'/v1/auto/user/'+escape(args),
-      method: 'GET'
+function showContracts(message, args){
+  const pp = 4;
+  if(!args.length){
+    var p = 0;
+  }else if(args.length == 1 && args[0] > 0){
+    var p = args[0]-1;
+  }else{
+    return message.channel.send('Invalid Arguments.');
+  }
+  var mp;
+  var limit;
+  var sql = "SELECT id FROM contracts WHERE faction = 0";
+  con.query(sql, function (err, result, fields) {
+    if(err) throw err;
+
+    mp = Math.ceil(result.length/pp);
+    if(p > mp){
+      p = mp;
     }
-    const req = https.request(options, res =>{
-      var body = "";
-      res.on('data', d => {
-        body += d;
-      })
-      res.on('error', error => {
-        console.error(error);
-        console.log("Encountered an error, Retrying user "+args);
-      })
-      res.on('end', function(){
-        try{
-          var user = JSON.parse(body);
-          if(user.data == null){
-            queryApi(args, apiKey);
-          }
-        }catch(err){
-          var result = "Encountered an error, User: "+args;
-          console.log(result);
-          promiseSearch(result);
-        };
-        if(Object.size(user.data) > 0){
-          cachePlayer(user.data);
-          if(Object.size(user.data.organization) > 1 && user.data.organization.name != ""){
-            user.data.organization.name = user.data.organization.rank+' ['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
-          }else if (user.data.organization.name == ""){
-            user.data.organization.name = "REDACTED";
-          }else{
-            user.data.organization.name = "None";
-          }
-          var cID = '';
-          if(user.data.profile.id != 'n/a'){
-            cID = " AND cID = "+user.data.profile.id.substring(1);
-          }else{
-            user.data.profile.id = '#No Citizen ID';
-          }
-          const sql = "SELECT reviewed_count as rating FROM players WHERE username = '"+user.data.profile.handle+"'"+cID+";";
-          con.query(sql, function (err, result, fields) {
-            if (err) throw err;
+    if(p*pp == 0){
+      limit = 'LIMIT 4';
+    }else{
+      limit = 'LIMIT 4, '+(p*pp-1);
+    }
+    var sql = "SELECT u_creator, careertype, price, target, faction, type, unsecure, escrow->'$.ESCROW' AS escrow, created_at FROM contracts WHERE faction = 0 AND completed = 0 AND markComplete = 0 AND escrow->'$.ACTIVE' = true ORDER BY id DESC "+limit+";";
+    con.query(sql, function (err, result, fields) {
+      if(err) throw err;
 
-            var rating = "";
-            if(result.length == 0){
-              rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
-            }else{
-              if(result[0].rating == -1){
-                rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
-              }else{
-                rating = xp(result[0].rating)+" ("+result[0].rating+")";
-              }
-            }
-            user.data.profile.enlisted = new Date(user.data.profile.enlisted);
-            user.data.profile.enlisted = ((user.data.profile.enlisted.getMonth() > 8) ? (user.data.profile.enlisted.getMonth() + 1) : ('0' + (user.data.profile.enlisted.getMonth() + 1))) + '/' + ((user.data.profile.enlisted.getDate() > 9) ? user.data.profile.enlisted.getDate() : ('0' + user.data.profile.enlisted.getDate())) + '/' + user.data.profile.enlisted.getFullYear();
+      var newCreator = [], newPrice = [], newEscrow = [], newDesc = [], spacer, field = [];
+      for(var x = 0; x<result.length; x++){
+        if(result[x].type == 'R'){
+          if(result[x].careertype == 'Scouting'){
+            result[x].careertype = 'Looking for a Scout';
 
-            embed = new MessageEmbed()
-              .setColor(0x25a6dd)
-              .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-              .setDescription("AKA "+user.data.profile.display)
-              .setThumbnail(user.data.profile.image)
-              .addFields(
-                { name: 'Badge', value: user.data.profile.badge, inline: true},
-                { name: 'Mobitracker Vouchers', value: rating, inline: true},
-                { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
-                { name: 'Enlisted', value: user.data.profile.enlisted, inline: true}
-               )
-               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-            if(user.data.profile.location){
-              embed.addFields(
-                { name: 'Location', value: user.data.profile.location.region+", "+user.data.profile.location.country, inline: true}
-              );
-            }else{
-              embed.addFields(
-                { name: 'Location', value: "REDACTED", inline: true}
-              );
-            }
-            if(user.data.profile.fluency){
-              embed.addFields(
-                { name: 'Languages', value: user.data.profile.fluency.join(", "), inline: true}
-              );
-            }else{
-              embed.addFields(
-                { name: 'Languages', value: "REDACTED", inline: true}
-              );
-            }
-            embed.addFields(
-              { name: 'Main Organization', value: user.data.organization.name },
-              { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
-            );
-            promiseSearch(embed);
-          });
-        }else{
-          var result = "Could not find "+`${args}`;
-          //console.log(result);
-          promiseSearch(result);
+          }else if(result[x].careertype == 'Delivery'){
+            result[x].careertype = 'Looking for a Courier';
+
+          }else if(result[x].careertype == 'Racing'){
+            result[x].careertype = 'Looking to Race';
+
+          }else if(result[x].careertype == 'Medical'){
+            result[x].careertype = 'Looking for Medical Services';
+
+          }else if(result[x].careertype == 'Security'){
+            result[x].careertype = 'Looking for Security Services';
+
+          }else if(result[x].careertype == 'Charting Regular'){
+            result[x].careertype = 'Looking for a Charter';
+
+          }else if(result[x].careertype == 'Charting Luxury'){
+            result[x].careertype = 'Looking for a Luxurious Charter';
+
+          }
+        }else if(result[x].type == 'O'){
+          if(result[x].careertype == 'Scouting'){
+            result[x].careertype = 'Scout for Hire';
+
+          }else if(result[x].careertype == 'Delivery'){
+            result[x].careertype = 'Courier for Hire';
+
+          }else if(result[x].careertype == 'Racing'){
+            result[x].careertype = 'Racer for Hire';
+
+          }else if(result[x].careertype == 'Medical'){
+            result[x].careertype = 'Medical Services for Hire';
+
+          }else if(result[x].careertype == 'Security'){
+            result[x].careertype = 'Security Services for Hire';
+
+          }else if(result[x].careertype == 'Charting Regular'){
+            result[x].careertype = 'Regular Charter for Hire';
+
+          }else if(result[x].careertype == 'Charting Luxury'){
+            result[x].careertype = 'Luxurious Charter for Hire';
+
+          }
         }
-      })
-    })
-    req.end()
+        result[x].unsecure = decodeEntities(result[x].unsecure);
+        result[x].unsecure = truncate(result[x].unsecure, 10);
+        result[x].price = result[x].price+' aUEC';
+        if(result[x].escrow == 1){
+          result[x].escrow = "Active";
+        }else{
+          result[x].escrow = "Inactive";
+        }
+        newCreator[x] = { name: result[x].u_creator, value: result[x].careertype, inline: true };
+        newPrice[x] = { name: 'Price', value: numberWithCommas(result[x].price), inline: true };
+        newEscrow[x] = { name: 'Escrow', value:result[x].escrow, inline:true };
+        newDesc[x] = { name: 'Description', value:result[x].unsecure, inline:true };
+        spacer = { name: '\u200B', value: '\u200B' };
+      }
+      p++;
+      var embed = new MessageEmbed()
+        .setColor(0x44a4dc)
+        .setAuthor('MobiTracker Contracts', 'https://mobitracker.co/android-chrome-512x512.png', 'https://mobitracker.co/contracts')
+        .setTitle('Page '+p+' of '+mp)
+        .setFooter('Contracts - Mobitracker.co');
+      for(var x = 0; x < result.length; x++){
+        embed.addFields(newCreator[x]);
+        embed.addFields(newPrice[x]);
+        embed.addFields(newEscrow[x]);
+        embed.addFields(newDesc[x]);
+        if(x != result.length-1){
+          embed.addFields(spacer);
+        }
+      }
+      message.channel.send(embed);
+    });
   });
 }
-
-var truncate = function (elem, limit) {
-	if (!elem || !limit) return;
-	var content = elem.trim();
-	content = content.split(' ').slice(0, limit);
-	content = content.join(' ');
-	elem = content+'...';
-  return elem;
-};
-
-Object.size = function(obj) {
-  var size = 0, key;
-  for (key in obj) {
-      if (obj.hasOwnProperty(key)) size++;
-  }
-  return size;
-};
-
-
-
-function readAttachment(message, url){
-  const options = {
-    hostname: 'cdn.discordapp.com',
-    port: 443,
-    path: url,
-    method: 'GET'
-  }
-  const req = https.request(options, res =>{
-    var body = "";
-    res.on('data', d => {
-      body += d;
-    })
-    res.on('error', error => {
-      console.error(error)
-    })
-    res.on('end', async function(){
-      if (!body.startsWith(prefix)) return;
-      var args = body.slice(prefix.length).trim().split(/\s+/);
-      const command = args.shift().toLowerCase();
-      if(command === 'search'){
-        if (!args.length){
-      		return message.channel.send(`You didnt provide a username.`);
-      	}
-        if(args.length > 1){
-          addQueue(message, args);
-        }
-      }
-    })
-  })
-  req.end();
-}
-
-client.on('message', async message => {
-  if (message.content.includes("https://robertsspaceindustries.com/citizens/")){
-    var handle = message.content.split("/");
-    handle = handle.pop();
-    if(handle.includes(" ")) handle = handle.substr(0,handle.indexOf(' '));
-    client.channels.cache.get("827064226807283722").send(message.member.user.tag+" linked a handle: "+handle);
-    client.channels.cache.get("827064226807283722").send("!search "+handle);
-  }else if (message.attachments){
-    message.attachments.map((currElement, index) => {
-      if(currElement.url.includes("message.txt")){
-        readAttachment(message, currElement.url.slice(26));
-      }
-    });
-  }
-  if (!message.content.startsWith(prefix)) return;
-  var args = message.content.slice(prefix.length).trim().split(/\s+/);
-  const command = args.shift().toLowerCase();
-
-  if (command === 'search'){
-  	if (!args.length){
-  		return message.channel.send(`You didnt provide a username.`);
-  	}
-    if(args.length > 1){
-      addQueue(message, args);
-    }else{
-      lookUp(args.length, message, args);
-    }
-  }
-
-  if(command == 'contracts'){
-    showContracts(message, args);
-  }
-
-  if(command == 'alerts'){
-    toggleAlerts(message, args);
-  }
-
-  if(command == 'register'){
-    registerUser(message, args);
-  }
-
-  if(command == 'help'){
-    message.channel.send("MobiTracker's Discord bot is very simple to use! \n\n!help - Bring up this help message \n\n!search USERNAME - Find any user in the verse by their ingame name quickly and displaying all the information you'd find online at https://mobitracker.co \n\n !contracts PAGENUMBER - Search through MobiTrackers Contracts by the page number and See what people are doing! \n\n!auth - The command to authorize and edit your alert policies! \nGet your auth token at https://mobitracker.co/discord \n\n!alerts on/off - Pause and Resume your alert policy!");
-  }
-
-  /*
-  if(command == 'auth'){
-    if(!args.length){
-      return message.channel.send('Sign in at https://mobitracker.co/login and click the button at the top that says "Discord Bot". \nThen and copy the text provided and paste it here.');
-    }else if(args.length>1){
-      return message.channel.send('Too many arguments.');
-    }
-    jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
-      if(err){
-        if(err.message === 'jwt expired'){
-          message.author.send('This Token has expired!');
-        }else{
-          message.author.send('Invalid Token!');
-        }
-      }else{
-        if(decoded.cid != "" && decoded.username != ""){
-          const authUser = message.author;
-          delete decoded.exp;
-          decoded.update = false;
-          const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
-          const msg = {
-            type:"authDiscord",
-            token: token
-          };
-          const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
-          con.query(sql, function (err, result, fields){
-            if (err) throw err;
-            if(result.length > 0){
-              const sql = "SELECT contracts->'$.active' AS contracts, applicants->'$.active' AS applicants, reviews->'$.active' AS reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
-              con.query(sql, function (err, result, fields) {
-                if (err) throw err;
-                if(result.length > 0){
-                  if(decoded.contracts === result[0].contracts && decoded.applicants === result[0].applicants && decoded.reviews === result[0].reviews ){
-                    message.author.send('Your policies are the same. \nContracts: '+result[0].contracts+'\nApplicants & Escrow: '+result[0].applicants+'\nReviews: '+result[0].reviews);
-                  }else{
-                    decoded.update = true;
-                    const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
-                    const msg = {
-                      type:"authDiscord",
-                      token: token
-                    };
-                    wsClient.send(JSON.stringify(msg));
-                    message.author.send('Updated your alert policies!');
-                  }
-                }else{
-                  wsClient.send(JSON.stringify(msg));
-                  var span = "";
-                  if(decoded.contracts == 0 && decoded.reviews != 0){
-                    span = " for contract alerts.";
-                  }else if(decoded.contracts != 0 && decoded.reviews == 0){
-                    span = " for review alerts.";
-                  }else{
-                    span = " for contracts and review alerts.";
-                  }
-                  message.author.send('Your discord is now linked with '+decoded.username+''+span+' \nhttps://mobitracker.co/'+decoded.username+' \nRemember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
-                }
-              });
-            }else{
-              message.author.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
-            }
-          });
-        }else{
-          message.author.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
-        }
-      }
-    });
-  }
-  */
-  if (!message.content.startsWith(`${prefix}`)) return;
-});
-
 
 function xp(rep){
   rep = parseInt(rep);
