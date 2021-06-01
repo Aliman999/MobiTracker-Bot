@@ -646,7 +646,6 @@ client.on('message', async message => {
 
 async function registerUser(message, argz){
   if(argz.length > 0){
-    console.log(argz);
     await getKey().then((key) => {
       console.log(key);
       linkRSI(key);
@@ -788,6 +787,7 @@ async function registerUser(message, argz){
     var alreadyLinked = [];
     var ii = 0;
     var tries = 0;
+    console.log(argz);
     for(var i = 0; i < argz.length; i++){
       if(username.includes(argz[i])){
         alreadyLinked.push(argz[i]);
