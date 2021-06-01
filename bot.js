@@ -40,9 +40,13 @@ jobQueue.on("scheduled", function (info) {
 });
 
 jobQueue.on("executing", function (info) {
-  var queued = jobQueue.jobs("RUNNING");
+  var queued = jobQueue.jobs("QUEUED");
   var exec = jobQueue.counts().EXECUTING;
   console.log(queued);
+});
+
+jobQueue.on("error", function (error) {
+  console.log(error);
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
