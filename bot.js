@@ -31,17 +31,37 @@ jobQueue.on("received", function (info) {
 
 jobQueue.on("queued", function (info) {
   console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
-  info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
+  //info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
 });
 
 jobQueue.on("running", function (info) {
   console.log(jobQueue.jobs("RUNNING").join(", ")+" running");
-  info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
+  //info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
 });
 
 jobQueue.on("executing", function (info) {
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
-  info.args[3].edit("Running");
+  //info.args[3].edit("Running");
+});
+
+limiter.on("received", function (info) {
+  console.log(limiter.jobs("RECEIVED").join(", ")+" put into queue");
+  console.log(limiter.counts());
+});
+
+limiter.on("queued", function (info) {
+  console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
+  //info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
+});
+
+limiter.on("running", function (info) {
+  console.log(limiter.jobs("RUNNING").join(", ")+" running");
+  //info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
+});
+
+limiter.on("executing", function (info) {
+  console.log(limiter.jobs("EXECUTING").join(", ")+" executing");
+  //info.args[3].edit("Running");
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
