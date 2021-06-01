@@ -208,9 +208,7 @@ async function lookUp(count, message, args, msg){
   }
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    group.key(message.author.username).schedule(() => {
-      query(args[i], keys[i]);
-    });
+    group.key(message.author.username).schedule(query, args[i], keys[i]);
   }
 }
 
