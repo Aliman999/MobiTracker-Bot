@@ -17,15 +17,19 @@ var jwt = require('jsonwebtoken');
 var discordClients = [];
 var position = [];
 var update = [];
-const jobQueue = new Bottleneck({
-  maxConcurrent:1,
+const limiter = new Bottleneck({
+  maxConcurrent: 1,
   minTime: 333
+});
+const jobQueue = new Bottleneck({
+  maxConcurrent:1
 });
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function (info) {
   console.log(jobQueue.jobs("RECEIVED").join(", ")+" put into queue");
   console.log(jobQueue.counts());
+  console.log(info);
 });
 
 jobQueue.on("queued", function (info) {
@@ -44,6 +48,20 @@ jobQueue.on("executing", function (info) {
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   console.log(jobQueue.counts());
   //info.args[3].edit("Running");
+});
+
+limiter.on("received", function (info) {
+  update[0].edit("Running");
+});
+
+limiter.on("executing", function (info) {
+  if(position[0].author.username != info.args[2].author.username){
+    position.shift();
+    update.shift();
+    for(){
+
+    }
+  }
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
@@ -98,10 +116,7 @@ function getKey(){
 async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
   var msg = await message.channel.send("Preparing your request");
-  jobQueue.schedule( { id:message.author.username }, ()=>{
-    const allTasks = tasksArray.map(() => lookUp(args.length, message, args, msg));
-    return Promise.all(allTasks);
-  })
+  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
       msg.edit("You must wait for your current job to finish.");
@@ -229,21 +244,6 @@ async function lookUp(count, message, args, msg){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
     limiter.schedule(query, args[i], keys[i], message);
   }
-  var i = 0;
-  const int = setInterval(async () => {
-    if(i == (args.length-1)){
-      clearInterval(int);
-    }
-    if(message.author.id != "751252617451143219"){
-      if(message.channel.type == "text"){
-        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+arg+' in the '+message.guild.name+' server');
-      }else{
-        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+arg+' in '+message.channel.type+'s');
-      }
-    }
-    message.channel.send(await queryApi(arg, key));
-    i++;
-  }, 333);
 }
 
 function getUserFromMention(mention) {
