@@ -906,7 +906,7 @@ async function registerUser(message, argz){
         console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
         var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
         password = password.slice(0, password.length/2);
-        const sql = "INSERT INTO `discord` (discID, password) VALUES ("+message.author.id+", "+password+");";
+        const sql = "INSERT INTO `discord` (discID, password) VALUES ("+message.author.id+", '"+password+"');";
         con.query(sql, function (err, result, fields) {
           if(err) throw err;
         });
