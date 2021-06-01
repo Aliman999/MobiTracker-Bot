@@ -772,14 +772,14 @@ async function registerUser(message, argz){
           }
         }
       }else if(result.length > 0){
-        addRSI(result, key);
+        addRSI(result, key, argz);
       }else{
         firstRegister();
       }
     });
   }
 
-  function addRSI(result, key){
+  function addRSI(result, key, argz){
     var username = JSON.parse(result[0].username);
     var registeredCID = [];
     var failedNames = [];
