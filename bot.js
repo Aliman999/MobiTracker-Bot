@@ -27,16 +27,8 @@ const jobQueue = new Bottleneck({
 });
 const queueCounts = jobQueue.counts();
 
-jobQueue.on("received", function (info) {
-  console.log(jobQueue.jobs("RECEIVED").join(", ")+" put into queue");
-});
-
 jobQueue.on("queued", function (info) {
   console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
-});
-
-jobQueue.on("running", function (info) {
-  console.log(jobQueue.jobs("RUNNING").join(", ")+" running");
 });
 
 jobQueue.on("executing", function (info) {
@@ -226,20 +218,20 @@ async function lookUp(count, message, args, msg){
       keys.push(key);
     });
   }
-  const query = async function(arg, key){
-    if(message.author.id != "751252617451143219"){
-      if(message.channel.type == "text"){
-        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+arg+' in the '+message.guild.name+' server');
-      }else{
-        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+arg+' in '+message.channel.type+'s');
+  const query = async function(args, keys, message, i){
+    for(var i = 0; i < args.length; i++){
+      args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
+      if(message.author.id != "751252617451143219"){
+        if(message.channel.type == "text"){
+          console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in the '+message.guild.name+' server');
+        }else{
+          console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in '+message.channel.type+'s');
+        }
       }
+      message.channel.send(await queryApi(args[i], keys[i]));
     }
-    message.channel.send(await queryApi(arg, key));
   }
-  for(var i = 0; i < args.length; i++){
-    args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    limiter.schedule(query, args[i], keys[i], message);
-  }
+  limiter.schedule(query, args, keys, message, i);
 }
 
 function getUserFromMention(mention) {
