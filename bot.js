@@ -19,7 +19,6 @@ const group = new Bottleneck.Group({
   maxConcurrent: 1,
   minTime: 333
 });
-const groupCounts = group.counts();
 group.on("created", (limiter, key) => {
   console.log("A new batch was created for key: " + key)
 
