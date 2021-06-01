@@ -100,6 +100,7 @@ function getPrio(usrID){
     const sql = "SELECT priority FROM discord WHERE discID = "+usrID+";";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
+      console.log(result);
       if(result.length > 0){
         callback(result[0].priority);
       }else{
