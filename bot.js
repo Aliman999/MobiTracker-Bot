@@ -17,7 +17,7 @@ var jwt = require('jsonwebtoken');
 var discordClients = [];
 var position = [];
 var update = [];
-var updateBool = false;
+var updateBool = true;
 const limiter = new Bottleneck({
   maxConcurrent: 1,
   minTime: 333
@@ -45,7 +45,7 @@ jobQueue.on("executing", function (info) {
 
 limiter.on("received", function (info) {
   update[0].edit("Running");
-  if(updateBool){
+  if(position[0].author.username != info.args[2].author.username){
     for(var x = 1; x < update.length; x++){
       update[i].edit(i+" in Queue");
     }
