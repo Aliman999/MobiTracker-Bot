@@ -50,7 +50,7 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("executing", function (info) {
-  console.log(position);
+  position[0].message.channel.send("test");
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
