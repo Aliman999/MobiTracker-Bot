@@ -29,19 +29,15 @@ jobQueue.on("received", function (info) {
 });
 
 jobQueue.on("queued", function (info) {
-  info.args[3].edit(jobQueue.jobs("QUEUED").length+"in Queue");
-  console.log();
+  info.args[3].edit((jobQueue.jobs("QUEUED").length-1)+" in Queue");
 });
 
 jobQueue.on("scheduled", function (info) {
-  console.log(jobQueue.counts());
+  info.args[3].edit((jobQueue.jobs("SCHEDULED").length-1)+" in Queue");
 });
 
 jobQueue.on("executing", function (info) {
-  var queued = jobQueue.jobs("QUEUED");
-  var exec = jobQueue.jobs("EXECUTING");
-  console.log(queued);
-  console.log(exec);
+  info.args[3].edit(("Running");
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
