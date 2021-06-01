@@ -29,14 +29,17 @@ jobQueue.on("received", function (info) {
 });
 
 jobQueue.on("queued", function (info) {
+  console.log(jobQueue.counts());
   info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
 });
 
 jobQueue.on("scheduled", function (info) {
+  console.log(jobQueue.counts());
   info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
 });
 
 jobQueue.on("executing", function (info) {
+  console.log(jobQueue.counts());
   info.args[3].edit("Running");
 });
 
@@ -203,9 +206,6 @@ async function lookUp(count, message, args, msg){
     await getKey(args.length).then((key) => {
       keys.push(key);
     });
-  }
-  if(msg){
-    msg.edit("Ready to execute.");
   }
   const query = async function(arg, key){
     if(message.author.id != "751252617451143219"){
