@@ -58,9 +58,6 @@ limiter.on("executing", function (info) {
     updateBool = true;
     position.shift();
     update.shift();
-    for(){
-
-    }
   }
 });
 
