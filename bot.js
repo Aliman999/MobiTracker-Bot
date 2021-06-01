@@ -786,27 +786,27 @@ async function registerUser(message, argz){
     var alreadyLinked = [];
     var ii = 0;
     var tries = 0;
-    for(var i = 0; i < argz.length; i++){
-      if(username.includes(argz[i])){
-        alreadyLinked.push(argz[i]);
-        username.splice(username.indexOf(argz[i]), 1);
-        argz.splice(i, 1);
+    for(var xx = 0; xx < argz.length; xx++){
+      if(username.includes(argz[xx])){
+        alreadyLinked.push(argz[xx]);
+        username.splice(username.indexOf(argz[xx]), 1);
+        argz.splice(xx, 1);
       }
     }
     if(argz.length == 0){
       message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
       return;
     }
-    for(var i = 0; i < argz.length; i++){
+    for(var xx = 0; xx < argz.length; xx++){
       const options = {
         hostname: 'api.starcitizen-api.com',
         port: 443,
-        path: '/'+key+'/v1/live/user/'+escape(argz[i]),
+        path: '/'+key+'/v1/live/user/'+escape(argz[xx]),
         method: 'GET'
       }
       console.log(options);
 
-      retry(argz[i]);
+      retry(argz[xx]);
       function retry(name){
         const req = https.request(options, res =>{
           var body = "";
@@ -840,7 +840,7 @@ async function registerUser(message, argz){
                       }
                     }
                   }
-                  if(ii == argz.length-1){
+                  if(xx == argz.length-1){
                     var rString = "", fString = "", aString = "";
                     if(username.length > 0){
                       rString = "Registered: "+username.join(", ")+" ";
