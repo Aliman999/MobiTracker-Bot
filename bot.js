@@ -58,9 +58,6 @@ limiter.on("executing", function (info) {
   if(position[0].author.username != info.args[2].author.username){
     position.shift();
     update.shift();
-    for(){
-
-    }
   }
 });
 
