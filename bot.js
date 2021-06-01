@@ -57,7 +57,6 @@ limiter.on("received", function (info) {
 limiter.on("executing", function (info) {
   if(position[0].author.username != info.args[2].author.username){
     console.log(position[0].author.username+" job finished");
-    update[0].edit("Running");
     position.shift();
     update.shift();
   }
