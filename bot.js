@@ -225,7 +225,8 @@ function numberWithCommas(x) {
 async function lookUp(count, message, args, msg){
   var args = args;
   var keys = [];
-  prio = await getPrio(message.author.id);
+  var prio = await getPrio(message.author.id);
+  console.log(prio);
   for(var i = 0; i < args.length; i++){
     console.log(i);
     await getKey(args.length).then((key) => {
