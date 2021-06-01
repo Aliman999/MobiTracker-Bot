@@ -52,10 +52,7 @@ limiter.on("executing", function (info) {
     position.shift();
     update.shift();
     console.log(position[0].author.username+" job started");
-    for(var x = 0; x < position.length; x++){
-      console.log(position[i].author.username+" is "+i+" in queue");
-      updateQueue(update[i], (i+" in Queue"));
-    }
+    updateQueue(position, update, i);
   }
 });
 
@@ -125,7 +122,10 @@ async function addQueue(message, args){
   });
 }
 
-function updateQueue(message, msg){
+function updateQueue(position, update, i){
+  for(var x = 0; x < position.length; x++){
+    console.log(position[i].author.username+" is "+i+" in queue");
+  }
   console.log(msg);
   //message.edit(msg);
 }
