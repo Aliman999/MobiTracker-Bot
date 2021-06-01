@@ -49,6 +49,7 @@ limiter.on("received", function (info) {
 limiter.on("executing", function (info) {
   if(position[0].author.username != info.args[2].author.username){
     console.log(position[0].author.username+" job finished");
+    position.channel.send("Finished");
     position.shift();
     update.shift();
     console.log(position[0].author.username+" job started");
