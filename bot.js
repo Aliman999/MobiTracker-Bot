@@ -780,7 +780,7 @@ async function registerUser(message, argz){
   }
 
   function addRSI(result, key){
-    if(result.length > 0){
+    if(result[0].username){
       var username = JSON.parse(result[0].username);
     }else{
       var username = [''];
