@@ -52,6 +52,9 @@ limiter.on("executing", function (info) {
     console.log(position[0].author.username+" job finished");
     position.shift();
     update.shift();
+    for(var ii = 0; ii < 5; ii++){
+      console.log(ii);
+    }
     console.log(position[0].author.username+" job started");
     console.log(position);
     //update[0].edit("Testing");
