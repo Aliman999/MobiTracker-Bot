@@ -141,7 +141,7 @@ function getKey(){
 async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
   var msg = await message.channel.send("Preparing your request");
-  jobQueue.schedule(lookUp, args.length, message, args, msg);
+  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg);
 }
 
 
@@ -263,7 +263,7 @@ async function lookUp(count, message, args, msg){
   }
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    limiter.schedule( {id:message.author.username}, query, args[i], keys[i]);
+    limiter.schedule(query, args[i], keys[i]);
   }
 }
 
