@@ -229,10 +229,10 @@ async function lookUp(count, message, args, msg){
     }
     message.channel.send(await queryApi(arg, key));
   }
-  position.push(message.author.username);
+  position.push(message);
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    limiter.schedule(query, args[i], keys[i], message.author.username);
+    limiter.schedule(query, args[i], keys[i], message);
   }
 }
 
