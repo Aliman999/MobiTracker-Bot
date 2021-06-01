@@ -53,7 +53,7 @@ limiter.on("executing", function (info) {
     position.shift();
     update.shift();
     for(var x = 1; x < update.length; x++){
-      console.log(update[i].author.username+" is "+i+" in queue");
+      console.log(position[i].author.username+" is "+i+" in queue");
       //update[i].edit(i+" in Queue");
     }
   }
