@@ -100,7 +100,6 @@ function getPrio(usrID){
     const sql = "SELECT priority FROM discord WHERE discID = "+usrID+";";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
-      console.log(result);
       if(result.length > 0){
         cbPrio(result[0].priority);
       }else{
@@ -228,6 +227,7 @@ async function lookUp(count, message, args, msg){
   var keys = [];
   prio = await getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
+    console.log(i);
     await getKey(args.length).then((key) => {
       keys.push(key);
     });
