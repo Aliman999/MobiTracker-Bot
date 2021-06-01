@@ -55,6 +55,7 @@ limiter.on("executing", function (info) {
     console.log(position[0].author.username+" job started");
     for(var ii = 0; ii < position.length; ii++){
       console.log(position[ii].author.username+" is "+ii+" in queue");
+      update[ii].edit(ii+" in Queue");
     }
   }
 });
