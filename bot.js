@@ -44,14 +44,6 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("received", function (info) {
-  console.log(update[0].author.username+" running");
-  //update[0].edit("Running");
-  if(position[0].author.username != info.args[2].author.username){
-    for(var x = 1; x < update.length; x++){
-      console.log(update[i].author.username+" is "+i+" in queue");
-      //update[i].edit(i+" in Queue");
-    }
-  }
 });
 
 limiter.on("executing", function (info) {
