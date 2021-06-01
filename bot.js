@@ -810,7 +810,6 @@ async function registerUser(message, argz){
         path: '/'+key+'/v1/live/user/'+escape(argz[i]),
         method: 'GET'
       }
-      console.log(options);
 
       retry(argz[i]);
       function retry(name){
@@ -871,7 +870,6 @@ async function registerUser(message, argz){
 
                     if(registeredCID.length > 0){
                       const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
-                      console.log(sql);
                       con.query(sql);
                     }
 
