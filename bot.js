@@ -96,15 +96,15 @@ function getKey(){
 }
 
 function getPrio(usrID){
-  return new Promise(callback =>{
+  return new Promise(cbPrio =>{
     const sql = "SELECT priority FROM discord WHERE discID = "+usrID+";";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
       console.log(result);
       if(result.length > 0){
-        callback(result[0].priority);
+        cbPrio(result[0].priority);
       }else{
-        callback(9);
+        cbPrio(9);
       }
     });
   })
@@ -232,6 +232,7 @@ async function lookUp(count, message, args, msg){
       keys.push(key);
     });
   }
+  console.log(message.author.username+" Priority: "+prio);
   const query = async function(args, keys, message, i){
     for(var i = 0; i < args.length; i++){
       args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
@@ -245,7 +246,6 @@ async function lookUp(count, message, args, msg){
       message.channel.send(await queryApi(args[i], keys[i]));
     }
   }
-  console.log(message.author.username+" Priority: "+prio);
   limiter.schedule({priority:prio}, query, args, keys, message, i);
 }
 
