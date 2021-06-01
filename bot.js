@@ -48,26 +48,7 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("received", function (info) {
-  console.log(limiter.jobs("RECEIVED").join(", ")+" put into queue");
-  console.log(limiter.counts());
-});
-
-limiter.on("queued", function (info) {
-  console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
-  console.log(limiter.counts());
-  //info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
-});
-
-limiter.on("running", function (info) {
-  console.log(limiter.jobs("RUNNING").join(", ")+" running");
-  console.log(limiter.counts());
-  //info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
-});
-
-limiter.on("executing", function (info) {
-  console.log(limiter.jobs("EXECUTING").join(", ")+" executing");
-  console.log(limiter.counts());
-  //info.args[3].edit("Running");
+  console.log(info);
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
