@@ -19,6 +19,13 @@ const limiter = new Bottleneck({
   maxConcurrent: 1,
   minTime: 333
 });
+const jobQueue = new Bottleneck({
+  maxConcurrent:1
+});
+const queueCounts = jobQueue.counts();
+jobQueue.on('received', (info) => {
+  console.log(info);
+});
 
 const queue = new Array();
 const success = new Array();
@@ -27,7 +34,7 @@ let i = 0;
 let j = 0;
 
 // Once the limiter is idle, print out all the stats.
-limiter.on("idle", function () {
+jobQueue.on("idle", function () {
   // Give it a second to recieve the final success statement
   setTimeout(() => {
     console.log('************ QUEUE STATS *****************');
@@ -44,8 +51,8 @@ limiter.on("idle", function () {
 
 
 // Show a live status on what is happening in the queue.
-limiter.on("queued", function (info) {
-  console.log(limiter.counts());
+jobQueue.on("queued", function (info) {
+  console.log(jobQueue.counts());
 });
 
 // Add the times to each of the id's added to the queue so that we can work out how long each takes
@@ -81,13 +88,6 @@ function addToQueue(id, api, company) {
 
 
 
-const jobQueue = new Bottleneck({
-  maxConcurrent:1
-});
-const queueCounts = jobQueue.counts();
-jobQueue.on('received', (info) => {
-  console.log(info);
-});
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
