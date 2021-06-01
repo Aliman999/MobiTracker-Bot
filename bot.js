@@ -27,12 +27,6 @@ jobQueue.on('received', (info) => {
   console.log(info);
 });
 
-const queue = new Array();
-const success = new Array();
-const error = new Array();
-let i = 0;
-let j = 0;
-
 jobQueue.on("received", function (info) {
   console.log(jobQueue.counts());
 });
@@ -46,7 +40,9 @@ jobQueue.on("scheduled", function (info) {
 });
 
 jobQueue.on("executing", function (info) {
-  console.log(jobQueue.counts());
+  var queued = jobQueue.jobs("RUNNING");
+  var exec = jobQueue.counts().EXECUTING;
+  console.log(queued);
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
