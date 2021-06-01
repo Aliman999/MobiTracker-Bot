@@ -831,7 +831,7 @@ async function registerUser(message, argz){
                     }catch{
                     }
                     if(crypto == "mt.co"){
-                      if(username === undefined || username.length == 0){
+                      if(username == null){
                         username.push(user.data.profile.handle);
                         registeredCID.push(user.data.profile.id.substring(1));
                       }else{
