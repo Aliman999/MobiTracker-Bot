@@ -34,7 +34,7 @@ jobQueue.on("queued", function (info) {
   info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
 });
 
-jobQueue.on("scheduled", function (info) {
+jobQueue.on("running", function (info) {
   console.log(jobQueue.jobs("RUNNING"));
   info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
 });
