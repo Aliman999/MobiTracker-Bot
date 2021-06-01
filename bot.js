@@ -22,9 +22,7 @@ const limiter = new Bottleneck({
   maxConcurrent: 1,
   minTime:333
 });
-const jobQueue = new Bottleneck({
-  maxConcurrent:1
-});
+const jobQueue = new Bottleneck();
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("queued", function (info) {
