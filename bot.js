@@ -48,7 +48,14 @@ limiter.on("received", function (info) {
 
 limiter.on("executing", function (info) {
   if(position[0].author.username != info.args[2].author.username){
-    updateQueue(position, update, i);
+    console.log(position[0].author.username+" job finished");
+    position.shift();
+    update.shift();
+    console.log(position[0].author.username+" job started");
+    for(var x = 0; x < position.length; x++){
+      console.log(position[i].author.username+" is "+i+" in queue");
+    }
+    update[0].edit("Testing");
   }
 });
 
@@ -116,18 +123,6 @@ async function addQueue(message, args){
       msg.edit("You must wait for your current job to finish.");
     }
   });
-}
-
-function updateQueue(position, update, i){
-  console.log(position[0].author.username+" job finished");
-  position.shift();
-  update.shift();
-  console.log(position[0].author.username+" job started");
-  for(var x = 0; x < position.length; x++){
-    console.log(position[i].author.username+" is "+i+" in queue");
-  }
-  //console.log(msg);
-  //message.edit(msg);
 }
 
 
