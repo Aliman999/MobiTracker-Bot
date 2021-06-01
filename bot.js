@@ -100,11 +100,9 @@ function getKey(){
 function getPrio(usrID){
   return new Promise(callback =>{
     const sql = "SELECT priority FROM discord WHERE discID = "+usrID+";";
-    console.log(sql);
     con.query(sql, function (err, result, fields){
       if(err) throw err;
       if(result.length > 0){
-        console.log(result[0].priority);
         callback(result[0].priority);
       }else{
         callback(9);
