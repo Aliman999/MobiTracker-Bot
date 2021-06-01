@@ -786,12 +786,13 @@ async function registerUser(message, argz){
     var alreadyLinked = [];
     var ii = 0;
     var tries = 0;
-    for(var i = 0; i < argz.length; i++){
-    console.log(argz[i]);
-      if(username.includes(argz[i])){
-        alreadyLinked.push(argz[i]);
-        username.splice(username.indexOf(argz[i]), 1);
-        argz.splice(i, 1);
+    if(username.length > 0){
+      for(var i = 0; i < argz.length; i++){
+        if(username.includes(argz[i])){
+          alreadyLinked.push(argz[i]);
+          username.splice(username.indexOf(argz[i]), 1);
+          argz.splice(i, 1);
+        }
       }
     }
     if(argz.length == 0){
@@ -901,7 +902,6 @@ async function registerUser(message, argz){
     const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
     const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
-
       if(err) throw err;
       if(result.length == 0){
         console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
@@ -910,11 +910,7 @@ async function registerUser(message, argz){
         const sql = "INSERT INTO `discord` (discID) VALUES ("+message.author.id+");";
         con.query(sql, function (err, result, fields) {
           if(err) throw err;
-
         });
-      }
-      if(err){
-        console.log(err);
       }
     });
     message.channel.send(registerP1);
