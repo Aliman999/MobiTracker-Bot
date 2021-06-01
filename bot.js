@@ -84,7 +84,7 @@ function getKey(){
   })
 }
 
-function addQueue(message, args){
+async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
   var msg = await message.channel.send("Preparing your request");
   queue.schedule( { id:"queue" }, lookUp, args.length, message, args, msg);
