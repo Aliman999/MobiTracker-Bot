@@ -15,13 +15,23 @@ const schedule = require('node-schedule');
 require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
-const jobs = new Bottleneck({
+const group = new Bottleneck.Group({
   maxConcurrent: 1,
   minTime: 333
 });
-const queue = new Bottleneck();
+const groupCounts = group.counts();
+group.on("created", (limiter, key) => {
+  console.log("A new batch was created for key: " + key)
 
-queue.on('scheduled', function(info){
+  // Prepare the limiter, for example we'll want to listen to its "error" events!
+  limiter.on("error", (err) => {
+    // Handle errors here
+  })
+});
+
+const queue = new Bottleneck();
+const queueCounts = queue.counts();
+queue.on('received', (info) => {
   console.log(info);
 });
 
@@ -73,6 +83,13 @@ function getKey(){
     });
   })
 }
+
+function addQueue(message, args){
+  console.log(message.author.username+" started request for "+args.length+" searches.");
+  var msg = await message.channel.send("Preparing your request");
+  queue.schedule( { id:"queue" }, lookUp, args.length, message, args, msg);
+}
+
 
 schedule.scheduleJob('* * 0 * *', function(){
   var stats = {
@@ -192,7 +209,9 @@ async function lookUp(count, message, args, msg){
   }
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    jobs.schedule(query, args[i], keys[i]);
+    group.key(message.author.username).schedule(() => {
+      query(args[i], keys[i]);
+    });
   }
 }
 
@@ -915,9 +934,7 @@ function readAttachment(message, url){
       		return message.channel.send(`You didnt provide a username.`);
       	}
         if(args.length > 1){
-          console.log(message.author.username+" started request for "+args.length+" searches.");
-          var msg = await message.channel.send("Preparing your request");
-          queue.schedule(lookUp, args.length, message, args, msg);
+          addQueue(message, args);
         }
       }
     })
@@ -948,9 +965,7 @@ client.on('message', async message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}
     if(args.length > 1){
-      console.log(message.author.username+" started request for "+args.length+" searches.");
-      var msg = await message.channel.send("Preparing your request");
-      queue.schedule(lookUp, args.length, message, args, msg);
+      addQueue();
     }else{
       lookUp(args.length, message, args);
     }
