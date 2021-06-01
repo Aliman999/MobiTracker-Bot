@@ -44,6 +44,7 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("received", function (info) {
+  console.log(position);
 });
 
 limiter.on("executing", function (info) {
