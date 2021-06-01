@@ -15,6 +15,7 @@ const schedule = require('node-schedule');
 require('console-stamp')(console, 'HH:MM:ss.l');
 var jwt = require('jsonwebtoken');
 var discordClients = [];
+var position = [];
 const limiter = new Bottleneck({
   maxConcurrent: 1,
   minTime: 333
@@ -47,7 +48,7 @@ jobQueue.on("executing", function (info) {
   //info.args[3].edit("Running");
 });
 
-limiter.on("received", function (info) {
+limiter.on("executing", function (info) {
   console.log(info);
 });
 
@@ -225,9 +226,10 @@ async function lookUp(count, message, args, msg){
     }
     message.channel.send(await queryApi(arg, key));
   }
+  position.push(message.author.username);
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-    limiter.schedule(query, args[i], keys[i]);
+    limiter.schedule(query, args[i], keys[i], message.author.username);
   }
 }
 
