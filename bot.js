@@ -73,26 +73,6 @@ function addToQueue(id, api, company) {
       }
     }
 
-// in order to get a really random number for the ID to track it (running the api multiple times, so makes it easier to distinguish the id)
-    const id = Math.floor(( Math.random() * 1000) * ( Math.random() * 10) / Math.random() * 100);
-
-      const ops = {
-        priority: 2,
-        id: id
-      };
-
-      addToQueue(ops.id, 'api', body.customerId);
-
-      limiter.schedule(ops, () => axios.post(url, body, {
-        headers
-      })).then((res) => {
-        addToSuccess(ops.id, 'api', body.customerId);
-        res.status(200).json(JSON.parse(res.data));
-      }).catch((error) => {
-        addToError(ops.id, 'api', body.customerId);
-        res.status(500).send(error);
-      });
-
 
 
 
