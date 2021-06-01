@@ -823,7 +823,7 @@ async function registerUser(message, argz){
           res.on('end', function(){
             const user = JSON.parse(body);
             if(Object.keys(user.data).length > 0){
-              if(user.data.profile.id != "n/a"){
+              //if(user.data.profile.id != "n/a"){
                 if(user.data.profile.bio){
                   const bio = user.data.profile.bio.split(/\s+/);
                   for(var x = 0; x < bio.length; x++){
@@ -878,10 +878,10 @@ async function registerUser(message, argz){
                   message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
                   console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
                 }
-              }else{
-                message.channel.send(user.data.profile.handle+" unfortunately doesn't have a Citizen ID. \n\nThis is because:\n1. You don't own a Star Citizen Game Package\n2. Your game package was gifted and you need to add 45(USD) of credit to your account to get a Citizen ID.");
-                console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
-              }
+              //}else{
+              //  message.channel.send(user.data.profile.handle+" unfortunately doesn't have a Citizen ID. \n\nThis is because:\n1. You don't own a Star Citizen Game Package\n2. Your game package was gifted and you need to add 45(USD) of credit to your account to get a Citizen ID.");
+              //  console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No ID)");
+              //}
             }else{
               if(tries != 1){
                 console.log("Failed to find "+name+", retrying.");
