@@ -113,7 +113,7 @@ function getKey(){
 async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
   if(position.length > 0){
-    var msg = await message.channel.send(position.length+" in queue");
+    var msg = await message.channel.send(position.length+" in Queue");
   }else{
     var msg = await message.channel.send("Preparing your request");
   }
