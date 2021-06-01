@@ -539,7 +539,7 @@ client.on('message', async message => {
       addQueue(message, args);
     }else{
       var msg = await message.channel.send("Preparing your request");
-      lookUp(args.length, message, args, msg, 2);
+      lookUp(args.length, message, args, msg, 7);
     }
   }
 
