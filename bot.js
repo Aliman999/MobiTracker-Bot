@@ -44,10 +44,12 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("received", function (info) {
-  update[0].edit("Running");
+  console.log(update[0].author.username+" running");
+  //update[0].edit("Running");
   if(position[0].author.username != info.args[2].author.username){
     for(var x = 1; x < update.length; x++){
-      update[i].edit(i+" in Queue");
+      console.log(update[i].author.username+" is "+i+" in queue");
+      //update[i].edit(i+" in Queue");
     }
   }
 });
@@ -58,6 +60,10 @@ limiter.on("executing", function (info) {
     updateBool = true;
     position.shift();
     update.shift();
+    for(var x = 1; x < update.length; x++){
+      console.log(update[i].author.username+" is "+i+" in queue");
+      //update[i].edit(i+" in Queue");
+    }
   }
 });
 
@@ -113,6 +119,8 @@ function getKey(){
 async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
   var msg = await message.channel.send("Preparing your request");
+  position.push(message);
+  update.push(msg);
   jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
@@ -235,8 +243,6 @@ async function lookUp(count, message, args, msg){
     }
     message.channel.send(await queryApi(arg, key));
   }
-  position.push(message);
-  update.push(msg);
   for(var i = 0; i < args.length; i++){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
     limiter.schedule(query, args[i], keys[i], message);
