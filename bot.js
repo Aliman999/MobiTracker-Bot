@@ -18,9 +18,12 @@ var discordClients = [];
 var position = [];
 var update = [];
 var updateBool = true;
-const limiter = new Bottleneck({
+const group = new Bottleneck.Group({
   maxConcurrent: 1,
   minTime: 333
+});
+const limiter = new Bottleneck({
+  maxConcurrent: 1,
 });
 const jobQueue = new Bottleneck({
   maxConcurrent:1
