@@ -783,7 +783,7 @@ async function registerUser(message, argz){
     if(result.length > 0){
       var username = JSON.parse(result[0].username);
     }else{
-      var username = [];
+      var username = [''];
     }
     var registeredCID = [];
     var failedNames = [];
