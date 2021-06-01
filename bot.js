@@ -25,22 +25,22 @@ const jobQueue = new Bottleneck({
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function (info) {
-  console.log(jobQueue.jobs("RECEIVED"));
+  console.log(jobQueue.jobs("RECEIVED").join(", ")+" put into queue");
   console.log(jobQueue.counts());
 });
 
 jobQueue.on("queued", function (info) {
-  console.log(jobQueue.jobs("QUEUED"));
+  console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
   info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
 });
 
 jobQueue.on("running", function (info) {
-  console.log(jobQueue.jobs("RUNNING"));
+  console.log(jobQueue.jobs("RUNNING").join(", ")+" running");
   info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
 });
 
 jobQueue.on("executing", function (info) {
-  console.log(jobQueue.jobs("EXECUTING"));
+  console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   info.args[3].edit("Running");
 });
 
