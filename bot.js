@@ -50,6 +50,7 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("executing", function (info) {
+  console.log("Test");
   console.log(position[0].message.author.username);
 });
 
