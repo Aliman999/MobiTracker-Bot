@@ -964,7 +964,7 @@ client.on('message', async message => {
   		return message.channel.send(`You didnt provide a username.`);
   	}
     if(args.length > 1){
-      addQueue();
+      addQueue(message, args);
     }else{
       lookUp(args.length, message, args);
     }
