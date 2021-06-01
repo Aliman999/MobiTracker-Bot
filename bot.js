@@ -218,7 +218,7 @@ async function lookUp(count, message, args, msg){
       keys.push(key);
     });
   }
-  const query = function(args, keys, message, i){
+  const query = async function(args, keys, message, i){
     for(var i = 0; i < args.length; i++){
       args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
       if(message.author.id != "751252617451143219"){
@@ -228,7 +228,7 @@ async function lookUp(count, message, args, msg){
           console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in '+message.channel.type+'s');
         }
       }
-      message.channel.send(queryApi(args[i], keys[i]));
+      message.channel.send(await queryApi(args[i], keys[i]));
     }
   }
   limiter.schedule(query, args, keys, message, i);
