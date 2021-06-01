@@ -52,12 +52,10 @@ limiter.on("executing", function (info) {
     position.shift();
     update.shift();
     console.log(position[0].author.username+" job started");
-    /*
     for(var x = 0; x < position.length; x++){
       console.log(position[i].author.username+" is "+i+" in queue");
-      //update[i].edit(i+" in Queue");
+      updateQueue(update[i], (i+" in Queue"));
     }
-    */
   }
 });
 
@@ -125,6 +123,11 @@ async function addQueue(message, args){
       msg.edit("You must wait for your current job to finish.");
     }
   });
+}
+
+function updateQueue(message, msg){
+  console.log(msg);
+  //message.edit(msg);
 }
 
 
