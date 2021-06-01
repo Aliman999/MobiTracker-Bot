@@ -917,7 +917,7 @@ async function registerUser(message, argz){
         con.query(sql, function (err, result, fields) {
           if(err) throw err;
           client.users.fetch(message.author.id).then((user) =>{
-            user.send("You can now login to MobiTracker.co using your Registered RSI Handles."+"\n\nYour password to MobiTracker is "+password+);
+            user.send("You can now login to MobiTracker.co using your Registered RSI Handles."+"\n\nYour password to MobiTracker is "+password);
           });
         });
       }
