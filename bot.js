@@ -52,10 +52,8 @@ limiter.on("executing", function (info) {
     position.shift();
     update.shift();
     console.log(position[0].author.username+" job started");
-    for(var x = 0; x < position.length; x++){
-      console.log(position[i].author.username+" is "+i+" in queue");
-    }
-    update[0].edit("Testing");
+    console.log(position);
+    //update[0].edit("Testing");
   }
 });
 
