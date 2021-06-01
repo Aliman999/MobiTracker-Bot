@@ -43,10 +43,6 @@ jobQueue.on("executing", function (info) {
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
 });
 
-limiter.on("received", function (info) {
-  console.log(position);
-});
-
 limiter.on("executing", function (info) {
   if(position[0].author.username != info.args[2].author.username){
     console.log(position[0].author.username+" job finished");
