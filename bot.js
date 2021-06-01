@@ -31,16 +31,19 @@ jobQueue.on("received", function (info) {
 
 jobQueue.on("queued", function (info) {
   console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
+  console.log(jobQueue.counts());
   //info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
 });
 
 jobQueue.on("running", function (info) {
   console.log(jobQueue.jobs("RUNNING").join(", ")+" running");
+  console.log(jobQueue.counts());
   //info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
 });
 
 jobQueue.on("executing", function (info) {
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
+  console.log(jobQueue.counts());
   //info.args[3].edit("Running");
 });
 
@@ -51,16 +54,19 @@ limiter.on("received", function (info) {
 
 limiter.on("queued", function (info) {
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
+  console.log(limiter.counts());
   //info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
 });
 
 limiter.on("running", function (info) {
   console.log(limiter.jobs("RUNNING").join(", ")+" running");
+  console.log(limiter.counts());
   //info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
 });
 
 limiter.on("executing", function (info) {
   console.log(limiter.jobs("EXECUTING").join(", ")+" executing");
+  console.log(limiter.counts());
   //info.args[3].edit("Running");
 });
 
