@@ -97,6 +97,16 @@ function getKey(){
   })
 }
 
+function getPrio(usrID){
+  return new Promise(callback =>{
+    const sql = "SELECT prio FROM discord WHERE discID = "+usrID;
+    con.query(sql, function (err, result, fields){
+      console.log(result[0].pro);
+      callback(result[0].pro);
+    });
+  })
+}
+
 async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
   if(position.length > 0){
@@ -213,6 +223,7 @@ function numberWithCommas(x) {
 async function lookUp(count, message, args, msg, prio = 9){
   var args = args;
   var keys = [];
+  prio = getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then((key) => {
       keys.push(key);
