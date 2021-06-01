@@ -49,10 +49,9 @@ limiter.on("received", function (info) {
 limiter.on("executing", function (info) {
   if(position[0].author.username != info.args[2].author.username){
     console.log(position[0].author.username+" job finished");
-    updateBool = true;
     position.shift();
     update.shift();
-    for(var x = 1; x < update.length; x++){
+    for(var x = 0; x < position.length; x++){
       console.log(position[i].author.username+" is "+i+" in queue");
       //update[i].edit(i+" in Queue");
     }
@@ -110,7 +109,11 @@ function getKey(){
 
 async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
-  var msg = await message.channel.send("Preparing your request");
+  if(position.length > 0){
+    var msg = await message.channel.send(position.length+" in queue");
+  }else{
+    var msg = await message.channel.send("Preparing your request");
+  }
   position.push(message);
   update.push(msg);
   jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
