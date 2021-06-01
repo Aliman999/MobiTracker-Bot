@@ -28,6 +28,7 @@ const queueCounts = jobQueue.counts();
 jobQueue.on("received", function (info) {
   console.log(jobQueue.jobs("RECEIVED").join(", ")+" put into queue");
   console.log(jobQueue.counts());
+  console.log(info);
 });
 
 jobQueue.on("queued", function (info) {
@@ -49,7 +50,9 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("executing", function (info) {
-  console.log(position.indexOf("Kindmiss"));
+  if(position.indexOf(info.args[2]) < 0){
+
+  }
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
