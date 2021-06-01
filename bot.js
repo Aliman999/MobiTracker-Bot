@@ -30,7 +30,7 @@ jobQueue.on("received", function (info) {
 
 jobQueue.on("queued", function (info) {
   console.log(jobQueue.counts());
-  console.log(info.args);
+  info.args[2].edit("test");
 });
 
 jobQueue.on("scheduled", function (info) {
