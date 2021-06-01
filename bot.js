@@ -17,6 +17,7 @@ var jwt = require('jsonwebtoken');
 var discordClients = [];
 var position = [];
 var update = [];
+var updateBool = false;
 const limiter = new Bottleneck({
   maxConcurrent: 1,
   minTime: 333
@@ -28,37 +29,38 @@ const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function (info) {
   console.log(jobQueue.jobs("RECEIVED").join(", ")+" put into queue");
-  console.log(jobQueue.counts());
-  console.log(info);
 });
 
 jobQueue.on("queued", function (info) {
   console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
-  console.log(jobQueue.counts());
-  //info.args[3].edit((jobQueue.jobs("QUEUED").length)+" in Queue");
 });
 
 jobQueue.on("running", function (info) {
   console.log(jobQueue.jobs("RUNNING").join(", ")+" running");
-  console.log(jobQueue.counts());
-  //info.args[3].edit((jobQueue.jobs("SCHEDULED").length)+" in Queue");
 });
 
 jobQueue.on("executing", function (info) {
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
-  console.log(jobQueue.counts());
-  //info.args[3].edit("Running");
 });
 
 limiter.on("received", function (info) {
   update[0].edit("Running");
+  if(updateBool){
+    for(var x = 1; x < update.length; x++){
+      update[i].edit(i+" in Queue");
+    }
+  }
 });
 
 limiter.on("executing", function (info) {
   if(position[0].author.username != info.args[2].author.username){
     console.log(position[0].author.username+" job finished");
+    updateBool = true;
     position.shift();
     update.shift();
+    for(){
+
+    }
   }
 });
 
