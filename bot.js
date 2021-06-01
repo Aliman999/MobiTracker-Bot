@@ -738,9 +738,6 @@ async function registerUser(message, argz){
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"';";
                         con.query(sql, function (err, result, fields) {
                           if(err) throw err;
-                          client.users.fetch(message.author.id).then((user) =>{
-                            user.send("Your password to MobiTracker is "+password);
-                          });
                         });
 
                       }
@@ -919,6 +916,9 @@ async function registerUser(message, argz){
         const sql = "INSERT INTO `discord` (discID, password) VALUES ("+message.author.id+", '"+password+"');";
         con.query(sql, function (err, result, fields) {
           if(err) throw err;
+          client.users.fetch(message.author.id).then((user) =>{
+            user.send("Your password to MobiTracker is "+password);
+          });
         });
       }
     });
