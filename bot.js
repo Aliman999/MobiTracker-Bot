@@ -222,7 +222,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-async function lookUp(count, message, args, msg, boolPrio){
+async function lookUp(count, message, args, msg, boolPrio = false){
   var args = args;
   var keys = [];
   if(!boolPrio){
