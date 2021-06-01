@@ -29,8 +29,8 @@ jobQueue.on("received", function (info) {
 });
 
 jobQueue.on("queued", function (info) {
-  console.log(jobQueue.counts());
-  console.log(info.args[3]);
+  info.args[3].edit(jobQueue.jobs("QUEUED").length+"in Queue");
+  console.log();
 });
 
 jobQueue.on("scheduled", function (info) {
