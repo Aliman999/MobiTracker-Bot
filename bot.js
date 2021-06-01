@@ -101,11 +101,11 @@ function addToQueue(id, api, company) {
 
 
 
-const queue = new Bottleneck({
+const jobQueue = new Bottleneck({
   maxConcurrent:1
 });
-const queueCounts = queue.counts();
-queue.on('received', (info) => {
+const queueCounts = jobQueue.counts();
+jobQueue.on('received', (info) => {
   console.log(info);
 });
 
@@ -161,7 +161,7 @@ function getKey(){
 async function addQueue(message, args){
   console.log(message.author.username+" started request for "+args.length+" searches.");
   var msg = await message.channel.send("Preparing your request");
-  queue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg);
+  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg);
 }
 
 
