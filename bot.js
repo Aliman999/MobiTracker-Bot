@@ -780,19 +780,21 @@ async function registerUser(message, argz){
   }
 
   function addRSI(result, key){
-    var username = JSON.parse(result[0].username);
+    if(result.length > 0){
+      var username = JSON.parse(result[0].username);
+    }else{
+      var username = [];
+    }
     var registeredCID = [];
     var failedNames = [];
     var alreadyLinked = [];
     var ii = 0;
     var tries = 0;
-    if(username){
-      for(var i = 0; i < argz.length; i++){
-        if(username.includes(argz[i])){
-          alreadyLinked.push(argz[i]);
-          username.splice(username.indexOf(argz[i]), 1);
-          argz.splice(i, 1);
-        }
+    for(var i = 0; i < argz.length; i++){
+      if(username.includes(argz[i])){
+        alreadyLinked.push(argz[i]);
+        username.splice(username.indexOf(argz[i]), 1);
+        argz.splice(i, 1);
       }
     }
     if(argz.length == 0){
