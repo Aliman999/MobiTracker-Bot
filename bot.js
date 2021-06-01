@@ -49,8 +49,7 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("executing", function (info) {
-  console.log(info);
-  console.log(position.indexOf(info.args[2]));
+  console.log(position.join(", ")+" | "+info.args[2]);
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
