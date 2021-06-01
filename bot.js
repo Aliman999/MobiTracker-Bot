@@ -786,12 +786,13 @@ async function registerUser(message, argz){
     var alreadyLinked = [];
     var ii = 0;
     var tries = 0;
-    for(var i = 0; i < argz.length; i++){
-      console.log(username+" | "+argz);
-      if(username.includes(argz[i])){
-        alreadyLinked.push(argz[i]);
-        username.splice(username.indexOf(argz[i]), 1);
-        argz.splice(i, 1);
+    if(result[0].username){
+      for(var i = 0; i < argz.length; i++){
+        if(username.includes(argz[i])){
+          alreadyLinked.push(argz[i]);
+          username.splice(username.indexOf(argz[i]), 1);
+          argz.splice(i, 1);
+        }
       }
     }
     if(argz.length == 0){
@@ -830,11 +831,16 @@ async function registerUser(message, argz){
                     }catch{
                     }
                     if(crypto == "mt.co"){
-                      if(!username.includes(user.data.profile.handle)){
+                      if(username === undefined || username.length == 0){
                         username.push(user.data.profile.handle);
                         registeredCID.push(user.data.profile.id.substring(1));
+                      }else{
+                        if(!username.includes(user.data.profile.handle)){
+                          username.push(user.data.profile.handle);
+                          registeredCID.push(user.data.profile.id.substring(1));
+                        }
                       }
-                      x = bio.length
+                      x = bio.length;
                     }else{
                       if(x == bio.length-1){
                         failedNames.push(user.data.profile.handle);
