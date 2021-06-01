@@ -26,7 +26,6 @@ const queueCounts = jobQueue.counts();
 jobQueue.on("received", function (info) {
   console.log(jobQueue.jobs("RECEIVED").join(", ")+" put into queue");
   console.log(jobQueue.counts());
-  console.log(info);
 });
 
 jobQueue.on("queued", function (info) {
@@ -230,6 +229,21 @@ async function lookUp(count, message, args, msg){
     args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
     limiter.schedule(query, args[i], keys[i], message);
   }
+  var i = 0;
+  const int = setInterval(() => {
+    if(i == (args.length-1)){
+      clearInterval(int);
+    }
+    if(message.author.id != "751252617451143219"){
+      if(message.channel.type == "text"){
+        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+arg+' in the '+message.guild.name+' server');
+      }else{
+        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+arg+' in '+message.channel.type+'s');
+      }
+    }
+    message.channel.send(await queryApi(arg, key));
+    i++;
+  }, 333);
 }
 
 function getUserFromMention(mention) {
