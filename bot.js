@@ -18,12 +18,9 @@ var discordClients = [];
 var position = [];
 var update = [];
 var updateBool = true;
-const final = new Bottleneck({
-  maxConcurrent: 1,
-  minTime:333
-});
 const limiter = new Bottleneck({
   maxConcurrent: 1,
+  minTime:333
 });
 const jobQueue = new Bottleneck({
   maxConcurrent:1
@@ -223,17 +220,15 @@ async function lookUp(count, message, args, msg){
   }
   const query = function(args, keys, message, i){
     for(var i = 0; i < args.length; i++){
-      final.schedule((args, keys, message, i) => {
-        args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-        if(message.author.id != "751252617451143219"){
-          if(message.channel.type == "text"){
-            console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in the '+message.guild.name+' server');
-          }else{
-            console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in '+message.channel.type+'s');
-          }
+      args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
+      if(message.author.id != "751252617451143219"){
+        if(message.channel.type == "text"){
+          console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in the '+message.guild.name+' server');
+        }else{
+          console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in '+message.channel.type+'s');
         }
-        message.channel.send(queryApi(args[i], keys[i]));
-      });
+      }
+      message.channel.send(queryApi(args[i], keys[i]));
     }
   }
   limiter.schedule(query, args, keys, message, i);
