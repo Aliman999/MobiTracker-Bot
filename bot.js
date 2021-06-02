@@ -668,7 +668,9 @@ client.on('message', async message => {
 async function registerUser(message, argz){
   if(argz.length > 0){
     await getKey().then(async (key) => {
-      linkRSI(key);
+      await firstRegister(true).then(()=>{
+        linkRSI(key);
+      });
     });
   }else{
     firstRegister();
@@ -940,6 +942,8 @@ async function registerUser(message, argz){
               });
               callback();
             });
+          }else{
+            callback();
           }
         });
       }else{
