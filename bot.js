@@ -679,7 +679,8 @@ async function registerUser(message, argz){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      var exist = JSON.parse(result[0]);
+      console.log(result[0]);
+      var exist = { cid:JSON.parse(result[0].cID), username:JSON.parse(result[0].username) };
       if(exist.cid.length == 0){
         var args = [];
         for(var y = 0; y < argz.length; y++){
