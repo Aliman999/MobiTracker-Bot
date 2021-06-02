@@ -229,6 +229,7 @@ function numberWithCommas(x) {
 }
 
 function loading(percent, max){
+  console.log(Math.Round((percent/max)*100)+"%");
   return Math.Round((percent/max)*100)+"%";
 }
 
@@ -238,9 +239,9 @@ async function lookUp(count, message, args, msg){
   var percent = 0;
   message.author.prio = await getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
-    await getKey(args.length).then((key) => {
+    await getKey(args.length).then(async (key) => {
       keys.push(key);
-      msg.edit(loading(percent, args.length));
+      await msg.edit(loading(percent, args.length));
       percent++;
     });
   }
