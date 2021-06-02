@@ -680,7 +680,7 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       var exist = JSON.parse(result[0]);
-      if(result[0].length == 0){
+      if(exist.cid.length == 0){
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
@@ -793,7 +793,7 @@ async function registerUser(message, argz){
             req.end();
           }
         }
-      }else if(result[0].cid.length > 0){
+      }else if(exist.cid.length > 0){
         addRSI(result, key);
       }else{
         firstRegister();
