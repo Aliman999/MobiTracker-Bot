@@ -30,6 +30,7 @@ jobQueue.on("executing", function(info){
 });
 
 limiter.on("queued", function(info){
+  console.log(info);
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4], len:info[0].length });
   position.sort((a, b) => {
