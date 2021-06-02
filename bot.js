@@ -46,6 +46,7 @@ limiter.on("queued", function(info){
 });
 
 limiter.on("executing", function(info){
+  position[0].msg.edit("Running");
   console.log(position[0].id+' running');
 });
 
