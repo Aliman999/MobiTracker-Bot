@@ -228,13 +228,6 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function loading(percent, max){
-  var amnt = Math.round((percent/max)*100);
-  if(amnt%5 == 0){
-    return amnt+"%";
-  }
-}
-
 async function lookUp(count, message, args, msg){
   var args = args;
   var keys = [];
@@ -243,7 +236,9 @@ async function lookUp(count, message, args, msg){
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then(async (key) => {
       keys.push(key);
-      msg.edit(await loading(percent, args.length));
+      if(Math.round((percent/args.length)*100)%5 == 0){
+        msg.edit(Math.round((percent/args.length)*100)+"%");
+      }
       percent++;
     });
   }
