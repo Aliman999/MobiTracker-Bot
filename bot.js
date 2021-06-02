@@ -307,6 +307,7 @@ function queryApi(args, apiKey){
         try{
           var user = JSON.parse(body);
           if(user.data == null){
+            console.log(args+" returned null, retrying");
             queryApi(args, apiKey);
           }
         }catch(err){
