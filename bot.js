@@ -668,8 +668,8 @@ client.on('message', async message => {
 async function registerUser(message, argz){
   if(argz.length > 0){
     await getKey().then(async (key) => {
-      firstRegister();
-      linkRSI(key);
+      await firstRegister();
+      await linkRSI(key);
     });
   }else{
     firstRegister();
@@ -678,7 +678,7 @@ async function registerUser(message, argz){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      if(!result.length == 0){
+      if(!result[0].cid){
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
