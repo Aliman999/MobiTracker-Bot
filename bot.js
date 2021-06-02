@@ -34,9 +34,7 @@ limiter.on("queued", function(info){
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
   /*
   if(position.length > 0){
-    var msg = message.channel.send(position.length+" in Queue");
-  }else{
-    var msg = message.channel.send("Preparing your request");
+    msg.edit(position.length+" in Queue");
   }
   position.push(message);
   update.push(msg);
@@ -124,6 +122,7 @@ function getPrio(usrID){
 }
 
 async function addQueue(message, args){
+  var msg = message.channel.send("Preparing your request");
   jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
