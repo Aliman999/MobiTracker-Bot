@@ -256,6 +256,7 @@ async function lookUp(count, message, args, msg){
       }
       message.channel.send(await queryApi(args[i], keys[i]));
     }
+    return;
   }
   limiter.schedule({ priority:message.author.prio, id:message.author.username }, query, args, keys, message, i, msg);
 }
