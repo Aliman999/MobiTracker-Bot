@@ -231,17 +231,18 @@ function numberWithCommas(x) {
 async function lookUp(count, message, args, msg){
   var args = args;
   var keys = [];
-  var percent = 0;
+  var percent, nodupe = 0;
   message.author.prio = await getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then(async (key) => {
       keys.push(key);
-      console.log(Math.round((percent/args.length)*100));
-      if(Math.round((percent/args.length)*100)%5 == 0){
+      percent = Math.round((i/args.length)*100);
+      console.log(percent);
+      if(percent%5 == 0 && percent != nodupe){
+        nodupe = percent;
         console.log(Math.round((percent/args.length)*100)+"mod 5");
         msg.edit(Math.round((percent/args.length)*100)+"%");
       }
-      percent++;
     });
   }
   console.log(message.author.username+" Priority: "+message.author.prio);
