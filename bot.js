@@ -20,8 +20,7 @@ var update = [];
 var updateBool = true;
 const limiter = new Bottleneck({
   maxConcurrent: 1,
-  minTime:333,
-  trackDoneStatus: true
+  minTime:333
 });
 const jobQueue = new Bottleneck();
 const queueCounts = jobQueue.counts();
