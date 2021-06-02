@@ -237,7 +237,7 @@ async function lookUp(count, message, args, msg){
     await getKey(args.length).then(async (key) => {
       keys.push(key);
       percent = Math.round((i/args.length)*100);
-      if(percent != nodupe){
+      if(percent%5 == 0 && percent != nodupe){
         nodupe = percent;
         msg.edit("Preparing your request - "+percent+"%");
       }
