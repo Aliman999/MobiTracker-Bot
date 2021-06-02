@@ -240,8 +240,7 @@ async function lookUp(count, message, args, msg){
       console.log(percent);
       if(percent%5 == 0 && percent != nodupe){
         nodupe = percent;
-        console.log(percent+" mod 5");
-        msg.edit(percent+"%");
+        msg.edit("Preparing your request - "+percent+"%");
       }
     });
   }
