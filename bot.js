@@ -801,12 +801,7 @@ async function registerUser(message, argz){
   }
 
   function addRSI(result, key){
-    if(result[0].username){
-      var username = JSON.parse(result[0].username);
-    }else{
-      var username = [];
-    }
-    console.log(username);
+    var username = JSON.parse(result[0].username);
     var registeredCID = [];
     var failedNames = [];
     var alreadyLinked = [];
