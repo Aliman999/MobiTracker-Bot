@@ -38,7 +38,11 @@ limiter.on("queued", function(info){
   });
   position.forEach((e, iii) => {
     console.log(e.id+" | "+e.priority+" | "+iii+" in Queue");
-    e.msg.edit(iii+" in Queue");
+    if(iii == 0){
+      e.msg.edit("Running");
+    }else{
+      e.msg.edit(iii+" in Queue");
+    }
   });
 });
 
