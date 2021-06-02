@@ -668,7 +668,7 @@ client.on('message', async message => {
 async function registerUser(message, argz){
   if(argz.length > 0){
     await getKey().then(async (key) => {
-      await firstRegister().then(()=>{
+      await firstRegister(true).then(()=>{
         linkRSI(key);
       });
     });
@@ -924,27 +924,46 @@ async function registerUser(message, argz){
     }
   }
 
-  function firstRegister(){
+  function firstRegister(special = false){
     return new Promise(callback =>{
-      const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
-      const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
-      con.query(sql, function (err, result, fields) {
-        if(err) throw err;
-        if(result.length == 0){
-          console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
-          var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-          password = password.slice(0, password.length/2);
-          const sql = "INSERT INTO `discord` ( discUser, discID, password) VALUES ( '"+message.author.tag+"' ,"+message.author.id+", '"+password+"');";
-          con.query(sql, function (err, result, fields) {
-            if(err) throw err;
-            client.users.fetch(message.author.id).then((user) =>{
-              user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour password to MobiTracker is ```"+password+"```");
+      if(special){
+        con.query(sql, function (err, result, fields) {
+          if(err) throw err;
+          if(result.length == 0){
+            console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
+            var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
+            password = password.slice(0, password.length/2);
+            const sql = "INSERT INTO `discord` ( discUser, discID, password) VALUES ( '"+message.author.tag+"' ,"+message.author.id+", '"+password+"');";
+            con.query(sql, function (err, result, fields) {
+              if(err) throw err;
+              client.users.fetch(message.author.id).then((user) =>{
+                user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour password to MobiTracker is ```"+password+"```");
+              });
+              callback();
             });
-            callback();
-          });
-        }
-      });
-      message.channel.send(registerP1);
+          }
+        });
+      }else{
+        const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
+        const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
+        con.query(sql, function (err, result, fields) {
+          if(err) throw err;
+          if(result.length == 0){
+            console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
+            var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
+            password = password.slice(0, password.length/2);
+            const sql = "INSERT INTO `discord` ( discUser, discID, password) VALUES ( '"+message.author.tag+"' ,"+message.author.id+", '"+password+"');";
+            con.query(sql, function (err, result, fields) {
+              if(err) throw err;
+              client.users.fetch(message.author.id).then((user) =>{
+                user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour password to MobiTracker is ```"+password+"```");
+              });
+              callback();
+            });
+          }
+        });
+        message.channel.send(registerP1);
+      }
     })
   }
 }
