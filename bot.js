@@ -26,35 +26,32 @@ const limiter = new Bottleneck({
 const jobQueue = new Bottleneck();
 const queueCounts = jobQueue.counts();
 
-jobQueue.on("executing", function (info) {
+jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
 });
 
 limiter.on("queued", function(info){
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
-  position.push({ id:info.options.id, priority:info.options.priority });
-  update.push(info.args[4]);
+  position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4] });
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
-  position.forEach((e) => {
-    console.log(e.id+" | "+e.priority);
+  position.forEach((e, iii) => {
+    console.log(e.id+" | "+e.priority+" | "+iii+" in Queue");
+    e.msg.edit(iii+" in Queue");
   });
-
-  //msg.edit(position.length+" in Queue");
 });
 
-limiter.on("executing", function (info) {
-  console.log(position[0].id);
+limiter.on("executing", function(info){
+  console.log(position[0].id+' running');
 });
 
 limiter.on("done", function(info){
   console.log(position[0].id+" job finished");
-  update[0].channel.send("Finished");
-  update.shift();
+  position[0].message.channel.send("Finished");
   position.shift();
   for(var ii = 0; ii < position.length; ii++){
-    update[ii].edit(ii+" in Queue");
+    position[ii].msg.edit(ii+" in Queue");
   }
 });
 
