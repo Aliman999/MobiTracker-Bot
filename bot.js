@@ -241,7 +241,7 @@ async function lookUp(count, message, args, msg){
     await getKey(args.length).then(async (key) => {
       console.log("hello");
       keys.push(key);
-      msg.edit(await loading(percent, args.length));
+      msg.edit(i);
       percent++;
     });
   }
