@@ -673,8 +673,7 @@ async function registerUser(message, argz){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-
-      if(result.length == 0){
+      if(!result[0].cid){
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
@@ -785,7 +784,7 @@ async function registerUser(message, argz){
             req.end();
           }
         }
-      }else if(result.length > 0){
+      }else if(result[0].cid){
         addRSI(result, key);
       }else{
         firstRegister();
@@ -926,7 +925,7 @@ async function registerUser(message, argz){
         console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
         var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
         password = password.slice(0, password.length/2);
-        const sql = "INSERT INTO `discord` (discID, password) VALUES ("+message.author.id+", '"+password+"');";
+        const sql = "INSERT INTO `discord` ( discUser, discID, password) VALUES ( "+message.author.username+" ,"+message.author.id+", '"+password+"');";
         con.query(sql, function (err, result, fields) {
           if(err) throw err;
           client.users.fetch(message.author.id).then((user) =>{
