@@ -42,18 +42,25 @@ limiter.on("queued", function(info){
 });
 
 limiter.on("executing", function(info){
-  console.log(position.findIndex(info.options.id)+" in "+position.length);
-  position[position.findIndex(info.options.id)].msg.edit("Running");
-  console.log(position[0].id+' running');
+  for(var ind = 0; ind < position.length; ind++){
+    if(position[ind].id === info.options.id){
+      console.log(position[ind].id+" in "+ind);
+      position[ind].msg.edit("Running");
+      console.log(position[ind].id+' running');
+    }
+  }
 });
 
 limiter.on("done", function(info){
-  var index = position.findIndex(info.options.id);
-  console.log(position[index].id+" job finished");
-  position[index].message.channel.send("Finished "+position[index].len+" searches");
-  position.shift();
-  for(var ii = 0; ii < position.length; ii++){
-    position[ii].msg.edit(ii+" in Queue");
+  for(var ind = 0; ind < position.length; ind++){
+    if(position[ind].id === info.options.id){
+      console.log(position[ind].id+" job finished");
+      position[ind].message.channel.send("Finished "+position[index].len+" searches");
+      position.splice(ind, 1);
+      for(var ii = 0; ii < position.length; ii++){
+        position[ii].msg.edit(ii+" in Queue");
+      }
+    }
   }
 });
 
