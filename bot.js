@@ -37,14 +37,14 @@ limiter.on("queued", function(info){
   });
   position.forEach((e, iii) => {
     console.log(e.id+" | "+e.priority+" | "+iii+" in Queue");
-    e.msg.edit("**"+ii+" in Queue"+"**");
+    e.msg.edit("**[STATUS]: ** \u231A ```"+iii+" in Queue. Servers are busy, please wait in queue.```");
   });
 });
 
 limiter.on("executing", function(info){
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
-      position[ind].msg.edit("**Running**");
+      position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
       console.log(position[ind].id+' running');
     }
   }
@@ -54,10 +54,10 @@ limiter.on("done", function(info){
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
       console.log(position[ind].id+" job finished");
-      position[ind].message.channel.send("Finished "+position[ind].len+" searches");
+      position[ind].message.channel.send("**[STATUS]: ** \u2699 ```Finished "+position[ind].len+" searches.```");
       position.splice(ind, 1);
       for(var ii = 0; ii < position.length; ii++){
-        position[ii].msg.edit("**"+ii+" in Queue"+"**");
+        position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
       }
     }
   }
@@ -131,7 +131,7 @@ async function addQueue(message, args){
   jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
-      msg.edit("**You must wait for your current job to finish.**");
+      msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are currently busy, please wait.```");
     }
   });
 }
@@ -243,7 +243,7 @@ async function lookUp(count, message, args, msg){
       percent = Math.round((i/args.length)*100);
       if(percent%5 == 0 && percent != nodupe){
         nodupe = percent;
-        msg.edit("**Preparing your request - "+percent+"%**");
+        msg.edit("**[STATUS]: ** \u231B	 ```"+percent+"%  Our microtech datacenters are processing your request.```");
       }
     });
   }
