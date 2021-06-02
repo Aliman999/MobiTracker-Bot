@@ -228,14 +228,20 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function loading(percent, max){
+  return Math.Round((percent/max)*100)+"%";
+}
+
 async function lookUp(count, message, args, msg){
   var args = args;
   var keys = [];
+  var percent = 0;
   message.author.prio = await getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then((key) => {
       keys.push(key);
     });
+    msg.edit(await loading(percent, args.length));
   }
   console.log(message.author.username+" Priority: "+message.author.prio);
   const query = async function(args, keys, message, i){
