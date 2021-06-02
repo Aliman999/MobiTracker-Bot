@@ -45,26 +45,17 @@ limiter.on("queued", function(info){
 });
 
 limiter.on("executing", function (info) {
-  console.log(limiter.counts());
-  console.log(limiter.jobs("EXECUTING").join(", ")+" in Queue");
-  /*
-  if(position[0].author.username != info.args[2].author.username){
-    console.log(position[0].author.username+" job finished");
-    position.shift();
-    update.shift();
-    console.log(position[0].author.username+" job started");
-    for(var ii = 0; ii < position.length; ii++){
-      console.log(position[ii].author.username+" is "+ii+" in queue | Priority: "+position[ii].author.prio);
-      update[ii].edit(ii+" in Queue");
-    }
-  }
-  */
+  console.log(position[0].id);
 });
 
 limiter.on("done", function(info){
-  console.log(info);
-  position.shift();
+  console.log(position[0].id+" job finished");
+  update[0].channel.send("Finished");
   update.shift();
+  position.shift();
+  for(var ii = 0; ii < position.length; ii++){
+    update[ii].edit(ii+" in Queue");
+  }
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
