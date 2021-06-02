@@ -44,7 +44,6 @@ limiter.on("queued", function(info){
 limiter.on("executing", function(info){
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
-      console.log(position[ind].id+" in "+ind);
       position[ind].msg.edit("Running");
       console.log(position[ind].id+' running');
     }
@@ -760,7 +759,7 @@ async function registerUser(message, argz){
                       var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
                       password = password.substring(password.length/2, password.length);
 
-                      const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"';";
+                      const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"' WHERE discID = "+message.author.id+";";
                       con.query(sql, function (err, result, fields) {
                         if(err) throw err;
                       });
