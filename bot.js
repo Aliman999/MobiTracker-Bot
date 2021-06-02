@@ -927,6 +927,7 @@ async function registerUser(message, argz){
   function firstRegister(special = false){
     return new Promise(callback =>{
       if(special){
+        const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
         con.query(sql, function (err, result, fields) {
           if(err) throw err;
           if(result.length == 0){
