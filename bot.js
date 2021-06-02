@@ -48,8 +48,9 @@ limiter.on("executing", function(info){
 });
 
 limiter.on("done", function(info){
-  console.log(position[position.findIndex(info.options.id)].id+" job finished");
-  position[position.findIndex(info.options.id)].message.channel.send("Finished "+position[0].len+" searches");
+  var index = position.findIndex(info.options.id);
+  console.log(position[index].id+" job finished");
+  position[index].message.channel.send("Finished "+position[index].len+" searches");
   position.shift();
   for(var ii = 0; ii < position.length; ii++){
     position[ii].msg.edit(ii+" in Queue");
