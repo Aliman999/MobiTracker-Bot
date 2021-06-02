@@ -35,8 +35,16 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("queued", function(info){
-  console.log(info);
-
+  console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
+  /*
+  if(position.length > 0){
+    var msg = message.channel.send(position.length+" in Queue");
+  }else{
+    var msg = message.channel.send("Preparing your request");
+  }
+  position.push(message);
+  update.push(msg);
+  */
 });
 
 limiter.on("executing", function (info) {
