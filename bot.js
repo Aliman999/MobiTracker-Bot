@@ -711,6 +711,8 @@ async function registerUser(message, argz){
                     const bio = user.data.profile.bio.split(/\s+/);
                     if(user.data.profile.id != "n/a"){
                       user.data.profile.id = user.data.profile.id.substring(1);
+                    }else{
+                      user.data.profile.id = "";
                     }
                     for(var x = 0; x < bio.length; x++){
                       var encrypted = bio[x];
