@@ -26,10 +26,6 @@ const limiter = new Bottleneck({
 const jobQueue = new Bottleneck();
 const queueCounts = jobQueue.counts();
 
-jobQueue.on("queued", function (info) {
-  console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
-});
-
 jobQueue.on("executing", function (info) {
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
 });
@@ -49,6 +45,7 @@ limiter.on("queued", function(info){
 
 limiter.on("executing", function (info) {
   console.log(limiter.counts());
+  console.log(limiter.jobs("EXECUTING").join(", ")+" in Queue");
   /*
   if(position[0].author.username != info.args[2].author.username){
     console.log(position[0].author.username+" job finished");
