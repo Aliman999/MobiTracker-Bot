@@ -42,13 +42,14 @@ limiter.on("queued", function(info){
 });
 
 limiter.on("executing", function(info){
-  position[0].msg.edit("Running");
+  console.log(position.findIndex(info.options.id)+" in "+position.length);
+  position[position.findIndex(info.options.id)].msg.edit("Running");
   console.log(position[0].id+' running');
 });
 
 limiter.on("done", function(info){
-  console.log(position[0].id+" job finished");
-  position[0].message.channel.send("Finished "+position[0].len+" searches");
+  console.log(position[position.findIndex(info.options.id)].id+" job finished");
+  position[position.findIndex(info.options.id)].message.channel.send("Finished "+position[0].len+" searches");
   position.shift();
   for(var ii = 0; ii < position.length; ii++){
     position[ii].msg.edit(ii+" in Queue");
