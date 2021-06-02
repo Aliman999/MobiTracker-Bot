@@ -36,6 +36,7 @@ jobQueue.on("executing", function (info) {
 
 limiter.on("queued", function(info){
   console.log(info);
+
 });
 
 limiter.on("executing", function (info) {
@@ -118,14 +119,6 @@ function getPrio(usrID){
 }
 
 async function addQueue(message, args){
-  console.log(message.author.username+" started request for "+args.length+" searches.");
-  if(position.length > 0){
-    var msg = await message.channel.send(position.length+" in Queue");
-  }else{
-    var msg = await message.channel.send("Preparing your request");
-  }
-  position.push(message);
-  update.push(msg);
   jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
@@ -253,7 +246,7 @@ async function lookUp(count, message, args, msg){
       message.channel.send(await queryApi(args[i], keys[i]));
     }
   }
-  limiter.schedule({priority:message.author.prio}, query, args, keys, message, i);
+  limiter.schedule({ priority:message.author.prio, id:message.author.username }, query, args, keys, message, i, msg);
 }
 
 function getUserFromMention(mention) {
