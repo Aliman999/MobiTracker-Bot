@@ -32,8 +32,14 @@ jobQueue.on("executing", function (info) {
 limiter.on("queued", function(info){
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
   console.log(info);
-  position.push(info.options.id);
+  position.push({ id:info.options.id, priority:info.options.priority });
   update.push(info.args[4]);
+  position.sort((a, b) => {
+      return a.priority - b.priority;
+  });
+  position.forEach((e) => {
+    console.log(e.id+" | "+e.priority);
+  });
 
   //msg.edit(position.length+" in Queue");
 });
