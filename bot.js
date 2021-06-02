@@ -681,7 +681,7 @@ async function registerUser(message, argz){
       if(err) throw err;
       var exist = { cid:JSON.parse(result[0].cID), username:JSON.parse(result[0].username) };
       console.log(exist);
-      if(exist.cid.length == 0){
+      if(!exist.cid){
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
