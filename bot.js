@@ -123,7 +123,7 @@ function getPrio(usrID){
 }
 
 async function addQueue(message, args){
-  var msg = message.channel.send("Preparing your request");
+  var msg = await message.channel.send("Preparing your request");
   jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
