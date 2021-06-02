@@ -679,7 +679,7 @@ async function registerUser(message, argz){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      if(!result[0].cid){
+      if(result[0].cid.length == 0){
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
@@ -792,7 +792,7 @@ async function registerUser(message, argz){
             req.end();
           }
         }
-      }else if(result[0].cid){
+      }else if(result[0].cid.length > 0){
         addRSI(result, key);
       }else{
         firstRegister();
@@ -801,7 +801,11 @@ async function registerUser(message, argz){
   }
 
   function addRSI(result, key){
-    var username = JSON.parse(result[0].username);
+    if(result[0].username){
+      var username = JSON.parse(result[0].username);
+    }else{
+      var username = [];
+    }
     var registeredCID = [];
     var failedNames = [];
     var alreadyLinked = [];
