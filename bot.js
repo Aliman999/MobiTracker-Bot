@@ -229,9 +229,9 @@ function numberWithCommas(x) {
 }
 
 function loading(percent, max){
-  var amnt = Math.round((percent/max)*100)+"%";
+  var amnt = Math.round((percent/max)*100);
   if(amnt%5 == 0){
-    return amnt;
+    return amnt+"%";
   }
 }
 
