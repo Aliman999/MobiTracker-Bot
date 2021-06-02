@@ -240,8 +240,8 @@ async function lookUp(count, message, args, msg){
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then((key) => {
       keys.push(key);
+      msg.edit(await loading(percent, args.length));
     });
-    msg.edit(await loading(percent, args.length));
   }
   console.log(message.author.username+" Priority: "+message.author.prio);
   const query = async function(args, keys, message, i){
