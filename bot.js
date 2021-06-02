@@ -301,7 +301,7 @@ function queryApi(args, apiKey){
         body += d;
       })
       res.on('error', error => {
-        console.error(error);
+        console.log(error);
         console.log("Encountered an error, Retrying user "+args);
       })
       res.on('end', function(){
