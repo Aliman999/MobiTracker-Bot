@@ -241,7 +241,7 @@ async function lookUp(count, message, args, msg){
     await getKey(args.length).then(async (key) => {
       keys.push(key);
       console.log(Math.Round((percent/args.length)*100)+"%");
-      msg.edit(awaitloading(percent, args.length));
+      msg.edit(await loading(percent, args.length));
       percent++;
     });
   }
