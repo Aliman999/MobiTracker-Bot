@@ -235,8 +235,9 @@ async function lookUp(count, message, args, msg){
   message.author.prio = await getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then(async (key) => {
+      console.log(Math.round((percent/args.length)*100)+"%");
       keys.push(key);
-      msg.edit(Math.round((percent/args.length)*100)+"%");
+      //msg.edit();
       percent++;
     });
   }
