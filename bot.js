@@ -34,6 +34,10 @@ jobQueue.on("executing", function (info) {
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
 });
 
+limiter.on("queued", function(info){
+  console.log(info);
+});
+
 limiter.on("executing", function (info) {
   console.log(limiter.counts());
   /*
