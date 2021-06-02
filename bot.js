@@ -241,6 +241,7 @@ async function lookUp(count, message, args, msg){
     await getKey(args.length).then((key) => {
       keys.push(key);
       msg.edit(await loading(percent, args.length));
+      percent++;
     });
   }
   console.log(message.author.username+" Priority: "+message.author.prio);
