@@ -20,7 +20,8 @@ var update = [];
 var updateBool = true;
 const limiter = new Bottleneck({
   maxConcurrent: 1,
-  minTime:333
+  minTime:333,
+  trackDoneStatus: true
 });
 const jobQueue = new Bottleneck();
 const queueCounts = jobQueue.counts();
@@ -34,6 +35,8 @@ jobQueue.on("executing", function (info) {
 });
 
 limiter.on("executing", function (info) {
+  console.log(limiter.counts());
+  /*
   if(position[0].author.username != info.args[2].author.username){
     console.log(position[0].author.username+" job finished");
     position.shift();
@@ -44,6 +47,7 @@ limiter.on("executing", function (info) {
       update[ii].edit(ii+" in Queue");
     }
   }
+  */
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
