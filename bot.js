@@ -811,13 +811,11 @@ async function registerUser(message, argz){
     var alreadyLinked = [];
     var ii = 0;
     var tries = 0;
-    if(result[0].username){
-      for(var i = 0; i < argz.length; i++){
-        if(username.includes(argz[i])){
-          alreadyLinked.push(argz[i]);
-          username.splice(username.indexOf(argz[i]), 1);
-          argz.splice(i, 1);
-        }
+    for(var i = 0; i < argz.length; i++){
+      if(username.includes(argz[i])){
+        alreadyLinked.push(argz[i]);
+        username.splice(username.indexOf(argz[i]), 1);
+        argz.splice(i, 1);
       }
     }
     if(argz.length == 0){
