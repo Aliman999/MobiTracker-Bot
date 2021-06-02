@@ -32,13 +32,10 @@ jobQueue.on("executing", function (info) {
 limiter.on("queued", function(info){
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
   console.log(info);
-  /*
-  if(position.length > 0){
-    msg.edit(position.length+" in Queue");
-  }
-  position.push(message);
-  update.push(msg);
-  */
+  position.push(info.options.id);
+  update.push(info.args[4]);
+
+  //msg.edit(position.length+" in Queue");
 });
 
 limiter.on("executing", function (info) {
