@@ -32,6 +32,7 @@ jobQueue.on("executing", function (info) {
 
 limiter.on("queued", function(info){
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
+  console.log(info);
   /*
   if(position.length > 0){
     msg.edit(position.length+" in Queue");
