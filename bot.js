@@ -305,11 +305,14 @@ function queryApi(args, apiKey){
         console.log("Encountered an error, Retrying user "+args);
       })
       res.on('end', function(){
+        console.log("searched "+args);
         try{
           var user = JSON.parse(body);
           if(user.data == null){
             console.log(args+" returned null, retrying");
-            queryApi(args, apiKey);
+            setTimeout(() => {
+              queryApi(args, apiKey);
+            }, 1000);
           }
         }catch(err){
           var result = "Encountered an error, User: "+args;
