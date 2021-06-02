@@ -236,7 +236,7 @@ async function lookUp(count, message, args, msg){
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then(async (key) => {
       keys.push(key);
-      msg.edit(Math.Round((percent/args.length)*100)+"%");
+      msg.edit(Math.round((percent/args.length)*100)+"%");
       percent++;
     });
   }
