@@ -680,7 +680,6 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       var exist = { cid:JSON.parse(result[0].cID), username:JSON.parse(result[0].username) };
-      console.log(exist);
       if(!exist.cid){
         var args = [];
         for(var y = 0; y < argz.length; y++){
