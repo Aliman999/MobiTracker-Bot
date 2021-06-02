@@ -806,6 +806,7 @@ async function registerUser(message, argz){
     }else{
       var username = [];
     }
+    console.log(username);
     var registeredCID = [];
     var failedNames = [];
     var alreadyLinked = [];
