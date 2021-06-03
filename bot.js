@@ -344,10 +344,10 @@ function queryApi(args, apiKey){
 
             var rating = "";
             if(result.length == 0){
-              rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
+              rating = "No Vouches. \n[Login](https://mobitracker.co/login) to vouch for them.";
             }else{
               if(result[0].rating == -1){
-                rating = "No Reviews. \n[Login](https://mobitracker.co/login) to leave them a review.";
+                rating = "No Vouches. \n[Login](https://mobitracker.co/login) to vouch for them.";
               }else{
                 rating = xp(result[0].rating)+" ("+result[0].rating+")";
               }
