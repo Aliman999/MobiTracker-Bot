@@ -54,7 +54,7 @@ limiter.on("done", function(info){
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
       console.log(position[ind].id+" job finished");
-      position[ind].message.channel.send("**[STATUS]: ** \u2699 ```Finished "+position[ind].len+" searches.```");
+      position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
       position.splice(ind, 1);
       for(var ii = 0; ii < position.length; ii++){
         position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
