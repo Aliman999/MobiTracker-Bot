@@ -45,9 +45,10 @@ jobQueue.on("queued", function(info){
 
 jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
+  console.log(info.args[4]);
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.args[4]){
-      console.log("Removed "+info.args[4]);
+      console.log("Removed");
       position.splice(ind, 1);
     }
   }
