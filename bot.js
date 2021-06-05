@@ -71,25 +71,10 @@ group.on("created", (limiter, key) => {
       }
     }
   })
-  limiter.once("queued", function(){
-  })
-  limiter.once("executing", function(info){
-    console.log(info);
-    for(var ind = 0; ind < position.length; ind++){
-      if(position[ind].id === info.args[4]){
-        position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
-        console.log(position[ind].id+' running');
-      }
-    }
-  });
   limiter.on("done", function(info){
     if(count == info.args[5]){
-      for(var ind = 0; ind < position.length; ind++){
-        if(position[ind].id === info.args[4]){
-          position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
-          console.log(position[ind].id+' Finished');
-        }
-      }
+      info.args[2].channel.send("**[STATUS]: ** \uF4BE ```Finished "+info.args[5]+" searches.```");
+      console.log(position[ind].id+' Finished');
     }
     count++;
   })

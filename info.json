@@ -1,0 +1,63 @@
+{
+  args: [
+    'ChaffedButt', --- 0
+    'c032ae79fa8a389e5b6e2f17a191643e', --- 1
+    Message { --- 2
+      channel: [TextChannel],
+      deleted: false,
+      id: '850832297300983808',
+      type: 'DEFAULT',
+      system: false,
+      content: '',
+      author: [User],
+      pinned: false,
+      tts: false,
+      nonce: null,
+      embeds: [],
+      attachments: [Collection [Map]],
+      createdTimestamp: 1622924627376,
+      editedTimestamp: 0,
+      reactions: [ReactionManager],
+      mentions: [MessageMentions],
+      webhookID: null,
+      application: null,
+      activity: null,
+      _edits: [],
+      flags: [MessageFlags],
+      reference: null
+    },
+    Message { --- 3
+      channel: [TextChannel],
+      deleted: false,
+      id: '850832298760601610',
+      type: 'DEFAULT',
+      system: false,
+      content: '**[STATUS]: ** ⌛\t ```95%  Our microtech datacenters are processing your request.```',
+      author: [ClientUser],
+      pinned: false,
+      tts: false,
+      nonce: null,
+      embeds: [],
+      attachments: Collection [Map] {},
+      createdTimestamp: 1622924627724,
+      editedTimestamp: 1622924657617,
+      reactions: [ReactionManager],
+      mentions: [MessageMentions],
+      webhookID: null,
+      application: null,
+      activity: null,
+      _edits: [Array],
+      flags: [MessageFlags],
+      reference: null
+    },
+    'Aliman', --- 4
+    284 --- 5
+  ],
+  options: {
+    priority: 5,
+    weight: 1,
+    expiration: null,
+    id: '<no-id>-rdctbgt6sy'
+  },
+  retryCount: 0
+}
