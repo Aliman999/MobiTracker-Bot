@@ -32,47 +32,45 @@ jobQueue.on("received", function(info){
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
+  position.forEach((e, iii) => {
+    if(this.length > 1){
+      e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
+    }
+  });
 });
 
 jobQueue.on("queued", function(info){
   console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
   position.forEach((e, iii) => {
-    e.msg.edit("**[STATUS]: ** \u231A ```"+iii+" in Queue. Servers are busy, please wait in queue.```");
+    if(this.length > 1){
+      e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
+    }
   });
 });
 
 jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
-    if(position[ind].id === info.options.id){
-      //console.log(position[ind].id+' running');
+    if(position[ind].id === info.args[4]){
+      position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
+      console.log(position[ind].id+' running');
+      position.splice(ind, 1);
     }
   }
+  position.forEach((e, iii) => {
+    if(this.length > 1){
+      e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
+    }
+  });
 });
 
 jobQueue.on("done", function(info){
-  for(var ind = 0; ind < position.length; ind++){
-    if(position[ind].id === info.options.id){
-      for(var ii = 0; ii < position.length; ii++){
-        position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
-      }
-    }
-  }
+  console.log(info.id+" Finished.");
 });
 
 group.on("created", (limiter, key) => {
   var count = 0;
   limiter.once("received", function(info){
-    for(var ind = 0; ind < position.length; ind++){
-      if(position[ind].id === info.args[4]){
-        position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
-        console.log(position[ind].id+' running');
-        for(var ii = 0; ii < position.length; ii++){
-          position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
-        }
-        position.splice(ind, 1);
-      }
-    }
   })
   limiter.on("done", function(info){
     if(count == info.args[5]){
