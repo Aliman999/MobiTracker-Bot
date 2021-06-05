@@ -582,8 +582,7 @@ client.on('message', async message => {
     if(args.length > 1){
       addQueue(message, args);
     }else{
-      var msg = await message.channel.send("**[STATUS]: ** \u231B	 ```Our microtech datacenters are processing your request.```");
-      lookUp(args.length, message, args, msg);
+      addQueue(message, args);
     }
   }
 
