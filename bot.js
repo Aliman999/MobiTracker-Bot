@@ -33,7 +33,7 @@ jobQueue.on("received", function(info){
       return a.priority - b.priority;
   });
   position.forEach((e, iii) => {
-    if(this.length > 1){
+    if(position.length > 1){
       e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
     }
   });
@@ -42,7 +42,7 @@ jobQueue.on("received", function(info){
 jobQueue.on("queued", function(info){
   console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
   position.forEach((e, iii) => {
-    if(this.length > 1){
+    if(position.length > 1){
       e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
     }
   });
@@ -58,7 +58,7 @@ jobQueue.on("executing", function(info){
     }
   }
   position.forEach((e, iii) => {
-    if(this.length > 1){
+    if(position.length > 1){
       e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
     }
   });
