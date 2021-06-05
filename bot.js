@@ -75,13 +75,16 @@ group.on("created", (limiter, key) => {
     }
   });
   limiter.on("done", function(info){
-    position.splice(ind, 1);
-    console.log(position[ind].id+" | "+info.args[4]);
-    if(count == ){
-
+    if(count == info.args[5]){
+      for(var ind = 0; ind < position.length; ind++){
+        if(position[ind].id === info.args[4]){
+          position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
+          console.log(position[ind].id+' Finished');
+        }
+        position.splice(ind, 1);
+      }
     }
     count++;
-    //position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
   })
 });
 
