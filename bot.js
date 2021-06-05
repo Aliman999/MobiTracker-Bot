@@ -24,7 +24,7 @@ const group = new Bottleneck.Group({
 });
 group.on("created", (limiter, key) => {
   limiter.on("executing", function(info){
-    console.log(info);
+    console.log(position[ind].id+" | "+info.args[4]);
     for(var ind = 0; ind < position.length; ind++){
       if(position[ind].id === info.args[4]){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
@@ -32,6 +32,9 @@ group.on("created", (limiter, key) => {
       }
     }
   });
+  limiter.on("done", function(info){
+
+  })
 });
 const jobQueue = new Bottleneck({
   maxConcurrent: 3,
