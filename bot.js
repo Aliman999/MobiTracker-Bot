@@ -35,8 +35,7 @@ jobQueue.on("received", function(info){
 });
 
 jobQueue.on("queued", function(info){
-  console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
-    console.log("test");
+  console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
   position.forEach((e, iii) => {
     e.msg.edit("**[STATUS]: ** \u231A ```"+iii+" in Queue. Servers are busy, please wait in queue.```");
   });
