@@ -52,7 +52,7 @@ jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.args[4]){
-      console.log("Removed");
+      console.log("Removed "+info.args[4]);
       position.splice(ind, 1);
     }
   }
