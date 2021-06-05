@@ -316,84 +316,84 @@ function queryApi(args, apiKey){
             console.log(args+" returned null, retrying");
             queryApi(args, apiKey);
           }
+          if(Object.size(user.data) > 0){
+            cachePlayer(user.data);
+            if(Object.size(user.data.organization) > 1 && user.data.organization.name != ""){
+              user.data.organization.name = user.data.organization.rank+' ['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
+            }else if (user.data.organization.name == ""){
+              user.data.organization.name = "REDACTED";
+            }else{
+              user.data.organization.name = "None";
+            }
+            var cID = '';
+            if(user.data.profile.id != 'n/a'){
+              cID = " AND cID = "+user.data.profile.id.substring(1);
+            }else{
+              user.data.profile.id = '#No Citizen ID';
+            }
+            const sql = "SELECT reviewed_count as rating FROM players WHERE username = '"+user.data.profile.handle+"'"+cID+";";
+            con.query(sql, function (err, result, fields) {
+              if (err) throw err;
+
+              var rating = "";
+              if(result.length == 0){
+                rating = "No Vouches. \n[Login](https://mobitracker.co/login) to vouch for them.";
+              }else{
+                if(result[0].rating == -1){
+                  rating = "No Vouches. \n[Login](https://mobitracker.co/login) to vouch for them.";
+                }else{
+                  rating = xp(result[0].rating)+" ("+result[0].rating+")";
+                }
+              }
+              user.data.profile.enlisted = new Date(user.data.profile.enlisted);
+              user.data.profile.enlisted = ((user.data.profile.enlisted.getMonth() > 8) ? (user.data.profile.enlisted.getMonth() + 1) : ('0' + (user.data.profile.enlisted.getMonth() + 1))) + '/' + ((user.data.profile.enlisted.getDate() > 9) ? user.data.profile.enlisted.getDate() : ('0' + user.data.profile.enlisted.getDate())) + '/' + user.data.profile.enlisted.getFullYear();
+
+              embed = new MessageEmbed()
+                .setColor(0x25a6dd)
+                .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
+                .setDescription("AKA "+user.data.profile.display)
+                .setThumbnail(user.data.profile.image)
+                .addFields(
+                  { name: 'Badge', value: user.data.profile.badge, inline: true},
+                  { name: 'Mobitracker Vouchers', value: rating, inline: true},
+                  { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
+                  { name: 'Enlisted', value: user.data.profile.enlisted, inline: true}
+                 )
+                 .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
+              if(user.data.profile.location){
+                embed.addFields(
+                  { name: 'Location', value: user.data.profile.location.region+", "+user.data.profile.location.country, inline: true}
+                );
+              }else{
+                embed.addFields(
+                  { name: 'Location', value: "REDACTED", inline: true}
+                );
+              }
+              if(user.data.profile.fluency){
+                embed.addFields(
+                  { name: 'Languages', value: user.data.profile.fluency.join(", "), inline: true}
+                );
+              }else{
+                embed.addFields(
+                  { name: 'Languages', value: "REDACTED", inline: true}
+                );
+              }
+              embed.addFields(
+                { name: 'Main Organization', value: user.data.organization.name },
+                { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
+              );
+              promiseSearch(embed);
+            });
+          }else{
+            var result = "Could not find "+`${args}`;
+            //console.log(result);
+            promiseSearch(result);
+          }
         }catch(err){
           var result = "Encountered an error, User: "+args;
           console.log(result);
           promiseSearch(result);
         };
-        if(Object.size(user.data) > 0){
-          cachePlayer(user.data);
-          if(Object.size(user.data.organization) > 1 && user.data.organization.name != ""){
-            user.data.organization.name = user.data.organization.rank+' ['+user.data.organization.stars+']'+' in '+'['+user.data.organization.name+'](https://robertsspaceindustries.com/orgs/'+user.data.organization.sid+')';
-          }else if (user.data.organization.name == ""){
-            user.data.organization.name = "REDACTED";
-          }else{
-            user.data.organization.name = "None";
-          }
-          var cID = '';
-          if(user.data.profile.id != 'n/a'){
-            cID = " AND cID = "+user.data.profile.id.substring(1);
-          }else{
-            user.data.profile.id = '#No Citizen ID';
-          }
-          const sql = "SELECT reviewed_count as rating FROM players WHERE username = '"+user.data.profile.handle+"'"+cID+";";
-          con.query(sql, function (err, result, fields) {
-            if (err) throw err;
-
-            var rating = "";
-            if(result.length == 0){
-              rating = "No Vouches. \n[Login](https://mobitracker.co/login) to vouch for them.";
-            }else{
-              if(result[0].rating == -1){
-                rating = "No Vouches. \n[Login](https://mobitracker.co/login) to vouch for them.";
-              }else{
-                rating = xp(result[0].rating)+" ("+result[0].rating+")";
-              }
-            }
-            user.data.profile.enlisted = new Date(user.data.profile.enlisted);
-            user.data.profile.enlisted = ((user.data.profile.enlisted.getMonth() > 8) ? (user.data.profile.enlisted.getMonth() + 1) : ('0' + (user.data.profile.enlisted.getMonth() + 1))) + '/' + ((user.data.profile.enlisted.getDate() > 9) ? user.data.profile.enlisted.getDate() : ('0' + user.data.profile.enlisted.getDate())) + '/' + user.data.profile.enlisted.getFullYear();
-
-            embed = new MessageEmbed()
-              .setColor(0x25a6dd)
-              .setAuthor(user.data.profile.handle+user.data.profile.id, user.data.profile.image, "https://mobitracker.co/"+user.data.profile.handle)
-              .setDescription("AKA "+user.data.profile.display)
-              .setThumbnail(user.data.profile.image)
-              .addFields(
-                { name: 'Badge', value: user.data.profile.badge, inline: true},
-                { name: 'Mobitracker Vouchers', value: rating, inline: true},
-                { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
-                { name: 'Enlisted', value: user.data.profile.enlisted, inline: true}
-               )
-               .setFooter(user.data.profile.handle+' - Mobitracker.co', 'https://mobitracker.co/android-chrome-512x512.png');
-            if(user.data.profile.location){
-              embed.addFields(
-                { name: 'Location', value: user.data.profile.location.region+", "+user.data.profile.location.country, inline: true}
-              );
-            }else{
-              embed.addFields(
-                { name: 'Location', value: "REDACTED", inline: true}
-              );
-            }
-            if(user.data.profile.fluency){
-              embed.addFields(
-                { name: 'Languages', value: user.data.profile.fluency.join(", "), inline: true}
-              );
-            }else{
-              embed.addFields(
-                { name: 'Languages', value: "REDACTED", inline: true}
-              );
-            }
-            embed.addFields(
-              { name: 'Main Organization', value: user.data.organization.name },
-              { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
-            );
-            promiseSearch(embed);
-          });
-        }else{
-          var result = "Could not find "+`${args}`;
-          //console.log(result);
-          promiseSearch(result);
-        }
       })
     })
     req.end()
