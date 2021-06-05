@@ -18,30 +18,66 @@ var discordClients = [];
 var position = [];
 var update = [];
 var updateBool = true;
-const limiter = new Bottleneck({
-  maxConcurrent: 1,
-  minTime:333
+const group = new Bottleneck.Group({
+    maxConcurrent: 1,
+    minTime:333
 });
-const jobQueue = new Bottleneck();
+group.on("created", (limiter, key) => {
+  limiter.on("queued", function(info){
+    console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
+    position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4], len:info.args[0].length });
+    position.sort((a, b) => {
+        return a.priority - b.priority;
+    });
+    position.forEach((e, iii) => {
+      console.log(e.id+" | "+e.priority+" | "+iii+" in Queue");
+      e.msg.edit("**[STATUS]: ** \u231A ```"+iii+" in Queue. Servers are busy, please wait in queue.```");
+    });
+  });
+
+  limiter.on("executing", function(info){
+    for(var ind = 0; ind < position.length; ind++){
+      if(position[ind].id === info.options.id){
+        position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
+        console.log(position[ind].id+' running');
+      }
+    }
+  });
+
+  limiter.on("done", function(info){
+    for(var ind = 0; ind < position.length; ind++){
+      if(position[ind].id === info.options.id){
+        console.log(position[ind].id+" job finished");
+        position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
+        position.splice(ind, 1);
+        for(var ii = 0; ii < position.length; ii++){
+          position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
+        }
+      }
+    }
+  });
+});
+const jobQueue = new Bottleneck({
+  maxConcurrent: 3,
+});
 const queueCounts = jobQueue.counts();
 
-jobQueue.on("executing", function(info){
-  console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
-});
-
-limiter.on("queued", function(info){
-  console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
+jobQueue.on("received" function(){
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4], len:info.args[0].length });
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
+})
+
+jobQueue.on("queued", function(info){
+  console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
   position.forEach((e, iii) => {
-    console.log(e.id+" | "+e.priority+" | "+iii+" in Queue");
     e.msg.edit("**[STATUS]: ** \u231A ```"+iii+" in Queue. Servers are busy, please wait in queue.```");
   });
 });
 
-limiter.on("executing", function(info){
+jobQueue.on("executing", function(info){
+  console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
       position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
@@ -50,7 +86,7 @@ limiter.on("executing", function(info){
   }
 });
 
-limiter.on("done", function(info){
+jobQueue.on("done", function(info){
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
       console.log(position[ind].id+" job finished");
@@ -248,21 +284,20 @@ async function lookUp(count, message, args, msg){
     });
   }
   console.log(message.author.username+" Priority: "+message.author.prio);
-  const query = async function(args, keys, message, i){
-    for(var i = 0; i < args.length; i++){
-      args[i] = args[i].replace(/[^\-a-zA-Z0-9]/g, '_');
-      if(message.author.id != "751252617451143219"){
-        if(message.channel.type == "text"){
-          console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in the '+message.guild.name+' server');
-        }else{
-          console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args[i]+' in '+message.channel.type+'s');
-        }
+  const query = async function(args, keys, message){
+    args = args.replace(/[^\-a-zA-Z0-9]/g, '_');
+    if(message.author.id != "751252617451143219"){
+      if(message.channel.type == "text"){
+        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args+' in the '+message.guild.name+' server');
+      }else{
+        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args+' in '+message.channel.type+'s');
       }
-      message.channel.send(await queryApi(args[i], keys[i]));
     }
-    return;
+    message.channel.send(await queryApi(args, keys));
   }
-  limiter.schedule({ priority:message.author.prio, id:message.author.username }, query, args, keys, message, i, msg);
+  for(var i = 0; i < args.length; i++){
+    group.key(id:message.author.username).schedule(query, args[i], keys[i], message, msg);
+  }
 }
 
 function getUserFromMention(mention) {
