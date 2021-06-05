@@ -45,12 +45,13 @@ const jobQueue = new Bottleneck({
 });
 const queueCounts = jobQueue.counts();
 
-jobQueue.on("received", function(){
+jobQueue.on("received", function(info){
   console.log(jobQueue.counts());
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4], len:info.args[0].length });
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
+  console.log(position);
 });
 
 jobQueue.on("scheduled", function(INFO){
@@ -67,7 +68,6 @@ jobQueue.on("queued", function(info){
 
 jobQueue.on("executing", function(info){
   console.log(jobQueue.counts());
-  console.log(position);
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
