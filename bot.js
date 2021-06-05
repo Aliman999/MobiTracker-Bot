@@ -67,6 +67,9 @@ group.on("created", (limiter, key) => {
       if(position[ind].id === info.args[4]){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
+        for(var ii = 0; ii < position.length; ii++){
+          position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
+        }
         position.splice(ind, 1);
       }
     }
