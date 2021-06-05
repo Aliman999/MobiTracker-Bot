@@ -296,7 +296,7 @@ async function lookUp(count, message, args, msg){
     message.channel.send(await queryApi(args, keys));
   }
   for(var i = 0; i < args.length; i++){
-    group.key(id:message.author.username).schedule(query, args[i], keys[i], message, msg);
+    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg);
   }
 }
 
