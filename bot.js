@@ -149,7 +149,7 @@ async function addQueue(message, args){
   jobQueue.schedule( { id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
-      msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are currently busy, please wait.```");
+      msg.edit("**[STATUS]: ** \u231A ```Error```");
     }
   });
 }
