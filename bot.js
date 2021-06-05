@@ -75,8 +75,8 @@ group.on("created", (limiter, key) => {
   });
   limiter.once("done", function(info){
     position.splice(ind, 1);
-    console.log(position[ind].id+" | "+info.args);
-      //position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
+    console.log(position[ind].id+" | "+info.args[4]);
+    //position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
   })
 });
 
