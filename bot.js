@@ -47,7 +47,6 @@ const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(info){
   console.log(jobQueue.counts());
-  console.log(info);
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[3], len:info.args[0] });
   position.sort((a, b) => {
       return a.priority - b.priority;
