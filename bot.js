@@ -61,6 +61,7 @@ jobQueue.on("done", function(info){
 });
 
 group.on("created", (limiter, key) => {
+  var count = 0;
   limiter.once("received", function(){
   })
   limiter.once("queued", function(){
@@ -73,9 +74,13 @@ group.on("created", (limiter, key) => {
       }
     }
   });
-  limiter.once("done", function(info){
+  limiter.on("done", function(info){
     position.splice(ind, 1);
     console.log(position[ind].id+" | "+info.args[4]);
+    if(count == ){
+
+    }
+    count++;
     //position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
   })
 });
@@ -277,7 +282,7 @@ async function lookUp(count, message, args, msg){
     message.channel.send(await queryApi(args, keys));
   }
   for(var i = 0; i < args.length; i++){
-    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username);
+    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length);
   }
 }
 
