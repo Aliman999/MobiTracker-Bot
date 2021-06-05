@@ -51,8 +51,7 @@ jobQueue.on("received", function(){
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
-})
-
+});
 
 jobQueue.on("scheduled", function(INFO){
   console.log(jobQueue.counts());
