@@ -28,7 +28,7 @@ group.on("created", (limiter, key) => {
   limiter.on("queued", function(){
   })
   limiter.on("executing", function(info){
-    console.log(position[ind].id+" | "+info.args[4]);
+    console.log(position[ind].id+" | "+info.args[3]);
     for(var ind = 0; ind < position.length; ind++){
       if(position[ind].id === info.args[4]){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
@@ -47,11 +47,11 @@ const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(){
   console.log(jobQueue.counts());
+  console.log(position);
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4], len:info.args[0].length });
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
-  console.log(position);
 });
 
 jobQueue.on("scheduled", function(INFO){
