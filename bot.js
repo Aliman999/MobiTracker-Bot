@@ -54,8 +54,6 @@ jobQueue.on("executing", function(info){
 jobQueue.on("done", function(info){
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
-      console.log(position[ind].id+" job finished");
-      position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
       position.splice(ind, 1);
       for(var ii = 0; ii < position.length; ii++){
         position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
@@ -73,13 +71,13 @@ group.on("created", (limiter, key) => {
     console.log(position[ind].id+" | "+info.args[3]);
     for(var ind = 0; ind < position.length; ind++){
       if(position[ind].id === info.args[4]){
-        position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
       }
     }
   });
   limiter.on("done", function(info){
-    console.log(position[ind].id+" | "+info.args[4]);
+    console.log(position[ind].id+" | "+info.args);
+      //position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
   })
 });
 
