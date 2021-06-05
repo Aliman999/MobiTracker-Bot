@@ -65,7 +65,7 @@ jobQueue.on("executing", function(info){
 });
 
 jobQueue.on("done", function(info){
-  console.log(info.id+" Finished.");
+  console.log(info.options.id+" Finished.");
 });
 
 group.on("created", (limiter, key) => {
