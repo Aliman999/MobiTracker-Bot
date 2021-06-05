@@ -145,7 +145,8 @@ function getPrio(usrID){
 
 async function addQueue(message, args){
   var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
-  jobQueue.schedule( { id:message.author.username }, lookUp, args.length, message, args, msg)
+  message.author.prio = await getPrio(message.author.id);
+  jobQueue.schedule( { id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg)
   .catch((error) => {
     if (error instanceof Bottleneck.BottleneckError) {
       msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are currently busy, please wait.```");
@@ -253,7 +254,6 @@ async function lookUp(count, message, args, msg){
   var args = args;
   var keys = [];
   var percent, nodupe = 0;
-  message.author.prio = await getPrio(message.author.id);
   for(var i = 0; i < args.length; i++){
     await getKey(args.length).then(async (key) => {
       keys.push(key);
