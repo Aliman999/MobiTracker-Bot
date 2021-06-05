@@ -23,8 +23,17 @@ const group = new Bottleneck.Group({
     minTime:333
 });
 group.on("created", (limiter, key) => {
-  console.log("A new limiter was created for key: " + key)
+  limiter.on("received", function(){
+    console.log(limiter.counts());
+  })
+  limiter.on("queued", function(){
+    console.log(limiter.counts());
+  })
+  limiter.on("scheduled", function(){
+    console.log(limiter.counts());
+  })
   limiter.on("executing", function(info){
+    console.log(limiter.counts());
     console.log(position[ind].id+" | "+info.args[4]);
     for(var ind = 0; ind < position.length; ind++){
       if(position[ind].id === info.args[4]){
