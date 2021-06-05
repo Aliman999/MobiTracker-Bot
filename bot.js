@@ -67,12 +67,14 @@ group.on("created", (limiter, key) => {
       if(position[ind].id === info.args[4]){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
+        position.splice(ind, 1);
       }
     }
   })
   limiter.once("queued", function(){
   })
   limiter.once("executing", function(info){
+    console.log(info);
     for(var ind = 0; ind < position.length; ind++){
       if(position[ind].id === info.args[4]){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
@@ -87,7 +89,6 @@ group.on("created", (limiter, key) => {
           position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
           console.log(position[ind].id+' Finished');
         }
-        position.splice(ind, 1);
       }
     }
     count++;
