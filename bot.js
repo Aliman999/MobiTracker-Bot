@@ -29,9 +29,6 @@ group.on("created", (limiter, key) => {
   limiter.on("queued", function(){
     console.log(limiter.counts());
   })
-  limiter.on("scheduled", function(){
-    console.log(limiter.counts());
-  })
   limiter.on("executing", function(info){
     console.log(limiter.counts());
     console.log(position[ind].id+" | "+info.args[4]);
@@ -52,6 +49,7 @@ const jobQueue = new Bottleneck({
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(){
+  console.log(jobQueue.counts());
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4], len:info.args[0].length });
   position.sort((a, b) => {
       return a.priority - b.priority;
@@ -59,6 +57,7 @@ jobQueue.on("received", function(){
 })
 
 jobQueue.on("queued", function(info){
+  console.log(jobQueue.counts());
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
   position.forEach((e, iii) => {
     e.msg.edit("**[STATUS]: ** \u231A ```"+iii+" in Queue. Servers are busy, please wait in queue.```");
@@ -66,6 +65,7 @@ jobQueue.on("queued", function(info){
 });
 
 jobQueue.on("executing", function(info){
+  console.log(jobQueue.counts());
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
