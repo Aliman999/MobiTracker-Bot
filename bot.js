@@ -23,36 +23,12 @@ const group = new Bottleneck.Group({
     minTime:333
 });
 group.on("created", (limiter, key) => {
-  limiter.on("queued", function(info){
-    console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
-    position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4], len:info.args[0].length });
-    position.sort((a, b) => {
-        return a.priority - b.priority;
-    });
-    position.forEach((e, iii) => {
-      console.log(e.id+" | "+e.priority+" | "+iii+" in Queue");
-      e.msg.edit("**[STATUS]: ** \u231A ```"+iii+" in Queue. Servers are busy, please wait in queue.```");
-    });
-  });
-
   limiter.on("executing", function(info){
+    console.log(info);
     for(var ind = 0; ind < position.length; ind++){
       if(position[ind].id === info.options.id){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
-      }
-    }
-  });
-
-  limiter.on("done", function(info){
-    for(var ind = 0; ind < position.length; ind++){
-      if(position[ind].id === info.options.id){
-        console.log(position[ind].id+" job finished");
-        position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
-        position.splice(ind, 1);
-        for(var ii = 0; ii < position.length; ii++){
-          position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
-        }
       }
     }
   });
@@ -62,7 +38,7 @@ const jobQueue = new Bottleneck({
 });
 const queueCounts = jobQueue.counts();
 
-jobQueue.on("received" function(){
+jobQueue.on("received", function(){
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[4], len:info.args[0].length });
   position.sort((a, b) => {
       return a.priority - b.priority;
