@@ -54,7 +54,7 @@ jobQueue.on("done", function(info){
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
       for(var ii = 0; ii < position.length; ii++){
-        position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
+        position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
       }
     }
   }
@@ -68,7 +68,7 @@ group.on("created", (limiter, key) => {
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
         for(var ii = 0; ii < position.length; ii++){
-          position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
+          position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
         }
         position.splice(ind, 1);
       }
