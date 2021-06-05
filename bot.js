@@ -26,7 +26,7 @@ group.on("created", (limiter, key) => {
   limiter.on("executing", function(info){
     console.log(info);
     for(var ind = 0; ind < position.length; ind++){
-      if(position[ind].id === info.options.id){
+      if(position[ind].id === info.args[4]){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
       }
@@ -273,7 +273,7 @@ async function lookUp(count, message, args, msg){
     message.channel.send(await queryApi(args, keys));
   }
   for(var i = 0; i < args.length; i++){
-    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg);
+    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username);
   }
 }
 
