@@ -33,7 +33,7 @@ group.on("created", (limiter, key) => {
     }
   });
   limiter.on("done", function(info){
-
+    console.log(position[ind].id+" | "+info.args[4]);
   })
 });
 const jobQueue = new Bottleneck({
