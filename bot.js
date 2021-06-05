@@ -32,11 +32,6 @@ jobQueue.on("received", function(info){
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
-  position.forEach((e, iii) => {
-    if(position.length > 1){
-      e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
-    }
-  });
 });
 
 jobQueue.on("queued", function(info){
