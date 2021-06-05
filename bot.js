@@ -51,6 +51,7 @@ jobQueue.on("received", function(){
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
+    console.log(position);
 });
 
 jobQueue.on("scheduled", function(INFO){
@@ -77,7 +78,6 @@ jobQueue.on("executing", function(info){
 });
 
 jobQueue.on("done", function(info){
-  console.log(position);
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
       console.log(position[ind].id+" job finished");
