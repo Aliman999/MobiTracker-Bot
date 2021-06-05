@@ -66,8 +66,8 @@ group.on("created", (limiter, key) => {
   limiter.once("queued", function(){
   })
   limiter.once("executing", function(info){
+    console.log(info);
     for(var ind = 0; ind < position.length; ind++){
-      console.log(info);
       if(position[ind].id === info.id){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
