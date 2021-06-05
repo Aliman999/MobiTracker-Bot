@@ -53,7 +53,6 @@ jobQueue.on("executing", function(info){
 jobQueue.on("done", function(info){
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
-      position.splice(ind, 1);
       for(var ii = 0; ii < position.length; ii++){
         position[ii].msg.edit("**[STATUS]: ** \u231A ```"+ii+" in Queue. Servers are busy, please wait in queue.```");
       }
@@ -76,6 +75,7 @@ group.on("created", (limiter, key) => {
     }
   });
   limiter.on("done", function(info){
+    position.splice(ind, 1);
     console.log(position[ind].id+" | "+info.args);
       //position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
   })
