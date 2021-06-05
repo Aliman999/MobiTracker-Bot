@@ -24,13 +24,10 @@ const group = new Bottleneck.Group({
 });
 group.on("created", (limiter, key) => {
   limiter.on("received", function(){
-    console.log(limiter.counts());
   })
   limiter.on("queued", function(){
-    console.log(limiter.counts());
   })
   limiter.on("executing", function(info){
-    console.log(limiter.counts());
     console.log(position[ind].id+" | "+info.args[4]);
     for(var ind = 0; ind < position.length; ind++){
       if(position[ind].id === info.args[4]){
