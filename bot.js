@@ -22,44 +22,19 @@ const group = new Bottleneck.Group({
     maxConcurrent: 1,
     minTime:333
 });
-group.on("created", (limiter, key) => {
-  limiter.on("received", function(){
-  })
-  limiter.on("queued", function(){
-  })
-  limiter.on("executing", function(info){
-    console.log(position[ind].id+" | "+info.args[3]);
-    for(var ind = 0; ind < position.length; ind++){
-      if(position[ind].id === info.args[4]){
-        position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
-        console.log(position[ind].id+' running');
-      }
-    }
-  });
-  limiter.on("done", function(info){
-    console.log(position[ind].id+" | "+info.args[4]);
-  })
-});
 const jobQueue = new Bottleneck({
   maxConcurrent: 3,
 });
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(info){
-  console.log(jobQueue.counts());
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[3], len:info.args[0] });
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
-  console.log(position);
-});
-
-jobQueue.on("scheduled", function(INFO){
-  console.log(jobQueue.counts());
 });
 
 jobQueue.on("queued", function(info){
-  console.log(jobQueue.counts());
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
   position.forEach((e, iii) => {
     e.msg.edit("**[STATUS]: ** \u231A ```"+iii+" in Queue. Servers are busy, please wait in queue.```");
@@ -67,7 +42,6 @@ jobQueue.on("queued", function(info){
 });
 
 jobQueue.on("executing", function(info){
-  console.log(jobQueue.counts());
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
@@ -88,6 +62,25 @@ jobQueue.on("done", function(info){
       }
     }
   }
+});
+
+group.on("created", (limiter, key) => {
+  limiter.on("received", function(){
+  })
+  limiter.on("queued", function(){
+  })
+  limiter.on("executing", function(info){
+    console.log(position[ind].id+" | "+info.args[3]);
+    for(var ind = 0; ind < position.length; ind++){
+      if(position[ind].id === info.args[4]){
+        position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
+        console.log(position[ind].id+' running');
+      }
+    }
+  });
+  limiter.on("done", function(info){
+    console.log(position[ind].id+" | "+info.args[4]);
+  })
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
