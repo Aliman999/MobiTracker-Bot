@@ -61,20 +61,20 @@ jobQueue.on("done", function(info){
 });
 
 group.on("created", (limiter, key) => {
-  limiter.on("received", function(){
+  limiter.once("received", function(){
   })
-  limiter.on("queued", function(){
+  limiter.once("queued", function(){
   })
-  limiter.on("executing", function(info){
+  limiter.once("executing", function(info){
     console.log(position);
     for(var ind = 0; ind < position.length; ind++){
-      if(position[ind].id === info.args[4]){
+      if(position[ind].id === info.id){
         position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
       }
     }
   });
-  limiter.on("done", function(info){
+  limiter.once("done", function(info){
     position.splice(ind, 1);
     console.log(position[ind].id+" | "+info.args);
       //position[ind].message.channel.send("**[STATUS]: ** \uF4BE ```Finished "+position[ind].len+" searches.```");
