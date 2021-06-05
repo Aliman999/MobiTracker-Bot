@@ -53,6 +53,11 @@ jobQueue.on("received", function(){
   });
 })
 
+
+jobQueue.on("scheduled", function(INFO){
+  console.log(jobQueue.counts());
+});
+
 jobQueue.on("queued", function(info){
   console.log(jobQueue.counts());
   console.log(limiter.jobs("QUEUED").join(", ")+" in Queue");
