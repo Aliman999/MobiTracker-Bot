@@ -45,11 +45,13 @@ jobQueue.on("queued", function(info){
 
 jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
-  console.log(info.options.id);
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
       console.log("Removed");
       position.splice(ind, 1);
+    }
+    for(var ii = 0; ii < position.length; ii++){
+      position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
     }
   }
 });
