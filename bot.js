@@ -47,7 +47,7 @@ jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
-      console.log("Removed");
+      position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
       position.splice(ind, 1);
     }
     for(var ii = 0; ii < position.length; ii++){
@@ -58,16 +58,6 @@ jobQueue.on("executing", function(info){
 
 jobQueue.on("done", function(info){
   console.log(info.options.id+" Finished.");
-  for(var ind = 0; ind < position.length; ind++){
-    if(position[ind].id === info.options.id){
-      position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
-      console.log(position[ind].id+' running');
-      position.splice(ind, 1);
-      for(var ii = 0; ii < position.length; ii++){
-        position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
-      }
-    }
-  }
 });
 
 group.on("created", (limiter, key) => {
