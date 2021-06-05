@@ -45,7 +45,6 @@ jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
-      position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
       console.log(position[ind].id+' running');
     }
   }
@@ -68,9 +67,10 @@ group.on("created", (limiter, key) => {
   limiter.on("queued", function(){
   })
   limiter.on("executing", function(info){
-    console.log(position[ind].id+" | "+info.args[3]);
+    console.log(position[ind].id+" | "+info.args);
     for(var ind = 0; ind < position.length; ind++){
       if(position[ind].id === info.args[4]){
+        position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
         console.log(position[ind].id+' running');
       }
     }
