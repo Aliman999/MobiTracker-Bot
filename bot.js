@@ -45,7 +45,7 @@ jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
-      console.log(position[ind].id+' running');
+      //console.log(position[ind].id+' running');
     }
   }
 });
@@ -62,7 +62,13 @@ jobQueue.on("done", function(info){
 
 group.on("created", (limiter, key) => {
   var count = 0;
-  limiter.once("received", function(){
+  limiter.once("received", function(info){
+    for(var ind = 0; ind < position.length; ind++){
+      if(position[ind].id === info.args[4]){
+        position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
+        console.log(position[ind].id+' running');
+      }
+    }
   })
   limiter.once("queued", function(){
   })
