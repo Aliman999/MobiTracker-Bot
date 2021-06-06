@@ -260,9 +260,9 @@ async function lookUp(count, message, args, msg){
       keys.push(key);
       percent = Math.round((i/args.length)*100);
       if(i == args.length){
+        console.log(i+" | "+args.length);
         percent = 100;
       };
-      console.log(percent);
       if(percent%5 == 0 && percent != nodupe){
         nodupe = percent;
         msg.edit("**[STATUS]: ** \u231B	 ```"+percent+"%  Our microtech datacenters are processing your request.```");
