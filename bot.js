@@ -280,6 +280,7 @@ async function lookUp(count, message, args, msg){
       }
     }
     const messageSend = await queryApi(args, keys);
+    console.log(messageSend.status);
     if(messageSend.status == 0){
       return true;
     }else{
