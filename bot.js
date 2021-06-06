@@ -292,6 +292,11 @@ async function lookUp(count, message, args, msg){
       if(result){
         throw new Error(result.data);
       }
+    })
+    .catch((error) => {
+      if (error instanceof Bottleneck.BottleneckError) {
+        msg.edit("**[STATUS]: ** \u231A ```Error```");
+      }
     });
   }
 }
