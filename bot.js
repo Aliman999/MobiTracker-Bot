@@ -285,23 +285,22 @@ async function lookUp(count, message, args, msg){
       return false;
     }
   }
-  for(var i = 0; i < args.length; i++){
-     group.key(message.author.username).schedule(async (i) =>{
-      console.log(args);
-      await query(args[i], keys[i], message, msg, message.author.username, args.length)
-      .then((result)=>{
-        console.log(result);
-        if(result){
-          throw new Error(result.data);
-        }
-      })
-    })
-    .catch((error) => {
-      if (error instanceof Bottleneck.BottleneckError) {
-
+  group.key(message.author.username).schedule(async () =>{
+   for(var i = 0; i < args.length; i++){
+    await query(args[i], keys[i], message, msg, message.author.username, args.length)
+    .then((result)=>{
+      console.log(result);
+      if(result){
+        throw new Error(result.data);
       }
-    });
+    })
+   }
+  })
+  .catch((error) => {
+  if (error instanceof Bottleneck.BottleneckError) {
+
   }
+  });
 }
 
 function getUserFromMention(mention) {
