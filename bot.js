@@ -282,7 +282,7 @@ async function lookUp(count, message, args, msg){
     if(messageSend.status){
       message.channel.send(messageSend);
     }else{
-      console.log(new Error("Returned Null!"));
+      throw new Error("API Returned Null!");
     }
   }
   for(var i = 0; i < args.length; i++){
