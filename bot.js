@@ -280,16 +280,17 @@ async function lookUp(count, message, args, msg){
       }
     }
     const messageSend = await queryApi(args, keys);
-    message.channel.send(messageSend.data);
     if(messageSend.status == 0){
       return true;
     }else{
+      message.channel.send(messageSend.data);
       return false;
     }
   }
   for(var i = 0; i < args.length; i++){
     group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length)
     .then((result)=>{
+      console.log(result);
       if(result){
         throw new Error(result.data);
       }
@@ -333,7 +334,7 @@ function queryApi(args, apiKey){
     var options = {
       hostname: 'api.starcitizen-api.com',
       port: 443,
-      path: '/v1/live/user/'+escape(args),
+      path: '/'+apiKey+'/v1/live/user/'+escape(args),
       method: 'GET'
     }
     const req = https.request(options, res =>{
