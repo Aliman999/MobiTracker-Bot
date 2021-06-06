@@ -267,10 +267,22 @@ async function lookUp(count, message, args, msg){
         console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args+' in '+message.channel.type+'s');
       }
     }
-    message.channel.send(await queryApi(args, keys));
+    const messageSend = await queryApi(args, keys);
+    if(messageSend.success){
+      message.channel.send(messageSend);
+    }else{
+      message.channel.send("Api returned null");
+      return messageSend;
+    }
   }
   for(var i = 0; i < args.length; i++){
-    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length);
+    group.key(message.author.username).schedule(async () =>{
+      await query(args[i], keys[i], message, msg, message.author.username, args.length).then((result) => {
+        if(result == null){
+          throw new Error("Returned Null!");
+        }
+      });
+    });
   }
 }
 
@@ -323,7 +335,7 @@ function queryApi(args, apiKey){
           var user = JSON.parse(body);
           if(user.data == null){
             console.log(args+" returned null, retrying");
-            queryApi(args, apiKey);
+            promiseSearch({status:0, data:args+" returned null"});
           }
           if(Object.size(user.data) > 0){
             cachePlayer(user.data);
@@ -391,17 +403,17 @@ function queryApi(args, apiKey){
                 { name: 'Main Organization', value: user.data.organization.name },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
               );
-              promiseSearch(embed);
+              promiseSearch({ status:1, data:embed });
             });
           }else{
             var result = "Could not find "+`${args}`;
             //console.log(result);
-            promiseSearch(result);
+            promiseSearch({ status:0, data:result });
           }
         }catch(err){
           var result = "Encountered an error, User: "+args;
           console.log(result);
-          promiseSearch(result);
+          promiseSearch({ status:0, data:result });
         };
       })
     })
