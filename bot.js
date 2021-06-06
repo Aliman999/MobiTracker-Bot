@@ -65,7 +65,7 @@ group.on("created", (limiter, key) => {
   limiter.once("received", function(info){
   })
   limiter.on("done", function(info){
-    console.log(info);
+    //console.log(info);
     console.log(count);
     count++;
     if(count == info.args[4]){
