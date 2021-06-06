@@ -279,9 +279,10 @@ async function lookUp(count, message, args, msg){
       }
     }
     try{
-
+      const messageSend = await queryApi(args, keys);
+    }catch(e){
+      console.log(e);
     }
-    const messageSend = await queryApi(args, keys);
     if(messageSend.status){
       message.channel.send(messageSend);
     }else{
