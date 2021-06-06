@@ -71,6 +71,18 @@ group.on("created", (limiter, key) => {
     }
     count++;
   })
+
+  limiter.on("failed", async (error, jobInfo) => {
+    const id = jobInfo.options.id;
+    console.warn(`Job ${id} failed: ${error}`);
+
+    if (jobInfo.retryCount === 0) {
+      console.log(`Retrying job ${id} in 25ms!`);
+      return 25;
+    }
+  });
+
+  limiter.on("retry", (error, jobInfo) => console.log(`Now retrying ${jobInfo.options.id}`));
 });
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
