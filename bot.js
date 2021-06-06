@@ -286,8 +286,7 @@ async function lookUp(count, message, args, msg){
     }
   }
   for(var i = 0; i < args.length; i++){
-    var name = args[i];
-    var key = keys[i];
+    /*
     group.key(message.author.username).schedule(async () =>{
       await query(name, key, message, msg, message.author.username, args.length)
       .then((result)=>{
@@ -295,6 +294,13 @@ async function lookUp(count, message, args, msg){
           throw new Error(result.data);
         }
       })
+    })
+    */
+    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length)
+    .then((result)=>{
+      if(result){
+        throw new Error(result.data);
+      }
     })
     .catch((error) => {
       if (error instanceof Bottleneck.BottleneckError) {
