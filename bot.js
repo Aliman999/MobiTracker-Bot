@@ -17,6 +17,7 @@ var jwt = require('jsonwebtoken');
 var discordClients = [];
 var position = [];
 var update = [];
+var failed = [];
 var updateBool = true;
 const group = new Bottleneck.Group({
     maxConcurrent: 1,
@@ -74,12 +75,10 @@ group.on("created", (limiter, key) => {
   })
 
   limiter.on("failed", async (error, jobInfo) => {
-    const id = jobInfo.options.id;
-    console.warn(`Job ${id} failed: ${error}`);
+    console.log(jobInfo);
 
     if(jobInfo.retryCount === 0){
-      console.log(`Retrying job ${id} in 25ms!`);
-      return 25;
+      return 333;
     }
   });
 
@@ -287,8 +286,7 @@ async function lookUp(count, message, args, msg){
     }
   }
   for(var i = 0; i < args.length; i++){
-    await group.key(message.author.username).schedule(async () =>{
-      console.log(i);
+     group.key(message.author.username).schedule(async (i) =>{
       await query(args[i], keys[i], message, msg, message.author.username, args.length)
       .then((result)=>{
         console.log(result);
