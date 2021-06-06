@@ -278,6 +278,7 @@ async function lookUp(count, message, args, msg){
     }
     await queryApi(args, keys)
     .then((result)=>{
+      console.log(result.status);
       if(result.status == 0){
         return true;
       }else{
