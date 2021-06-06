@@ -74,9 +74,8 @@ group.on("created", (limiter, key) => {
     }
   })
 
-  limiter.on("failed", async (error, jobInfo) => {
-    console.log(error);
-    console.log(jobInfo);
+  limiter.on("failed", async (error, info) => {
+    console.log(info);
 
     if(jobInfo.retryCount === 0){
       return 333;
