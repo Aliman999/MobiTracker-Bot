@@ -259,7 +259,6 @@ async function lookUp(count, message, args, msg){
   }
   console.log(message.author.username+" Priority: "+message.author.prio);
   const query = async function(args, keys, message){
-    args = args.replace(/[^\-a-zA-Z0-9]/g, '_');
     if(message.author.id != "751252617451143219"){
       if(message.channel.type == "text"){
         console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args+' in the '+message.guild.name+' server');
