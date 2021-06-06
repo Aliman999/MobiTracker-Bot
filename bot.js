@@ -75,8 +75,11 @@ group.on("created", (limiter, key) => {
   })
 
   limiter.on("failed", async (error, jobInfo) => {
+    console.log(jobInfo.args);
     if(jobInfo.retryCount === 0){
       return 333;
+    }else{
+      //info.args[2].channel.send("**[ERROR]: ** :tools: ```Failed to find```");
     }
   });
 
