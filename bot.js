@@ -279,15 +279,19 @@ async function lookUp(count, message, args, msg){
       }
     }
     const messageSend = await queryApi(args, keys);
-    if(messageSend.status){
-      message.channel.send(messageSend);
+    message.channel.send(messageSend.data);
+    if(messageSend.status == 0){
+      return true;
     }else{
-      throw new Error("API Returned Null!");
+      return false;
     }
   }
   for(var i = 0; i < args.length; i++){
     group.key(message.author.username).schedule(async () =>{
-      await query(args[i], keys[i], message, msg, message.author.username, args.length);
+      const return = query(args[i], keys[i], message, msg, message.author.username, args.length);
+      if(return){
+        throw new Error(return.data);
+      }
     });
   }
 }
@@ -340,8 +344,7 @@ function queryApi(args, apiKey){
         try{
           var user = JSON.parse(body);
           if(user.data == null){
-            console.log(args+" returned null, retrying");
-            promiseSearch({status:0, data:args+" returned null"});
+            promiseSearch({status:0, data:args+" returned null, retrying"});
           }
           if(Object.size(user.data) > 0){
             cachePlayer(user.data);
@@ -413,12 +416,10 @@ function queryApi(args, apiKey){
             });
           }else{
             var result = "Could not find "+`${args}`;
-            //console.log(result);
-            promiseSearch({ status:0, data:result });
+            promiseSearch({ status:1, data:result });
           }
         }catch(err){
           var result = "Encountered an error, User: "+args;
-          console.log(result);
           promiseSearch({ status:0, data:result });
         };
       })
