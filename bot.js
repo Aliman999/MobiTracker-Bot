@@ -484,6 +484,7 @@ function cachePlayer(user){
       eventUpdate = eventUpdate.filter((c, index) => {
           return eventUpdate.indexOf(c) === index;
       });
+      console.log(eventUpdate);
     }else{
       check.badge = JSON.stringify(check.badge);
       check.organization = JSON.stringify(Object.assign({}, check.organization));
