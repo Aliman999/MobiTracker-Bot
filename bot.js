@@ -276,14 +276,15 @@ async function lookUp(count, message, args, msg){
         console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args+' in '+message.channel.type+'s');
       }
     }
-    const messageSend = await queryApi(args, keys);
-    console.log(messageSend.status);
-    if(messageSend.status == 0){
-      return true;
-    }else{
-      message.channel.send(messageSend.data);
-      return false;
-    }
+    await queryApi(args, keys)
+    .then((result)=>{
+      if(result.status == 0){
+        return true;
+      }else{
+        message.channel.send(result.data);
+        return false;
+      }
+    })
   }
   for(var i = 0; i < args.length; i++){
     group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length)
