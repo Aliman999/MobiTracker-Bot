@@ -66,7 +66,7 @@ group.on("created", (limiter, key) => {
   })
   limiter.on("done", function(info){
     console.log(info);
-    if(count == info.args[5]){
+    if(count == info.args[4]){
       info.args[3].channel.send("**[STATUS]: ** \uF4BE ```Finished "+info.args[5]+" searches.```");
       console.log(position[ind].id+' Finished');
     }
