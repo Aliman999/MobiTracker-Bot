@@ -290,7 +290,7 @@ async function lookUp(count, message, args, msg){
     group.key(message.author.username).schedule(async () =>{
       const result = query(args[i], keys[i], message, msg, message.author.username, args.length);
       if(result){
-        throw new Error(return.data);
+        throw new Error(result.data);
       }
     });
   }
