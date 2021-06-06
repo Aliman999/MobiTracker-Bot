@@ -74,8 +74,8 @@ group.on("created", (limiter, key) => {
     }
   })
 
-  limiter.on("failed", async (error, info) => {
-    console.log(info);
+  limiter.on("failed", async (error, jobInfo) => {
+    console.log(jobInfo);
 
     if(jobInfo.retryCount === 0){
       return 333;
@@ -287,7 +287,7 @@ async function lookUp(count, message, args, msg){
   }
   for(var i = 0; i < args.length; i++){
      group.key(message.author.username).schedule(async (i) =>{
-      console.log(i);
+      console.log(i+" test");
       await query(args[i], keys[i], message, msg, message.author.username, args.length)
       .then((result)=>{
         console.log(result);
