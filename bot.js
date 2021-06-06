@@ -260,7 +260,7 @@ async function lookUp(count, message, args, msg){
       keys.push(key);
       percent = Math.round((i/args.length)*100);
       if(i == args.length){
-        percent == 100;
+        percent = 100;
       };
       console.log(percent);
       if(percent%5 == 0 && percent != nodupe){
