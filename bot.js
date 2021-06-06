@@ -278,6 +278,9 @@ async function lookUp(count, message, args, msg){
         console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args+' in '+message.channel.type+'s');
       }
     }
+    try{
+
+    }
     const messageSend = await queryApi(args, keys);
     if(messageSend.status){
       message.channel.send(messageSend);
@@ -285,7 +288,6 @@ async function lookUp(count, message, args, msg){
       try{
 
       }catch{
-        throw new Error("API Returned Null!");
       }
     }
   }
@@ -345,7 +347,9 @@ function queryApi(args, apiKey){
           var user = JSON.parse(body);
           if(user.data == null){
             console.log(args+" returned null, retrying");
-            promiseSearch({status:0, data:args+" returned null"});
+            //promiseSearch({status:0, data:args+" returned null"});
+
+            throw new Error("API Returned Null!");
           }
           if(Object.size(user.data) > 0){
             cachePlayer(user.data);
@@ -418,12 +422,14 @@ function queryApi(args, apiKey){
           }else{
             var result = "Could not find "+`${args}`;
             //console.log(result);
-            promiseSearch({ status:0, data:result });
+            //promiseSearch({ status:0, data:result });
+            throw new Error("API Returned Null!");
           }
         }catch(err){
           var result = "Encountered an error, User: "+args;
           console.log(result);
-          promiseSearch({ status:0, data:result });
+          //promiseSearch({ status:0, data:result });
+          throw new Error("API Returned Null!");
         };
       })
     })
