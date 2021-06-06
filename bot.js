@@ -282,7 +282,7 @@ async function lookUp(count, message, args, msg){
     if(messageSend.status){
       message.channel.send(messageSend);
     }else{
-      new Error("Returned Null!");
+      throw new Error("Returned Null!");
     }
   }
   for(var i = 0; i < args.length; i++){
