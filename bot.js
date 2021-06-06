@@ -77,7 +77,7 @@ group.on("created", (limiter, key) => {
     const id = jobInfo.options.id;
     console.warn(`Job ${id} failed: ${error}`);
 
-    if (jobInfo.retryCount === 0) {
+    if(jobInfo.retryCount === 0){
       console.log(`Retrying job ${id} in 25ms!`);
       return 25;
     }
@@ -152,12 +152,7 @@ function getPrio(usrID){
 async function addQueue(message, args){
   var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
   message.author.prio = await getPrio(message.author.id);
-  jobQueue.schedule( { id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg)
-  .catch((error) => {
-    if (error instanceof Bottleneck.BottleneckError) {
-      msg.edit("**[STATUS]: ** \u231A ```Error```");
-    }
-  });
+  jobQueue.schedule({ id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg);
 }
 
 
@@ -264,6 +259,7 @@ async function lookUp(count, message, args, msg){
     await getKey(args.length).then(async (key) => {
       keys.push(key);
       percent = Math.round((i/args.length)*100);
+      console.log(percent);
       if(percent%5 == 0 && percent != nodupe){
         nodupe = percent;
         msg.edit("**[STATUS]: ** \u231B	 ```"+percent+"%  Our microtech datacenters are processing your request.```");
