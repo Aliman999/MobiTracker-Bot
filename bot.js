@@ -481,6 +481,9 @@ function cachePlayer(user){
         update = true;
         eventUpdate.push("Avatar Changed");
       }
+      eventUpdate = eventUpdate.filter((c, index) => {
+          return eventUpdate.indexOf(c) === index;
+      });
     }else{
       check.badge = JSON.stringify(check.badge);
       check.organization = JSON.stringify(Object.assign({}, check.organization));
