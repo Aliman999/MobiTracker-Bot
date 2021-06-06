@@ -288,8 +288,8 @@ async function lookUp(count, message, args, msg){
       return false;
     }
   }
-  for(var i = 0; i < args.length; i++){
-    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length)
+  for(var i = 0; i < args.length; i++){ // keys[i]
+    group.key(message.author.username).schedule(query, args[i], null, message, msg, message.author.username, args.length)
     .then((result)=>{
       console.log(result);
       if(result){
