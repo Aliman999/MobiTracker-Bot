@@ -291,16 +291,15 @@ async function lookUp(count, message, args, msg){
       console.log(i+" awijdaidjw");
       await query(args[i], keys[i], message, msg, message.author.username, args.length)
       .then((result)=>{
-        console.log(result);
         if(result){
           throw new Error(result.data);
         }
       })
     })
     .catch((error) => {
-    if (error instanceof Bottleneck.BottleneckError) {
+      if (error instanceof Bottleneck.BottleneckError) {
 
-    }
+      }
     });
   }
 }
