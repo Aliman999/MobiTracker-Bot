@@ -280,20 +280,14 @@ async function lookUp(count, message, args, msg){
     .then((result)=>{
       console.log(result.status);
       if(result.status == 0){
-        return true;
+        throw new Error(result.data);
       }else{
         message.channel.send(result.data);
-        return false;
       }
     })
   }
   for(var i = 0; i < args.length; i++){
     group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length)
-    .then((result)=>{
-      if(result){
-        throw new Error(result.data);
-      }
-    })
     .catch((error) => {
       if (error instanceof Bottleneck.BottleneckError) {
 
