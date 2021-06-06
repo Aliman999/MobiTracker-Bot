@@ -47,6 +47,7 @@ jobQueue.on("queued", function(info){
 jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
+    console.log();
     if(position[ind].id === info.options.id){
       position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
       position.splice(ind, 1);
