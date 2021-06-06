@@ -267,7 +267,7 @@ async function lookUp(count, message, args, msg){
       }
     }
     const messageSend = await queryApi(args, keys);
-    if(messageSend.success){
+    if(messageSend.status){
       message.channel.send(messageSend);
     }else{
       message.channel.send("Api returned null");
@@ -278,7 +278,7 @@ async function lookUp(count, message, args, msg){
     group.key(message.author.username).schedule(async () =>{
       await query(args[i], keys[i], message, msg, message.author.username, args.length).then((result) => {
         console.log(result);
-        if(result == null){
+        if(result.status == null){
           throw new Error("Returned Null!");
         }
       });
