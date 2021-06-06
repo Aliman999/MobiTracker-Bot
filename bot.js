@@ -288,7 +288,7 @@ async function lookUp(count, message, args, msg){
   }
   for(var i = 0; i < args.length; i++){
     group.key(message.author.username).schedule(async () =>{
-      console.log(args);
+      console.log(i);
       await query(args[i], keys[i], message, msg, message.author.username, args.length)
       .then((result)=>{
         console.log(result);
