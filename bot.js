@@ -418,12 +418,12 @@ function queryApi(args, apiKey){
               promiseSearch({ status:1, data:embed });
             });
           }else{
-            var result = "**[ERROR]: ** :tools: Failed to find "+`${args}`;
-            promiseSearch({ status:1, data:result });
+            console.log(args+" returned null, retrying");
+            promiseSearch({ status:0, data:null });
           }
         }catch(err){
-          var result = "Encountered an error, User: "+args;
-          promiseSearch({ status:0, data:result });
+          console.log("Failed to parse "+args);
+          promiseSearch({ status:0, data:null });
         };
       })
     })
