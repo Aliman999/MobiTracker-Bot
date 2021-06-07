@@ -78,7 +78,7 @@ group.on("created", (limiter, key) => {
   })
 
   limiter.on("failed", async (error, jobInfo) => {
-    if(jobInfo.retryCount < 3){
+    if(jobInfo.retryCount < 2){
       return 1000;
     }else{
       jobInfo.args[2].channel.send("**[ERROR]: ** :tools: ```3 Attemps to find "+jobInfo.args[0]+" Failed```");
