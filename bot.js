@@ -508,7 +508,7 @@ function cachePlayer(user){
         if(data.username != check.username){
           console.log(1);
           update = true;
-          eventUpdate.push("Username Changed");
+          eventUpdate.push("Changed Name");
         }else if (data.badge.title != check.badge.title) {
           console.log(2);
           update = true;
