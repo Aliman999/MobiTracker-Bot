@@ -81,7 +81,7 @@ group.on("created", (limiter, key) => {
     if(jobInfo.retryCount < 3){
       return 1000;
     }else{
-      jobInfo.args[2].channel.send("**[ERROR]: ** :tools: 3 Attemps to find **"+jobInfo.args[0]+"** Failed");
+      jobInfo.args[2].channel.send("**[ERROR]: ** :tools: ```3 Attemps to find **"+jobInfo.args[0]+"** Failed```");
       cachePlayer(jobInfo.args[0]);
     }
   });
