@@ -68,7 +68,6 @@ group.on("created", (limiter, key) => {
     info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
   })
   limiter.on("done", function(info){
-    console.log(info);
     count++;
     if(count == info.args[5]){
       info.args[2].channel.send("**[STATUS]: ** :floppy_disk: ```Finished "+info.args[5]+" searches.```");
@@ -77,7 +76,6 @@ group.on("created", (limiter, key) => {
   })
 
   limiter.on("failed", async (error, jobInfo) => {
-    console.log(jobInfo.args);
     if(jobInfo.retryCount < 3){
       return 1000;
     }else{
