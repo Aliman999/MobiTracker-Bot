@@ -432,7 +432,6 @@ function queryApi(args, apiKey){
 function cachePlayer(user){
   if(typeof user === 'string'){
     const sql = "SELECT * FROM `CACHE players` WHERE username = '"+user+"'";
-    console.log(sql);
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result.length > 0){
