@@ -69,6 +69,7 @@ group.on("created", (limiter, key) => {
   })
   limiter.on("done", function(info){
     count++;
+    console.log(count+" | "+info.args[5]);
     if(count == info.args[5]){
       info.args[2].channel.send("**[STATUS]: ** :floppy_disk: ```Finished "+info.args[5]+" searches.```");
       console.log(info.args[4]+' Finished');
