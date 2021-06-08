@@ -81,7 +81,7 @@ group.on("created", (limiter, key) => {
     if(jobInfo.retryCount < 2){
       return 1000;
     }else{
-      jobInfo.args[2].channel.send("**[ERROR]: ** :tools: ```3 Attemps to find "+jobInfo.args[0]+" Failed```");
+      jobInfo.args[2].channel.send("**[ERROR]: ** :tools: ```2 Attemps to find "+jobInfo.args[0]+" Failed```");
       cachePlayer(jobInfo.args[0]);
     }
   });
@@ -344,8 +344,8 @@ function queryApi(args, apiKey){
         console.log("searched "+args);
         try{
           var user = JSON.parse(body);
-          if(user.data == null){
-            promiseSearch({status:0, data:args+" returned null, retrying"});
+          if(user.success == 0){
+            promiseSearch({status:user.success, data:args+" returned null, retrying"});
           }
           if(Object.size(user.data) > 0){
             cachePlayer(user.data);
@@ -413,7 +413,7 @@ function queryApi(args, apiKey){
                 { name: 'Main Organization', value: user.data.organization.name },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
               );
-              promiseSearch({ status:1, data:embed });
+              promiseSearch({ status:user.success, data:embed });
             });
           }else{
             console.log(args+" returned null, retrying");
