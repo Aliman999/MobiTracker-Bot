@@ -155,6 +155,13 @@ function getPrio(usrID){
 async function addQueue(message, args){
   var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
   message.author.prio = await getPrio(message.author.id);
+  if(message.author.id != "751252617451143219"){
+    if(message.channel.type == "text"){
+      console.log(message.author.tag+" ["+message.author.prio+"]"+" starting search for "+args.length+" users in the "+message.guild.name+' server');
+    }else{
+      console.log(message.author.tag+" ["+message.author.prio+"]"+" starting search for "+args.length+" users in "+message.channel.type+'s');
+    }
+  }
   jobQueue.schedule({ id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg);
 }
 
@@ -213,9 +220,6 @@ console.log = function(msg) {
   const day = ("0" + date.getDate()).slice(-2);
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const year = date.getFullYear();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
   fs.appendFile('/home/ubuntu/logs/bot.log', "["+month+"/"+day+"/"+year+" "+date.toLocaleTimeString('en-US')+"]"+" - "+msg+'\n', function(err) { if(err) {
       return trueLog(err);
     }
