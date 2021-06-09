@@ -155,7 +155,6 @@ function getPrio(usrID){
 async function addQueue(message, args){
   var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
   message.author.prio = await getPrio(message.author.id);
-  console.log();
   jobQueue.schedule({ id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg);
 }
 
