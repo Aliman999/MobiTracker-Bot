@@ -73,7 +73,7 @@ group.on("created", (limiter, key) => {
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
     if(count == info.args[5]){
       info.args[2].channel.send("**[STATUS]: ** :floppy_disk: ```Finished "+info.args[5]+" searches.```");
-      console.log(info.args[4]+' Finished');
+      console.log('Finished '+info.args[4]+"'s Job");
       group.deleteKey(info.args[4]);
     }
   })
