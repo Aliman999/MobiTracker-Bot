@@ -38,7 +38,7 @@ jobQueue.on("received", function(info){
 });
 
 jobQueue.on("queued", function(info){
-  console.log(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
+  console.save(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
   position.forEach((e, iii) => {
     if(position.length > 1){
       e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
@@ -47,7 +47,7 @@ jobQueue.on("queued", function(info){
 });
 
 jobQueue.on("executing", function(info){
-  console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
+  console.save(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
     if(position[ind].id === info.options.id){
       position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
@@ -60,7 +60,7 @@ jobQueue.on("executing", function(info){
 });
 
 jobQueue.on("done", function(info){
-  console.log(info.options.id+" Finished.");
+  console.save(info.options.id+" Finished.");
 });
 
 group.on("created", (limiter, key) => {
@@ -70,7 +70,7 @@ group.on("created", (limiter, key) => {
   })
   limiter.on("done", function(info){
     count++;
-    console.log(count+" | "+info.args[5]);
+    console.log(count+" | "+info.args[5]+" - "+info.args[6]);
     if(count == info.args[5]){
       info.args[2].channel.send("**[STATUS]: ** :floppy_disk: ```Finished "+info.args[5]+" searches.```");
       console.log(info.args[4]+' Finished');
@@ -301,7 +301,6 @@ async function lookUp(count, message, args, msg){
       }
     });
   }
-  console.log(message.author.username+" Priority: "+message.author.prio);
   async function query(args, keys, message){
     await queryApi(args, keys)
     .then((result)=>{
@@ -370,8 +369,7 @@ function queryApi(args, apiKey){
         body += d;
       })
       res.on('error', error => {
-        console.log(error);
-        console.log("Encountered an error, Retrying user "+args);
+        promiseSearch({status:0, data:args+" returned null, retrying"})
       })
       res.on('end', function(){
         try{
@@ -448,11 +446,11 @@ function queryApi(args, apiKey){
               promiseSearch({ status:user.success, data:embed });
             });
           }else{
-            console.log(args+" returned null, retrying");
+            console.save(args+" returned null, retrying");
             promiseSearch({ status:0, data:null });
           }
         }catch(err){
-          console.log("Failed to parse "+args);
+          console.save("Failed to parse "+args);
           promiseSearch({ status:0, data:null });
         };
       })
@@ -533,20 +531,16 @@ function cachePlayer(user){
           }
         }
         if(data.cID != check.cID){
-          console.log(0);
           update = true;
           eventUpdate.push("Obtained ID");
         }
         if(data.username != check.username){
-          console.log(1);
           update = true;
           eventUpdate.push("Changed Name");
         }else if (data.badge.title != check.badge.title) {
-          console.log(2);
           update = true;
           eventUpdate.push("Badge Changed");
         }else if (data.avatar != check.avatar) {
-          console.log(3);
           update = true;
           eventUpdate.push("Avatar Changed");
         }
