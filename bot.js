@@ -233,7 +233,8 @@ console.log = function(msg) {
   trueLog(msg);
 }
 
-var logSave = function(msg) {
+var logSave = console.save;
+console.save = function(msg) {
   const date = new Date();
   const day = ("0" + date.getDate()).slice(-2);
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -242,7 +243,6 @@ var logSave = function(msg) {
       return trueLog(err);
     }
   });
-  logSave(msg);
 }
 
 console.save("test");
