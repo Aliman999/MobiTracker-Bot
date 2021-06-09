@@ -13,7 +13,7 @@ const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
 const schedule = require('node-schedule');
 require('console-stamp')(console, {
-    format: ':date(dd/mm/yyyy HH:MM:ss.l)'
+    format: ':date(mm/dd/yyyy HH:MM:ss.l)'
 });
 var jwt = require('jsonwebtoken');
 var discordClients = [];
