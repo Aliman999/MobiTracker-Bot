@@ -245,8 +245,6 @@ console.save = function(msg) {
   });
 }
 
-console.save("test");
-
 var con = mysql.createPool({
   host: config.MysqlHost,
   user: config.MysqlUsername,
