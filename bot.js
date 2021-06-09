@@ -157,9 +157,17 @@ async function addQueue(message, args){
   message.author.prio = await getPrio(message.author.id);
   if(message.author.id != "751252617451143219"){
     if(message.channel.type == "text"){
-      console.log(message.author.tag+" ["+message.author.prio+"]"+" starting search for "+args.length+" users in the "+message.guild.name+' server');
+      if(args.length > 1){
+        console.log(message.author.tag+" ["+message.author.prio+"]"+" starting search for "+args.length+" users in the "+message.guild.name+' server');
+      }else{
+        console.log(message.author.tag+" ["+message.author.prio+"]"+" starting search for "+args.length+" user in the "+message.guild.name+' server');
+      }
     }else{
-      console.log(message.author.tag+" ["+message.author.prio+"]"+" starting search for "+args.length+" users in "+message.channel.type+'s');
+      if(args.length > 1){
+        console.log(message.author.tag+" ["+message.author.prio+"]"+" starting search for "+args.length+" users in "+message.channel.type+'s');
+      }else{
+        console.log(message.author.tag+" ["+message.author.prio+"]"+" starting search for "+args.length+" user in "+message.channel.type+'s');
+      }
     }
   }
   jobQueue.schedule({ id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg);
