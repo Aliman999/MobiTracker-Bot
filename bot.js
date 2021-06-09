@@ -12,7 +12,9 @@ const mysql = require('mysql');
 const client = new Client();
 const wsClient = new WebSocket("wss://mobitracker.co:8000");
 const schedule = require('node-schedule');
-require('console-stamp')(console, 'HH:MM:ss.l');
+require('console-stamp')(console, {
+    format: ':date(yyyy/mm/dd HH:MM:ss.l)'
+});
 var jwt = require('jsonwebtoken');
 var discordClients = [];
 var position = [];
@@ -81,7 +83,7 @@ group.on("created", (limiter, key) => {
     if(jobInfo.retryCount < 2){
       return 1000;
     }else{
-      jobInfo.args[2].channel.send("**[ERROR]: ** :tools: ```2 Attemps to find "+jobInfo.args[0]+" Failed```");
+      jobInfo.args[2].channel.send("**[ERROR]: ** :tools: ```3 Attemps to find "+jobInfo.args[0]+" Failed```");
       cachePlayer(jobInfo.args[0]);
     }
   });
@@ -153,6 +155,7 @@ function getPrio(usrID){
 async function addQueue(message, args){
   var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
   message.author.prio = await getPrio(message.author.id);
+  console.log();
   jobQueue.schedule({ id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg);
 }
 
@@ -271,13 +274,6 @@ async function lookUp(count, message, args, msg){
   }
   console.log(message.author.username+" Priority: "+message.author.prio);
   async function query(args, keys, message){
-    if(message.author.id != "751252617451143219"){
-      if(message.channel.type == "text"){
-        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args+' in the '+message.guild.name+' server');
-      }else{
-        console.log(message.author.username+'#'+message.author.discriminator+' searched for '+args+' in '+message.channel.type+'s');
-      }
-    }
     await queryApi(args, keys)
     .then((result)=>{
       if(result.status == 0){
@@ -288,7 +284,15 @@ async function lookUp(count, message, args, msg){
     })
   }
   for(var i = 0; i < args.length; i++){
-    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length)
+    if(message.author.id != "751252617451143219"){
+      var logMsg;
+      if(message.channel.type == "text"){
+        logMsg = message.author.username+'#'+message.author.discriminator+' searched for '+args+' in the '+message.guild.name+' server';
+      }else{
+        logMsg = message.author.username+'#'+message.author.discriminator+' searched for '+args+' in '+message.channel.type+'s';
+      }
+    }
+    group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length, logMsg)
     .catch((error) => {
       if (error instanceof Bottleneck.BottleneckError) {
 
@@ -341,7 +345,6 @@ function queryApi(args, apiKey){
         console.log("Encountered an error, Retrying user "+args);
       })
       res.on('end', function(){
-        console.log("searched "+args);
         try{
           var user = JSON.parse(body);
           if(user.success == 0){
@@ -619,11 +622,7 @@ client.on('message', async message => {
   	if (!args.length){
   		return message.channel.send(`You didnt provide a username.`);
   	}
-    if(args.length > 1){
-      addQueue(message, args);
-    }else{
-      addQueue(message, args);
-    }
+    addQueue(message, args);
   }
 
   if(command == 'contracts'){
