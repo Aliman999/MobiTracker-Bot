@@ -368,8 +368,8 @@ function queryApi(args, apiKey){
       res.on('end', function(){
         try{
           var user = JSON.parse(body);
-          if(user.success == 0){
-            promiseSearch({status:user.success, data:args+" returned null, retrying"});
+          if(user.data == null){
+            promiseSearch({status:0, data:args+" returned null, retrying"});
           }
           if(Object.size(user.data) > 0){
             cachePlayer(user.data);
