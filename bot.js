@@ -233,9 +233,16 @@ console.log = function(msg) {
   trueLog(msg);
 }
 
-var logSave = console.save;
-console.save = function(msg) {
-  trueLog(msg);
+var logSave = function(msg) {
+  const date = new Date();
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+  fs.appendFile('/home/ubuntu/logs/bot.log', "["+month+"/"+day+"/"+year+" "+date.toLocaleTimeString('en-US')+"]"+" - "+msg+'\n', function(err) { if(err) {
+      return trueLog(err);
+    }
+  });
+  logSave(msg);
 }
 
 console.save("test");
