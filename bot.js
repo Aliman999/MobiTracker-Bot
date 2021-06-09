@@ -312,7 +312,7 @@ async function lookUp(count, message, args, msg){
   }
   for(var i = 0; i < args.length; i++){
     if(message.author.id != "751252617451143219"){
-      var logMsg = message.author.username+'#'+message.author.discriminator+' searched for '+args;
+      var logMsg = message.author.username+'#'+message.author.discriminator+' searched for '+args[i];
     }
     group.key(message.author.username).schedule(query, args[i], keys[i], message, msg, message.author.username, args.length, logMsg)
     .catch((error) => {
