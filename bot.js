@@ -49,7 +49,6 @@ jobQueue.on("queued", function(info){
 jobQueue.on("executing", function(info){
   console.log(jobQueue.jobs("EXECUTING").join(", ")+" executing");
   for(var ind = 0; ind < position.length; ind++){
-    console.log(position[ind].id+" == "+info.options.id);
     if(position[ind].id === info.options.id){
       position[ind].msg.edit("**[STATUS]: ** \u2699 ```Running.```");
       position.splice(ind, 1);
@@ -224,7 +223,7 @@ socket();
 
 var trueLog = console.log;
 console.log = function(msg) {
-  const date = new Date(); //.toLocaleTimeString('en-US')
+  const date = new Date();
   const day = ("0" + date.getDate()).slice(-2);
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const year = date.getFullYear();
@@ -233,6 +232,18 @@ console.log = function(msg) {
     }
   });
   trueLog(msg);
+}
+var logSave = console.save;
+console.save = function(msg){
+  const date = new Date();
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+  fs.appendFile('/home/ubuntu/logs/bot.log', "["+month+"/"+day+"/"+year+" "+date.toLocaleTimeString('en-US')+"]"+" - "+msg+'\n', function(err) { if(err) {
+      return trueLog(err);
+    }
+  });
+  logSave(msg);
 }
 
 var con = mysql.createPool({
