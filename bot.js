@@ -200,10 +200,9 @@ function socket(){
     webSocket.send(JSON.stringify(message));
     heartbeat();
   }
-  /*
-  webSocket.onmessage = function(event){
+  webSocket.onerror = function(err){
+    console.log(err);
   }
-  */
   webSocket.onclose = function(){
     socket();
   };
