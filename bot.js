@@ -202,6 +202,7 @@ function socket(){
     heartbeat();
   }
   webSocket.onerror = function(err){
+    console.log("Lost Connection to Key Manager");
   }
   webSocket.onclose = function(){
     socket();
@@ -652,78 +653,14 @@ client.on('message', async message => {
     registerUser(message, args);
   }
 
+  if(command == 'link'){
+    registerUser(message, args);
+  }
+
   if(command == 'help'){
     message.channel.send("MobiTracker's Discord bot is very simple to use! \n\n!help - Bring up this help message \n\n!search USERNAME - Find any user in the verse by their ingame name quickly and displaying all the information you'd find online at https://mobitracker.co \n\n !contracts PAGENUMBER - Search through MobiTrackers Contracts by the page number and See what people are doing! \n\n!auth - The command to authorize and edit your alert policies! \nGet your auth token at https://mobitracker.co/discord \n\n!alerts on/off - Pause and Resume your alert policy!");
   }
 
-  /*
-  if(command == 'auth'){
-    if(!args.length){
-      return message.channel.send('Sign in at https://mobitracker.co/login and click the button at the top that says "Discord Bot". \nThen and copy the text provided and paste it here.');
-    }else if(args.length>1){
-      return message.channel.send('Too many arguments.');
-    }
-    jwt.verify(`${args}`, config.Secret, { algorithm: 'HS265' }, function (err, decoded){
-      if(err){
-        if(err.message === 'jwt expired'){
-          message.author.send('This Token has expired!');
-        }else{
-          message.author.send('Invalid Token!');
-        }
-      }else{
-        if(decoded.cid != "" && decoded.username != ""){
-          const authUser = message.author;
-          delete decoded.exp;
-          decoded.update = false;
-          const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
-          const msg = {
-            type:"authDiscord",
-            token: token
-          };
-          const sql = "SELECT username FROM players WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
-          con.query(sql, function (err, result, fields){
-            if (err) throw err;
-            if(result.length > 0){
-              const sql = "SELECT contracts->'$.active' AS contracts, applicants->'$.active' AS applicants, reviews->'$.active' AS reviews FROM discordAlerts WHERE username = '"+decoded.username+"' AND cID = "+decoded.cid;
-              con.query(sql, function (err, result, fields) {
-                if (err) throw err;
-                if(result.length > 0){
-                  if(decoded.contracts === result[0].contracts && decoded.applicants === result[0].applicants && decoded.reviews === result[0].reviews ){
-                    message.author.send('Your policies are the same. \nContracts: '+result[0].contracts+'\nApplicants & Escrow: '+result[0].applicants+'\nReviews: '+result[0].reviews);
-                  }else{
-                    decoded.update = true;
-                    const token = jwt.sign({ mtUser:decoded, discordUser: authUser}, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
-                    const msg = {
-                      type:"authDiscord",
-                      token: token
-                    };
-                    wsClient.send(JSON.stringify(msg));
-                    message.author.send('Updated your alert policies!');
-                  }
-                }else{
-                  wsClient.send(JSON.stringify(msg));
-                  var span = "";
-                  if(decoded.contracts == 0 && decoded.reviews != 0){
-                    span = " for contract alerts.";
-                  }else if(decoded.contracts != 0 && decoded.reviews == 0){
-                    span = " for review alerts.";
-                  }else{
-                    span = " for contracts and review alerts.";
-                  }
-                  message.author.send('Your discord is now linked with '+decoded.username+''+span+' \nhttps://mobitracker.co/'+decoded.username+' \nRemember to share a server containing this bot to keep getting alerts! \nYou may toggle alerts with !alerts.');
-                }
-              });
-            }else{
-              message.author.send('You must sign up at https://mobitracker.co/register To get discord alerts.');
-            }
-          });
-        }else{
-          message.author.send('The token was invalid. Please copy the provided token from https://mobitracker.co/auth');
-        }
-      }
-    });
-  }
-  */
   if (!message.content.startsWith(`${prefix}`)) return;
 });
 
@@ -862,7 +799,6 @@ async function registerUser(message, argz){
       }
     });
   }
-
   function addRSI(result, key){
     if(result[0].username){
       var username = JSON.parse(result[0].username);
