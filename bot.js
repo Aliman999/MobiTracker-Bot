@@ -10,12 +10,12 @@ const fs = require('fs');
 const https = require('https');
 const mysql = require('mysql');
 const client = new Client();
-const wsClient = new WebSocket("wss://mobitracker.co:8000");
 const schedule = require('node-schedule');
 require('console-stamp')(console, {
     format: ':date(mm/dd/yyyy HH:MM:ss)'
 });
 var jwt = require('jsonwebtoken');
+var webSocket = null;
 var discordClients = [];
 var position = [];
 var update = [];
@@ -189,34 +189,32 @@ function saveStats(stats){
 }
 
 function socket(){
-  wsClient.onopen = function(){
-    wsClient.send(JSON.stringify(msg));
-    console.log("Connected to Event Server");
+  var payload = jwt.sign({ user:"bot" }, config.Secret);
+  webSocket = new WebSocket("wss://mobitracker.co:2599");
+  webSocket.onopen = function(){
+    message = {
+      type:"auth",
+      token:payload
+    };
+    webSocket.send(JSON.stringify(message));
     heartbeat();
   }
-
-  wsClient.onmessage = function(response){
-    response = JSON.parse(response.data);
-    console.log(response.event);
+  /*
+  webSocket.onmessage = function(event){
   }
-
-  wsClient.onclose = function(){
-    console.log("Reconnecting to Event Server");
-    setInterval(socket, 3000);
+  */
+  webSocket.onclose = function(){
+    socket();
   };
-
-  wsClient.onerror = function(){
-    setTimeout(socket, 3000);
-  };
+  
+  function heartbeat() {
+    if (!webSocket) return;
+    if (webSocket.readyState !== 1) return;
+    webSocket.send(JSON.stringify({type:"ping"}));
+    setTimeout(heartbeat, 3000);
+  }
 }
 
-
-function heartbeat() {
-  if (!wsClient) return;
-  if (wsClient.readyState !== 1) return;
-  wsClient.send(JSON.stringify({type:"ping"}));
-  setTimeout(heartbeat, 3000);
-}
 
 socket();
 
