@@ -193,6 +193,7 @@ function socket(){
   var message;
   webSocket = new WebSocket("wss://mobitracker.co:2599");
   webSocket.onopen = function(){
+    console.log("Connected to Key Manager");
     message = {
       type:"auth",
       token:payload
