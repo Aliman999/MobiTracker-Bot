@@ -437,7 +437,7 @@ function queryApi(args, apiKey){
                 { name: 'Main Organization', value: user.data.organization.name },
                 { name: 'Affiliated Organizations', value: affiliations(user.data.affiliation)}
               );
-              promiseSearch({ status:user.success, data:embed });
+              promiseSearch({ status:1, data:embed });
             });
           }else{
             console.save(args+" returned null, retrying");
