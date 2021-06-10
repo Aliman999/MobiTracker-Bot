@@ -190,7 +190,7 @@ function saveStats(stats){
 
 function socket(){
   var payload = jwt.sign({ user:"bot" }, config.Secret);
-  webSocket = new WebSocket("wss://localhost:2599");
+  webSocket = new WebSocket("wss://mobitracker.co:2599");
   webSocket.onopen = function(){
     message = {
       type:"auth",
