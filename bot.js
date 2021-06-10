@@ -201,7 +201,6 @@ function socket(){
     heartbeat();
   }
   webSocket.onerror = function(err){
-    console.log(err);
   }
   webSocket.onclose = function(){
     socket();
