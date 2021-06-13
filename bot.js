@@ -567,8 +567,8 @@ function cachePlayer(user){
         check.badge = JSON.stringify(check.badge);
         check.organization = JSON.stringify(Object.assign({}, check.organization));
         var eventString = eventUpdate.join(", ");
-        const sql = "INSERT INTO `CACHE players` (event, cID, username, bio, badge, organization, avatar) VALUES ('"+eventString+"', "+check.cID+", '"+check.username+"', `"+check.bio+"`, '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"');";
-        con.query(sql, function (err, result, fields) {
+        const sql = "INSERT INTO `CACHE players` (event, cID, username, bio, badge, organization, avatar) VALUES ('"+eventString+"', "+check.cID+", '"+check.username+"', ?, '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"');";
+        con.query(sql, [check.bio], function (err, result, fields) {
           if(err) throw err;
         });
       }
