@@ -722,12 +722,18 @@ async function registerUser(message, argz){
                 const user = JSON.parse(body);
                 if(Object.keys(user.data).length > 0){
                   if(user.data.profile.bio){
-                    const bio = user.data.profile.bio.split(/\s+/);
                     if(user.data.profile.id != "n/a"){
                       user.data.profile.id = user.data.profile.id.substring(1);
                     }else{
                       user.data.profile.id = "";
                     }
+                    const sql = "SELECT cID, username FROM discord WHERE cID = "+user.data.profile.id+";";
+                    console.log(sql);
+                    con.query(sql, function (err, result, fields) {
+                      if(err) throw err;
+                    }
+                    /*
+                    const bio = user.data.profile.bio.split(/\s+/);
                     for(var x = 0; x < bio.length; x++){
                       var encrypted = bio[x];
                       try{
@@ -773,9 +779,9 @@ async function registerUser(message, argz){
                       con.query(sql, function (err, result, fields) {
                         if(err) throw err;
                       });
-
                     }
                     ii++;
+                    */
                   }else{
                     message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
                     console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
