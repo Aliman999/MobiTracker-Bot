@@ -780,7 +780,8 @@ async function registerUser(message, argz){
                       password = password.substring(password.length/2, password.length);
                       if(result.length > 0){
                         result.forEach((item, i) => {
-                          username.push(item.username);
+                          var temp = JSON.parse(item.username);
+                          username.push();
                           registeredCID.push(item.cID);
                         });
                       }
