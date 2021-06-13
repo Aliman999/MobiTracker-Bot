@@ -820,8 +820,8 @@ async function registerUser(message, argz){
         if(err) throw err;
         if(result.length == 0){
           console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
-          var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-          password = password.slice(0, password.length/2);
+          var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
+          password = password.slice(0, password.length);
           const sql = "INSERT INTO `discord` ( discUser, discID, password) VALUES ( '"+message.author.tag+"' ,"+message.author.id+", '"+password+"');";
           con.query(sql, function (err, result, fields) {
             if(err) throw err;
