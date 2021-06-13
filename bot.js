@@ -688,12 +688,14 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result[0]){
+        var registeredCID = [];
         if(result[0].username){
           var username = JSON.parse(result[0].username);
+          registeredCID.push(JSON.parse(result[0].cID));
         }else{
           var username = [];
+          registeredCID.push("");
         }
-        var registeredCID = [];
         var registeredAvi = [];
         var failedNames = [];
         var alreadyLinked = [];
