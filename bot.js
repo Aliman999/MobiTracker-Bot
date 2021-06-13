@@ -728,14 +728,6 @@ async function registerUser(message, argz){
                     }else{
                       user.data.profile.id = "";
                     }
-                    const sql = "SELECT cID, username FROM players WHERE cID = "+user.data.profile.id+";";
-                    con.query(sql, function (err, result, fields){
-                      if(err) throw err;
-                      if(result.length == 0){
-
-                      }
-                    });
-                    /*
                     const bio = user.data.profile.bio.split(/\s+/);
                     for(var x = 0; x < bio.length; x++){
                       var encrypted = bio[x];
@@ -775,16 +767,12 @@ async function registerUser(message, argz){
                         message.channel.send(drString+"\n"+dfString);
                       }
 
-                      var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-                      password = password.substring(password.length/2, password.length);
-
-                      const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"' WHERE discID = "+message.author.id+";";
+                      const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"' WHERE discID = "+message.author.id+"; UPDATE players SET cID = ";
                       con.query(sql, function (err, result, fields) {
                         if(err) throw err;
                       });
                     }
                     ii++;
-                    */
                   }else{
                     message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
                     console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
