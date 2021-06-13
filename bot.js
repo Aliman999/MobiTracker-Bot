@@ -821,13 +821,11 @@ async function registerUser(message, argz){
         if(result.length == 0){
           console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
           var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
-          var userPassword = password;
-          password = CryptoJS.AES.encrypt(userPassword, message.author.id).toString();
           const sql = "INSERT INTO `discord` ( discUser, discID ) VALUES ( '"+message.author.tag+"' ,"+message.author.id+"); INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`) VALUES ( '0', '"+message.author.tag+"', '"+password+"', 'none', '');";
           con.query(sql, function (err, result, fields){
             if(err) throw err;
             client.users.fetch(message.author.id).then((user) =>{
-              user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour temporary password to MobiTracker is ```"+userPassword+"```");
+              user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour temporary password to MobiTracker is ```"+message.author.id+"```");
             });
             callback();
           });
