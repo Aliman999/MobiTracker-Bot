@@ -721,7 +721,7 @@ async function registerUser(message, argz){
           console.log(i +" | "+ argz.length);
           if(tempName.includes(item)){
             alreadyLinked.push(item);
-            argz.remove(item);
+            argz.splice(i, 1);
           }
         });
         if(argz.length == 0){
