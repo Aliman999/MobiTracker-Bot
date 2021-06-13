@@ -723,7 +723,6 @@ async function registerUser(message, argz){
             path: '/'+key+'/v1/live/user/'+escape(argz[i]),
             method: 'GET'
           }
-          console.log(argz[i]);
           retry(argz[i]);
           function retry(name){
             const req = https.request(options, res =>{
