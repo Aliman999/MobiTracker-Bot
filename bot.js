@@ -684,11 +684,18 @@ async function registerUser(message, argz){
     firstRegister();
   }
   async function linkRSI(key){
-    const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
+    const sql = "SELECT cID, username, avatar FROM discord WHERE discID = "+message.author.id+" INNER JOIN players on players.username IN ("+argz.join(", ")+")";
+    console.log(sql);
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result[0]){
-        var username = [];
+        if(result[0].username){
+          var username = JSON.parse(result[0].username);
+        }else{
+          var username = [];
+        }
+
+        var registeredName = [];
         var registeredCID = [];
         var registeredAvi = [];
         var failedNames = [];
@@ -751,7 +758,7 @@ async function registerUser(message, argz){
                         }catch{
                         }
                         if(crypto == "mt.co"){
-                          username.push(user.data.profile.handle);
+                          registeredName.push(user.data.profile.handle);
                           registeredCID.push(user.data.profile.id);
                           registeredAvi.push(user.data.profile.image);
                           x = bio.length;
@@ -764,7 +771,7 @@ async function registerUser(message, argz){
                       if(ii == argz.length-1){
                         var rString = "", fString = "", aString = "";
                         if(username.length > 0){
-                          rString = "Registered: "+username.join(", ")+" ";
+                          rString = "Registered: "+registeredName.join(", ")+" ";
                         }
                         if(alreadyLinked.length > 0){
                           aString = "Already Linked: "+alreadyLinked.join(", ")+" ";
@@ -775,25 +782,10 @@ async function registerUser(message, argz){
                         var finalString = rString+aString+fString;
                         console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
                         message.channel.send(finalString);
-                        if(JSON.parse(result[0].cID)){
-                          result.forEach((item, i) => {
-                            var temp = JSON.parse(item.username);
-                            temp.forEach((item, i) => {
-                              username.push(item);
-                            });
-                            var temp = JSON.parse(item.cID);
-                            temp.forEach((item, i) => {
-                              registeredCID.push(item);
-                            });
-                          });
-                        }
-                        username = username.reverse();
-                        registeredCID = registeredCID.reverse();
-                        registeredCID.forEach((item, i) => {
-                          if(item == ""){
-                            registeredCID[i] = 0;
-                          }
+                        registeredName.forEach((item, i) => {
+                          username.push();
                         });
+
                         if(registeredCID.length > 0){
                           const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
                           con.query(sql);
