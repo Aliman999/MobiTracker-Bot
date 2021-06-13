@@ -701,14 +701,12 @@ async function registerUser(message, argz){
         var tries = 0;
         for(var i = 0; i < argz.length; i++){
           if(username.includes(argz[i])){
-            console.log(argz[i]);
             alreadyLinked.push(argz[i]);
             username.splice(username.indexOf(argz[i]), 1);
             argz.splice(i, 1);
-          }else{
-            console.log(argz[i]);
           }
         }
+        console.log(alreadyLinked);
         if(argz.length == 0){
           message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
           return;
