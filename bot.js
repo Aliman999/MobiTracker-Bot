@@ -688,13 +688,12 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result[0]){
-        var registeredCID = [];
         if(result[0].username){
           var username = JSON.parse(result[0].username);
-          registeredCID.push(JSON.parse(result[0].cID));
+          var registeredCID = [JSON.parse(result[0].cID)];
         }else{
           var username = [];
-          registeredCID.push("");
+          var registeredCID = [];
         }
         var registeredAvi = [];
         var failedNames = [];
@@ -757,17 +756,9 @@ async function registerUser(message, argz){
                       }catch{
                       }
                       if(crypto == "mt.co"){
-                        if(username == null){
-                          username.push(user.data.profile.handle);
-                          registeredCID.push(user.data.profile.id);
-                          registeredAvi.push(user.data.profile.image);
-                        }else{
-                          if(!username.includes(user.data.profile.handle)){
-                            username.push(user.data.profile.handle);
-                            registeredCID.push(user.data.profile.id);
-                            registeredAvi.push(user.data.profile.image);
-                          }
-                        }
+                        username.push(user.data.profile.handle);
+                        registeredCID.push(user.data.profile.id);
+                        registeredAvi.push(user.data.profile.image);
                         x = bio.length;
                       }else{
                         if(x == bio.length-1){
