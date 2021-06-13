@@ -703,8 +703,7 @@ async function registerUser(message, argz){
         for(var i = 0; i < argz.length; i++){
           if(result.includes(argz[i].toLowerCase())){
             console.log("contains"+argz[i]);
-            alreadyLinked.push(username[tempNames.indexOf(argz[i].toLowerCase())]);
-            username.splice(tempNames.indexOf(argz[i].toLowerCase()), 1);
+            alreadyLinked.push(result[result.indexOf(argz[i].toLowerCase())]);
             argz.splice(i, 1);
           }
         }
