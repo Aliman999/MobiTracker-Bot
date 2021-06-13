@@ -791,7 +791,7 @@ async function registerUser(message, argz){
                             registeredCID[i] = "null";
                           }
                         });
-
+                        console.log(registeredCID);
 
                         if(registeredCID.length > 0){
                           const sql = "UPDATE discord SET cID = '"+JSON.stringify(cID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
