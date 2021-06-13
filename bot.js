@@ -699,6 +699,7 @@ async function registerUser(message, argz){
         console.log(message.author.username+"#"+message.author.discriminator+" requested to Register "+args.join(", "));
         var registeredNames = [];
         var registeredCID = [];
+        var registeredAvi = [];
         var failedNames = [];
         var ii = 0;
         var tries = 0;
@@ -739,6 +740,7 @@ async function registerUser(message, argz){
                         if(!registeredNames.includes(user.data.profile.handle)){
                           registeredNames.push(user.data.profile.handle);
                           registeredCID.push(user.data.profile.id);
+                          registeredAvi.push(user.data.profile.avatar);
                         }
                         x = bio.length
                       }else{
@@ -771,6 +773,15 @@ async function registerUser(message, argz){
                       con.query(sql, function (err, result, fields) {
                         if(err) throw err;
                       });
+                      for(var xx = 0; xx < registeredCID.length; xx++){
+                        const sql = "INSERT INTO `players` ( `cID` `username`, `password`, `email`, `avatar`) VALUES ( "+registeredCID[xx]+", '"+registeredNames[xx]+"', '"+password+"', 'none', "+registeredAvi[xx]+");";
+                        console.log(sql);
+                        /*
+                        con.query(sql, function (err, result, fields) {
+                          if(err) throw err;
+                        });
+                        */
+                      }
                     }
                     ii++;
                   }else{
@@ -811,8 +822,7 @@ async function registerUser(message, argz){
         if(err) throw err;
         if(result.length == 0){
           console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
-          var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
-          const sql = "INSERT INTO `discord` ( discUser, discID ) VALUES ( '"+message.author.tag+"' ,"+message.author.id+"); INSERT INTO `players` ( `username`, `password`, `email`, `avatar`) VALUES ( '"+message.author.tag+"', '"+password+"', 'none', '');";
+          const sql = "INSERT INTO `discord` ( discUser, discID ) VALUES ( '"+message.author.tag+"' ,"+message.author.id+");";
           con.query(sql, function (err, result, fields){
             if(err) throw err;
             client.users.fetch(message.author.id).then((user) =>{
