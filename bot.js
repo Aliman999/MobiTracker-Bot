@@ -696,7 +696,7 @@ async function registerUser(message, argz){
         var ii = 0;
         var tries = 0;
         var tempName = [];
-        if(result.cID){
+        if(result[0].cID){
           result.forEach((item, i) => {
             tempName = JSON.parse(item.username.toLowerCase());
           });
@@ -776,20 +776,16 @@ async function registerUser(message, argz){
                       console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
                       message.channel.send(finalString);
 
-                      if(result.length > 0){
+                      if(result[0].cid){
                         result.forEach((item, i) => {
                           var temp = JSON.parse(item.username);
-                          if(temp){
-                            temp.forEach((item, i) => {
-                              username.push(item);
-                            });
-                          }
+                          temp.forEach((item, i) => {
+                            username.push(item);
+                          });
                           var temp = JSON.parse(item.cID);
-                          if(temp){
-                            temp.forEach((item, i) => {
-                              registeredCID.push(item);
-                            });
-                          }
+                          temp.forEach((item, i) => {
+                            registeredCID.push(item);
+                          });
                         });
                       }
                       username = username.reverse();
