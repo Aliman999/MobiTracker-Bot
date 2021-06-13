@@ -710,7 +710,6 @@ async function registerUser(message, argz){
         }
         var len = argz.length
         for(var xi = 0; xi < len; xi++){
-          console.log(xi +" | "+ argz.length);
           if(tempName.includes(argz[xi].toLowerCase())){
             alreadyLinked.push(argz[xi]);
           }else{
