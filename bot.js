@@ -685,9 +685,9 @@ async function registerUser(message, argz){
   }
   async function linkRSI(key){
     const sql = "SELECT discord.cID, discord.username, avatar FROM discord INNER JOIN players ON discord.discID = players.discID WHERE discord.discID = "+message.author.id;
-    console.log(sql);
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
+      console.log(avatar);
       if(result[0]){
         if(result[0].username){
           var username = JSON.parse(result[0].username);
