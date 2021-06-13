@@ -710,7 +710,7 @@ async function registerUser(message, argz){
         }
         for(var i = 0; i < argz.length; i++){
           if(tempName.includes(argz[i].toLowerCase())){
-            alreadyLinked.push(tempName[tempName.indexOf(argz[i].toLowerCase())]);
+            alreadyLinked.push(argz[i]);
             argz.splice(i, 1);
             i = 0;
           }
