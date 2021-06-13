@@ -481,7 +481,6 @@ function cachePlayer(user){
     if(!check.bio){
       check.bio = "";
     }
-    console.log(check.bio);
     check.username = user.profile.handle;
     check.badge.title = user.profile.badge;
     check.badge.src = user.profile.badge_image;
