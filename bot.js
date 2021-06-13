@@ -767,7 +767,7 @@ async function registerUser(message, argz){
                         message.channel.send(drString+"\n"+dfString);
                       }
 
-                      const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"', password = '"+password+"' WHERE discID = "+message.author.id+"; UPDATE players SET cID = ";
+                      const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"' WHERE discID = "+message.author.id+";";
                       con.query(sql, function (err, result, fields) {
                         if(err) throw err;
                       });
