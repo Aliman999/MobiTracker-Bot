@@ -688,7 +688,8 @@ async function registerUser(message, argz){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      var exist = { cid:JSON.parse(result[0].cID), username:JSON.parse(result[0].username) };
+      console.log(result[0]);
+      /*
       if(!exist.cid){
         var args = [];
         for(var y = 0; y < argz.length; y++){
@@ -802,178 +803,34 @@ async function registerUser(message, argz){
             req.end();
           }
         }
-      }else if(exist.cid.length > 0){
-        addRSI(result, key);
       }else{
         firstRegister();
       }
+      */
     });
   }
-  function addRSI(result, key){
-    if(result[0].username){
-      var username = JSON.parse(result[0].username);
-    }else{
-      var username = [];
-    }
-    var registeredCID = [];
-    var failedNames = [];
-    var alreadyLinked = [];
-    var ii = 0;
-    var tries = 0;
-    for(var i = 0; i < argz.length; i++){
-      if(username.includes(argz[i])){
-        alreadyLinked.push(argz[i]);
-        username.splice(username.indexOf(argz[i]), 1);
-        argz.splice(i, 1);
-      }
-    }
-    if(argz.length == 0){
-      message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
-      return;
-    }
-    for(var i = 0; i < argz.length; i++){
-      const options = {
-        hostname: 'api.starcitizen-api.com',
-        port: 443,
-        path: '/'+key+'/v1/live/user/'+escape(argz[i]),
-        method: 'GET'
-      }
 
-      retry(argz[i]);
-      function retry(name){
-        const req = https.request(options, res =>{
-          var body = "";
-          res.on('data', d =>{
-            body += d;
-          })
-          res.on('error', err =>{
-            console.log(err);
-          });
-          res.on('end', function(){
-            const user = JSON.parse(body);
-            if(Object.keys(user.data).length > 0){
-              if(user.data.profile.bio){
-                const bio = user.data.profile.bio.split(/\s+/);
-                if(user.data.profile.id != "n/a"){
-                  user.data.profile.id.substring(1);
-                }
-                for(var x = 0; x < bio.length; x++){
-                  var encrypted = bio[x];
-                  try{
-                    var crypto = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
-                  }catch{
-                  }
-                  if(crypto == "mt.co"){
-                    if(username == null){
-                      username.push(user.data.profile.handle);
-                      registeredCID.push(user.data.profile.id);
-                    }else{
-                      if(!username.includes(user.data.profile.handle)){
-                        username.push(user.data.profile.handle);
-                        registeredCID.push(user.data.profile.id);
-                      }
-                    }
-                    x = bio.length;
-                  }else{
-                    if(x == bio.length-1){
-                      failedNames.push(user.data.profile.handle);
-                    }
-                  }
-                }
-                if(ii == argz.length-1){
-                  var rString = "", fString = "", aString = "";
-                  if(username.length > 0){
-                    rString = "Registered: "+username.join(", ")+" ";
-                  }
-                  if(alreadyLinked.length > 0){
-                    aString = "Already Linked: "+alreadyLinked.join(", ")+" ";
-                  }
-                  if(failedNames.length > 0){
-                    fString = "Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
-                  }
-                  var finalString = rString+aString+fString;
-                  console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
-                  message.channel.send(finalString);
-
-                  var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-                  password = password.substring(password.length/2, password.length);
-
-                  if(registeredCID.length > 0){
-                    const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
-                    con.query(sql);
-                  }
-
-                }
-                ii++;
-              }else{
-                message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
-                console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
-              }
-            }else{
-              if(tries != 1){
-                console.log("Failed to find "+name+", retrying.");
-                tries++;
-                retry(name);
-              }else{
-                argz.remove(name);
-                setTimeout(() => {
-                  message.channel.send("Could not find Citizen: "+name);
-                }, 3000);
-              }
-            }
-          });
-        })
-        req.on('error', error => {
-          console.error(error)
-        });
-        req.end();
-      }
-    }
-  }
-
-  function firstRegister(special = false){
+  function firstRegister(){
     return new Promise(callback =>{
-      if(special){
-        const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
-        con.query(sql, function (err, result, fields) {
-          if(err) throw err;
-          if(result.length == 0){
-            console.log(message.author.tag+" Registered!");
-            var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-            password = password.slice(0, password.length/2);
-            const sql = "INSERT INTO `discord` ( discUser, discID, password) VALUES ( '"+message.author.tag+"' ,"+message.author.id+", '"+password+"');";
-            con.query(sql, function (err, result, fields) {
-              if(err) throw err;
-              client.users.fetch(message.author.id).then((user) =>{
-                user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour password to MobiTracker is ```"+password+"```");
-              });
-              callback();
+      const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
+      const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
+      con.query(sql, function (err, result, fields) {
+        if(err) throw err;
+        if(result.length == 0){
+          console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
+          var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
+          password = password.slice(0, password.length/2);
+          const sql = "INSERT INTO `discord` ( discUser, discID, password) VALUES ( '"+message.author.tag+"' ,"+message.author.id+", '"+password+"');";
+          con.query(sql, function (err, result, fields) {
+            if(err) throw err;
+            client.users.fetch(message.author.id).then((user) =>{
+              user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour password to MobiTracker is ```"+password+"```");
             });
-          }else{
             callback();
-          }
-        });
-      }else{
-        const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
-        const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id;
-        con.query(sql, function (err, result, fields) {
-          if(err) throw err;
-          if(result.length == 0){
-            console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
-            var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-            password = password.slice(0, password.length/2);
-            const sql = "INSERT INTO `discord` ( discUser, discID, password) VALUES ( '"+message.author.tag+"' ,"+message.author.id+", '"+password+"');";
-            con.query(sql, function (err, result, fields) {
-              if(err) throw err;
-              client.users.fetch(message.author.id).then((user) =>{
-                user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour password to MobiTracker is ```"+password+"```");
-              });
-              callback();
-            });
-          }
-        });
-        message.channel.send(registerP1);
-      }
+          });
+        }
+      });
+      message.channel.send(registerP1);
     })
   }
 }
