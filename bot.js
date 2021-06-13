@@ -689,14 +689,12 @@ async function registerUser(message, argz){
       if(err) throw err;
       if(result[0]){
         if(result[0].username){
-          var username = JSON.parse(result[0].username);
-        }else{
-          var username = [];
+          var alreadyLinked = JSON.parse(result[0].username);
         }
+        var username = [];
         var registeredCID = [];
         var registeredAvi = [];
         var failedNames = [];
-        var alreadyLinked = [];
         var ii = 0;
         var tries = 0;
         var tempNames = [];
