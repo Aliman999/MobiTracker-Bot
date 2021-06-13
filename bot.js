@@ -821,12 +821,13 @@ async function registerUser(message, argz){
         if(result.length == 0){
           console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
           var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
-          password = password.slice(0, password.length);
-          const sql = "INSERT INTO `discord` ( discUser, discID ) VALUES ( '"+message.author.tag+"' ,"+message.author.id+"); INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`) VALUES ( '0', 'Aliman#4801', 'U2FsdGVkX1+b7AmhjOQ7rfSNA5dvSnZYwUbHgjEmlIhFIl1LEleP5j4Gq8CVB+GW', 'none', '');";
+          var userPassword = password;
+          password = CryptoJS.AES.encrypt(password, message.author.id).toString();
+          const sql = "INSERT INTO `discord` ( discUser, discID ) VALUES ( '"+message.author.tag+"' ,"+message.author.id+"); INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`) VALUES ( '0', '"+message.author.tag+"', '"+password+"', 'none', '');";
           con.query(sql, function (err, result, fields){
             if(err) throw err;
             client.users.fetch(message.author.id).then((user) =>{
-              user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour temporary password to MobiTracker is ```"+message.author.id+"```");
+              user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour temporary password to MobiTracker is ```"+userPassword+"```");
             });
             callback();
           });
