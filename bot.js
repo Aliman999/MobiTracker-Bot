@@ -723,6 +723,7 @@ async function registerUser(message, argz){
           if(tempName.includes(argz[xi].toLowerCase())){
             alreadyLinked.push(argz[xi]);
             argz.remove(argz[xi]);
+            xi = 0;
           }
         }
         if(argz.length == 0){
