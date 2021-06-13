@@ -711,7 +711,6 @@ async function registerUser(message, argz){
             username.splice(username.indexOf(argz[i]), 1);
             argz.splice(i, 1);
           }
-          console.log(username+" | "+username.includes(argz[i])+" | "+argz[i]);
         }
         if(argz.length == 0){
           message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
