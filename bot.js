@@ -781,11 +781,16 @@ async function registerUser(message, argz){
                       if(result.length > 0){
                         result.forEach((item, i) => {
                           var temp = JSON.parse(item.username);
-                          console.log(temp);
-                          username.push();
-                          registeredCID.push(item.cID);
+                          temp.forEach((item, i) => {
+                            username.push(item);
+                          });
+                          var temp = JSON.parse(item.cID);
+                          temp.forEach((item, i) => {
+                            registeredCID.push(item);
+                          });
                         });
                       }
+                      console.log(username+" | "registeredCID);
                       if(registeredCID.length > 0){
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
                         //con.query(sql);
