@@ -786,12 +786,7 @@ async function registerUser(message, argz){
                           username.push(item);
                         });
                         registeredCID.forEach((item, i) => {
-                          if(item == ""){
-                            cID.push(0);
-                            registeredCID[i] = 0;
-                          }else{
-                            cID.push(item);
-                          }
+                          cID.push(item);
                         });
 
 
