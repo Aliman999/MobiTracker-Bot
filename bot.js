@@ -687,8 +687,8 @@ async function registerUser(message, argz){
     const sql = "SELECT discord.cID, discord.username, avatar FROM discord INNER JOIN players ON discord.discID = players.discID WHERE discord.discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      if(result[0]){
         console.log(result);
+      if(result[0]){
         if(result[0].username){
           var username = JSON.parse(result[0].username);
         }else{
