@@ -553,17 +553,15 @@ function cachePlayer(user){
         eventUpdate = removeDupe(eventUpdate);
       }else{
         check.bio = JSON.stringify(check.bio);
-        check.bio = escape(check.bio);
         check.badge = JSON.stringify(check.badge);
         check.organization = JSON.stringify(Object.assign({}, check.organization));
-        const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ('First Entry', "+check.cID+", '"+check.username+"', '"+check.bio+"', '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
-        con.query(sql, function (err, result, fields) {
+        const sql = "INSERT INTO `CACHE players` (event, cID, username, bio, badge, organization, avatar) VALUES ('First Entry', "+check.cID+", '"+check.username+"', ?, '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
+        con.query(sql, [check.bio], function (err, result, fields) {
           if(err) throw err;
         });
       }
       if(update){
         check.bio = JSON.stringify(check.bio);
-        check.bio = escape(check.bio);
         check.badge = JSON.stringify(check.badge);
         check.organization = JSON.stringify(Object.assign({}, check.organization));
         var eventString = eventUpdate.join(", ");
