@@ -731,9 +731,6 @@ async function registerUser(message, argz){
                     console.log(sql);
                     con.query(sql, function (err, result, fields){
                       if(err) throw err;
-                      if(){
-
-                      }
                     });
                     /*
                     const bio = user.data.profile.bio.split(/\s+/);
