@@ -696,10 +696,11 @@ async function registerUser(message, argz){
         var ii = 0;
         var tries = 0;
         var tempName = [];
-        result = JSON.parse(result[0].username);
+        result.username = JSON.parse(result[0].username);
+        result.cid = JSON.parse(result[0].cID);
         if(result){
           result.forEach((item, i) => {
-            tempName.push(item.toLowerCase());
+            tempName.push(item.username.toLowerCase());
           });
         }
         console.log(result);
@@ -779,7 +780,13 @@ async function registerUser(message, argz){
 
                       var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
                       password = password.substring(password.length/2, password.length);
-
+                      if(result.length > 0){
+                        result.forEach((item, i) => {
+                          username.push(item.username);
+                          registeredCID.push(item.cID);
+                        });
+                      }
+                      console.log(username+" + "+registeredCID);
                       if(registeredCID.length > 0){
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
                         con.query(sql);
