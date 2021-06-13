@@ -768,7 +768,7 @@ async function registerUser(message, argz){
                       }
                       if(ii == argz.length-1){
                         var rString = "", fString = "", aString = "";
-                        if(username.length > 0){
+                        if(registeredName.length > 0){
                           rString = "Registered: "+registeredName.join(", ")+" ";
                         }
                         if(alreadyLinked.length > 0){
