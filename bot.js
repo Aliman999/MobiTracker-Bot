@@ -687,12 +687,6 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result[0]){
-
-      }else{
-        firstRegister();
-      }
-      /*
-      if(!exist.cid){
         var args = [];
         for(var y = 0; y < argz.length; y++){
           args.push(argz[y].toLowerCase());
@@ -808,7 +802,6 @@ async function registerUser(message, argz){
       }else{
         firstRegister();
       }
-      */
     });
   }
 
