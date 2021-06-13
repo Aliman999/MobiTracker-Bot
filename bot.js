@@ -695,8 +695,14 @@ async function registerUser(message, argz){
         var alreadyLinked = [];
         var ii = 0;
         var tries = 0;
-        var tempName = JSON.parse(result[0].username);
-        console.log(tempName);
+        var tempName = [];
+        result[0] = JSON.parse(result[0]);
+        if(result){
+          result.forEach((item, i) => {
+            tempName.push(item.username.toLowerCase());
+          });
+        }
+        console.log(result);
         for(var i = 0; i < argz.length; i++){
           if(tempName.includes(argz[i].toLowerCase())){
             alreadyLinked.push(tempName[tempName.indexOf(argz[i].toLowerCase())]);
@@ -779,7 +785,7 @@ async function registerUser(message, argz){
                           registeredCID.push(item.cID);
                         });
                       }
-                      console.log(username+" + "+registeredCID);
+                      console.log(username);
                       if(registeredCID.length > 0){
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
                         con.query(sql);
