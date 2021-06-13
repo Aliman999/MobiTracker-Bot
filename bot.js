@@ -727,7 +727,7 @@ async function registerUser(message, argz){
                     }else{
                       user.data.profile.id = "";
                     }
-                    const sql = "SELECT cID, username FROM discord WHERE cID = "+user.data.profile.id+";";
+                    const sql = "SELECT cID, username FROM players WHERE cID = "+user.data.profile.id+";";
                     console.log(sql);
                     con.query(sql, function (err, result, fields){
                       if(err) throw err;
