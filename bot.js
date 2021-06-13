@@ -705,7 +705,6 @@ async function registerUser(message, argz){
         console.log(result);
         for(var i = 0; i < argz.length; i++){
           if(tempName.includes(argz[i].toLowerCase())){
-            console.log("contains "+argz[i]);
             alreadyLinked.push(tempName[tempName.indexOf(argz[i].toLowerCase())]);
             argz.splice(i, 1);
           }
