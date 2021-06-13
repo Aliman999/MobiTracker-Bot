@@ -772,10 +772,10 @@ async function registerUser(message, argz){
                       if(ii == searchNames.length-1){
                         var rString = "", fString = "", aString = "";
                         if(registeredName.length > 0){
-                          rString = "Registered: "+registeredName.join(", ")+" ";
+                          rString = "Registered: "+registeredName.join(", ")+" \n";
                         }
                         if(alreadyLinked.length > 0){
-                          aString = "Already Linked: "+alreadyLinked.join(", ")+" ";
+                          aString = "Already Linked: "+alreadyLinked.join(", ")+" \n";
                         }
                         if(failedNames.length > 0){
                           fString = "Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
