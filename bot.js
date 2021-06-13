@@ -698,7 +698,7 @@ async function registerUser(message, argz){
         var tempName = [];
         if(result.length > 0){
           result.forEach((item, i) => {
-            tempName.push(JSON.parse(item.username.toLowerCase()));
+            tempName = JSON.parse(item.username.toLowerCase());
           });
         }
         console.log(tempName);
