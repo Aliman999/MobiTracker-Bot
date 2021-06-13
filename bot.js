@@ -687,30 +687,37 @@ async function registerUser(message, argz){
     const sql = "SELECT cID, username FROM discord WHERE discID = "+message.author.id;
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
-      console.log(result[0]);
       if(result[0]){
-        var args = [];
-        for(var y = 0; y < argz.length; y++){
-          args.push(argz[y].toLowerCase());
+        if(result[0].username){
+          var username = JSON.parse(result[0].username);
+        }else{
+          var username = [];
         }
-        var args = args.filter((c, index) => {
-          return args.indexOf(c) === index;
-        });
-        console.log(message.author.username+"#"+message.author.discriminator+" requested to Register "+args.join(", "));
-        var registeredNames = [];
         var registeredCID = [];
-        var registeredAvi = [];
         var failedNames = [];
+        var alreadyLinked = [];
         var ii = 0;
         var tries = 0;
-        for(var i = 0; i < args.length; i++){
+        for(var i = 0; i < argz.length; i++){
+          if(username.includes(argz[i])){
+            alreadyLinked.push(argz[i]);
+            username.splice(username.indexOf(argz[i]), 1);
+            argz.splice(i, 1);
+          }
+        }
+        if(argz.length == 0){
+          message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
+          return;
+        }
+        for(var i = 0; i < argz.length; i++){
           const options = {
             hostname: 'api.starcitizen-api.com',
             port: 443,
-            path: '/'+key+'/v1/live/user/'+escape(args[i]),
+            path: '/'+key+'/v1/live/user/'+escape(argz[i]),
             method: 'GET'
           }
-          retry(args[i]);
+
+          retry(argz[i]);
           function retry(name){
             const req = https.request(options, res =>{
               var body = "";
@@ -724,70 +731,67 @@ async function registerUser(message, argz){
                 const user = JSON.parse(body);
                 if(Object.keys(user.data).length > 0){
                   if(user.data.profile.bio){
-                    if(user.data.profile.id != "n/a"){
-                      user.data.profile.id = user.data.profile.id.substring(1);
-                    }else{
-                      user.data.profile.id = "";
-                    }
                     const bio = user.data.profile.bio.split(/\s+/);
+                    if(user.data.profile.id != "n/a"){
+                      user.data.profile.id.substring(1);
+                    }
                     for(var x = 0; x < bio.length; x++){
                       var encrypted = bio[x];
                       try{
-                        var result = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+                        var crypto = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
                       }catch{
                       }
-                      if(result == "mt.co"){
-                        if(!registeredNames.includes(user.data.profile.handle)){
-                          registeredNames.push(user.data.profile.handle);
+                      if(crypto == "mt.co"){
+                        if(username == null){
+                          username.push(user.data.profile.handle);
                           registeredCID.push(user.data.profile.id);
-                          registeredAvi.push(user.data.profile.image);
+                        }else{
+                          if(!username.includes(user.data.profile.handle)){
+                            username.push(user.data.profile.handle);
+                            registeredCID.push(user.data.profile.id);
+                          }
                         }
-                        x = bio.length
+                        x = bio.length;
                       }else{
                         if(x == bio.length-1){
                           failedNames.push(user.data.profile.handle);
                         }
                       }
                     }
-                    registeredNames.forEach((item, i) => {
-                      if(item){
-
+                    if(ii == argz.length-1){
+                      var rString = "", fString = "", aString = "";
+                      if(username.length > 0){
+                        rString = "Registered: "+username.join(", ")+" ";
                       }
-                    });
-                    if(ii == args.length-1){
-                      var rString = "", fString = "", drString = "", dfString = "";
-                      if(registeredNames.length > 0){
-                        rString = " | Registered: "+registeredNames.join(", ");
-                        drString = "Registered: "+registeredNames.join(", ")+" ";
+                      if(alreadyLinked.length > 0){
+                        aString = "Already Linked: "+alreadyLinked.join(", ")+" ";
                       }
                       if(failedNames.length > 0){
-                        fString = " | Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
-                        dfString = dfString+"Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
+                        fString = "Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
                       }
-                      var finalString = rString+fString;
-                      console.log(message.author.username+"#"+message.author.discriminator+finalString);
-                      if(drString && !dfString){
-                        message.channel.send(drString);
-                      }else if (!drString && drString) {
-                        message.channel.send(dfString);
-                      }else{
-                        message.channel.send(drString+"\n"+dfString);
+                      var finalString = rString+aString+fString;
+                      console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
+                      message.channel.send(finalString);
+
+                      var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
+                      password = password.substring(password.length/2, password.length);
+
+                      if(registeredCID.length > 0){
+                        const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
+                        con.query(sql);
+
+                        var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
+                        for(var xx = 0; xx < registeredCID.length; xx++){
+                          const sql = "INSERT INTO `players` ( `cID` `username`, `password`, `email`, `avatar`, `verify`) VALUES ( "+registeredCID[xx]+", '"+registeredNames[xx]+"', '"+password+"', 'Discord', "+registeredAvi[xx]+", 1);";
+                          console.log(sql);
+                          /*
+                          con.query(sql, function (err, result, fields) {
+                            if(err) throw err;
+                          });
+                          */
+                        }
                       }
 
-                      const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(registeredNames)+"' WHERE discID = "+message.author.id+";";
-                      con.query(sql, function (err, result, fields) {
-                        if(err) throw err;
-                      });
-                      var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
-                      for(var xx = 0; xx < registeredCID.length; xx++){
-                        const sql = "INSERT INTO `players` ( `cID` `username`, `password`, `email`, `avatar`, `verify`) VALUES ( "+registeredCID[xx]+", '"+registeredNames[xx]+"', '"+password+"', 'Discord', "+registeredAvi[xx]+", 1);";
-                        console.log(sql);
-                        /*
-                        con.query(sql, function (err, result, fields) {
-                          if(err) throw err;
-                        });
-                        */
-                      }
                     }
                     ii++;
                   }else{
@@ -800,7 +804,7 @@ async function registerUser(message, argz){
                     tries++;
                     retry(name);
                   }else{
-                    args.remove(name);
+                    argz.remove(name);
                     setTimeout(() => {
                       message.channel.send("Could not find Citizen: "+name);
                     }, 3000);
@@ -819,6 +823,7 @@ async function registerUser(message, argz){
       }
     });
   }
+
 
   function firstRegister(){
     return new Promise(callback =>{
