@@ -695,7 +695,7 @@ async function registerUser(message, argz){
         var alreadyLinked = [];
         var ii = 0;
         var tries = 0;
-        var tempName = result[0].username;
+        var tempName = JSON.parse(result[0].username);
         console.log(tempName);
         for(var i = 0; i < argz.length; i++){
           if(tempName.includes(argz[i].toLowerCase())){
