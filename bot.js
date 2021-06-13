@@ -704,9 +704,9 @@ async function registerUser(message, argz){
           tempNames.push(item.toLowerCase());
         });
 
-        console.log(tempNames.indexOf(argz[i].toLowerCase()));
         for(var i = 0; i < argz.length; i++){
           if(tempNames.includes(argz[i].toLowerCase())){
+                  console.log(tempNames.indexOf(argz[i].toLowerCase()));
             alreadyLinked.push(username[tempNames.indexOf(argz[i].toLowerCase())]);
             username.splice(tempNames.indexOf(argz[i].toLowerCase()), 1);
             argz.splice(i, 1);
