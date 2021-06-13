@@ -776,8 +776,6 @@ async function registerUser(message, argz){
                       console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
                       message.channel.send(finalString);
 
-                      var password = CryptoJS.AES.encrypt("mt.co", message.author.id).toString();
-                      password = password.substring(password.length/2, password.length);
                       if(result.length > 0){
                         result.forEach((item, i) => {
                           var temp = JSON.parse(item.username);
@@ -790,6 +788,8 @@ async function registerUser(message, argz){
                           });
                         });
                       }
+                      username = username.reverse();
+                      registeredCID = registeredCID.reverse();
                       if(registeredCID.length > 0){
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
                         console.log(sql);
