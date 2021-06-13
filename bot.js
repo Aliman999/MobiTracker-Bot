@@ -731,7 +731,7 @@ async function registerUser(message, argz){
               });
               res.on('end', function(){
                 const user = JSON.parse(body);
-                if(user.success === 0){
+                if(!user.success){
                   console.log("Failed to find "+name+", retrying.");
                   tries++;
                   retry(name);
