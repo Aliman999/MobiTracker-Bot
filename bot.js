@@ -789,6 +789,11 @@ async function registerUser(message, argz){
                         }
                         username = username.reverse();
                         registeredCID = registeredCID.reverse();
+                        registeredCID.forEach((item, i) => {
+                          if(item == ""){
+                            registeredCID[i] = 0;
+                          }
+                        });
                         if(registeredCID.length > 0){
                           const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
                           con.query(sql);
