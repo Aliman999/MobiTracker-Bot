@@ -775,7 +775,7 @@ async function registerUser(message, argz){
                       var finalString = rString+aString+fString;
                       console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
                       message.channel.send(finalString);
-                      console.log(result[0]);
+                      console.log(JSON.parse(result[0]).cid);
                       if(JSON.parse(result[0]).cid){
                         result.forEach((item, i) => {
                           var temp = JSON.parse(item.username);
