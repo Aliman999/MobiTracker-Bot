@@ -690,8 +690,10 @@ async function registerUser(message, argz){
       if(result[0]){
         if(result[0].username){
           var username = JSON.parse(result[0].username);
+          var cID = JSON.parse(result[0].cID);
         }else{
           var username = [];
+          var cID = [];
         }
         var registeredName = [];
         var registeredCID = [];
@@ -782,10 +784,11 @@ async function registerUser(message, argz){
                         message.channel.send(finalString);
                         registeredName.forEach((item, i) => {
                           username.push(item);
+                          cID.push(registeredCID[i]);
                         });
 
                         if(registeredCID.length > 0){
-                          const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
+                          const sql = "UPDATE discord SET cID = '"+JSON.stringify(cID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
                           con.query(sql);
 
                           var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
