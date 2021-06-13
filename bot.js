@@ -740,7 +740,7 @@ async function registerUser(message, argz){
                         if(!registeredNames.includes(user.data.profile.handle)){
                           registeredNames.push(user.data.profile.handle);
                           registeredCID.push(user.data.profile.id);
-                          registeredAvi.push(user.data.profile.avatar);
+                          registeredAvi.push(user.data.profile.image);
                         }
                         x = bio.length
                       }else{
@@ -749,7 +749,6 @@ async function registerUser(message, argz){
                         }
                       }
                     }
-                    console.log(user.data.profile);
                     if(ii == args.length-1){
                       var rString = "", fString = "", drString = "", dfString = "";
                       if(registeredNames.length > 0){
