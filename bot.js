@@ -592,7 +592,16 @@ Object.size = function(obj) {
   }
   return size;
 };
-
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 
 function readAttachment(message, url){
@@ -713,7 +722,6 @@ async function registerUser(message, argz){
           if(tempName.includes(argz[i].toLowerCase())){
             alreadyLinked.push(argz[i]);
             argz.splice(i, 1);
-            i = 0;
           }
         }
         if(argz.length == 0){
