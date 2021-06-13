@@ -688,20 +688,18 @@ async function registerUser(message, argz){
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
       if(result[0]){
-        if(result[0].username){
-          var alreadyLinked = JSON.parse(result[0].username);
-        }
         var username = [];
         var registeredCID = [];
         var registeredAvi = [];
         var failedNames = [];
+        var alreadyLinked = [];
         var ii = 0;
         var tries = 0;
         var tempNames = [];
         username.forEach((item, i) => {
           tempNames.push(item.toLowerCase());
         });
-        console.log(username);
+        console.log(result);
         for(var i = 0; i < argz.length; i++){
           if(tempNames.includes(argz[i].toLowerCase())){
             alreadyLinked.push(username[tempNames.indexOf(argz[i].toLowerCase())]);
