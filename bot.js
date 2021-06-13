@@ -736,6 +736,7 @@ async function registerUser(message, argz){
                   tries++;
                   retry(name);
                 }
+                console.log(user);
                 if(Object.keys(user.data).length > 0){
                   if(user.data.profile.bio){
                     const bio = user.data.profile.bio.split(/\s+/);
