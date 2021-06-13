@@ -749,6 +749,7 @@ async function registerUser(message, argz){
                         }
                       }
                     }
+                    console.log(user.data.profile);
                     if(ii == args.length-1){
                       var rString = "", fString = "", drString = "", dfString = "";
                       if(registeredNames.length > 0){
