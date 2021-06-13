@@ -730,7 +730,8 @@ async function registerUser(message, argz){
                     const sql = "SELECT cID, username FROM discord WHERE cID = "+user.data.profile.id+";";
                     console.log(sql);
                     con.query(sql, function (err, result, fields){
-                    }
+                      if(err) throw err;
+                    });
                     /*
                     const bio = user.data.profile.bio.split(/\s+/);
                     for(var x = 0; x < bio.length; x++){
