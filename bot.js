@@ -749,6 +749,11 @@ async function registerUser(message, argz){
                         }
                       }
                     }
+                    registeredNames.forEach((item, i) => {
+                      if(item){
+
+                      }
+                    });
                     if(ii == args.length-1){
                       var rString = "", fString = "", drString = "", dfString = "";
                       if(registeredNames.length > 0){
@@ -775,7 +780,7 @@ async function registerUser(message, argz){
                       });
                       var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
                       for(var xx = 0; xx < registeredCID.length; xx++){
-                        const sql = "INSERT INTO `players` ( `cID` `username`, `password`, `email`, `avatar`, `verify`) VALUES ( "+registeredCID[xx]+", '"+registeredNames[xx]+"', '"+password+"', 'none', "+registeredAvi[xx]+", 1);";
+                        const sql = "INSERT INTO `players` ( `cID` `username`, `password`, `email`, `avatar`, `verify`) VALUES ( "+registeredCID[xx]+", '"+registeredNames[xx]+"', '"+password+"', 'Discord', "+registeredAvi[xx]+", 1);";
                         console.log(sql);
                         /*
                         con.query(sql, function (err, result, fields) {
