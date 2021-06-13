@@ -717,11 +717,11 @@ async function registerUser(message, argz){
             tempName = JSON.parse(item.username.toLowerCase());
           });
         }
-        for(var i = 0; i < argz.length; i++){
-          console.log(i +" | "+ argz.length);
-          if(tempName.includes(argz[i].toLowerCase())){
-            alreadyLinked.push(argz[i]);
-            argz.remove(argz[i]);
+        for(var xi = 0; xi < argz.length; xi++){
+          console.log(xi +" | "+ argz.length);
+          if(tempName.includes(argz[xi].toLowerCase())){
+            alreadyLinked.push(argz[xi]);
+            argz.remove(argz[xi]);
           }
         }
         if(argz.length == 0){
