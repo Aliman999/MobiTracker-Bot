@@ -718,7 +718,7 @@ async function registerUser(message, argz){
           });
         }
         argz.forEach((item, i) => {
-          console.log(xi +" | "+ argz.length);
+          console.log(i +" | "+ argz.length);
           if(tempName.includes(item)){
             alreadyLinked.push(item);
             argz.remove(item);
