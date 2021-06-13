@@ -708,13 +708,13 @@ async function registerUser(message, argz){
             tempName = JSON.parse(item.username.toLowerCase());
           });
         }
-        console.log(tempName);
-        for(var i = 0; i < argz.length; i++){
+        for(var i = 0; i < argz.length &&  i < tempName; i++){
           if(tempName.includes(argz[i].toLowerCase())){
             alreadyLinked.push(tempName[tempName.indexOf(argz[i].toLowerCase())]);
             argz.splice(i, 1);
           }
         }
+        console.log(tempName);
         if(argz.length == 0){
           message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
           return;
