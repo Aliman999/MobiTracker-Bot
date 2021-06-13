@@ -770,7 +770,7 @@ async function registerUser(message, argz){
                         }
                       }
                       if(ii == searchNames.length-1){
-                        var rString = "", fString = "", aString = "";
+                        var rString = "", fString = "", aString = "", discString = "", discAString = "";
                         if(registeredName.length > 0){
                           rString = "Registered: "+registeredName.join(", ")+" ";
                           discString = "Registered: "+registeredName.join(", ")+" \n\n";
