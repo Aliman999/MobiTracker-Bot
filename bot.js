@@ -735,87 +735,88 @@ async function registerUser(message, argz){
                   console.log("Failed to find "+name+", retrying.");
                   tries++;
                   retry(name);
-                }
-                if(Object.keys(user.data).length > 0){
-                  if(user.data.profile.bio){
-                    const bio = user.data.profile.bio.split(/\s+/);
-                    if(user.data.profile.id == "n/a"){
-                      user.data.profile.id = "";
-                    }else{
-                      user.data.profile.id = user.data.profile.id.substring(1);
-                    }
-                    for(var x = 0; x < bio.length; x++){
-                      var encrypted = bio[x];
-                      try{
-                        var crypto = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
-                      }catch{
-                      }
-                      if(crypto == "mt.co"){
-                        username.push(user.data.profile.handle);
-                        registeredCID.push(user.data.profile.id);
-                        registeredAvi.push(user.data.profile.image);
-                        x = bio.length;
-                      }else{
-                        if(x == bio.length-1){
-                          failedNames.push(user.data.profile.handle);
-                        }
-                      }
-                    }
-                    if(ii == argz.length-1){
-                      var rString = "", fString = "", aString = "";
-                      if(username.length > 0){
-                        rString = "Registered: "+username.join(", ")+" ";
-                      }
-                      if(alreadyLinked.length > 0){
-                        aString = "Already Linked: "+alreadyLinked.join(", ")+" ";
-                      }
-                      if(failedNames.length > 0){
-                        fString = "Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
-                      }
-                      var finalString = rString+aString+fString;
-                      console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
-                      message.channel.send(finalString);
-                      if(JSON.parse(result[0].cID)){
-                        result.forEach((item, i) => {
-                          var temp = JSON.parse(item.username);
-                          temp.forEach((item, i) => {
-                            username.push(item);
-                          });
-                          var temp = JSON.parse(item.cID);
-                          temp.forEach((item, i) => {
-                            registeredCID.push(item);
-                          });
-                        });
-                      }
-                      username = username.reverse();
-                      registeredCID = registeredCID.reverse();
-                      if(registeredCID.length > 0){
-                        const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
-                        con.query(sql);
-
-                        var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
-                        for(var xx = 0; xx < registeredCID.length; xx++){
-                          const sql = "INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`, `verify`) VALUES ( "+registeredCID[xx]+", '"+username[xx]+"', '"+password+"', 'Discord', "+registeredAvi[xx]+", 1);";
-                          con.query(sql);
-                        }
-                      }
-
-                    }
-                    ii++;
-                  }else{
-                    message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
-                    console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
-                  }
                 }else{
-                  if(tries != 1){
-                    console.log("Failed to find "+name+", retrying.");
-                    tries++;
-                    retry(name);
+                  if(Object.keys(user.data).length > 0){
+                    if(user.data.profile.bio){
+                      const bio = user.data.profile.bio.split(/\s+/);
+                      if(user.data.profile.id == "n/a"){
+                        user.data.profile.id = "";
+                      }else{
+                        user.data.profile.id = user.data.profile.id.substring(1);
+                      }
+                      for(var x = 0; x < bio.length; x++){
+                        var encrypted = bio[x];
+                        try{
+                          var crypto = CryptoJS.AES.decrypt(encrypted, message.author.id).toString(CryptoJS.enc.Utf8);
+                        }catch{
+                        }
+                        if(crypto == "mt.co"){
+                          username.push(user.data.profile.handle);
+                          registeredCID.push(user.data.profile.id);
+                          registeredAvi.push(user.data.profile.image);
+                          x = bio.length;
+                        }else{
+                          if(x == bio.length-1){
+                            failedNames.push(user.data.profile.handle);
+                          }
+                        }
+                      }
+                      if(ii == argz.length-1){
+                        var rString = "", fString = "", aString = "";
+                        if(username.length > 0){
+                          rString = "Registered: "+username.join(", ")+" ";
+                        }
+                        if(alreadyLinked.length > 0){
+                          aString = "Already Linked: "+alreadyLinked.join(", ")+" ";
+                        }
+                        if(failedNames.length > 0){
+                          fString = "Failed: "+failedNames.join(", ")+" (No Token/Wrong Token)";
+                        }
+                        var finalString = rString+aString+fString;
+                        console.log(message.author.username+"#"+message.author.discriminator+" "+finalString);
+                        message.channel.send(finalString);
+                        if(JSON.parse(result[0].cID)){
+                          result.forEach((item, i) => {
+                            var temp = JSON.parse(item.username);
+                            temp.forEach((item, i) => {
+                              username.push(item);
+                            });
+                            var temp = JSON.parse(item.cID);
+                            temp.forEach((item, i) => {
+                              registeredCID.push(item);
+                            });
+                          });
+                        }
+                        username = username.reverse();
+                        registeredCID = registeredCID.reverse();
+                        if(registeredCID.length > 0){
+                          const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
+                          con.query(sql);
+
+                          var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
+                          for(var xx = 0; xx < registeredCID.length; xx++){
+                            const sql = "INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`, `verify`) VALUES ( "+registeredCID[xx]+", '"+username[xx]+"', '"+password+"', 'Discord', "+registeredAvi[xx]+", 1);";
+                            con.query(sql);
+                          }
+                        }
+
+                      }
+                      ii++;
+                    }else{
+                      message.channel.send("Unfortunately we could not find "+user.data.profile.handle+"'s bio.");
+                      console.log(message.author.username+"#"+message.author.discriminator+" failed to register "+user.data.profile.handle+" (No Bio)");
+                    }
                   }else{
-                    argz.remove(name);
-                    setTimeout(() => {
-                      message.channel.send("Could not find Citizen: "+name);
-                    }, 3000);
+                    if(tries != 1){
+                      console.log("Failed to find "+name+", retrying.");
+                      tries++;
+                      retry(name);
+                    }else{
+                      argz.remove(name);
+                      setTimeout(() => {
+                        message.channel.send("Could not find Citizen: "+name);
+                      }, 3000);
+                    }
                   }
                 }
               });
