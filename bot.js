@@ -779,13 +779,17 @@ async function registerUser(message, argz){
                       if(result.length > 0){
                         result.forEach((item, i) => {
                           var temp = JSON.parse(item.username);
-                          temp.forEach((item, i) => {
-                            username.push(item);
-                          });
+                          if(temp){
+                            temp.forEach((item, i) => {
+                              username.push(item);
+                            });
+                          }
                           var temp = JSON.parse(item.cID);
-                          temp.forEach((item, i) => {
-                            registeredCID.push(item);
-                          });
+                          if(temp){
+                            temp.forEach((item, i) => {
+                              registeredCID.push(item);
+                            });
+                          }
                         });
                       }
                       username = username.reverse();
