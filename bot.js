@@ -684,7 +684,7 @@ async function registerUser(message, argz){
     firstRegister();
   }
   async function linkRSI(key){
-    const sql = "SELECT cID, username, avatar FROM discord WHERE discID = "+message.author.id+" INNER JOIN players on players.username IN ("+argz.join(", ")+")";
+    const sql = "SELECT cID, username, avatar FROM discord WHERE discID = "+message.author.id+" INNER JOIN players on players.username IN ('"+argz.join(", ")+"')";
     console.log(sql);
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
