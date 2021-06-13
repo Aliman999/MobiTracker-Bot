@@ -690,11 +690,10 @@ async function registerUser(message, argz){
       if(result[0]){
         if(result[0].username){
           var username = JSON.parse(result[0].username);
-          var registeredCID = [JSON.parse(result[0].cID)];
         }else{
           var username = [];
-          var registeredCID = [];
         }
+        var registeredCID = [];
         var registeredAvi = [];
         var failedNames = [];
         var alreadyLinked = [];
@@ -708,7 +707,6 @@ async function registerUser(message, argz){
         for(var i = 0; i < argz.length; i++){
           if(tempNames.includes(argz[i].toLowerCase())){
             alreadyLinked.push(username[tempNames.indexOf(argz[i].toLowerCase())]);
-            console.log(username[tempNames.indexOf(argz[i].toLowerCase())]+" | "+argz[i].toLowerCase());
             username.splice(tempNames.indexOf(argz[i].toLowerCase()), 1);
             argz.splice(i, 1);
           }
