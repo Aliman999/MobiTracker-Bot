@@ -790,9 +790,9 @@ async function registerUser(message, argz){
                           });
                         });
                       }
-                      console.log(username+" | "+registeredCID);
                       if(registeredCID.length > 0){
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
+                        console.log(sql);
                         //con.query(sql);
 
                         var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
