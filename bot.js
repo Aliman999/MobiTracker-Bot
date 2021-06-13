@@ -477,6 +477,7 @@ function cachePlayer(user){
                   avatar: ''
                 };
     check.cID = parseInt(user.profile.id.substring(1));
+    check.bio = user.profile.bio;
     check.username = user.profile.handle;
     check.badge.title = user.profile.badge;
     check.badge.src = user.profile.badge_image;
@@ -530,12 +531,18 @@ function cachePlayer(user){
         if(data.username != check.username){
           update = true;
           eventUpdate.push("Changed Name");
-        }else if (data.badge.title != check.badge.title) {
+        }
+        if(data.badge.title != check.badge.title){
           update = true;
           eventUpdate.push("Badge Changed");
-        }else if (data.avatar != check.avatar) {
+        }
+        if(data.avatar != check.avatar){
           update = true;
           eventUpdate.push("Avatar Changed");
+        }
+        if(data.bio != check.bio){
+          update = true;
+          eventUpdate.push("Bio Changed");
         }
         function removeDupe(data){
           return data.filter((value, index) => data.indexOf(value) === index)
