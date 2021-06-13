@@ -781,14 +781,14 @@ async function registerUser(message, argz){
                       if(result.length > 0){
                         result.forEach((item, i) => {
                           var temp = JSON.parse(item.username);
+                          console.log(temp);
                           username.push();
                           registeredCID.push(item.cID);
                         });
                       }
-                      console.log(username);
                       if(registeredCID.length > 0){
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
-                        con.query(sql);
+                        //con.query(sql);
 
                         var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
                         for(var xx = 0; xx < registeredCID.length; xx++){
