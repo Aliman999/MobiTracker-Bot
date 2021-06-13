@@ -792,18 +792,14 @@ async function registerUser(message, argz){
                       registeredCID = registeredCID.reverse();
                       if(registeredCID.length > 0){
                         const sql = "UPDATE discord SET cID = '"+JSON.stringify(registeredCID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
-                        console.log(sql);
-                        //con.query(sql);
+                        con.query(sql);
 
                         var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
                         for(var xx = 0; xx < registeredCID.length; xx++){
                           const sql = "INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`, `verify`) VALUES ( "+registeredCID[xx]+", '"+username[xx]+"', '"+password+"', 'Discord', "+registeredAvi[xx]+", 1);";
-                          //console.log(sql);
-                          /*
                           con.query(sql, function (err, result, fields) {
                             if(err) throw err;
                           });
-                          */
                         }
                       }
 
