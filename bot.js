@@ -729,9 +729,11 @@ async function registerUser(message, argz){
                       user.data.profile.id = "";
                     }
                     const sql = "SELECT cID, username FROM players WHERE cID = "+user.data.profile.id+";";
-                    console.log(sql);
                     con.query(sql, function (err, result, fields){
                       if(err) throw err;
+                      if(result.length == 0){
+
+                      }
                     });
                     /*
                     const bio = user.data.profile.bio.split(/\s+/);
