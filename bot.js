@@ -499,10 +499,10 @@ function cachePlayer(user){
     }
     var sql = "";
     if(check.cID){
-      sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
+      sql = "SELECT cID, username, bio, badge, organization, avatar FROM `CACHE players` WHERE cID = "+user.profile.id.substring(1)+";";
     }else{
       check.cID = 0;
-      sql = "SELECT cID, username, badge, organization, avatar FROM `CACHE players` WHERE username = '"+user.profile.handle+"';";
+      sql = "SELECT cID, username, bio, badge, organization, avatar FROM `CACHE players` WHERE username = '"+user.profile.handle+"';";
     }
     con.query(sql, function (err, result, fields) {
       if(err) throw err;
