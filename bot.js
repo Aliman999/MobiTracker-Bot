@@ -248,7 +248,8 @@ var con = mysql.createPool({
   host: config.MysqlHost,
   user: config.MysqlUsername,
   password: config.MysqlPassword,
-  database: config.MysqlDatabase
+  database: config.MysqlDatabase,
+  multipleStatements:true
 });
 
 con.getConnection(function(err, connection) {
