@@ -789,6 +789,8 @@ async function registerUser(message, argz){
                           if(item == ""){
                             cID.push(0);
                             registeredCID[i] = 0;
+                          }else{
+                            cID.push(item);
                           }
                         });
 
