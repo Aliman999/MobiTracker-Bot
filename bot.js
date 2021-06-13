@@ -700,7 +700,7 @@ async function registerUser(message, argz){
         var ii = 0;
         var tries = 0;
         username.forEach((item, i) => {
-          username[i] = toLowerCase(item);
+          username[i] = item.toLowerCase();
         });
         for(var i = 0; i < argz.length; i++){
           if(username.includes(argz[i])){
