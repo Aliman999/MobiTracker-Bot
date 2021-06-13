@@ -711,7 +711,7 @@ async function registerUser(message, argz){
             argz.splice(i, 1);
           }
         }
-        console.log(username);
+        console.log(tempNames.indexOf(argz[i].toLowerCase()));
         if(argz.length == 0){
           message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
           return;
