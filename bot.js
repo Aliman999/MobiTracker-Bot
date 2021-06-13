@@ -696,7 +696,7 @@ async function registerUser(message, argz){
         var ii = 0;
         var tries = 0;
         var tempName = result[0].username;
-        console.log(result);
+        console.log(tempName);
         for(var i = 0; i < argz.length; i++){
           if(tempName.includes(argz[i].toLowerCase())){
             alreadyLinked.push(tempName[tempName.indexOf(argz[i].toLowerCase())]);
