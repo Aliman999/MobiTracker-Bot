@@ -709,12 +709,12 @@ async function registerUser(message, argz){
           });
         }
         for(var i = 0; i < argz.length; i++){
+          console.log(i +" | "+ argz.length);
           if(tempName.includes(argz[i].toLowerCase())){
             alreadyLinked.push(argz[i]);
             argz.splice(i, 1);
             i = 0;
           }
-          console.log(tempName.includes(argz[i].toLowerCase()));
         }
         if(argz.length == 0){
           message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
