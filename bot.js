@@ -799,9 +799,9 @@ async function registerUser(message, argz){
 
                           var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
                           for(var xx = 0; xx < registeredCID.length; xx++){
-                            const sql = "INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`, `verify`) VALUES ( ?, '"+registeredName[xx]+"', '"+password+"', 'Discord', '"+registeredAvi[xx]+"', 1);";
+                            const sql = "INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`, `verify`) VALUES ( "+JSON.stringify(registeredCID[xx])+", '"+registeredName[xx]+"', '"+password+"', 'Discord', '"+registeredAvi[xx]+"', 1);";
                             console.log(sql);
-                            con.query(sql, [registeredCID[xx]]);
+                            //con.query(sql);
                           }
                         }
 
