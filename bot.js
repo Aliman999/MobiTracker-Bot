@@ -702,6 +702,9 @@ async function registerUser(message, argz){
         username.forEach((item, i) => {
           username[i] = item.toLowerCase();
         });
+        argz.forEach((item, i) => {
+          argz[i] = item.toLowerCase();
+        });
         for(var i = 0; i < argz.length; i++){
           if(username.includes(argz[i])){
             alreadyLinked.push(argz[i]);
