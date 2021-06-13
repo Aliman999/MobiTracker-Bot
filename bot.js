@@ -822,7 +822,7 @@ async function registerUser(message, argz){
           console.log(message.author.username+"#"+message.author.discriminator+" Registered!");
           var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
           var userPassword = password;
-          password = CryptoJS.AES.encrypt(password, message.author.id).toString();
+          password = CryptoJS.AES.encrypt(userPassword, message.author.id).toString();
           const sql = "INSERT INTO `discord` ( discUser, discID ) VALUES ( '"+message.author.tag+"' ,"+message.author.id+"); INSERT INTO `players` ( `cID`, `username`, `password`, `email`, `avatar`) VALUES ( '0', '"+message.author.tag+"', '"+password+"', 'none', '');";
           con.query(sql, function (err, result, fields){
             if(err) throw err;
