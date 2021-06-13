@@ -784,8 +784,14 @@ async function registerUser(message, argz){
                         message.channel.send(finalString);
                         registeredName.forEach((item, i) => {
                           username.push(item);
-                          cID.push(registeredCID[i]);
                         });
+                        registeredCID.forEach((item, i) => {
+                          if(item == ""){
+                            cID.push(0);
+                            registeredCID[i] = 0;
+                          }
+                        });
+
 
                         if(registeredCID.length > 0){
                           const sql = "UPDATE discord SET cID = '"+JSON.stringify(cID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
