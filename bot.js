@@ -796,7 +796,7 @@ async function registerUser(message, argz){
 
                         if(registeredCID.length > 0){
                           const sql = "UPDATE discord SET cID = '"+JSON.stringify(cID)+"', username = '"+JSON.stringify(username)+"' WHERE discID = "+message.author.id+";";
-                          con.query(sql);
+                          //con.query(sql);
 
                           var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
                           for(var xx = 0; xx < registeredCID.length; xx++){
