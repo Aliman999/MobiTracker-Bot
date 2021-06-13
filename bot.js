@@ -731,6 +731,11 @@ async function registerUser(message, argz){
               });
               res.on('end', function(){
                 const user = JSON.parse(body);
+                if(user.data == null){
+                  console.log("Failed to find "+name+", retrying.");
+                  tries++;
+                  retry(name);
+                }
                 if(Object.keys(user.data).length > 0){
                   if(user.data.profile.bio){
                     const bio = user.data.profile.bio.split(/\s+/);
