@@ -788,10 +788,10 @@ async function registerUser(message, argz){
                         });
                         registeredCID.forEach((item, i) => {
                           cID.push(item);
-                          console.log(item);
-                          if(item == null){
+                          if(!item){
                             registeredCID[i] = "null";
                           }
+                          console.log(registeredCID);
                         });
 
                         if(registeredCID.length > 0){
