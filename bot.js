@@ -699,16 +699,15 @@ async function registerUser(message, argz){
         var alreadyLinked = [];
         var ii = 0;
         var tries = 0;
+        var tempNames = [];
         username.forEach((item, i) => {
-          username[i] = item.toLowerCase();
+          tempNames.push(item.toLowerCase());
         });
-        argz.forEach((item, i) => {
-          argz[i] = item.toLowerCase();
-        });
+
         for(var i = 0; i < argz.length; i++){
-          if(username.includes(argz[i])){
+          if(tempNames.includes(argz[i].toLowerCase())){
             alreadyLinked.push(argz[i]);
-            username.splice(username.indexOf(argz[i]), 1);
+            username.splice(tempNames.indexOf(argz[i].toLowerCase()), 1);
             argz.splice(i, 1);
           }
         }
