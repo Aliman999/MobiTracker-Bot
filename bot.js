@@ -699,7 +699,10 @@ async function registerUser(message, argz){
         username.forEach((item, i) => {
           tempNames.push(item.toLowerCase());
         });
-        result = JSON.parse(result[0].username).toLowerCase();
+        result = JSON.parse(result[0].username);
+        result.forEach((item, i) => {
+          result = item.toLowerCase();
+        });
         console.log(result);
         for(var i = 0; i < argz.length; i++){
           if(tempNames.includes(argz[i].toLowerCase())){
