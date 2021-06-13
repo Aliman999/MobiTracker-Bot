@@ -718,8 +718,8 @@ async function registerUser(message, argz){
           });
         }
         argz.forEach((item, i) => {
-          console.log(tempName.join(", ") +" | "+ item);
-          if(tempName.includes(item)){
+          console.log(tempName.join(", ") +" | "+ item.toLowerCase());
+          if(tempName.includes(item.toLowerCase())){
             alreadyLinked.push(item);
             argz.splice(i, 1);
           }
