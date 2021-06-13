@@ -701,7 +701,7 @@ async function registerUser(message, argz){
         });
         result = JSON.parse(result[0].username);
         result.forEach((item, i) => {
-          result = item.toLowerCase();
+          result[i] = item.toLowerCase();
         });
         console.log(result);
         for(var i = 0; i < argz.length; i++){
