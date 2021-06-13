@@ -460,8 +460,8 @@ function cachePlayer(user){
       if(result.length > 0){
         const last = result.length-1;
         if(result[last].event != "Changed Name"){
-          const sql = "INSERT INTO `CACHE players` (event, cID, username, badge, organization, avatar) VALUES ( 'Changed Name', "+result[0].cID+", '"+result[0].username+"', '"+result[0].badge+"', '"+result[0].organization+"', '"+result[0].avatar+"' );";
-          con.query(sql, function (err, result, fields) {
+          const sql = "INSERT INTO `CACHE players` (event, cID, username, bio, badge, organization, avatar) VALUES ( 'Changed Name', "+result[last].cID+", '"+result[last].username+"', ?, '"+result[last].badge+"', '"+result[last].organization+"', '"+result[last].avatar+"' );";
+          con.query(sql, [result[last].bio], function (err, result, fields) {
             if(err) throw err;
           });
         }
