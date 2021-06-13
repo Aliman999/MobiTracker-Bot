@@ -592,16 +592,6 @@ Object.size = function(obj) {
   }
   return size;
 };
-Array.prototype.remove = function() {
-    var what, a = arguments, L = a.length, ax;
-    while (L && this.length) {
-        what = a[--L];
-        while ((ax = this.indexOf(what)) !== -1) {
-            this.splice(ax, 1);
-        }
-    }
-    return this;
-};
 
 
 function readAttachment(message, url){
@@ -704,6 +694,7 @@ async function registerUser(message, argz){
           var username = [];
           var cID = [];
         }
+        var searchNames = [];
         var registeredName = [];
         var registeredCID = [];
         var registeredAvi = [];
@@ -720,24 +711,24 @@ async function registerUser(message, argz){
         var len = argz.length
         for(var xi = 0; xi < len; xi++){
           console.log(xi +" | "+ argz.length);
-          if(tempName.includes(argz[xi].toLowerCase())){
+          if(tempName.contains(argz[xi].toLowerCase())){
             alreadyLinked.push(argz[xi]);
-            argz.remove(argz[xi]);
-            xi = 0;
+          }else{
+            searchNames.push(argz[xi]);
           }
         }
-        if(argz.length == 0){
+        if(searchNames.length == 0){
           message.channel.send("Failed: "+alreadyLinked.join(", ")+" (Already Registered)");
           return;
         }
-        for(var i = 0; i < argz.length; i++){
+        for(var i = 0; i < searchNames.length; i++){
           const options = {
             hostname: 'api.starcitizen-api.com',
             port: 443,
-            path: '/'+key+'/v1/live/user/'+escape(argz[i]),
+            path: '/'+key+'/v1/live/user/'+escape(searchNames[i]),
             method: 'GET'
           }
-          retry(argz[i]);
+          retry(searchNames[i]);
           function retry(name){
             const req = https.request(options, res =>{
               var body = "";
@@ -779,7 +770,7 @@ async function registerUser(message, argz){
                           }
                         }
                       }
-                      if(ii == argz.length-1){
+                      if(ii == searchNames.length-1){
                         var rString = "", fString = "", aString = "";
                         if(registeredName.length > 0){
                           rString = "Registered: "+registeredName.join(", ")+" ";
