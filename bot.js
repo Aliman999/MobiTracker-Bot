@@ -802,7 +802,7 @@ async function registerUser(message, argz){
 
                           var password = CryptoJS.AES.encrypt(message.author.id, message.author.id).toString();
                           for(var xx = 0; xx < registeredCID.length; xx++){
-                            const sql = "INSERT INTO `players` ( `cID`, `username`, `password`, `email`, discID, `avatar`, `verify`) VALUES ( "+registeredCID[xx]+", '"+registeredName[xx]+"', '"+password+"', 'Discord', "+message.author.id+", '"+registeredAvi[xx]+"', 1);";
+                            const sql = "INSERT INTO `players` ( `cID`, `username`, `password`, `email`, discID, `avatar`, `verify`, `signup`) VALUES ( "+registeredCID[xx]+", '"+registeredName[xx]+"', '"+password+"', 'Discord', "+message.author.id+", '"+registeredAvi[xx]+"', 1, 1);";
                             con.query(sql);
                           }
                         }
