@@ -23,7 +23,7 @@ var failed = [];
 var updateBool = true;
 const group = new Bottleneck.Group({
     maxConcurrent: 1,
-    minTime:333
+    minTime:3000
 });
 const jobQueue = new Bottleneck({
   maxConcurrent: 3,
