@@ -204,7 +204,7 @@ function socket(){
   webSocket.onerror = function(err){
   }
   webSocket.onclose = function(){
-    console.log("Lost Connection to Key Manager");
+    console.log("Lost Connection to MobiTracker API");
     setTimeout(socket, 5000);
   };
 
