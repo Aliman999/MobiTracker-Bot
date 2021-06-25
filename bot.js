@@ -200,10 +200,10 @@ function socket(){
     };
     webSocket.send(JSON.stringify(message));
     heartbeat();
-    webSocket.onerror = function(err){
-      console.log("Lost Connection to Key Manager");
-      webSocket.onerror = null;
-    }
+  }
+  webSocket.onerror = function(err){
+    console.log("Lost Connection to Key Manager");
+    webSocket.onerror = null;
   }
   webSocket.onclose = function(){
     socket();
