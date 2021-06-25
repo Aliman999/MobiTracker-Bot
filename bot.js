@@ -193,7 +193,7 @@ function socket(){
   var message;
   webSocket = new WebSocket("wss://mobitracker.co:2599");
   webSocket.onopen = function(){
-    console.log("Connected to Key Manager");
+    console.log("Connected to Internal API");
     message = {
       type:"auth",
       token:payload
@@ -204,8 +204,8 @@ function socket(){
   webSocket.onerror = function(err){
   }
   webSocket.onclose = function(){
-    console.log("Lost Connection to MobiTracker API");
-    setTimeout(socket, 5000);
+    console.log("Lost Connection to Internal API");
+    setTimeout(socket, 3000);
   };
 
   function heartbeat() {
