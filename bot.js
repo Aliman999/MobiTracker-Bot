@@ -203,11 +203,10 @@ function socket(){
   }
   webSocket.onerror = function(err){
     console.log("Lost Connection to Key Manager");
-    webSocket.onerror = null;
   }
   webSocket.onclose = function(){
-    console.log("Test");
     socket();
+    webSocket.onclose = null;
   };
 
   function heartbeat() {
