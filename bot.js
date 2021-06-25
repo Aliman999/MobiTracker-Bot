@@ -205,7 +205,7 @@ function socket(){
   }
   webSocket.onclose = function(){
     console.log("Lost Connection to Key Manager");
-    socket();
+    setTimeout(socket, 5000);
   };
 
   function heartbeat() {
