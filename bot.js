@@ -201,12 +201,12 @@ function socket(){
     webSocket.send(JSON.stringify(message));
     heartbeat();
   }
-    console.log("Test");
   webSocket.onerror = function(err){
     console.log("Lost Connection to Key Manager");
     webSocket.onerror = null;
   }
   webSocket.onclose = function(){
+    console.log("Test");
     socket();
   };
 
