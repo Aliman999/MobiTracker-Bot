@@ -59,6 +59,7 @@ jobQueue.on("done", function(info){
 });
 
 group.on("created", (limiter, key) => {
+  console.log(key);
   var count = 0;
   limiter.once("received", function(info){
     info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
