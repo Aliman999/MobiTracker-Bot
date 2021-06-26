@@ -23,7 +23,7 @@ var failed = [];
 var updateBool = true;
 
 const group = new Bottleneck.Group({
-    maxConcurrent: 1,
+    maxConcurrent: 2,
     minTime:3000
 });
 
