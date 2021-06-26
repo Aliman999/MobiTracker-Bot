@@ -21,9 +21,10 @@ var position = [];
 var update = [];
 var failed = [];
 var updateBool = true;
+var concurrent = 2;
 
 const group = new Bottleneck.Group({
-    maxConcurrent: 2,
+    maxConcurrent: concurrent,
     minTime:3000
 });
 
@@ -33,9 +34,7 @@ const jobQueue = new Bottleneck({
 
 const queueCounts = jobQueue.counts();
 
-var groupCount = 0;
 jobQueue.on("received", function(info){
-  groupCount++;
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[3], len:info.args[0] });
   position.sort((a, b) => {
       return a.priority - b.priority;
@@ -194,8 +193,9 @@ async function lookUp(count, message, args, msg){
     })
   }
   var wait = setInterval(()=>{
-    console.log(groupCount);
-    if(groupCount < 3){
+    console.log(position.length);
+    if(position < 3){
+      console.log(position);
       clearInterval(wait);
       for(var i = 0; i < args.length; i++){
         if(message.author.id != "751252617451143219"){
@@ -209,6 +209,7 @@ async function lookUp(count, message, args, msg){
         });
       }
     }else{
+      console.log(position);
       position.forEach((e, iii) => {
         if(position.length > 1){
           e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
