@@ -71,7 +71,7 @@ group.on("created", (limiter, key) => {
     if(subCount == info.args[5]){
       console.log(subCount+" | "+info.args[5]);
       for(var ind = 0; ind < position.length; ind++){
-        if(position[ind].id === info.options.id){
+        if(position[ind].id === key){
           position.splice(ind, 1);
         }
         for(var ii = 0; ii < position.length; ii++){
