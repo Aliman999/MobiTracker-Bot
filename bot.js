@@ -193,7 +193,6 @@ async function lookUp(count, message, args, msg){
     })
   }
   var wait = setInterval(()=>{
-    console.log(position.length);
     if(position.length < 3){
       clearInterval(wait);
       for(var i = 0; i < args.length; i++){
