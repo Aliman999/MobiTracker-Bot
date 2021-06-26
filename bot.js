@@ -22,10 +22,9 @@ var update = [];
 var failed = [];
 var updateBool = true;
 
-
-const limiter = new Bottleneck({
-  maxConcurrent: 1,
-  minTime:3000
+const group = new Bottleneck.Group({
+    maxConcurrent: 1,
+    minTime:3000
 });
 
 const jobQueue = new Bottleneck({
@@ -66,20 +65,11 @@ jobQueue.on("done", function(info){
   console.save(info.options.id+" Finished.");
 });
 
-
-limiter.once("received", function(info){
+group.on("created", (limiter, key) => {
   var count = 0;
-  info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
-
-  limiter.on("queue", function(info){
-    console.log(info);
-    position.forEach((e, iii) => {
-      if(position.length > 1){
-        e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
-      }
-    });
+  limiter.once("received", function(info){
+    info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
   })
-
   limiter.on("done", function(info){
     count++;
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
@@ -98,7 +88,7 @@ limiter.once("received", function(info){
       cachePlayer(jobInfo.args[0]);
     }
   });
-})
+});
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
@@ -205,7 +195,7 @@ async function lookUp(count, message, args, msg){
     if(message.author.id != "751252617451143219"){
       var logMsg = message.author.tag+' searched for '+args[i];
     }
-    limiter.schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
+    group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
     .catch((error) => {
       if (error instanceof Bottleneck.BottleneckError) {
 
