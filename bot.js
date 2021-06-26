@@ -195,7 +195,6 @@ async function lookUp(count, message, args, msg){
   var wait = setInterval(()=>{
     console.log(position.length);
     if(position.length < 3){
-      console.log(position.length+" jobs");
       clearInterval(wait);
       for(var i = 0; i < args.length; i++){
         if(message.author.id != "751252617451143219"){
@@ -209,7 +208,6 @@ async function lookUp(count, message, args, msg){
         });
       }
     }else{
-      console.log(position.length+" jobs in queue");
       position.forEach((e, iii) => {
         if(position.length > 1){
           e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
