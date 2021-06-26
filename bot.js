@@ -71,7 +71,8 @@ limiter.once("received", function(info){
   var count = 0;
   info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
 
-  limiter.on("queue", function(){
+  limiter.on("queue", function(info){
+    console.log(info);
     position.forEach((e, iii) => {
       if(position.length > 1){
         e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
