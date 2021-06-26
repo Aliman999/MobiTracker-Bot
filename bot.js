@@ -194,7 +194,7 @@ async function lookUp(count, message, args, msg){
   }
   var wait = setInterval(()=>{
     console.log(position.length);
-    if(position < 3){
+    if(position.length < 3){
       console.log(position.length+" jobs");
       clearInterval(wait);
       for(var i = 0; i < args.length; i++){
