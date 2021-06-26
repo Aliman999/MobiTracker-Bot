@@ -67,6 +67,7 @@ group.on("created", (limiter, key) => {
     if(subCount == 0){
       info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
     }
+    subCount++;
     if(count == info.args[5]){
       for(var ind = 0; ind < position.length; ind++){
         if(position[ind].id === info.options.id){
@@ -77,7 +78,6 @@ group.on("created", (limiter, key) => {
         }
       }
     }
-    subCount++;
   })
   limiter.on("done", function(info){
     count++;
