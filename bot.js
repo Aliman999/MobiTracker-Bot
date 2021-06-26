@@ -189,7 +189,7 @@ async function addQueue(message, args){
       }
     }
   }
-  jobQueue.schedule({ id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg);
+  jobQueue.schedule({ id:message.author.tag, priority:message.author.prio }, lookUp, args.length, message, args, msg);
 }
 
 async function lookUp(count, message, args, msg){
@@ -216,7 +216,7 @@ async function lookUp(count, message, args, msg){
         if(message.author.id != "751252617451143219"){
           var logMsg = message.author.tag+' searched for '+args[i];
         }
-        group.key(message.author.username).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
+        group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
         .catch((error) => {
           if (error instanceof Bottleneck.BottleneckError) {
             console.log(error.message);
