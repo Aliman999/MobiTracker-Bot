@@ -21,13 +21,17 @@ var position = [];
 var update = [];
 var failed = [];
 var updateBool = true;
-const group = new Bottleneck.Group({
-    maxConcurrent: 1,
-    minTime:3000
+
+
+const limiter = new Bottleneck({
+  maxConcurrent: 1,
+  minTime:3000
 });
+
 const jobQueue = new Bottleneck({
   maxConcurrent: 3,
 });
+
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(info){
@@ -62,11 +66,10 @@ jobQueue.on("done", function(info){
   console.save(info.options.id+" Finished.");
 });
 
-group.on("created", (limiter, key) => {
+
+limiter.once("received", function(info){
   var count = 0;
-  limiter.once("received", function(info){
-    info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
-  })
+  info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
   limiter.on("done", function(info){
     count++;
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
@@ -85,7 +88,7 @@ group.on("created", (limiter, key) => {
       cachePlayer(jobInfo.args[0]);
     }
   });
-});
+})
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
@@ -171,6 +174,35 @@ async function addQueue(message, args){
   jobQueue.schedule({ id:message.author.username, priority:message.author.prio }, lookUp, args.length, message, args, msg);
 }
 
+async function lookUp(count, message, args, msg){
+  var args = args;
+  var key;
+  var percent, nodupe = 0;
+  await getKey(args.length).then(async (result) => {
+    key = result;
+  });
+  async function query(args, keys, message){
+    await queryApi(args, keys)
+    .then((result)=>{
+      if(result.status == 0){
+        throw new Error(result.data);
+      }else{
+        message.channel.send(result.data);
+      }
+    })
+  }
+  for(var i = 0; i < args.length; i++){
+    if(message.author.id != "751252617451143219"){
+      var logMsg = message.author.tag+' searched for '+args[i];
+    }
+    group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
+    .catch((error) => {
+      if (error instanceof Bottleneck.BottleneckError) {
+
+      }
+    });
+  }
+}
 
 schedule.scheduleJob('* * 0 * *', function(){
   var stats = {
@@ -281,36 +313,6 @@ function decodeEntities(encodedString) {
 }
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-async function lookUp(count, message, args, msg){
-  var args = args;
-  var key;
-  var percent, nodupe = 0;
-  await getKey(args.length).then(async (result) => {
-    key = result;
-  });
-  async function query(args, keys, message){
-    await queryApi(args, keys)
-    .then((result)=>{
-      if(result.status == 0){
-        throw new Error(result.data);
-      }else{
-        message.channel.send(result.data);
-      }
-    })
-  }
-  for(var i = 0; i < args.length; i++){
-    if(message.author.id != "751252617451143219"){
-      var logMsg = message.author.tag+' searched for '+args[i];
-    }
-    group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
-    .catch((error) => {
-      if (error instanceof Bottleneck.BottleneckError) {
-
-      }
-    });
-  }
 }
 
 function getUserFromMention(mention) {
