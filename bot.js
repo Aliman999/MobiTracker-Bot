@@ -285,21 +285,11 @@ function numberWithCommas(x) {
 
 async function lookUp(count, message, args, msg){
   var args = args;
-  var keys = [];
+  var key;
   var percent, nodupe = 0;
-  for(var i = 0; i < args.length; i++){
-    await getKey(args.length).then(async (key) => {
-      keys.push(key);
-      percent = Math.round((i/args.length)*100);
-      if(i == args.length-1){
-        percent = 100;
-      };
-      if(percent%5 == 0 && percent != nodupe){
-        nodupe = percent;
-        msg.edit("**[STATUS]: ** \u231B	 ```"+percent+"%  Our microtech datacenters are processing your request.```");
-      }
-    });
-  }
+  await getKey(args.length).then(async (result) => {
+    key = result;
+  });
   async function query(args, keys, message){
     await queryApi(args, keys)
     .then((result)=>{
@@ -314,7 +304,7 @@ async function lookUp(count, message, args, msg){
     if(message.author.id != "751252617451143219"){
       var logMsg = message.author.tag+' searched for '+args[i];
     }
-    group.key(message.author.tag).schedule(query, args[i], keys[i], message, msg, message.author.tag, args.length, logMsg)
+    group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
     .catch((error) => {
       if (error instanceof Bottleneck.BottleneckError) {
 
