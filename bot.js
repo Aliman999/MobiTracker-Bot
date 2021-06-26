@@ -65,7 +65,9 @@ jobQueue.on("done", function(info){
   console.save(info.options.id+" Finished.");
 });
 
+var groupCount = 0;
 group.on("created", (limiter, key) => {
+  groupCount++;
   var count = 0;
   limiter.once("received", function(info){
     info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
@@ -181,8 +183,8 @@ async function lookUp(count, message, args, msg){
   await getKey(args.length).then(async (result) => {
     key = result;
   });
-  async function query(args, keys, message){
-    await queryApi(args, keys)
+  async function query(args, key, message){
+    await queryApi(args, key)
     .then((result)=>{
       if(result.status == 0){
         throw new Error(result.data);
@@ -191,16 +193,24 @@ async function lookUp(count, message, args, msg){
       }
     })
   }
-  for(var i = 0; i < args.length; i++){
-    if(message.author.id != "751252617451143219"){
-      var logMsg = message.author.tag+' searched for '+args[i];
-    }
-    group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
-    .catch((error) => {
-      if (error instanceof Bottleneck.BottleneckError) {
-
+  var wait = setInterval((ms)=>{
+    console.log("testing speed");
+    for(var i = 0; i < args.length; i++){
+      if(message.author.id != "751252617451143219"){
+        var logMsg = message.author.tag+' searched for '+args[i];
       }
-    });
+      group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
+      .catch((error) => {
+        if (error instanceof Bottleneck.BottleneckError) {
+
+        }
+      });
+    }
+  }, ms);
+  if(groupCount >= 3){
+    wait(3000);
+  }else{
+    wait(0);
   }
 }
 
