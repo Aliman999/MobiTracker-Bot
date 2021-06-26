@@ -63,19 +63,19 @@ group.on("created", (limiter, key) => {
   var count = 0;
   limiter.once("received", function(info){
     info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
+    for(var ind = 0; ind < position.length; ind++){
+      if(position[ind].id === info.options.id){
+        position.splice(ind, 1);
+      }
+      for(var ii = 0; ii < position.length; ii++){
+        position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
+      }
+    }
   })
   limiter.on("done", function(info){
     count++;
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
     if(count == info.args[5]){
-      for(var ind = 0; ind < position.length; ind++){
-        if(position[ind].id === info.options.id){
-          position.splice(ind, 1);
-        }
-        for(var ii = 0; ii < position.length; ii++){
-          position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
-        }
-      }
       info.args[2].channel.send("**[STATUS]: ** :floppy_disk: ```Finished "+info.args[5]+" searches.```");
       console.log('Finished '+info.args[4]+"'s Job");
       group.deleteKey(info.args[4]);
