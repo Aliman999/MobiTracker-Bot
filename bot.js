@@ -195,7 +195,7 @@ async function lookUp(count, message, args, msg){
     if(message.author.id != "751252617451143219"){
       var logMsg = message.author.tag+' searched for '+args[i];
     }
-    group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
+    limiter.schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
     .catch((error) => {
       if (error instanceof Bottleneck.BottleneckError) {
 
