@@ -194,7 +194,6 @@ async function lookUp(count, message, args, msg){
     })
   }
   var wait = setInterval(()=>{
-    console.log("testing speed");
     if(groupCount < 3){
       clearInterval(wait);
       for(var i = 0; i < args.length; i++){
@@ -208,6 +207,12 @@ async function lookUp(count, message, args, msg){
           }
         });
       }
+    }else{
+      position.forEach((e, iii) => {
+        if(position.length > 1){
+          e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
+        }
+      });
     }
   }, 3000);
 }
