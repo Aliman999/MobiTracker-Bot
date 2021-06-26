@@ -202,7 +202,7 @@ async function lookUp(count, message, args, msg){
         group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
         .catch((error) => {
           if (error instanceof Bottleneck.BottleneckError) {
-
+            console.log(error.message);
           }
         });
       }
