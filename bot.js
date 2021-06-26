@@ -67,7 +67,6 @@ group.on("created", (limiter, key) => {
       info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
       bool = false;
     }
-    console.log(count +" | "+ info.args[5]);
     if(count == info.args[5]){
       for(var ind = 0; ind < position.length; ind++){
         if(position[ind].id === info.options.id){
