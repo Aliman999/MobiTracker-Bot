@@ -193,25 +193,23 @@ async function lookUp(count, message, args, msg){
       }
     })
   }
-  var wait = setInterval((ms)=>{
+  setInterval(()=>{
     console.log("testing speed");
-    for(var i = 0; i < args.length; i++){
-      if(message.author.id != "751252617451143219"){
-        var logMsg = message.author.tag+' searched for '+args[i];
-      }
-      group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
-      .catch((error) => {
-        if (error instanceof Bottleneck.BottleneckError) {
-
+    if(groupCount < 3){
+      this.clearInterval();
+      for(var i = 0; i < args.length; i++){
+        if(message.author.id != "751252617451143219"){
+          var logMsg = message.author.tag+' searched for '+args[i];
         }
-      });
+        group.key(message.author.tag).schedule(query, args[i], key, message, msg, message.author.tag, args.length, logMsg)
+        .catch((error) => {
+          if (error instanceof Bottleneck.BottleneckError) {
+
+          }
+        });
+      }
     }
-  }, ms);
-  if(groupCount >= 3){
-    wait(3000);
-  }else{
-    wait(0);
-  }
+  }, 3000);
 }
 
 schedule.scheduleJob('* * 0 * *', function(){
