@@ -70,6 +70,15 @@ jobQueue.on("done", function(info){
 limiter.once("received", function(info){
   var count = 0;
   info.args[3].edit("**[STATUS]: ** \u2699 ```Running.```");
+
+  limiter.on("queue", function(){
+    position.forEach((e, iii) => {
+      if(position.length > 1){
+        e.msg.edit("**[STATUS]: ** \u231A ```"+(iii+1)+" in Queue. Servers are busy, please wait in queue.```");
+      }
+    });
+  })
+
   limiter.on("done", function(info){
     count++;
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
