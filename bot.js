@@ -193,10 +193,10 @@ async function lookUp(count, message, args, msg){
       }
     })
   }
-  setInterval(()=>{
+  var wait = setInterval(()=>{
     console.log("testing speed");
     if(groupCount < 3){
-      clearInterval(this);
+      clearInterval(wait);
       for(var i = 0; i < args.length; i++){
         if(message.author.id != "751252617451143219"){
           var logMsg = message.author.tag+' searched for '+args[i];
