@@ -59,7 +59,7 @@ jobQueue.on("done", function(info){
 });
 
 group.on("created", (limiter, key) => {
-  console.log(group);
+  console.log(group.on);
   var count = 0;
   var subCount = 0;
   var bool = true;
@@ -106,9 +106,6 @@ group.on("created", (limiter, key) => {
       cachePlayer(jobInfo.args[0]);
     }
   });
-})
-.on("error", function(err){
-  console.log(err);
 })
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
