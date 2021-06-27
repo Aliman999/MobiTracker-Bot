@@ -107,8 +107,8 @@ group.on("created", (limiter, key) => {
     }
   });
 })
-.on("error", function(){
-  
+.on("error", function(err){
+  console.log(err);
 })
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
