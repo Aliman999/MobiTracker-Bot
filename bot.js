@@ -177,7 +177,6 @@ async function addQueue(message, args){
     if(item == message.author.tag){
       var msg = message.channel.send("**[STATUS]:** :warning: ```Please wait for your current job to finish.```");
       end = true;
-      break;
     }
   });
   if(end){
