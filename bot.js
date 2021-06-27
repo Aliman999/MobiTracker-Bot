@@ -120,11 +120,13 @@ client.on("ready", () => {
   function loopStatus(){
     setTimeout(function(){
       const guild = client.guilds.fetch("826925430773645332");
+      console.log(guild.members);
+      /*
       var memberCount = guild.members.filter(member => !member.user.bot).size;
       console.log(memberCount);
       var memberCountChannel = client.channels.get("829705342618697799");
       memberCountChannel.setName(`Citizens: ${memberCount}`);
-
+      */
       client.user.setPresence({
         status: 'online',
         activity: {
