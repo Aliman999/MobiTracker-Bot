@@ -175,7 +175,7 @@ async function addQueue(message, args){
   var end = false;
   groups.forEach((item, i) => {
     if(item == message.author.tag){
-      var msg = await message.channel.send("**[STATUS]:** :warning: ```Please wait for your current job to finish.```");
+      var msg = message.channel.send("**[STATUS]:** :warning: ```Please wait for your current job to finish.```");
       end = true;
       break;
     }
