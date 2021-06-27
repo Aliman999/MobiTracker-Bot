@@ -123,13 +123,7 @@ client.on("ready", () => {
       var memberCount = guild.members.cache.filter(member => !member.user.bot).size;
       client.channels.cache.get("829705342618697799")
       .setName("Citizens: "+memberCount);
-      //console.log();
-      /*
-      var memberCount = guild.members.filter(member => !member.user.bot).size;
-      console.log(memberCount);
-      var memberCountChannel = client.channels.get("829705342618697799");
-      memberCountChannel.setName(`Citizens: ${memberCount}`);
-      */
+      
       client.user.setPresence({
         status: 'online',
         activity: {
