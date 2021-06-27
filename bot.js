@@ -35,7 +35,11 @@ const jobQueue = new Bottleneck({
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(info){
-  console.log(group.instances);
+  position.forEach((item, i) => {
+    if(item.id == info.options.id){
+      throw new Error("Duplicate Job");
+    }
+  });
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[3], len:info.args[0] });
   position.sort((a, b) => {
       return a.priority - b.priority;
