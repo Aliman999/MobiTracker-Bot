@@ -59,7 +59,7 @@ jobQueue.on("done", function(info){
 });
 
 group.on("created", (limiter, key) => {
-  console.log(group.on);
+  console.log(group.on());
   var count = 0;
   var subCount = 0;
   var bool = true;
