@@ -35,19 +35,10 @@ const jobQueue = new Bottleneck({
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(info){
-  position.forEach((item, i) => {
-    console.log(item.id);
-    if(item.id == info.options.id){
-      throw new Error("Duplicate Job");
-    }
-  });
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[3], len:info.args[0] });
   position.sort((a, b) => {
       return a.priority - b.priority;
   });
-});
-
-jobQueue.on("error", function(error, info){
 });
 
 jobQueue.on("queued", function(info){
@@ -66,8 +57,9 @@ jobQueue.on("executing", function(info){
 jobQueue.on("done", function(info){
   console.save(info.options.id+" Finished.");
 });
-
+var groups = [];
 group.on("created", (limiter, key) => {
+  throw new Error("debug");
   var count = 0;
   var subCount = 0;
   var bool = true;
