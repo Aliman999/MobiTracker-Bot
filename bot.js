@@ -35,6 +35,7 @@ const jobQueue = new Bottleneck({
 const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(info){
+  console.log(group.instances);
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[3], len:info.args[0] });
   position.sort((a, b) => {
       return a.priority - b.priority;
@@ -59,7 +60,6 @@ jobQueue.on("done", function(info){
 });
 
 group.on("created", (limiter, key) => {
-  console.log(group.on());
   var count = 0;
   var subCount = 0;
   var bool = true;
