@@ -123,6 +123,7 @@ client.on("ready", () => {
       .setName();
       const guild = client.guilds.get("826925430773645332");
       var memberCount = guild.members.filter(member => !member.user.bot).size;
+      console.log(memberCount);
       var memberCountChannel = client.channels.get("829705342618697799");
       memberCountChannel.setName(`Citizens: ${memberCount}`);
 
