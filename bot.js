@@ -120,10 +120,7 @@ client.on("ready", () => {
   function loopStatus(){
     setTimeout(function(){
       var guild = client.guilds.cache.get("826925430773645332");
-      console.log(guild);
-      guild.members.cache.forEach((item, i) => {
-        console.log(item);
-      });
+      console.log(guild.members.cache.size);
       client.channels.cache.get("829705342618697799")
       //.setName("");
       //console.log();
