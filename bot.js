@@ -120,7 +120,7 @@ client.on("ready", () => {
   function loopStatus(){
     setTimeout(function(){
       const guild = client.guilds.fetch("826925430773645332");
-      console.log(guild.members.cache);
+      console.log(guild.members.cache.size);
       /*
       var memberCount = guild.members.filter(member => !member.user.bot).size;
       console.log(memberCount);
