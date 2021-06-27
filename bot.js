@@ -119,7 +119,11 @@ client.on("ready", () => {
   const list = ["for !help", "for new Contracts", "for new Applicants", "for new Reviews"];
   function loopStatus(){
     setTimeout(function(){
-      console.log(client.channels.cache.get("829705342618697799"));
+      var guild = client.guilds.cache.get("826925430773645332");
+      console.log(guild.members.size);
+      client.channels.cache.get("829705342618697799")
+      //.setName("");
+      //console.log();
       /*
       var memberCount = guild.members.filter(member => !member.user.bot).size;
       console.log(memberCount);
