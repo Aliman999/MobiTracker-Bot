@@ -120,9 +120,9 @@ client.on("ready", () => {
   function loopStatus(){
     setTimeout(function(){
       var guild = client.guilds.cache.get("826925430773645332");
-      console.log(guild.members.cache.size);
+      var memberCount = guild.members.cache.filter(member => !member.user.bot).size;
       client.channels.cache.get("829705342618697799")
-      //.setName("");
+      .setName("Citizens: "+memberCount);
       //console.log();
       /*
       var memberCount = guild.members.filter(member => !member.user.bot).size;
