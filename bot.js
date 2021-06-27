@@ -32,9 +32,10 @@ const jobQueue = new Bottleneck({
   maxConcurrent: 3,
 });
 
-const queueCounts = jobQueue.counts();
+var groups = [];
 
 jobQueue.on("received", function(info){
+  groups.push(info.options.id);
   position.push({ id:info.options.id, priority:info.options.priority, message:info.args[2], msg:info.args[3], len:info.args[0] });
   position.sort((a, b) => {
       return a.priority - b.priority;
@@ -57,9 +58,7 @@ jobQueue.on("executing", function(info){
 jobQueue.on("done", function(info){
   console.save(info.options.id+" Finished.");
 });
-var groups = [];
 group.on("created", (limiter, key) => {
-  throw new Error("debug");
   var count = 0;
   var subCount = 0;
   var bool = true;
@@ -84,6 +83,7 @@ group.on("created", (limiter, key) => {
     count++;
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
     if(count == info.args[5]){
+
       for(var ind = 0; ind < position.length; ind++){
         if(position[ind].id === info.options.id){
           position.splice(ind, 1);
@@ -106,9 +106,6 @@ group.on("created", (limiter, key) => {
       cachePlayer(jobInfo.args[0]);
     }
   });
-})
-.on("error", function(error, info){
-  console.log(info);
 })
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
@@ -175,7 +172,15 @@ function getPrio(usrID){
 }
 
 async function addQueue(message, args){
-  var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
+  groups.forEach((item, i) => {
+    if(item == message.author.tag){
+      var msg = await message.channel.send("**[STATUS]:** :warning: ```Please wait for your current job to finish.```");
+      break;
+    }else{
+      var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
+      break;
+    }
+  });
   message.author.prio = await getPrio(message.author.id);
   if(message.author.id != "751252617451143219"){
     if(message.channel.type == "text"){
