@@ -59,7 +59,7 @@ jobQueue.on("done", function(info){
 });
 
 group.on("created", (limiter, key) => {
-  console.log(key);
+  console.log(group);
   var count = 0;
   var subCount = 0;
   var bool = true;
@@ -107,9 +107,6 @@ group.on("created", (limiter, key) => {
     }
   });
 })
-.catch(error){
-  console.log(err);
-}
 
 const botToken = jwt.sign({ mtUser:{username:'mtcobot', cid: '0000001'} }, config.Secret, { algorithm: 'HS256' }, { 'iat':Math.floor(Date.now()/1000) });
 const msg = {
