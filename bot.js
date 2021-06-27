@@ -69,7 +69,6 @@ group.on("created", (limiter, key) => {
     subCount++;
     if(subCount == info.args[5]){
       for(var ind = 0; ind < position.length; ind++){
-        console.log(position[ind].id +" | "+key);
         if(position[ind].id === key){
           position.splice(ind, 1);
         }
