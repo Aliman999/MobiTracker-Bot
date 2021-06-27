@@ -83,14 +83,14 @@ group.on("created", (limiter, key) => {
     count++;
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
     if(count == info.args[5]){
-
-      for(var ind = 0; ind < position.length; ind++){
-        if(position[ind].id === info.options.id){
-          position.splice(ind, 1);
+      groups.forEach((item, i) => {
+        if(item == info.options.id){
+          console.log(item+ " | "+info.options.id);
+          groups.splice(i, 1);
         }
-        for(var ii = 0; ii < position.length; ii++){
-          position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
-        }
+      });
+      for(var ii = 0; ii < position.length; ii++){
+        position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
       }
       info.args[2].channel.send("**[STATUS]: ** :floppy_disk: ```Finished "+info.args[5]+" searches.```");
       console.log('Finished '+info.args[4]+"'s Job");
@@ -100,7 +100,7 @@ group.on("created", (limiter, key) => {
 
   limiter.on("failed", async (error, jobInfo) => {
     if(jobInfo.retryCount < 2){
-      return 1000;
+      return 3000;
     }else{
       jobInfo.args[2].channel.send("**[ERROR]: ** :tools: ```3 Attemps to find "+jobInfo.args[0]+" Failed```");
       cachePlayer(jobInfo.args[0]);
@@ -176,11 +176,10 @@ async function addQueue(message, args){
     if(item == message.author.tag){
       var msg = await message.channel.send("**[STATUS]:** :warning: ```Please wait for your current job to finish.```");
       break;
-    }else{
-      var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
-      break;
     }
   });
+
+  var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
   message.author.prio = await getPrio(message.author.id);
   if(message.author.id != "751252617451143219"){
     if(message.channel.type == "text"){
