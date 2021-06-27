@@ -46,6 +46,9 @@ jobQueue.on("received", function(info){
   });
 });
 
+jobQueue.on("error", function(error, info){
+});
+
 jobQueue.on("queued", function(info){
   console.save(jobQueue.jobs("QUEUED").join(", ")+" in Queue");
   position.forEach((e, iii) => {
