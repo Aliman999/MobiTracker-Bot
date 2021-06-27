@@ -36,6 +36,7 @@ const queueCounts = jobQueue.counts();
 
 jobQueue.on("received", function(info){
   position.forEach((item, i) => {
+    console.log(item.id);
     if(item.id == info.options.id){
       throw new Error("Duplicate Job");
     }
