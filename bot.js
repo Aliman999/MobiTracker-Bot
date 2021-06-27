@@ -483,6 +483,7 @@ function queryApi(args, apiKey){
   });
 }
 
+
 function cachePlayer(user){
   if(typeof user === 'string'){
     const sql = "SELECT * FROM `CACHE players` WHERE username = '"+user+"'";
@@ -545,6 +546,11 @@ function cachePlayer(user){
         data.organization = JSON.parse(data.organization);
         data.organization = Object.values(data.organization);
         data.badge = JSON.parse(data.badge);
+        try{
+          data.bio = JSON.parse(data.bio);
+        }catch{
+
+        }
         for(var i = 0; i < Object.size(data); i++){
           if(i == 3){
             for(var x = 0; x < Object.size(data.organization) && x < Object.size(check.organization); x++){
@@ -558,24 +564,25 @@ function cachePlayer(user){
             }
           }
         }
-        if(data.cID != check.cID){
+        if(data.cID !== check.cID){
           update = true;
           eventUpdate.push("Obtained ID");
         }
-        if(data.username != check.username){
+        if(data.username !== check.username){
           update = true;
           eventUpdate.push("Changed Name");
         }
-        if(data.badge.title != check.badge.title){
+        if(data.badge.title !== check.badge.title){
           update = true;
           eventUpdate.push("Badge Changed");
         }
-        if(data.avatar != check.avatar){
+        if(data.avatar !== check.avatar){
           update = true;
           eventUpdate.push("Avatar Changed");
         }
-        if(data.bio != check.bio){
+        if(data.bio !== check.bio){
           update = true;
+          console.log({old: data.bio, new: check.bio});
           eventUpdate.push("Bio Changed");
         }
         function removeDupe(data){
