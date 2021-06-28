@@ -83,8 +83,8 @@ group.on("created", (limiter, key) => {
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
     if(count == info.args[5]){
       for(var iii = 0; iii < groups.length; iii++){
-        console.log(groups[iii]+" | "+info.options.id);
-        if(groups[iii] === info.options.id){
+        console.log(groups[iii]+" | "+key);
+        if(groups[iii] === key){
           console.log(groups[iii]+ " | "+info.options.id);
           groups.splice(iii, 1);
         }
