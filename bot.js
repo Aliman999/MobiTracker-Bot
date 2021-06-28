@@ -82,12 +82,12 @@ group.on("created", (limiter, key) => {
     count++;
     console.log(count+" | "+info.args[5]+" - "+info.args[6]);
     if(count == info.args[5]){
-      groups.forEach((item, i) => {
-        if(item == info.options.id){
-          console.log(item+ " | "+info.options.id);
-          groups.splice(i, 1);
+      for(var iii = 0; iii < groups.length; iii++){
+        if(groups[iii] === info.options.id){
+          console.log(groups[iii]+ " | "+info.options.id);
+          groups.splice(iii, 1);
         }
-      });
+      }
       for(var ii = 0; ii < position.length; ii++){
         position[ii].msg.edit("**[STATUS]: ** \u231A ```"+(ii+1)+" in Queue. Servers are busy, please wait in queue.```");
       }
@@ -123,7 +123,7 @@ client.on("ready", () => {
       var memberCount = guild.members.cache.filter(member => !member.user.bot).size;
       client.channels.cache.get("829705342618697799")
       .setName("Citizens: "+memberCount);
-      
+
       client.user.setPresence({
         status: 'online',
         activity: {
