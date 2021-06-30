@@ -265,7 +265,7 @@ function saveStats(stats){
 function socket(){
   var payload = jwt.sign({ username:"bot" }, config.Secret);
   var message;
-  webSocket = new WebSocket("wss://mobitracker.co:2599");
+  webSocket = new WebSocket("wss://ws.mobitracker.co:2599");
   webSocket.onopen = function(){
     console.log("Connected to Internal API");
     message = {
