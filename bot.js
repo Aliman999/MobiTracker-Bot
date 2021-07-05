@@ -30,7 +30,7 @@ tips.tips = [
   "**[TIP]:** :tada: ```Subbing to our patreon bumps you up in priority.```",
 ]
 
-for(var x = 0; x < tips.tips.length; x++){
+for(var x = 0; x < 30; x++){
   console.log(Math.floor(Math.random()*tips.tips.length));
 }
 
