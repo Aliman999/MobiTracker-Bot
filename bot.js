@@ -897,7 +897,7 @@ async function registerUser(message, argz){
 
   function firstRegister(){
     return new Promise(callback =>{
-      const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register rsihandle1 rsihandle2 ...";
+      const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register ingamename altname ...";
       const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id+";";
       con.query(sql, function (err, result, fields) {
         if(err) throw err;
