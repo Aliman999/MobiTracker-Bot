@@ -31,6 +31,7 @@ tips.tips = [
 ]
 
 tips.random = function(){
+  console.log(Math.floor(Math.random()*tips.tips.length));
   return tips[Math.floor(Math.random()*tips.tips.length)];
 }
 
