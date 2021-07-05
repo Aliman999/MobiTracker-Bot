@@ -884,7 +884,7 @@ async function registerUser(message, argz){
 
   function firstRegister(){
     return new Promise(callback =>{
-      const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1";
+      const registerP1 = "You're almost done! \nPut this key into your account's bio: `"+CryptoJS.AES.encrypt("mt.co", message.author.id).toString()+"` \n\nThen type !register and the RSI Handle(s) \nIE: !register JamesDusky0 JamesDusky1 ...";
       const sql = "SELECT cID FROM discord WHERE discID = "+message.author.id+";";
       con.query(sql, function (err, result, fields) {
         if(err) throw err;
@@ -894,7 +894,7 @@ async function registerUser(message, argz){
           con.query(sql, function (err, result, fields){
             if(err) throw err;
             client.users.fetch(message.author.id).then((user) =>{
-              user.send("You can now login to MobiTracker.co using your Registered Handles."+"\n\nYour temporary password to MobiTracker is ```"+message.author.id+"```");
+              user.send("You can now login to MobiTracker.co using your Registered Handles.\nWe've provided your account with a temporary password if it is not registered through the website. \n\nYour temporary password to MobiTracker is ```"+message.author.id+"```");
             });
             callback();
           });
