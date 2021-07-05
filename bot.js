@@ -31,8 +31,7 @@ tips.tips = [
 ]
 
 tips.random = function(){
-  console.log(Math.floor(Math.random()*tips.tips.length));
-  return tips[Math.floor(Math.random()*tips.tips.length)];
+  return tips.tips[Math.floor(Math.random()*tips.tips.length)];
 }
 
 const group = new Bottleneck.Group({
