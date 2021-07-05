@@ -197,8 +197,7 @@ async function addQueue(message, args){
     return;
   }
   var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
-  var tip = await tips.random();
-  message.channel.send(tip);
+  console.log(tips.random());
   message.author.prio = await getPrio(message.author.id);
   if(message.author.id != "751252617451143219"){
     if(message.channel.type == "text"){
