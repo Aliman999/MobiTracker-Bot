@@ -26,8 +26,8 @@ var concurrent = 2;
 var tips = {};
 
 tips.tips = [
-  "**[TIP]:** :tada: `You can search up to 200 users at once seperated with spaces.`",
-  "**[TIP]:** :tada: `Subbing to our patreon bumps you up in priority.`",
+  "**[TIP]:** :tada: ```You can search up to 200 users at once seperated with spaces.```",
+  "**[TIP]:** :tada: ```Subbing to our patreon bumps you up in priority.```",
 ]
 
 tips.random = function(){
