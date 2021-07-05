@@ -28,6 +28,7 @@ var tips = {};
 tips.tips = [
   "**[TIP]:** :tada: ```You can search up to 200 users at once seperated with spaces.```",
   "**[TIP]:** :tada: ```Subbing to our patreon bumps you up in priority.```",
+  "**[TIP]:** :tada: ```Integrating MobiTracker into your Organization yields special benefits!```"
 ]
 
 tips.random = function(){
