@@ -32,7 +32,7 @@ tips.tips = [
 ]
 
 for(var x = 0; x < 30; x++){
-  console.log(Math.floor(Math.random()*tips.tips.length));
+  console.log(Math.floor(Math.random()*6));
 }
 
 tips.random = function(){
