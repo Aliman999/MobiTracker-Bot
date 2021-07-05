@@ -23,6 +23,17 @@ var failed = [];
 var updateBool = true;
 var concurrent = 2;
 
+var tips = {};
+
+tips.tips = [
+  "**[TIP]:** :tada: `You can search up to 200 users at once seperated with spaces.`",
+  "**[TIP]:** :tada: `Subbing to our patreon bumps you up in priority.`",
+]
+
+tips.random = function(){
+  return tips[Math.floor(Math.random()*tips.tips.length)];
+}
+
 const group = new Bottleneck.Group({
     maxConcurrent: concurrent,
     minTime:3000
@@ -186,6 +197,7 @@ async function addQueue(message, args){
     return;
   }
   var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
+  await message.channel.send(tips.random());
   message.author.prio = await getPrio(message.author.id);
   if(message.author.id != "751252617451143219"){
     if(message.channel.type == "text"){
