@@ -31,6 +31,10 @@ tips.tips = [
   "**[TIP]:** :tada: ```Integrating MobiTracker into your Organization yields special benefits!```"
 ]
 
+for(var x = 0; x < tips.tips.length; x++){
+  console.log(Math.floor(Math.random()*tips.tips.length));
+}
+
 tips.random = function(){
   return tips.tips[Math.floor(Math.random()*tips.tips.length)];
 }
