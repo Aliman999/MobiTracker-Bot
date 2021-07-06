@@ -27,7 +27,8 @@ var tips = {};
 
 tips.tips = [
   "**[TIP]:** :tada: ```You can search up to 200 users at once seperated with spaces.```",
-  "**[TIP]:** :tada: ```Subbing to our patreon bumps you up in priority.```",
+  "**[TIP]:** :tada: ```Subbing to our patreon will bump you up in priority! See our #:scroll:faq channel for more information```",
+  "**[TIP]:** :tada: ```Our processing centers are ready for priority services. Ask for details in our discord!```"
 ]
 
 tips.random = function(){
