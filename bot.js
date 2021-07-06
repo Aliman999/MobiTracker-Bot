@@ -28,7 +28,6 @@ var tips = {};
 tips.tips = [
   "**[TIP]:** :tada: ```You can search up to 200 users at once seperated with spaces.```",
   "**[TIP]:** :tada: ```Subbing to our patreon bumps you up in priority.```",
-  "**[TIP]:** :tada: ```Integrating MobiTracker into your Organization yields special benefits!```"
 ]
 
 tips.random = function(){
@@ -198,7 +197,7 @@ async function addQueue(message, args){
     return;
   }
   var msg = await message.channel.send("**[STATUS]:** :hourglass: ```Our microtech datacenters are processing your request.```");
-  message.channel.send(tips.random());
+  //message.channel.send(tips.random());
   message.author.prio = await getPrio(message.author.id);
   if(message.author.id != "751252617451143219"){
     if(message.channel.type == "text"){
