@@ -277,7 +277,7 @@ function socket(){
   webSocket.onopen = function(){
     console.log("Connected to Internal API");
     message = {
-      type:"auth",
+      type:"internal",
       token:payload
     };
     webSocket.send(JSON.stringify(message));
