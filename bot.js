@@ -162,12 +162,7 @@ function getKey(){
     con.query(sql, function (err, result, fields){
       if(err) throw err;
       apiKey = result[0].apiKey;
-      var id = result[0].id;
-      const sql = "UPDATE apiKeys SET count = count-1 WHERE id = "+id;
-      con.query(sql, function (err, result, fields){
-        if(err) throw err;
-        callback(apiKey);
-      })
+      callback(apiKey);
     });
   })
 }
