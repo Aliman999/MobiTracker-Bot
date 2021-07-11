@@ -291,6 +291,7 @@ function socket(){
   };
 
   function heartbeat() {
+    console.log(webSocket);
     if (!webSocket) return;
     if (webSocket.readyState !== 1) return;
     webSocket.send(JSON.stringify({type:"ping"}));
