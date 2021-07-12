@@ -22,6 +22,7 @@ var update = [];
 var failed = [];
 var updateBool = true;
 var concurrent = 2;
+var key;
 
 var tips = {};
 
@@ -159,12 +160,10 @@ client.on("ready", () => {
 
 function getKey(){
   return new Promise(callback =>{
-    var apiKey;
     const sql = "SELECT id, apiKey, count FROM apiKeys WHERE note like '%main%' GROUP BY id, apiKey, count ORDER BY count desc LIMIT 1";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
-      apiKey = result[0].apiKey;
-      callback(apiKey);
+      callback(result[0].apiKey);
     });
   })
 }
@@ -217,7 +216,6 @@ async function addQueue(message, args){
 
 async function lookUp(count, message, args, msg){
   var args = args;
-  var key;
   var percent, nodupe = 0;
   async function query(args, key, message){
     await queryApi(args, key)
