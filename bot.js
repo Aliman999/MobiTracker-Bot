@@ -151,7 +151,9 @@ client.on("ready", () => {
       }
     }, 10000)
   }
-
+  getKey().then(async (result) => {
+    key = result;
+  });
   loopStatus();
 });
 
@@ -217,9 +219,6 @@ async function lookUp(count, message, args, msg){
   var args = args;
   var key;
   var percent, nodupe = 0;
-  await getKey(args.length).then(async (result) => {
-    key = result;
-  });
   async function query(args, key, message){
     await queryApi(args, key)
     .then((result)=>{
