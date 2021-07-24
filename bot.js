@@ -170,11 +170,11 @@ function getKey(){
 
 function getPrio(usrID){
   return new Promise(cbPrio =>{
-    const sql = "SELECT priority FROM discord WHERE discID = "+usrID+";";
+    const sql = "SELECT value FROM priority WHERE discID = "+usrID+";";
     con.query(sql, function (err, result, fields){
       if(err) throw err;
-      if(result.length > 0){
-        cbPrio(result[0].priority);
+      if(result[0]){
+        cbPrio(result[0].value);
       }else{
         cbPrio(9);
       }
