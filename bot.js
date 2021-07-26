@@ -577,9 +577,11 @@ function cachePlayer(user){
           update = true;
           eventUpdate.push("Obtained ID");
         }
-        if(data.username !== check.username){
-          update = true;
-          eventUpdate.push("Changed Name");
+        if(check.cID){
+          if (data.username !== check.username) {
+            update = true;
+            eventUpdate.push("Changed Name");
+          }
         }
         if(data.badge.title !== check.badge.title){
           update = true;
@@ -602,6 +604,7 @@ function cachePlayer(user){
         check.bio = JSON.stringify(check.bio);
         check.badge = JSON.stringify(check.badge);
         check.organization = JSON.stringify(Object.assign({}, check.organization));
+
         const sql = "INSERT INTO `CACHE players` (event, cID, username, bio, badge, organization, avatar) VALUES ('First Entry', "+check.cID+", '"+check.username+"', ?, '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"' );";
         con.query(sql, [check.bio], function (err, result, fields) {
           if(err) throw err;
@@ -611,10 +614,12 @@ function cachePlayer(user){
         check.bio = JSON.stringify(check.bio);
         check.badge = JSON.stringify(check.badge);
         check.organization = JSON.stringify(Object.assign({}, check.organization));
+
         var eventString = eventUpdate.join(", ");
         const sql = "INSERT INTO `CACHE players` (event, cID, username, bio, badge, organization, avatar) VALUES ('"+eventString+"', "+check.cID+", '"+check.username+"', ?, '"+check.badge+"', '"+check.organization+"', '"+check.avatar+"');";
         con.query(sql, [check.bio], function (err, result, fields) {
           if(err) throw err;
+          
         });
       }
     });
