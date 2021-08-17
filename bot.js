@@ -430,10 +430,10 @@ function queryApi(args, apiKey){
 
               var rating = "";
               if(result.length == 0){
-                rating = "No Vouches. \n[Login](https://mobitracker.co/login) to vouch for them.";
+                rating = "No Ratings. \n[Login](https://mobitracker.co/login) to leave them a review.";
               }else{
                 if(result[0].rating == -1){
-                  rating = "No Vouches. \n[Login](https://mobitracker.co/login) to vouch for them.";
+                  rating = "No Ratings. \n[Login](https://mobitracker.co/login) to leave them a review.";
                 }else{
                   rating = xp(result[0].rating)+" ("+result[0].rating+")";
                 }
@@ -448,7 +448,7 @@ function queryApi(args, apiKey){
                 .setThumbnail(user.data.profile.image)
                 .addFields(
                   { name: 'Badge', value: user.data.profile.badge, inline: true},
-                  { name: 'Mobitracker Vouchers', value: rating, inline: true},
+                  { name: 'Mobitracker Rating', value: rating, inline: true},
                   { name: 'RSI Profile', value: "["+user.data.profile.handle+"](https://robertsspaceindustries.com/citizens/"+user.data.profile.handle+")", inline: true },
                   { name: 'Enlisted', value: user.data.profile.enlisted, inline: true}
                  )
